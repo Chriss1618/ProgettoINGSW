@@ -1,13 +1,15 @@
-package com.ratatouille.Schermate;
+package com.ratatouille.Schermate.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ratatouille.Managers.Manager_LoginFragments;
 import com.ratatouille.R;
 
 import org.w3c.dom.Text;
@@ -19,10 +21,11 @@ public class Activity_Login extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     //LAYOUT
-    Button Button_Login;
-    TextView TextView_Testo;
+    View        Fragment_View;
+    Button      Button_Login;
 
     //FUNCTIONAL
+    private Manager_LoginFragments Manager_Login;
 
     //OTHER...
     
@@ -51,8 +54,17 @@ public class Activity_Login extends AppCompatActivity {
     }
 
     private void LinkLayout() {
-        //Button_Login    =       findViewById(R.id.button_login);
-        //TextView_Testo  =       findViewById(R.id.text_view_testo);
+
+        Fragment_View = findViewById(R.id.fragment_container_view_login);
+        ArrayList<View> Views = new ArrayList<>();
+
+        Views.add(Fragment_View);
+        Manager_Login = new Manager_LoginFragments(this,
+                findViewById(R.id.linear_layout_container_fragment),
+                getSupportFragmentManager(),
+                R.id.fragment_container_view_login,
+                Views);
+        Manager_Login.showPage(0,0);
     }
 
     private void SetDataOnLayout() {

@@ -8,7 +8,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ratatouille">
-        <activity android:name=".Schermate.Activity_Login">
+        <activity android:name=".Schermate.Login.Activity_Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
