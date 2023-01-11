@@ -1,27 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+
+    android:paddingTop="64dp"
+    android:paddingLeft="32dp"
+    tools:context=".Schermate.Activity_Login">
+
 
     <TextView
-        android:id="@+id/text_view_testo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="@string/login"
+        android:textColor="@color/MainColor"
+        android:textSize="60sp"
+        android:fontFamily="@font/sf_compact_rounded_bold"
+
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/under_login"
+        android:textColor="@color/Black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/sf_compact_rounded"
+
+        android:layout_marginTop="12dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="50dp"
+        android:text="@string/email"
+        android:textColor="@color/MainColor"
+
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/sf_compact_rounded_bold"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_text_email"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+
+        android:textCursorDrawable="@color/MainColor"
+        android:textColorLink="@color/MainColor"
+
+        android:background="@drawable/background_edit_text_stroke"
+        android:paddingStart="16dp"
+        android:hint="@string/inserisci_la_tua_email"
+
+        android:layout_marginTop="22dp"
+        android:ems="10"
+
+        android:inputType="textEmailAddress"
+        android:text=""
+
+        android:textColor="@color/SoftBlack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV"
+        android:autofillHints="" />
+    <TextView
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="50dp"
+        android:text="@string/password"
+        android:textColor="@color/MainColor"
+
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/sf_compact_rounded_bold"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_text_password"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+
+        android:textCursorDrawable="@color/MainColor"
+        android:textColorLink="@color/MainColor"
+
+        android:background="@drawable/background_edit_text_stroke"
+        android:paddingStart="16dp"
+        android:hint="@string/inserisci_la_tua_password"
+
+        android:layout_marginTop="22dp"
+        android:ems="10"
+
+        android:inputType="textPassword"
+        android:text=""
+
+        android:textColor="@color/SoftBlack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV"
+        android:autofillHints="" />
+
+
+</LinearLayout>

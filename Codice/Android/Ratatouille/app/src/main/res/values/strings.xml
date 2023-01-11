@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Ratatouille</string>
+    <string name="login">Login</string>
+    <string name="under_login">Immetti la password che ti è stata inviata tramite mail!</string>
+    <string name="email">EMAIL</string>
+    <string name="inserisci_la_tua_email">Inserisci la tua Email</string>
+    <string name="password">PASSWORD</string>
+    <string name="inserisci_la_tua_password">Inserisci la tua Password</string>
 </resources>
