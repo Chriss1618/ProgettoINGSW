@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="salva">SALVA</string>
+    <string name="inserisci_cognome">Inserisci Cognome</string>
+    <string name="cognome">COGNOME</string>
+    <string name="nome">NOME</string>
+    <string name="nuova_password">NUOVA PASSWORD</string>
+    <string name="inserisci_nuova_pasword">Inserisci nuova Pasword</string>
+    <string name="iniziamo">INIZIAMO</string>
+    <string name="benvenuto">BENVENUTO</string>
+</resources>

@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Schermate.Login.Fragments.Fragment_ConfirmPassword;
 import com.ratatouille.Schermate.Login.Fragments.Fragment_Login;
+import com.ratatouille.Schermate.Login.Fragments.Fragment_Welcome;
 
 import java.util.ArrayList;
 
@@ -20,49 +21,33 @@ public class Manager_LoginFragments {
     private final ArrayList<Fragment>   Fragments;
     private final ArrayList<View>       Views;
     private final FragmentManager       fragmentManager;
-    private final LinearLayout          Container_Fragments;
-    private final int                   Id_View;
 
     //DATA
     private int onMain;
 
-    public Manager_LoginFragments(Context mContext, LinearLayout Container_Fragments, FragmentManager fragmentManager, int Id_View, ArrayList<View> fragments_view){
+    public Manager_LoginFragments(Context mContext, FragmentManager fragmentManager, ArrayList<View> fragments_view){
         this.Fragments              = new ArrayList<>();
         this.context                = mContext;
-        this.Container_Fragments    = Container_Fragments;
         this.fragmentManager        = fragmentManager;
-        this.Id_View                = Id_View;
 
         Views = fragments_view;
 
+        Fragments.add(new Fragment_Welcome());
         Fragments.add(new Fragment_Login());
         Fragments.add(new Fragment_ConfirmPassword());
-
         onMain = 0;
     }
 
 
 
     //LAYOUT
-    public void showPage(int index,int view){
+    public void showPage(int index){
         fragmentManager.popBackStack();
 
-        switch (view){
-            case 0://SHOWING Evento_Fragment
-                fragmentManager.beginTransaction()
-                        .replace(Id_View, Fragments.get(index), null)
-                        .setReorderingAllowed(true)
-                        .commit();
-                break;
-            case 1://SHOWING Features_Fragment
-                fragmentManager.beginTransaction()
-                        .replace(Id_View, Fragments.get(index), null)
-                        .setReorderingAllowed(true)
-                        .commit();
-                break;
-        }
-
-
+        fragmentManager.beginTransaction()
+                .replace(Views.get(0).getId(), Fragments.get(index), null)
+                .setReorderingAllowed(true)
+                .commit();
     }
     public Fragment getFragment(int index){
         return Fragments.get(index);

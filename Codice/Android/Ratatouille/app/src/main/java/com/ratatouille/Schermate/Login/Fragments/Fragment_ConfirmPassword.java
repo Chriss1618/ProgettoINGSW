@@ -7,14 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.ratatouille.Managers.Manager_Animation;
+import com.ratatouille.Managers.Manager_LoginFragments;
 import com.ratatouille.R;
+import com.ratatouille.Schermate.Login.Activity_Login;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_ConfirmPassword#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Fragment_ConfirmPassword extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -26,19 +25,24 @@ public class Fragment_ConfirmPassword extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //SYSTEM
+    private static final String TAG = "Fragment_ConfirmPasswor";
+
+    //LAYOUT
+    View        Fragment_View;
+    Button      Button_Save;
+
+    //FUNCTIONAL
+    private Manager_LoginFragments Manager_Login;
+
+    //OTHER...
+
+
+
+
     public Fragment_ConfirmPassword() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_ConfirmPassword.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_ConfirmPassword newInstance(String param1, String param2) {
         Fragment_ConfirmPassword fragment = new Fragment_ConfirmPassword();
         Bundle args = new Bundle();
@@ -60,7 +64,45 @@ public class Fragment_ConfirmPassword extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__confirm_password, container, false);
+
+        Fragment_View =  inflater.inflate(R.layout.fragment__confirm_password, container, false);
+
+        PrepareData();
+
+        PrepareLayout();
+
+        animateIN();
+
+        return Fragment_View;
     }
+
+    //LAYOUT
+    private void PrepareData() {
+
+    }
+    private void PrepareLayout() {
+        LinkLayout();
+        SetDataOnLayout();
+        SetActionsOfLayout();
+    }
+
+    private void LinkLayout() {
+        Button_Save = Fragment_View.findViewById(R.id.button_save);
+    }
+    private void SetDataOnLayout() {
+
+
+    }
+    private void SetActionsOfLayout() {
+        Button_Save.setOnClickListener(View ->{});
+    }
+
+    //ANIMATIONS
+    private void animateIN(){
+        Fragment_View.startAnimation( Manager_Animation.getTranslateAnimatioINfromRight());
+    }
+
+    //ACTIONS
+
+    //FUNCTIONAL
 }
