@@ -1,5 +1,6 @@
-package com.ratatouille.Schermate.Login.Fragments;
+package com.ratatouille.Schermate.Login.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.ratatouille.Managers.Manager_Animation;
-import com.ratatouille.Managers.Manager_LoginFragments;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.R;
-import com.ratatouille.Schermate.Login.Activity_Login;
+import com.ratatouille.Schermate.Activity_Amministratore;
 
 public class Fragment_ConfirmPassword extends Fragment {
 
@@ -33,12 +34,9 @@ public class Fragment_ConfirmPassword extends Fragment {
     Button      Button_Save;
 
     //FUNCTIONAL
-    private Manager_LoginFragments Manager_Login;
+    private Controller_Login Manager_Login;
 
-    //OTHER...
-
-
-
+    //OTHER..
 
     public Fragment_ConfirmPassword() {
     }
@@ -94,7 +92,7 @@ public class Fragment_ConfirmPassword extends Fragment {
 
     }
     private void SetActionsOfLayout() {
-        Button_Save.setOnClickListener(View ->{});
+        Button_Save.setOnClickListener(View ->startApp());
     }
 
     //ANIMATIONS
@@ -103,6 +101,11 @@ public class Fragment_ConfirmPassword extends Fragment {
     }
 
     //ACTIONS
+    private void startApp(){
+        Intent intent = new Intent(getContext(), Activity_Amministratore.class);
+        getContext().startActivity(intent);
+        getActivity().finish();
+    }
 
     //FUNCTIONAL
 }

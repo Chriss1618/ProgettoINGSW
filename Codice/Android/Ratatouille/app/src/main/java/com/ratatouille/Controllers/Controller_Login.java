@@ -1,21 +1,20 @@
-package com.ratatouille.Managers;
+package com.ratatouille.Controllers;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Schermate.Login.Fragments.Fragment_ConfirmPassword;
-import com.ratatouille.Schermate.Login.Fragments.Fragment_Login;
-import com.ratatouille.Schermate.Login.Fragments.Fragment_Welcome;
+import com.ratatouille.Schermate.Login.Fragment.Fragment_ConfirmPassword;
+import com.ratatouille.Schermate.Login.Fragment.Fragment_Login;
+import com.ratatouille.Schermate.Login.Fragment.Fragment_Welcome;
 
 import java.util.ArrayList;
 
-public class Manager_LoginFragments {
+public class Controller_Login {
     //LAYOUT
     private final Context               context;
     private final ArrayList<Fragment>   Fragments;
@@ -25,7 +24,7 @@ public class Manager_LoginFragments {
     //DATA
     private int onMain;
 
-    public Manager_LoginFragments(Context mContext, FragmentManager fragmentManager, ArrayList<View> fragments_view){
+    public Controller_Login(Context mContext, FragmentManager fragmentManager, ArrayList<View> fragments_view){
         this.Fragments              = new ArrayList<>();
         this.context                = mContext;
         this.fragmentManager        = fragmentManager;

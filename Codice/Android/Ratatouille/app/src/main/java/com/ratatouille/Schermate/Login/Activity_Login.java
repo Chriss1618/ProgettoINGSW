@@ -2,22 +2,14 @@ package com.ratatouille.Schermate.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.Animator;
-import android.animation.TimeInterpolator;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.ratatouille.Managers.Manager_Animation;
-import com.ratatouille.Managers.Manager_LoginFragments;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
@@ -33,7 +25,7 @@ public class Activity_Login extends AppCompatActivity {
     ImageView       Image_View_Logo_2;
 
     //FUNCTIONAL
-    private Manager_LoginFragments Manager_Login;
+    private Controller_Login Manager_Login;
 
     //OTHER...
     
@@ -78,7 +70,7 @@ public class Activity_Login extends AppCompatActivity {
     private void setManagerFragment(){
         ArrayList<View> Views = new ArrayList<>();
         Views.add(Fragment_View);
-        Manager_Login = new Manager_LoginFragments(this,
+        Manager_Login = new Controller_Login(this,
                 getSupportFragmentManager(),
                 Views);
         Manager_Login.showPage(0);
