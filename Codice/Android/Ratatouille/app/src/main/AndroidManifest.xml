@@ -9,7 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ratatouille">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".Schermate.Activity_Account"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity android:name=".Schermate.Activity_Cameriere"></activity>
+        <activity android:name=".Schermate.Activity_Chef" />
+        <activity android:name=".Schermate.Activity_Supervisore" />
+        <activity android:name=".Schermate.Activity_Amministratore" />
+        <activity android:name=".Schermate.Login.Activity_Login"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

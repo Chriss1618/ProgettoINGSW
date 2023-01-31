@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Ratatouille</string>
+    <string name="login">Login</string>
+    <string name="under_login">Immetti la password che ti è stata inviata tramite mail!</string>
+    <string name="email">EMAIL</string>
+    <string name="inserisci_la_tua_email">Inserisci la tua Email</string>
+    <string name="password">PASSWORD</string>
+    <string name="inserisci_la_tua_password">Inserisci la tua Password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="salva">SALVA</string>
+    <string name="inserisci_cognome">Inserisci Cognome</string>
+    <string name="cognome">COGNOME</string>
+    <string name="nome">NOME</string>
+    <string name="inserisci_nome">Inserisci Nome</string>
+    <string name="nuova_password">NUOVA PASSWORD</string>
+    <string name="inserisci_nuova_pasword">Inserisci nuova Pasword</string>
+    <string name="iniziamo">INIZIAMO</string>
+    <string name="benvenuto">BENVENUTO</string>
+    <string name="produttivitt">Produttività</string>
+    <string name="staff">Staff</string>
+    <string name="menu">Menu</string>
+    <string name="account">Account</string>
 </resources>
