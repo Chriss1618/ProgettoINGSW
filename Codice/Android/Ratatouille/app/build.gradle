@@ -4,7 +4,6 @@ plugins {
 
 android {
     compileSdkVersion 32
-    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.ratatouille"
@@ -40,5 +39,7 @@ dependencies {
 
     //libreria BottomBar
     implementation 'nl.joery.animatedbottombar:library:1.1.0'
-
+    def lifecycle_version = "2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 }

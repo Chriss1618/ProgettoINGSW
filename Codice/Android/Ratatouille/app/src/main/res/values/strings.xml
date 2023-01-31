@@ -17,4 +17,8 @@
     <string name="inserisci_nuova_pasword">Inserisci nuova Pasword</string>
     <string name="iniziamo">INIZIAMO</string>
     <string name="benvenuto">BENVENUTO</string>
+    <string name="produttivitt">Produttività</string>
+    <string name="staff">Staff</string>
+    <string name="menu">Menu</string>
+    <string name="account">Account</string>
 </resources>
