@@ -20,7 +20,8 @@
         <activity android:name=".Schermate.Activity_Chef" />
         <activity android:name=".Schermate.Activity_Supervisore" />
         <activity android:name=".Schermate.Activity_Amministratore" />
-        <activity android:name=".Schermate.Login.Activity_Login">
+        <activity android:name=".Schermate.Login.Activity_Login"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
