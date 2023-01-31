@@ -1,4 +1,4 @@
-package com.ratatouille.Schermate.Login.Fragments;
+package com.ratatouille.Schermate.Account;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.ratatouille.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_ConfirmPassword#newInstance} factory method to
+ * Use the {@link Fragment_AccountInfo#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_ConfirmPassword extends Fragment {
+public class Fragment_AccountInfo extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class Fragment_ConfirmPassword extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment_ConfirmPassword() {
+    public Fragment_AccountInfo() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class Fragment_ConfirmPassword extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_ConfirmPassword.
+     * @return A new instance of fragment Fragment_AccountInfo.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_ConfirmPassword newInstance(String param1, String param2) {
-        Fragment_ConfirmPassword fragment = new Fragment_ConfirmPassword();
+    public static Fragment_AccountInfo newInstance(String param1, String param2) {
+        Fragment_AccountInfo fragment = new Fragment_AccountInfo();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class Fragment_ConfirmPassword extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__confirm_password, container, false);
+        return inflater.inflate(R.layout.fragment__account_info, container, false);
     }
 }

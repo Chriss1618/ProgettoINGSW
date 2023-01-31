@@ -37,8 +37,6 @@ public class Controller_Login {
         onMain = 0;
     }
 
-
-
     //LAYOUT
     public void showPage(int index){
         fragmentManager.popBackStack();
@@ -48,6 +46,7 @@ public class Controller_Login {
                 .setReorderingAllowed(true)
                 .commit();
     }
+
     public Fragment getFragment(int index){
         return Fragments.get(index);
     }
