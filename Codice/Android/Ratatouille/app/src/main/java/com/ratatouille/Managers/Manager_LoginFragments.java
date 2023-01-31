@@ -9,8 +9,9 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Schermate.Login.Fragments.Fragment_ConfirmPassword;
-import com.ratatouille.Schermate.Login.Fragments.Fragment_Login;
+
+import com.ratatouille.Schermate.Login.Fragment.Fragment_ConfirmPassword;
+import com.ratatouille.Schermate.Login.Fragment.Fragment_Login;
 
 import java.util.ArrayList;
 
