@@ -19,27 +19,22 @@ public class Fragment_ListStaff extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
 
     //SYSTEM
     private static final String TAG = "Fragment_ListStaff";
 
     //LAYOUT
     View            Fragment_View;
-    LinearLayout Background;
-    Button Button_Start;
-    TextView Text_View_Welcome;
+    LinearLayout    Background;
+    Button          Button_Start;
+    TextView        Text_View_Welcome;
 
     //FUNCTIONAL
     private Controller_Login Manager_Login;
 
     //OTHER...
-
-
-
 
     public Fragment_ListStaff() {
         // Required empty public constructor

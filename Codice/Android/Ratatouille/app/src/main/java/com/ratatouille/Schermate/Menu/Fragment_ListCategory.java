@@ -2,43 +2,47 @@ package com.ratatouille.Schermate.Menu;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ratatouille.Adapters.Adapter_Category;
+import com.ratatouille.Controllers.Controller_Amministratore;
 import com.ratatouille.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_ListCategory#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_ListCategory extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import nl.joery.animatedbottombar.AnimatedBottomBar;
+
+public class Fragment_ListCategory extends Fragment {
+    //SYSTEM
+    private static final String TAG = "Fragment_ListCategory";
+
+    //LAYOUT
+    private View View_layout;
+    private RecyclerView Recycler_Categories;
+
+    //FUNCTIONS
+    private Adapter_Category adapter_category;
+
+    //DATA
+    private ArrayList<String> TitleCategories;
+    //OTHERS...
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public Fragment_ListCategory() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_ListCategory.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_ListCategory newInstance(String param1, String param2) {
         Fragment_ListCategory fragment = new Fragment_ListCategory();
         Bundle args = new Bundle();
@@ -60,7 +64,51 @@ public class Fragment_ListCategory extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__list_category, container, false);
+        View_layout = inflater.inflate(R.layout.fragment__list_category, container, false);
+        PreparerData();
+        PrepareLayout();
+
+        return View_layout;
     }
+
+    //DATA
+    private void PreparerData(){
+        TitleCategories = new ArrayList<>();
+        TitleCategories.add("Primo");
+        TitleCategories.add("Secondo");
+        TitleCategories.add("Antipasti");
+        TitleCategories.add("Contorno");
+    }
+    //LAYOUT
+
+    //LAYOUT
+    private void PrepareLayout() {
+        LinkLayout();
+        SetDataOnLayout();
+        SetActionsOfLayout();
+    }
+
+    private void LinkLayout() {
+        Recycler_Categories = View_layout.findViewById(R.id.recycler_categories);
+    }
+
+    private void SetDataOnLayout() {
+        initFeaturesRV(TitleCategories);
+    }
+    private void SetActionsOfLayout() {
+
+    }
+
+    private void initFeaturesRV( ArrayList<String> featuresEvent){
+        adapter_category  = new Adapter_Category(getActivity(),featuresEvent);
+        Recycler_Categories.setAdapter(adapter_category);
+
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        Recycler_Categories.setLayoutManager(mLayoutManager);
+        Recycler_Categories.setNestedScrollingEnabled(false);
+    }
+
+
+    //FUNCTIONAL
+
 }

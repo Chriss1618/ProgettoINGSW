@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_element_category"
+        android:layout_width="180dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="20dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_category_menu"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_view_title_category"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
+                android:autoSizeMaxTextSize="25sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:gravity="center"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:text="Contorni"
+                android:textColor="@color/white"
+
+                />
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/ic_delete_on_element"
+        android:background="@drawable/background_white"
+        android:elevation = "5dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:clickable="true"
+        android:contentDescription="@string/icon_delete"
+        android:src="@drawable/baseline_cancel_24"
+        app:layout_constraintEnd_toEndOf="@+id/card_view_element_category"
+        app:layout_constraintTop_toTopOf="@+id/card_view_element_category" />
+</androidx.constraintlayout.widget.ConstraintLayout>

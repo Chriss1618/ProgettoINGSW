@@ -33,6 +33,7 @@ public class Manager_StaffFragments {
 
         Fragments.add(new Fragment_ListStaff());        //0
         Fragments.add(new Fragment_NewStaffMember());   //1
+
         onMain = INDEX_STAFF_LIST;
 
     }

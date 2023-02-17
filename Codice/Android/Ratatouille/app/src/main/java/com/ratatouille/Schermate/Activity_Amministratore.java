@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.ratatouille.Controllers.Controller_Amministrator;
+import com.ratatouille.Controllers.Controller_Amministratore;
 import com.ratatouille.R;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
@@ -20,11 +20,12 @@ public class Activity_Amministratore extends AppCompatActivity {
     private final static int TAB_AMMINISTRATORE_INDEX_STAFF     = 1;
     private final static int TAB_AMMINISTRATORE_INDEX_MENU      = 2;
     private final static int TAB_AMMINISTRATORE_INDEX_ACCOUNT   = 3;
-    Controller_Amministrator controller_amministrator;
+
+    Controller_Amministratore controller_amministrator;
 
     //LAYOUT
 
-    //FUNCTIONALS
+    //FUNCTIONS
 
     //OTHER
     AnimatedBottomBar Bottom_Bar_Amministratore;
@@ -32,7 +33,6 @@ public class Activity_Amministratore extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity__amministratore);
 
         PrepareData();
@@ -41,18 +41,7 @@ public class Activity_Amministratore extends AppCompatActivity {
     }
 
 
-   //FUNCTIONAL
     private void PrepareData() {
-        startController();
-    }
-
-    private void startController() {
-         controller_amministrator = new Controller_Amministrator(
-                this,
-                findViewById(R.id.fragment_container_view_Amministratore),
-                getSupportFragmentManager()
-        );
-
 
     }
 
@@ -67,11 +56,12 @@ public class Activity_Amministratore extends AppCompatActivity {
         Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_amm);
     }
     private void SetDataOnLayout() {
+        constructController();
+        controller_amministrator.showMain();
     }
     private void SetActionsOfLayout() {
         setBottomBar();
     }
-
 
     private void setBottomBar(){
         Bottom_Bar_Amministratore.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
@@ -102,12 +92,22 @@ public class Activity_Amministratore extends AppCompatActivity {
                     controller_amministrator.showSTAFF();
                 break;
             case TAB_AMMINISTRATORE_INDEX_MENU:
-
+                    controller_amministrator.showMENU();
                 break;
             case TAB_AMMINISTRATORE_INDEX_ACCOUNT:
-
+                    controller_amministrator.showACCOUNT();
                 break;
         }
+    }
+
+    //FUNCTIONAL
+    private void constructController() {
+        controller_amministrator = new Controller_Amministratore(
+                this,
+                findViewById(R.id.fragment_container_view_amministratore),
+                getSupportFragmentManager()
+        );
+
     }
 
 }

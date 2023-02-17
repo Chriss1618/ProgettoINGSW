@@ -12,4 +12,10 @@
     <string name="staff">Staff</string>
     <string name="menu">Menu</string>
     <string name="account">Account</string>
+    <string name="inventario">Inventario</string>
+    <string name="ordini">Ordini</string>
+    <string name="ordini_cameriere">Ordini Cameriere</string>
+    <string name="icon_add">icon add</string>
+    <string name="icon_delete">icon_delete</string>
+    <string name="cerca_prodotto_in_menu">Cerca Prodotto in Menu</string>
 </resources>
