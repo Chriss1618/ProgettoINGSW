@@ -100,12 +100,12 @@ public class Fragment_Welcome extends Fragment {
 
     //ANIMATIONS
     private void animateIN(){
-        Button_Start        .startAnimation(Manager_Animation.getTranslationINfromDown());
-        Text_View_Welcome   .startAnimation(Manager_Animation.getTranslationINfromUp());
+        Button_Start        .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
+        Text_View_Welcome   .startAnimation(Manager_Animation.getTranslationINfromUp(1000));
     }
     private void animateOUT(){
-        Button_Start        .startAnimation(Manager_Animation.getTranslationOUTtoDown());
-        Text_View_Welcome   .startAnimation(Manager_Animation.getTranslationOUTtoUp());
+        Button_Start        .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
+        Text_View_Welcome   .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
 
         // If fillAfter is true, the transformation that this animation performed will persist when it is finished.
         Background.setVisibility(View.VISIBLE);

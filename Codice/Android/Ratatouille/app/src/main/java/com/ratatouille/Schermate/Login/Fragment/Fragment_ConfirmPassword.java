@@ -98,7 +98,7 @@ public class Fragment_ConfirmPassword extends Fragment {
 
     //ANIMATIONS
     private void animateIN(){
-        Fragment_View.startAnimation( Manager_Animation.getTranslateAnimatioINfromRight());
+        Fragment_View.startAnimation( Manager_Animation.getTranslateAnimatioINfromRight(500));
     }
 
     //ACTIONS

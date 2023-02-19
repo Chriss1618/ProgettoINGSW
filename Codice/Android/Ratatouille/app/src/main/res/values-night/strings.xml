@@ -18,4 +18,5 @@
     <string name="icon_add">icon add</string>
     <string name="icon_delete">icon_delete</string>
     <string name="cerca_prodotto_in_menu">Cerca Prodotto in Menu</string>
+    <string name="categoria">Categoria</string>
 </resources>

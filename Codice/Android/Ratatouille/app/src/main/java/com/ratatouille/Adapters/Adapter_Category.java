@@ -1,29 +1,28 @@
 package com.ratatouille.Adapters;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ratatouille.Interfaces.AdapterEvent;
 import com.ratatouille.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.ViewHolder>{
-
+    private static final String TAG = "Adapter_Category";
     private Context mContext;
     private ArrayList<String> TitleCategories;
+    private AdapterEvent AdapterListener;
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         CardView        Card_View_Element_Category;
         TextView        Text_View_titoloCategory;
@@ -37,9 +36,10 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         }
     }
 
-    public Adapter_Category(Context context, ArrayList<String> TitleCategories){
+    public Adapter_Category(Context context, ArrayList<String> TitleCategories, AdapterEvent AdapterListener){
         this.mContext           = context;
         this.TitleCategories    = TitleCategories;
+        this.AdapterListener    = AdapterListener;
     }
 
     @NonNull
@@ -71,8 +71,18 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     }
 
     private void clickCategory(@NonNull ViewHolder holder,final int position){
-        Log.d(TAG, "clickCategory Holder: "+holder.Text_View_titoloCategory.getText().toString());
-        Log.d(TAG, "clickCategory Array: "+TitleCategories.get(position));
+        Log.d(TAG, " Holder: "+holder.Text_View_titoloCategory.getText().toString());
+        Log.d(TAG, " Array: "+TitleCategories.get(position));
         Log.d(TAG, "--------------------------------------");
+
+        //andare in list prducts
+        /*((Activity_Amministratore)mContext).changeFragmentOnAmministrator(
+                Controller_Amministratore.AMMINISTRATORE_INDEX_MENU,
+                Manager_MenuFragments.INDEX_MENU_LIST_PRODUCTS,
+                TitleCategories.get(position));*/
+
+        AdapterListener.onClickItem(TitleCategories.get(position));
     }
+
+
 }

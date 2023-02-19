@@ -3,12 +3,17 @@ package com.ratatouille.Schermate;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.ratatouille.Controllers.Controller_Amministratore;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
+import com.ratatouille.Schermate.Menu.Fragment_ListProducts;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
@@ -30,6 +35,33 @@ public class Activity_Amministratore extends AppCompatActivity {
     //OTHER
     AnimatedBottomBar Bottom_Bar_Amministratore;
 
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "onBackPressed: "+getSupportFragmentManager().getBackStackEntryCount());
+        final Handler handler = new Handler();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            if(getSupportFragmentManager().getBackStackEntryCount() == 1){
+                FragmentManager fm = getSupportFragmentManager();
+                Fragment_ListProducts fragment = (Fragment_ListProducts)fm.findFragmentById(R.id.fragment_container_view_amministratore);
+                fragment.EndAnimatins();
+            }
+            handler.postDelayed(()->{
+
+
+                getSupportFragmentManager().popBackStack();
+            },300);
+        }else{
+            handler.postDelayed(super::onBackPressed,300);
+
+        }
+
+
+
+    }
+
+    private void clearStackFragments(){
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,18 +116,15 @@ public class Activity_Amministratore extends AppCompatActivity {
     }
 
     private void setTAB(int indexTab){
+        clearStackFragments();
         switch (indexTab){
-            case TAB_AMMINISTRATORE_INDEX_STATS:
-                    controller_amministrator.showSTATS();
+            case TAB_AMMINISTRATORE_INDEX_STATS: controller_amministrator.showSTATS();
                 break;
-            case TAB_AMMINISTRATORE_INDEX_STAFF:
-                    controller_amministrator.showSTAFF();
+            case TAB_AMMINISTRATORE_INDEX_STAFF: controller_amministrator.showSTAFF();
                 break;
-            case TAB_AMMINISTRATORE_INDEX_MENU:
-                    controller_amministrator.showMENU();
+            case TAB_AMMINISTRATORE_INDEX_MENU: controller_amministrator.showMENU();
                 break;
-            case TAB_AMMINISTRATORE_INDEX_ACCOUNT:
-                    controller_amministrator.showACCOUNT();
+            case TAB_AMMINISTRATORE_INDEX_ACCOUNT: controller_amministrator.showACCOUNT();
                 break;
         }
     }
@@ -108,6 +137,10 @@ public class Activity_Amministratore extends AppCompatActivity {
                 getSupportFragmentManager()
         );
 
+    }
+
+    public void changeFragmentOnAmministrator(int type_manager,int index_fragment,String msg){
+        controller_amministrator.changeFragment(type_manager,index_fragment,msg);
     }
 
 }

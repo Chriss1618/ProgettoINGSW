@@ -35,7 +35,6 @@ public class Manager_StatsFragments {
     }
 
     public void showPage(int indexPage){
-        fragmentManager.popBackStack();
 
         fragmentManager.beginTransaction()
                 .replace(View.getId(), Fragments.get(indexPage), null)
@@ -46,12 +45,9 @@ public class Manager_StatsFragments {
     }
 
     public void showMain(){
-        fragmentManager.popBackStack();
-
         fragmentManager.beginTransaction()
                 .replace(View.getId(), Fragments.get(onMain), null)
                 .setReorderingAllowed(true)
                 .commit();
-
     }
 }

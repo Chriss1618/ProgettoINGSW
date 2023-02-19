@@ -1,14 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    android:id="@+id/fragment_list_product"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Schermate.Menu.Fragment_ListProducts">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="LIST PRODUCT" />
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <LinearLayout
+            android:id="@+id/toolbar_menu_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="16dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginStart="16dp">
+                <TextView
+                    android:id="@+id/text_view_title_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="@string/categoria"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="16dp">
+                <ImageView
+                    android:id="@+id/ic_order"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_order"
+                    android:contentDescription="@string/icon_add" />
+                <ImageView
+                    android:id="@+id/ic_add_category"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add_category"
+                    android:contentDescription="@string/icon_add" />
+                <ImageView
+                    android:id="@+id/ic_delete_category"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_trash_category"
+                    android:contentDescription="@string/icon_delete"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/edit_text_name_category"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:autofillHints=""
+
+                android:background="@drawable/background_search_category"
+                android:ems="10"
+                android:hint="@string/cerca_prodotto_in_menu"
+                android:inputType="text"
+                android:paddingStart="42dp"
+                android:textColorHint="@color/Gray"
+                android:text=""
+                android:textColor="@color/Gray"
+
+                android:textColorLink="@color/MainColor"
+                android:textCursorDrawable="@color/MainColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:contentDescription="@string/icon_add"
+                android:src="@drawable/ic_search"
+                app:layout_constraintStart_toStartOf="@+id/edit_text_name_category"
+                app:layout_constraintTop_toTopOf="@+id/edit_text_name_category" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_products"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
 </FrameLayout>
