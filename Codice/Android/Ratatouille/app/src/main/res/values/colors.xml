@@ -8,4 +8,5 @@
     <color name="Gray">#888EA2</color>
     <color name="SoftGray">#F4F4F6</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="dark">#CD292831</color>
 </resources>

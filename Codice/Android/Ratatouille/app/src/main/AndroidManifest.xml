@@ -4,12 +4,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ratatouille"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_ratatouille"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ratatouille">
-        <activity android:name=".Schermate.Activity_ChooseRole" />
+        <activity android:name=".Schermate.Activity_ChooseRole"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Schermate.Activity_Account" />
         <activity android:name=".Schermate.Activity_Cameriere" />
         <activity android:name=".Schermate.Activity_Chef" />
@@ -17,12 +24,8 @@
         <activity android:name=".Schermate.Activity_Amministratore" />
         <activity
             android:name=".Schermate.Login.Activity_Login"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+           >
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -46,23 +46,23 @@
                 android:layout_marginEnd="16dp">
                 <ImageView
                     android:id="@+id/ic_order"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
                     android:clickable="true"
                     android:src="@drawable/ic_order"
                     android:contentDescription="@string/icon_add" />
                 <ImageView
-                    android:id="@+id/ic_add_category"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:id="@+id/ic_add_product"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:clickable="true"
                     android:src="@drawable/ic_add_category"
                     android:contentDescription="@string/icon_add" />
                 <ImageView
-                    android:id="@+id/ic_delete_category"
+                    android:id="@+id/ic_delete_product"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="16dp"

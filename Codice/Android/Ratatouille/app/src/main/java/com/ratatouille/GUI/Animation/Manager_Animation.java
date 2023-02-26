@@ -9,6 +9,34 @@ import android.view.animation.TranslateAnimation;
 
 public class Manager_Animation {
 
+    private static Animation fadeOut(int milliseconds){
+        Animation fadeout = new AlphaAnimation(1.0f, 0.0f );
+        fadeout.setDuration(milliseconds);
+        return fadeout;
+    }
+    private static Animation fadeIn(int milliseconds){
+        Animation fadeIn = new AlphaAnimation(0.0f , 1.0f);
+        fadeIn.setDuration(milliseconds);
+        return fadeIn;
+    }
+
+    public static AnimationSet getFadeOut(int milliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        set.addAnimation(fadeOut(milliseconds));
+
+        return set;
+    }
+
+    public static AnimationSet getFadeIn(int milliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        set.addAnimation(fadeIn(milliseconds));
+
+        return set;
+    }
+
+
     public static AnimationSet getTranslateAnimatioOUT(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
@@ -57,14 +85,13 @@ public class Manager_Animation {
         TA.setDuration(milliseconds);
         TA.setInterpolator(new LinearInterpolator());
 
-        Animation fadeOut = new AlphaAnimation(0.0f , 1.0f);
-        fadeOut.setDuration(milliseconds);
+        Animation fadeIn = new AlphaAnimation(0.0f , 1.0f);
+        fadeIn.setDuration(milliseconds);
 
         set.addAnimation(TA);
-        set.addAnimation(fadeOut);
+        set.addAnimation(fadeIn);
         return set;
     }
-
     public static AnimationSet getTranslateAnimatioINfromLeft(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
@@ -76,11 +103,11 @@ public class Manager_Animation {
         TA.setDuration(milliseconds);
         TA.setInterpolator(new LinearInterpolator());
 
-        Animation fadeOut = new AlphaAnimation(0.0f , 1.0f);
-        fadeOut.setDuration(milliseconds);
+        Animation fadeIn = new AlphaAnimation(0.0f , 1.0f);
+        fadeIn.setDuration(milliseconds);
 
         set.addAnimation(TA);
-        set.addAnimation(fadeOut);
+        set.addAnimation(fadeIn);
         return set;
     }
 
@@ -106,7 +133,6 @@ public class Manager_Animation {
         set.addAnimation(TA);
         return set;
     }
-
     public static AnimationSet getTranslateLogoUp(){
         AnimationSet set = new AnimationSet(true);
 
@@ -140,7 +166,6 @@ public class Manager_Animation {
         set.addAnimation(fadeOut);
         return set;
     }
-
     public static AnimationSet getTranslationINfromUp(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
@@ -178,7 +203,6 @@ public class Manager_Animation {
         set.addAnimation(fadeOut);
         return set;
     }
-
     public static AnimationSet getTranslationOUTtoUp(int miliseconds){
         AnimationSet set = new AnimationSet(true);
 

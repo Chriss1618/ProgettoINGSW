@@ -2,65 +2,120 @@ package com.ratatouille.Schermate.Menu;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_InfoProduct#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_InfoProduct extends Fragment {
+public class Fragment_InfoProduct extends Fragment implements LayoutContainer {
+    //SYSTEM
+    private static final String TAG = "Fragment_InfoProduct";
+    private static final String PRODUCT_TAG = "product";
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //LAYOUT
+    private View        View_fragment;
+    private TextView    Text_View_Title_Product;
+    private CardView    Card_Item_Product;
+    private ImageView   ImageView_Edit_Product;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //FUNCTIONAL
+    private final Manager_MenuFragments manager_MenuFragments;
 
-    public Fragment_InfoProduct() {
-        // Required empty public constructor
+    //DATA
+    private String Product_Name;
+
+    //OTHER...
+
+    public Fragment_InfoProduct(Manager_MenuFragments manager_MenuFragments) {
+        this.manager_MenuFragments = manager_MenuFragments;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_InfoProduct.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_InfoProduct newInstance(String param1, String param2) {
-        Fragment_InfoProduct fragment = new Fragment_InfoProduct();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            Product_Name = getArguments().getString(PRODUCT_TAG);
         }
+        Log.d(TAG, "onCreate: Product passed:"+ Product_Name);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__info_product, container, false);
+        View_fragment = inflater.inflate(R.layout.fragment__info_product, container, false);
+
+        PrepareData();
+        PrepareLayout();
+
+        return View_fragment;
     }
+
+    //DATA
+    @Override
+    public void PrepareData() {
+
+    }
+
+    //LAYOUT
+    @Override
+    public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
+        StartAnimations();
+    }
+
+    @Override
+    public void LinkLayout() {
+        Text_View_Title_Product = View_fragment.findViewById(R.id.text_view_name_product);
+        Card_Item_Product       = View_fragment.findViewById(R.id.card_view_element_product);
+        ImageView_Edit_Product  = View_fragment.findViewById(R.id.ic_edit_product);
+    }
+    @Override
+    public void SetActionsOfLayout() {
+        ImageView_Edit_Product.setOnClickListener(view -> onClickEditProduct());
+    }
+    @Override
+    public void SetDataOnLayout() {
+        Text_View_Title_Product.setText(Product_Name);
+    }
+
+    //ACTIONS
+    private void onClickEditProduct(){
+        EndAnimations();
+        final Handler handler = new Handler();
+        handler.postDelayed(()->
+                        sendActionToManager(Manager_MenuFragments.INDEX_MENU_EDIT_PRODUCT,Product_Name),
+                300);
+    }
+
+    //FUNCTIONAL
+    private void sendActionToManager(int index,String msg){
+        this.manager_MenuFragments.showFragment(index,msg);
+    }
+
+    //ANIMATIONS
+    public void StartAnimations(){
+        Card_Item_Product       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
+
+    }
+
+    public void EndAnimations(){
+        Card_Item_Product       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+
+    }
+
 }

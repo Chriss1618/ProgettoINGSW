@@ -26,7 +26,15 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:layout_margin="32dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"
+
+        android:maxLines="1"
+
+        />
     <android.widget.Button
         android:id="@+id/button_supervisore"
         android:layout_width="250dp"

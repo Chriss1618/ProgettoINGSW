@@ -12,18 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ratatouille.Interfaces.AdapterEvent;
+import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Interfaces.RecyclerInterfaces.onClickItemAdapterListener;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
 
 public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.ViewHolder>{
+    //SYSTEM
     private static final String TAG = "Adapter_Category";
-    private Context mContext;
-    private ArrayList<String> TitleCategories;
-    private AdapterEvent AdapterListener;
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    //LAYOUT
+    private final ArrayList<String>         TitleCategories;
+    private final RecycleEventListener      RecycleEventListener;
+    private ViewHolder                      Holder;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         CardView        Card_View_Element_Category;
         TextView        Text_View_titoloCategory;
         ImageView       Image_View_delete_element;
@@ -36,10 +40,9 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         }
     }
 
-    public Adapter_Category(Context context, ArrayList<String> TitleCategories, AdapterEvent AdapterListener){
-        this.mContext           = context;
-        this.TitleCategories    = TitleCategories;
-        this.AdapterListener    = AdapterListener;
+    public Adapter_Category(ArrayList<String> TitleCategories, RecycleEventListener RecycleEventListener){
+        this.TitleCategories        = TitleCategories;
+        this.RecycleEventListener   = RecycleEventListener;
     }
 
     @NonNull
@@ -48,40 +51,35 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category,parent,false);
         return new ViewHolder(view);
     }
-
     @Override
     public int getItemCount() {
         return TitleCategories.size();
     }
-
     @Override
     public void onBindViewHolder(@NonNull Adapter_Category.ViewHolder holder, int position) {
-        initializeLayout(holder,position);
-        setActioins(holder,position);
+        this.Holder = holder;
+        initializeLayout(position);
 
+        setActions(position);
     }
+
+
 
     //LAYOUT
-    private void initializeLayout(@NonNull ViewHolder holder,final int position){
-        holder.Text_View_titoloCategory.setText(TitleCategories.get(position));
+    private void initializeLayout(final int position){
+        this.Holder.Text_View_titoloCategory.setText(TitleCategories.get(position));
+    }
+    private void setActions(final int position){
+        this.Holder.Card_View_Element_Category.setOnClickListener(view -> clickCategory(position));
     }
 
-    private void setActioins(@NonNull ViewHolder holder,final int position){
-        holder.Card_View_Element_Category.setOnClickListener(view -> clickCategory(holder,position));
-    }
-
-    private void clickCategory(@NonNull ViewHolder holder,final int position){
-        Log.d(TAG, " Holder: "+holder.Text_View_titoloCategory.getText().toString());
-        Log.d(TAG, " Array: "+TitleCategories.get(position));
+    //ACTIONS
+    private void clickCategory(final int position){
+        Log.d(TAG, "Premuto in Category-------------------");
+        Log.d(TAG, " Holder: "  + this.Holder.Text_View_titoloCategory.getText().toString());
+        Log.d(TAG, " Array: "   + this.TitleCategories.get(position));
         Log.d(TAG, "--------------------------------------");
-
-        //andare in list prducts
-        /*((Activity_Amministratore)mContext).changeFragmentOnAmministrator(
-                Controller_Amministratore.AMMINISTRATORE_INDEX_MENU,
-                Manager_MenuFragments.INDEX_MENU_LIST_PRODUCTS,
-                TitleCategories.get(position));*/
-
-        AdapterListener.onClickItem(TitleCategories.get(position));
+        RecycleEventListener.AdapterListener.onClickItem(TitleCategories.get(position));
     }
 
 

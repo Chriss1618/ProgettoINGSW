@@ -12,26 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ratatouille.Interfaces.AdapterEvent;
+import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Interfaces.RecyclerInterfaces.onClickItemAdapterListener;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
 
 public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewHolder>  {
+    //SYSTEM
     private static final String TAG = "Adapter_Product";
 
     //LAYOUT
-    private Context             mContext;
-    private ArrayList<String>   TitleProducts;
-    private AdapterEvent        AdapterListener;
+    private final ArrayList<String>         TitleProducts;
+    private final RecycleEventListener      RecycleEventListener;
+    private ViewHolder                      Holder;
 
-    public Adapter_Product(Context context, ArrayList<String> TitleProducts, AdapterEvent AdapterListener){
-        this.mContext           = context;
-        this.TitleProducts      = TitleProducts;
-        this.AdapterListener    = AdapterListener;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         CardView    Card_View_Element_Product;
         TextView    Text_View_Title_Product;
         TextView    Text_View_Price_Product;
@@ -46,17 +42,23 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         }
     }
 
+    public Adapter_Product(ArrayList<String> TitleProducts, RecycleEventListener RecycleEventListener){
+        this.TitleProducts          = TitleProducts;
+        this.RecycleEventListener   = RecycleEventListener;
+    }
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product,parent,false);
-        return new Adapter_Product.ViewHolder(view);
+        return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        initializeLayout(holder,position);
-        setActioins(holder,position);
+        this.Holder = holder;
+        initializeLayout(position);
+        setActions(position);
     }
 
     @Override
@@ -66,26 +68,21 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
 
     //LAYOUT
-    private void initializeLayout(@NonNull Adapter_Product.ViewHolder holder, final int position){
-        holder.Text_View_Title_Product.setText(TitleProducts.get(position));
+    private void initializeLayout( final int position){
+        this.Holder.Text_View_Title_Product.setText(TitleProducts.get(position));
     }
 
-    private void setActioins(@NonNull Adapter_Product.ViewHolder holder, final int position){
-        holder.Card_View_Element_Product.setOnClickListener(view -> clickProduct(holder,position));
+    private void setActions( final int position){
+        this.Holder.Card_View_Element_Product.setOnClickListener(view -> clickProduct(position));
     }
 
-    private void clickProduct(@NonNull Adapter_Product.ViewHolder holder, final int position){
-        Log.d(TAG, " Holder: "+holder.Text_View_Title_Product.getText().toString());
-        Log.d(TAG, " Array: "+TitleProducts.get(position));
+    private void clickProduct( final int position){
+        Log.d(TAG, "Premuto in Product--------------------");
+        Log.d(TAG, " Holder: "  + this.Holder.Text_View_Title_Product.getText().toString());
+        Log.d(TAG, " Array: "   + this.TitleProducts.get(position));
         Log.d(TAG, "--------------------------------------");
 
-        //andare in list prducts
-        /*((Activity_Amministratore)mContext).changeFragmentOnAmministrator(
-                Controller_Amministratore.AMMINISTRATORE_INDEX_MENU,
-                Manager_MenuFragments.INDEX_MENU_LIST_PRODUCTS,
-                TitleCategories.get(position));*/
-
-        AdapterListener.onClickItem(TitleProducts.get(position));
+        RecycleEventListener.AdapterListener.onClickItem(TitleProducts.get(position));
     }
 
 

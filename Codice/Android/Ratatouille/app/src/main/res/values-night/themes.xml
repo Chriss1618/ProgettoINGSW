@@ -13,4 +13,11 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/MainColor</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="DialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+
+        <!-- dialog_background is drawable shape with corner radius -->
+        <item name="android:background">@drawable/background_edit_text_stroke_white</item>
+
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

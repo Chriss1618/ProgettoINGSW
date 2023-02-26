@@ -8,15 +8,17 @@
     <string name="inserisci_nuova_pasword">Inserisci nuova Pasword</string>
     <string name="iniziamo">INIZIAMO</string>
     <string name="benvenuto">BENVENUTO</string>
-    <string name="produttivitt">Produttività</string>
-    <string name="staff">Staff</string>
-    <string name="menu">Menu</string>
-    <string name="account">Account</string>
-    <string name="inventario">Inventario</string>
+    <string name="Produttività">Produttività</string>
+    <string name="Staff">Staff</string>
+    <string name="Menu">Menu</string>
+    <string name="Account">Account</string>
+    <string name="Inventario">Inventario</string>
     <string name="ordini">Ordini</string>
     <string name="ordini_cameriere">Ordini Cameriere</string>
     <string name="icon_add">icon add</string>
     <string name="icon_delete">icon_delete</string>
     <string name="cerca_prodotto_in_menu">Cerca Prodotto in Menu</string>
     <string name="categoria">Categoria</string>
+    <string name="Modifica">Modifica</string>
+    <string name="cerca_membro_staff">Cerca Membro Staff</string>
 </resources>

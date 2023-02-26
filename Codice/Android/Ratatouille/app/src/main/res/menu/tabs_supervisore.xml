@@ -2,13 +2,13 @@
     <item
         android:id="@+id/tab_inventory"
         android:icon="@drawable/inventory"
-        android:title="@string/inventario" />
+        android:title="@string/Inventario" />
     <item
         android:id="@+id/tab_menu"
         android:icon="@drawable/tab_menu"
-        android:title="@string/menu" />
+        android:title="@string/Menu" />
     <item
         android:id="@+id/tab_account"
         android:icon="@drawable/tab_account"
-        android:title="@string/account" />
+        android:title="@string/Account" />
 </menu>

@@ -7,5 +7,5 @@
     <item
         android:id="@+id/tab_account"
         android:icon="@drawable/tab_account"
-        android:title="@string/account" />
+        android:title="@string/Account" />
 </menu>

@@ -8,6 +8,8 @@ import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.Managers.Manager_StatsFragments;
+import com.ratatouille.R;
+import com.ratatouille.Schermate.Menu.Fragment_ListProducts;
 
 public class Controller_Amministratore {
 
@@ -23,6 +25,7 @@ public class Controller_Amministratore {
     public Manager_MenuFragments       manager_menuFragments;
     public Manager_AccountFragments    manager_accountFragments;
     public int managerOnMain;
+
     //LAYOUT
     private final Context               context;
     private final android.view.View     View;
@@ -52,6 +55,7 @@ public class Controller_Amministratore {
                 this.fragmentManager
         );
     }
+
     private void constructManagerSTAFF(){
         manager_staffFragments = new Manager_StaffFragments(
                 this.context,
@@ -59,6 +63,7 @@ public class Controller_Amministratore {
                 this.fragmentManager
         );
     }
+
     private void constructManagerMENU(){
         manager_menuFragments = new Manager_MenuFragments(
                 this.context,
@@ -66,6 +71,7 @@ public class Controller_Amministratore {
                 this.fragmentManager
         );
     }
+
     private void constructManagerACCOUNT(){
         manager_accountFragments = new Manager_AccountFragments(
                 this.context,
@@ -93,6 +99,7 @@ public class Controller_Amministratore {
     }
 
 
+
     public void changeFragment(int type_manager,int index_fragment,String msg){
         switch (type_manager){
             case AMMINISTRATORE_INDEX_STATS:
@@ -101,6 +108,21 @@ public class Controller_Amministratore {
                 break;
             case AMMINISTRATORE_INDEX_MENU:
                 setFragmentMenuToShow(index_fragment,msg);
+                break;
+            case AMMINISTRATORE_INDEX_ACCOUNT:
+                break;
+        }
+    }
+
+    public void callEndAnimationOfFragment(int numberOfBackStack){
+        switch (managerOnMain){
+            case AMMINISTRATORE_INDEX_STATS:
+                break;
+            case AMMINISTRATORE_INDEX_STAFF:
+                manager_staffFragments.callEndAnimationOfFragment(numberOfBackStack);
+                break;
+            case AMMINISTRATORE_INDEX_MENU:
+                manager_menuFragments.callEndAnimationOfFragment(numberOfBackStack);
                 break;
             case AMMINISTRATORE_INDEX_ACCOUNT:
                 break;

@@ -1,12 +1,10 @@
 package com.ratatouille.Interfaces;
 
-import com.ratatouille.R;
-
 public interface LayoutContainer {
-    void PreparerData();
+    void PrepareData();
     void PrepareLayout();
 
     void LinkLayout();
-    void SetDataOnLayout();
     void SetActionsOfLayout();
+    void SetDataOnLayout();
 }
