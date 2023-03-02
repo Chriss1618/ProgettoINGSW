@@ -35,17 +35,21 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     public void onBackPressed() {
         int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();
 
-        controller_administrator.callEndAnimationOfFragment(numberOfBackStack);
+        controller_administrator.callEndAnimationOfFragment();
         callBackStackAfterAnimation(numberOfBackStack); //dopo 300 millisecondi
     }
 
     private void callBackStackAfterAnimation(int numberOfBackStack){
         final Handler handler = new Handler();
         handler.postDelayed(()-> {
-            Log.d(TAG, "callBackStackAfterAnimation: passed 300 ms");
             if (numberOfBackStack > 0) getSupportFragmentManager().popBackStack();
             else super.onBackPressed();
         },300);
+    }
+    private void clearBackStackPackage(){
+        for(int j  = getSupportFragmentManager().getBackStackEntryCount() ; j >0; j-- ){
+            getSupportFragmentManager().popBackStack();
+        }
     }
 
     @Override
@@ -84,6 +88,11 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
         constructController();
         controller_administrator.showMain();
     }
+
+
+
+
+
     @Override
     public void SetActionsOfLayout() {
         setBottomBar();
@@ -93,23 +102,29 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
         Bottom_Bar_Amministratore.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
             @Override
             public void onTabSelected(int from, @Nullable AnimatedBottomBar.Tab tab, int to, @NonNull AnimatedBottomBar.Tab tab1) {
-                Log.d(TAG, "onTabSelected: from->"+from);
-                Log.d(TAG, "onTabSelected: to->"+to);
-
-                setTAB(to);
+                Log.d(TAG, "onTabSelected: from->"+from+" to->"+to);
+                tabSelected(to);
             }
 
             @Override
-            public void onTabReselected(int i, @NonNull AnimatedBottomBar.Tab tab) {
-                Log.d(TAG, "onTabReselected: i->"+i);
-                setTAB(i);
+            public void onTabReselected(int to, @NonNull AnimatedBottomBar.Tab tab) {
+                Log.d(TAG, "onTabReselected: from->"+to+" to->"+to);
+                tabSelected(to);
             }
         });
 
+    }
 
+    private void tabSelected(int indexTab){
+        controller_administrator.callEndAnimationOfFragment();
+        controller_administrator.resetMainPackage();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(()-> setTAB(indexTab) ,300);
     }
 
     private void setTAB(int indexTab){
+        clearBackStackPackage();
         switch (indexTab){
             case TAB_AMMINISTRATORE_INDEX_STATS: controller_administrator.showSTATS();
                 break;
@@ -133,4 +148,14 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     }
 
 
+    //ANIMATIONS
+    @Override
+    public void StartAnimations() {
+
+    }
+
+    @Override
+    public void EndAnimations() {
+
+    }
 }

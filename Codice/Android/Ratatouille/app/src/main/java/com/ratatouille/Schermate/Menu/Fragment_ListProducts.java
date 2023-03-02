@@ -141,7 +141,8 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
     }
 
     //ANIMATIONS
-    private void StartAnimations(){
+    @Override
+    public void StartAnimations(){
         if(manager_menuFragments.from > manager_menuFragments.onMain){
             Log.d(TAG, "StartAnimations: Da product");
             fromProductAnimations();
@@ -150,6 +151,8 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
             fromMenuAnimations();
         }
     }
+
+    @Override
     public void EndAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
         Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
@@ -159,6 +162,7 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
         Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
 
     }
+
     public void toMenuAnimations(){
 
     }

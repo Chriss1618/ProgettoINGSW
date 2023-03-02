@@ -7,4 +7,7 @@ public interface LayoutContainer {
     void LinkLayout();
     void SetActionsOfLayout();
     void SetDataOnLayout();
+
+    void StartAnimations();
+    void EndAnimations();
 }

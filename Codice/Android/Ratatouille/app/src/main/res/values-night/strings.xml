@@ -21,4 +21,13 @@
     <string name="categoria">Categoria</string>
     <string name="Modifica">Modifica</string>
     <string name="cerca_membro_staff">Cerca Membro Staff</string>
+    <string name="indirizzo">Indirizzo</string>
+    <string name="numero_telefono">Numero Telefono</string>
+    <string name="nome_attivit">Nome Attività</string>
+    <string name="nome_cognome">Nome Cognome</string>
+    <string name="Descrizione_IMAGEVIEW_icon_set_imagine_profile">Icon set Imagine Profile</string>
+    <string name="Descrizione_IMAGEVIEW_imagine_profile">Imagine Profile</string>
+    <string name="numero_tavoli">Numero Tavoli:</string>
+    <string name="informazioni_attivit">Informazioni Attività</string>
+    <string name="annulla">ANNULLA</string>
 </resources>

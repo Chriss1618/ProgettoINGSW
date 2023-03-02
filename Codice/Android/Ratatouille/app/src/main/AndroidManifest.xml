@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ratatouille">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -9,6 +8,7 @@
         android:roundIcon="@mipmap/ic_ratatouille"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ratatouille">
+
         <activity android:name=".Schermate.Activity_ChooseRole"
             android:exported="true">
             <intent-filter>
@@ -17,16 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Schermate.Activity_Account" />
         <activity android:name=".Schermate.Activity_Cameriere" />
         <activity android:name=".Schermate.Activity_Chef" />
         <activity android:name=".Schermate.Activity_Supervisore" />
         <activity android:name=".Schermate.Activity_Amministratore" />
-        <activity
-            android:name=".Schermate.Login.Activity_Login"
-           >
+        <activity android:name=".Schermate.Login.Activity_Login" />
 
-        </activity>
     </application>
 
 </manifest>

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Manager_StaffFragments {
+    //SYSTEM
     private static final String TAG = "Manager_StaffFragments_CLass";
 
     public static final int INDEX_STAFF_LIST        = 0;
@@ -25,13 +26,15 @@ public class Manager_StaffFragments {
     public static final String TAG_STAFF_LIST           = "staffList";
     public static final String TAG_STAFF_NEW_MEMBER     = "newMember";
 
-
+    //LAYOUT
     private final Context               context;
     private final ArrayList<Fragment>   Fragments;
     private final View                  View;
-    private final FragmentManager       fragmentManager;
 
-    private int onMain;
+    //FUNCTIONAL
+    private final FragmentManager       fragmentManager;
+    public int                          onMain;
+    public int                          from;
 
     public Manager_StaffFragments(Context context, View view,FragmentManager fragmentManager){
         Fragments = new ArrayList<>();
@@ -46,28 +49,28 @@ public class Manager_StaffFragments {
         onMain = INDEX_STAFF_LIST;
 
     }
-    public void showMain(){
-        onMain = INDEX_STAFF_LIST;
-        fragmentManager.popBackStack();
 
+    //ShowPages
+    public void loadFragmentAsMain(String Tag){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(INDEX_STAFF_LIST), TAG_STAFF_LIST)
+                .replace(View.getId(), Fragments.get(onMain), Tag)
                 .setReorderingAllowed(true)
                 .commit();
-
     }
-
-    public void showNewStaffMember(){
-        onMain = INDEX_STAFF_NEW_MEMBER;
-
+    public void loadFragmentAsNormal(String Tag){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(INDEX_STAFF_NEW_MEMBER),TAG_STAFF_NEW_MEMBER)
+                .replace(View.getId(), Fragments.get(onMain),Tag)
                 .setReorderingAllowed(true)
                 .addToBackStack(null)
                 .commit();
     }
 
+    public void showMain(){
+        showListStaff();
+    }
     public void showFragment(int index,String msg){
+        from = onMain;
+        onMain = index;
         switch (index){
             case INDEX_STAFF_LIST:
                 showMain();
@@ -77,25 +80,28 @@ public class Manager_StaffFragments {
                 break;
         }
     }
+    //Pages
+    public void showListStaff       (){
+        loadFragmentAsMain(TAG_STAFF_LIST);
+    }
+    public void showNewStaffMember  (){
+        loadFragmentAsNormal(TAG_STAFF_NEW_MEMBER);
+    }
 
-    public void callEndAnimationOfFragment(int numberOfBackStack){
-        switch (numberOfBackStack){
+    //ANIMATIONS
+    public void callEndAnimationOfFragment(){
+        from = onMain;
+        switch (onMain){
             case INDEX_STAFF_LIST:
+                Fragment_ListStaff listStaff = (Fragment_ListStaff)fragmentManager.findFragmentByTag(TAG_STAFF_LIST);
+                Objects.requireNonNull(listStaff).EndAnimations();
                 break;
             case INDEX_STAFF_NEW_MEMBER:
-                Log.d(TAG, "Manager_staff: closing New Member");
                 onMain = INDEX_STAFF_LIST;
                 Fragment_NewStaffMember newStaffMember = (Fragment_NewStaffMember)fragmentManager.findFragmentByTag(TAG_STAFF_NEW_MEMBER);
                 Objects.requireNonNull(newStaffMember).EndAnimations();
                 break;
-            case 2:
-                switch (onMain){
-
-                }
-                break;
         }
     }
-
-
 
 }

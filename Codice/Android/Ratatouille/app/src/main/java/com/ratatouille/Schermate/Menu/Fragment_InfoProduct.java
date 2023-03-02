@@ -108,11 +108,13 @@ public class Fragment_InfoProduct extends Fragment implements LayoutContainer {
     }
 
     //ANIMATIONS
+    @Override
     public void StartAnimations(){
         Card_Item_Product       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
 
     }
 
+    @Override
     public void EndAnimations(){
         Card_Item_Product       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
 

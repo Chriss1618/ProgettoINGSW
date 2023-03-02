@@ -28,6 +28,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Managers.Manager_StatsFragments;
 import com.ratatouille.R;
 
 import java.text.ParseException;
@@ -44,7 +45,6 @@ public class Fragment_Stats extends Fragment implements LayoutContainer {
     View        view_fragment;
     PieChart    Pie_Chart_Productivity;
 
-    //FUNCTIONAL
     ArrayList<PieEntry> pieEntries;
     TextView            Text_View_Title_productivity;
     LinearLayout        Linear_Layout_Date_produttivita;
@@ -54,6 +54,8 @@ public class Fragment_Stats extends Fragment implements LayoutContainer {
     TextView            Text_View_to_Data;
     CardView            Card_view_Pie_Chart;
 
+    //FUNCTIONAL
+    final Manager_StatsFragments manager_statsFragments;
     //DATA
     ArrayList<String> OperatoriSala;
     ArrayList<Integer> OperatoriSala_Value ;
@@ -62,8 +64,9 @@ public class Fragment_Stats extends Fragment implements LayoutContainer {
     String dataTo;
     //OTHER..
 
-    public Fragment_Stats() {
+    public Fragment_Stats(Manager_StatsFragments manager_statsFragments) {
         // Required empty public constructor
+        this.manager_statsFragments = manager_statsFragments;
         pieEntries = new ArrayList<>();
         OperatoriSala = new ArrayList<>();
         OperatoriSala_Value = new ArrayList<>();
@@ -76,7 +79,6 @@ public class Fragment_Stats extends Fragment implements LayoutContainer {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-
 
     }
 
@@ -231,18 +233,28 @@ public class Fragment_Stats extends Fragment implements LayoutContainer {
     }
 
     //ANIMATIONS
+    @Override
     public void StartAnimations(){
         final Handler handler = new Handler();
         Pie_Chart_Productivity.setVisibility(View.GONE);
         Pie_Chart_Productivity.animate().rotation(240).start();
         handler.postDelayed(()->{
                 Pie_Chart_Productivity.setVisibility(View.VISIBLE);
-                Pie_Chart_Productivity.setAnimation(Manager_Animation.getFadeIn(400));
+                Pie_Chart_Productivity.startAnimation(Manager_Animation.getFadeIn(400));
                 Pie_Chart_Productivity.animate().rotationBy(120).setDuration(600).start();
             },400
         );
-        Text_View_Title_productivity    .setAnimation(Manager_Animation.getTranslationINfromUp(500));
-        Linear_Layout_Date_produttivita .setAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
-        Card_view_Pie_Chart             .setAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+        Text_View_Title_productivity    .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+        Linear_Layout_Date_produttivita .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
+        Card_view_Pie_Chart             .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+    }
+
+    @Override
+    public void EndAnimations() {
+        Text_View_Title_productivity    .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        Linear_Layout_Date_produttivita .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+        Card_view_Pie_Chart             .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        Pie_Chart_Productivity          .startAnimation(Manager_Animation.getFadeOut(400));
+        Pie_Chart_Productivity          .animate().rotationBy(120).setDuration(400).start();
     }
 }

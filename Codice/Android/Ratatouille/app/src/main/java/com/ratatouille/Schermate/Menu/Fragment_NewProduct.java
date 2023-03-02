@@ -2,20 +2,28 @@ package com.ratatouille.Schermate.Menu;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
-public class Fragment_NewProduct extends Fragment {
+public class Fragment_NewProduct extends Fragment implements LayoutContainer {
     //SYSTEM
     private static final String TAG = "Fragment_NewProduct";
 
     //LAYOUT
+    View                View_Fragment;
+    LinearLayout        LinearLayout_TitleProduct;
+    CardView            CardView_ProductData;
+    LinearLayout        LinearLayout_Buttons;
 
     //FUNCTIONAL
     private final Manager_MenuFragments manager_MenuFragments;
@@ -38,7 +46,56 @@ public class Fragment_NewProduct extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__new_product, container, false);
+        View_Fragment = inflater.inflate(R.layout.fragment__new_product, container, false);
+
+        PrepareData();
+        PrepareLayout();
+
+        StartAnimations();
+        return View_Fragment;
+    }
+
+    //DATA
+    @Override
+    public void PrepareData() {
+
+    }
+
+    //LAYOUT
+    @Override
+    public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
+    }
+
+    @Override
+    public void LinkLayout() {
+        LinearLayout_TitleProduct   = View_Fragment.findViewById(R.id.toolbar_title_product);
+        CardView_ProductData        = View_Fragment.findViewById(R.id.card_view_element_product);
+        LinearLayout_Buttons        = View_Fragment.findViewById(R.id.linear_layout_buttons);
+    }
+    @Override
+    public void SetActionsOfLayout() {
+
+    }
+    @Override
+    public void SetDataOnLayout() {
+
+    }
+
+
+    //ANIMATIONS
+    @Override
+    public void StartAnimations() {
+        LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+        CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+        LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationINfromDown(500));
+    }
+    @Override
+    public void EndAnimations() {
+        LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+        CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(500));
+        LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationOUTtoDown(500));
     }
 }

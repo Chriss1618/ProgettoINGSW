@@ -158,13 +158,16 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         LinearLayout_NewCategory.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
         LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeOut(500));
     }
+
     //ANIMATIONS
-    private void StartAnimations(){
+    @Override
+    public void StartAnimations(){
         Text_View_TitleCategory.setText(R.string.Menu);
         Text_View_TitleCategory     .startAnimation(Manager_Animation.getTranslationINfromUp(300));
         Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
     }
-    private void EndAnimations(){
+    @Override
+    public void EndAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         Recycler_Categories     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }

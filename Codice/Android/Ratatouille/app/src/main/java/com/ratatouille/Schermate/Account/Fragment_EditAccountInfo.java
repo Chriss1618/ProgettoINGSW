@@ -2,21 +2,29 @@ package com.ratatouille.Schermate.Account;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.R;
 
-public class Fragment_EditAccountInfo extends Fragment {
+public class Fragment_EditAccountInfo extends Fragment implements LayoutContainer {
     //SYSTEM
     private static final String TAG = "Fragment_EditAccountInf";
 
     //LAYOUT
-
+    View                View_Fragment;
+    ConstraintLayout    ConstraintLayout_ImageAccount;
+    LinearLayout        LinearLayout_InfoAccount;
+    LinearLayout        LinearLayout_Buttons;
 
     //FUNCTIONAL
     Manager_AccountFragments manager_accountFragments;
@@ -40,7 +48,56 @@ public class Fragment_EditAccountInfo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__edit_account_info, container, false);
+        View_Fragment = inflater.inflate(R.layout.fragment__edit_account_info, container, false);
+
+        PrepareData();
+        PrepareLayout();
+
+        StartAnimations();
+        return View_Fragment;
+    }
+
+    //DATA
+    @Override
+    public void PrepareData() {
+
+    }
+    //LAYOUT
+    @Override
+    public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
+    }
+
+    @Override
+    public void LinkLayout() {
+        ConstraintLayout_ImageAccount   = View_Fragment.findViewById(R.id.constraint_layout_image_account);
+        LinearLayout_InfoAccount        = View_Fragment.findViewById(R.id.linear_layout_info_account);
+        LinearLayout_Buttons            = View_Fragment.findViewById(R.id.linear_layout_buttons);
+    }
+    @Override
+    public void SetActionsOfLayout() {
+
+    }
+    @Override
+    public void SetDataOnLayout() {
+
+    }
+
+    //ANIMATIONS
+    @Override
+    public void StartAnimations() {
+        ConstraintLayout_ImageAccount   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+        LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(500));
+        LinearLayout_Buttons            .startAnimation(Manager_Animation.getTranslationINfromDown(500));
+    }
+
+    @Override
+    public void EndAnimations() {
+        ConstraintLayout_ImageAccount       .startAnimation(Manager_Animation.getTranslationOUTtoUp(600));
+        LinearLayout_InfoAccount            .startAnimation(Manager_Animation.getFadeOut(300));
+        LinearLayout_Buttons                .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
+
     }
 }

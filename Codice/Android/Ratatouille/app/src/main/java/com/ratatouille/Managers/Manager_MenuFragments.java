@@ -34,17 +34,17 @@ public class Manager_MenuFragments {
     public static final String TAG_MENU_NEW_PRODUCT         = "newProduct";
     public static final String TAG_MENU_EDIT_PRODUCT        = "editProduct";
 
-
     //LAYOUT
-    private final Context context;
-    private final ArrayList<Fragment> Fragments;
-    private final android.view.View View;
-    private final FragmentManager fragmentManager;
+    private final Context               context;
+    private final ArrayList<Fragment>   Fragments;
+    private final View                  View;
 
-    public int onMain;
-    public int from;
+    //FUNCTIONAL
+    private final FragmentManager   fragmentManager;
+    public int                      onMain;
+    public int                      from;
 
-    public Manager_MenuFragments(Context context, android.view.View view, FragmentManager fragmentManager) {
+    public Manager_MenuFragments(Context context, View view, FragmentManager fragmentManager) {
         Fragments = new ArrayList<>();
 
         this.context = context;
@@ -60,76 +60,28 @@ public class Manager_MenuFragments {
         this.onMain = INDEX_MENU_LIST_CATEGORY;
     }
 
+    //ShowPages
+    public void loadFragmentAsMain(String Tag){
+        fragmentManager.beginTransaction()
+                .replace(View.getId(), Fragments.get(onMain), Tag)
+                .setReorderingAllowed(true)
+                .commit();
+    }
+    public void loadFragmentAsNormal(String Tag){
+        fragmentManager.beginTransaction()
+                .replace(View.getId(), Fragments.get(onMain),Tag)
+                .setReorderingAllowed(true)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void showMain(){
-        from = onMain;
-        onMain = INDEX_MENU_LIST_CATEGORY;
-
-        fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(onMain), TAG_MENU_LIST_CATEGORY)
-                .setReorderingAllowed(true)
-                .commit();
-
+       showListCategory();
     }
-
-    public void showListProducts(String category){
-        from = onMain;
-        onMain = INDEX_MENU_LIST_PRODUCTS;
-
-        Bundle arguments = new Bundle();
-        arguments.putString("category", category);
-
-        Fragments.get(INDEX_MENU_LIST_PRODUCTS).setArguments(arguments);
-        fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(INDEX_MENU_LIST_PRODUCTS),TAG_MENU_LIST_PRODUCTS)
-                .setReorderingAllowed(true)
-                .addToBackStack(null)
-                .commit();
-    }
-    public void showInfoProduct(String product){
-        from = onMain;
-        onMain = INDEX_MENU_INFO_PRODUCT;
-
-        Bundle arguments = new Bundle();
-        arguments.putString("product", product);
-
-        Fragments.get(INDEX_MENU_INFO_PRODUCT).setArguments(arguments);
-        fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(INDEX_MENU_INFO_PRODUCT), TAG_MENU_INFO_PRODUCT)
-                .setReorderingAllowed(true)
-                .addToBackStack(null)
-                .commit();
-    }
-    public void showEditProduct(String product){
-        from = onMain;
-        onMain = INDEX_MENU_EDIT_PRODUCT;
-
-        Bundle arguments = new Bundle();
-        arguments.putString("product", product);
-
-        Fragments.get(INDEX_MENU_EDIT_PRODUCT).setArguments(arguments);
-        fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(INDEX_MENU_EDIT_PRODUCT), TAG_MENU_EDIT_PRODUCT)
-                .setReorderingAllowed(true)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    public void showAddProduct(String category){
-        from = onMain;
-        onMain = INDEX_MENU_NEW_PRODUCT;
-
-        Bundle arguments = new Bundle();
-        arguments.putString("category", category);
-
-        Fragments.get(INDEX_MENU_NEW_PRODUCT).setArguments(arguments);
-        fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(INDEX_MENU_NEW_PRODUCT), TAG_MENU_NEW_PRODUCT)
-                .setReorderingAllowed(true)
-                .addToBackStack(null)
-                .commit();
-    }
-
     public void showFragment(int index,String msg){
+        from = onMain;
+        onMain = index;
+
         switch (index){
             case INDEX_MENU_LIST_CATEGORY:
                 showMain();
@@ -148,36 +100,69 @@ public class Manager_MenuFragments {
                 break;
         }
     }
+    //Pages
+    public void showListCategory    (){
+        loadFragmentAsMain(TAG_MENU_LIST_CATEGORY);
+    }
+    public void showListProducts    (String category){
+        Bundle arguments = new Bundle();
+        arguments.putString("category", category);
+        Fragments.get(INDEX_MENU_LIST_PRODUCTS).setArguments(arguments);
+
+        loadFragmentAsNormal(TAG_MENU_LIST_PRODUCTS);
+    }
+    public void showInfoProduct     (String product){
+        Bundle arguments = new Bundle();
+        arguments.putString("product", product);
+        Fragments.get(INDEX_MENU_INFO_PRODUCT).setArguments(arguments);
+
+        loadFragmentAsNormal(TAG_MENU_INFO_PRODUCT);
+    }
+    public void showEditProduct     (String product){
+        Bundle arguments = new Bundle();
+        arguments.putString("product", product);
+        Fragments.get(INDEX_MENU_EDIT_PRODUCT).setArguments(arguments);
+
+        loadFragmentAsNormal(TAG_MENU_EDIT_PRODUCT);
+    }
+    public void showAddProduct      (String category){
+        Bundle arguments = new Bundle();
+        arguments.putString("category", category);
+        Fragments.get(INDEX_MENU_NEW_PRODUCT).setArguments(arguments);
+
+        loadFragmentAsNormal(TAG_MENU_NEW_PRODUCT);
+    }
 
     //ANIMATIONS
-    public void callEndAnimationOfFragment(int numberOfBackStack){
-        switch (numberOfBackStack){
+    public void callEndAnimationOfFragment(){
+        from = onMain;
+        switch (onMain){
             case INDEX_MENU_LIST_CATEGORY:
+                Fragment_ListCategory listCategory = (Fragment_ListCategory)fragmentManager.findFragmentByTag(TAG_MENU_LIST_CATEGORY);
+                Objects.requireNonNull(listCategory).EndAnimations();
                 break;
             case INDEX_MENU_LIST_PRODUCTS:
-                from = INDEX_MENU_LIST_PRODUCTS;
                 onMain = INDEX_MENU_LIST_CATEGORY;
                 Fragment_ListProducts listProducts = (Fragment_ListProducts)fragmentManager.findFragmentByTag(TAG_MENU_LIST_PRODUCTS);
                 Objects.requireNonNull(listProducts).EndAnimations();
                 break;
-            case 2:
-                switch (onMain){
-                    case INDEX_MENU_INFO_PRODUCT:
-                        from = INDEX_MENU_INFO_PRODUCT;
-                        onMain = INDEX_MENU_LIST_PRODUCTS;
-                        Fragment_InfoProduct infoProduct = (Fragment_InfoProduct)fragmentManager.findFragmentByTag(TAG_MENU_INFO_PRODUCT);
-                        Objects.requireNonNull(infoProduct).EndAnimations();
-                        break;
-                    case INDEX_MENU_EDIT_PRODUCT:
-                        from = INDEX_MENU_EDIT_PRODUCT;
-                        onMain = INDEX_MENU_INFO_PRODUCT;
-                        break;
-                    case INDEX_MENU_NEW_PRODUCT:
-                        from = INDEX_MENU_NEW_PRODUCT;
-                        onMain = INDEX_MENU_LIST_PRODUCTS;
-                        break;
-                }
+            case INDEX_MENU_INFO_PRODUCT:
+                onMain = INDEX_MENU_LIST_PRODUCTS;
+                Fragment_InfoProduct infoProduct = (Fragment_InfoProduct)fragmentManager.findFragmentByTag(TAG_MENU_INFO_PRODUCT);
+                Objects.requireNonNull(infoProduct).EndAnimations();
                 break;
+            case INDEX_MENU_EDIT_PRODUCT:
+                onMain = INDEX_MENU_INFO_PRODUCT;
+                Fragment_EditProduct editProduct = (Fragment_EditProduct)fragmentManager.findFragmentByTag(TAG_MENU_EDIT_PRODUCT);
+                Objects.requireNonNull(editProduct).EndAnimations();
+                break;
+            case INDEX_MENU_NEW_PRODUCT:
+                onMain = INDEX_MENU_LIST_PRODUCTS;
+                Fragment_NewProduct newProduct = (Fragment_NewProduct)fragmentManager.findFragmentByTag(TAG_MENU_NEW_PRODUCT);
+                Objects.requireNonNull(newProduct).EndAnimations();
+                break;
+
+
         }
     }
 

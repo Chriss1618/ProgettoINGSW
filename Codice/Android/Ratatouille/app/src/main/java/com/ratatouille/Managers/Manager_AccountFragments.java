@@ -9,10 +9,13 @@ import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Schermate.Account.Fragment_AccountInfo;
 import com.ratatouille.Schermate.Account.Fragment_EditAccountInfo;
+import com.ratatouille.Schermate.Staff.Fragment_NewStaffMember;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Manager_AccountFragments {
+    //SYSTEM
     private static final String TAG = "Manager_AccountFragment";
 
     public static final int INDEX_ACCOUNT_INFO  = 0;
@@ -21,13 +24,15 @@ public class Manager_AccountFragments {
     public static final String TAG_ACCOUNT_INFO       = "accountInfo";
     public static final String TAG_ACCOUNT_EDIT       = "accountEdit";
 
+    //LAYOUT
     public final Context context;
     private final ArrayList<Fragment> Fragments;
     private final android.view.View View;
-    private final FragmentManager fragmentManager;
 
-    private int onMain;
-    private int from;
+    //FUNCTIONAL
+    private final FragmentManager   fragmentManager;
+    public int                      onMain;
+    public int                      from;
 
     public Manager_AccountFragments(Context context, android.view.View view, FragmentManager fragmentManager) {
         Fragments = new ArrayList<>();
@@ -42,31 +47,28 @@ public class Manager_AccountFragments {
         onMain = INDEX_ACCOUNT_INFO;
     }
 
-    public void showMain(){
-        fragmentManager.popBackStack();
+    //ShowPages
+    public void loadFragmentAsMain(String Tag){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(onMain), TAG_ACCOUNT_INFO)
+                .replace(View.getId(), Fragments.get(onMain), Tag)
                 .setReorderingAllowed(true)
                 .commit();
-
     }
-
-    public void showAccountEdit(String Account){
-        from = onMain;
-        onMain = INDEX_ACCOUNT_EDIT;
-
-        Bundle arguments = new Bundle();
-        arguments.putString("account", Account);
-
-        Fragments.get(INDEX_ACCOUNT_EDIT).setArguments(arguments);
+    public void loadFragmentAsNormal(String Tag){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(INDEX_ACCOUNT_EDIT),TAG_ACCOUNT_EDIT)
+                .replace(View.getId(), Fragments.get(onMain),Tag)
                 .setReorderingAllowed(true)
                 .addToBackStack(null)
                 .commit();
     }
 
+    public void showMain(){
+       showAccoutnInfo();
+    }
     public void showFragment(int index,String msg){
+        from = onMain;
+        onMain = index;
+
         switch (index){
             case INDEX_ACCOUNT_INFO:
                 showMain();
@@ -77,6 +79,32 @@ public class Manager_AccountFragments {
 
         }
     }
+    //Pages
+    public void showAccoutnInfo     (){
+        loadFragmentAsMain(TAG_ACCOUNT_INFO);
+    }
+    public void showAccountEdit     (String Account){
+        Bundle arguments = new Bundle();
+        arguments.putString("account", Account);
+        Fragments.get(INDEX_ACCOUNT_EDIT).setArguments(arguments);
 
+        loadFragmentAsNormal(TAG_ACCOUNT_EDIT);
+    }
+
+    //ANIMATIONS
+    public void callEndAnimationOfFragment(){
+        from = onMain;
+        switch (onMain){
+            case INDEX_ACCOUNT_INFO:
+                Fragment_AccountInfo accountInfo = (Fragment_AccountInfo)fragmentManager.findFragmentByTag(TAG_ACCOUNT_INFO);
+                Objects.requireNonNull(accountInfo).EndAnimations();
+                break;
+            case INDEX_ACCOUNT_EDIT:
+                onMain = INDEX_ACCOUNT_INFO;
+                Fragment_EditAccountInfo editAccountInfo = (Fragment_EditAccountInfo)fragmentManager.findFragmentByTag(TAG_ACCOUNT_EDIT);
+                Objects.requireNonNull(editAccountInfo).EndAnimations();
+                break;
+        }
+    }
 
 }
