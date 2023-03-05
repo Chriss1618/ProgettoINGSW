@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
 import com.ratatouille.Schermate.Menu.Fragment_InfoProduct;
 import com.ratatouille.Schermate.Menu.Fragment_ListProducts;
 import com.ratatouille.Schermate.Staff.Fragment_ListStaff;
@@ -32,16 +33,18 @@ public class Manager_StaffFragments {
     private final View                  View;
 
     //FUNCTIONAL
+    private final BottomBarListener           bottomBarListener;
     private final FragmentManager       fragmentManager;
     public int                          onMain;
     public int                          from;
 
-    public Manager_StaffFragments(Context context, View view,FragmentManager fragmentManager){
+    public Manager_StaffFragments(Context context, View view,FragmentManager fragmentManager,BottomBarListener bottomBarListener){
         Fragments = new ArrayList<>();
 
         this.context            = context;
         this.View               = view;
         this.fragmentManager    = fragmentManager;
+        this.bottomBarListener  = bottomBarListener;
 
         Fragments.add(new Fragment_ListStaff(this));        //0
         Fragments.add(new Fragment_NewStaffMember(this));   //1
@@ -85,7 +88,16 @@ public class Manager_StaffFragments {
         loadFragmentAsMain(TAG_STAFF_LIST);
     }
     public void showNewStaffMember  (){
+        hideBottomBar();
         loadFragmentAsNormal(TAG_STAFF_NEW_MEMBER);
+    }
+
+    //FUNCTIONAL
+    public void hideBottomBar(){
+        bottomBarListener.hideBottomBarLinstener.hideBottomBar();
+    }
+    public void showBottomBar(){
+        bottomBarListener.showBottomBarLinstener.showBottomBar();
     }
 
     //ANIMATIONS
@@ -98,6 +110,7 @@ public class Manager_StaffFragments {
                 break;
             case INDEX_STAFF_NEW_MEMBER:
                 onMain = INDEX_STAFF_LIST;
+                showBottomBar();
                 Fragment_NewStaffMember newStaffMember = (Fragment_NewStaffMember)fragmentManager.findFragmentByTag(TAG_STAFF_NEW_MEMBER);
                 Objects.requireNonNull(newStaffMember).EndAnimations();
                 break;

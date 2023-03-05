@@ -2,14 +2,14 @@ package com.ratatouille.Controllers;
 
 import android.content.Context;
 
+import android.view.View;
 import androidx.fragment.app.FragmentManager;
 
+import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.Managers.Manager_StatsFragments;
-import com.ratatouille.R;
-import com.ratatouille.Schermate.Menu.Fragment_ListProducts;
 
 public class Controller_Amministratore {
     //SYSTEM
@@ -19,30 +19,33 @@ public class Controller_Amministratore {
     public final static int AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
     //FUNCTIONAL
+    public int                         managerOnMain;
+    private final FragmentManager      fragmentManager;
+
     public Manager_StaffFragments      manager_staffFragments;
     public Manager_StatsFragments      manager_statsFragments;
     public Manager_MenuFragments       manager_menuFragments;
     public Manager_AccountFragments    manager_accountFragments;
-    public int                         managerOnMain;
 
     //LAYOUT
     private final Context               context;
-    private final android.view.View     View;
-    private final FragmentManager       fragmentManager;
+    private final View                  View;
+    private final BottomBarListener     bottomBarListener;
 
-    public Controller_Amministratore(Context context, android.view.View view, FragmentManager fragmentManager) {
+    public Controller_Amministratore(Context context, View view, FragmentManager fragmentManager,BottomBarListener bottomBarListener) {
         this.context            = context;
         this.View               = view;
         this.fragmentManager    = fragmentManager;
-        this.managerOnMain = AMMINISTRATORE_INDEX_STATS;
+        this.bottomBarListener  = bottomBarListener;
+        this.managerOnMain      = AMMINISTRATORE_INDEX_STATS;
+
         constructManagerSTATS();
         constructManagerSTAFF();
         constructManagerMENU();
         constructManagerACCOUNT();
-
     }
 
-    //Costruttori Managers
+    //Constrictor Managers
     private void constructManagerSTATS(){
         manager_statsFragments = new Manager_StatsFragments(
                 this.context,
@@ -54,21 +57,24 @@ public class Controller_Amministratore {
         manager_staffFragments = new Manager_StaffFragments(
                 this.context,
                 this.View,
-                this.fragmentManager
+                this.fragmentManager,
+                this.bottomBarListener
         );
     }
     private void constructManagerMENU(){
         manager_menuFragments = new Manager_MenuFragments(
                 this.context,
                 this.View,
-                this.fragmentManager
+                this.fragmentManager,
+                this.bottomBarListener
         );
     }
     private void constructManagerACCOUNT(){
         manager_accountFragments = new Manager_AccountFragments(
                 this.context,
                 this.View,
-                this.fragmentManager
+                this.fragmentManager,
+                this.bottomBarListener
         );
     }
 
@@ -97,13 +103,13 @@ public class Controller_Amministratore {
     //FUNCTIONAL
     public void resetMainPackage(){
         switch (managerOnMain){
-            case AMMINISTRATORE_INDEX_STATS: this.manager_statsFragments.onMain = Manager_StatsFragments.INDEX_STAT_PRODUCTIVITY;
+            case AMMINISTRATORE_INDEX_STATS:    this.manager_statsFragments.onMain = Manager_StatsFragments.INDEX_STAT_PRODUCTIVITY;
                 break;
-            case AMMINISTRATORE_INDEX_STAFF: this.manager_staffFragments.onMain = Manager_StaffFragments.INDEX_STAFF_LIST;
+            case AMMINISTRATORE_INDEX_STAFF:    this.manager_staffFragments.onMain = Manager_StaffFragments.INDEX_STAFF_LIST;
                 break;
-            case AMMINISTRATORE_INDEX_MENU: this.manager_menuFragments.onMain = Manager_MenuFragments.INDEX_MENU_LIST_CATEGORY;
+            case AMMINISTRATORE_INDEX_MENU:     this.manager_menuFragments.onMain = Manager_MenuFragments.INDEX_MENU_LIST_CATEGORY;
                 break;
-            case AMMINISTRATORE_INDEX_ACCOUNT: this.manager_accountFragments.onMain = Manager_AccountFragments.INDEX_ACCOUNT_INFO;
+            case AMMINISTRATORE_INDEX_ACCOUNT:  this.manager_accountFragments.onMain = Manager_AccountFragments.INDEX_ACCOUNT_INFO;
                 break;
         }
     }

@@ -25,8 +25,9 @@ public class Fragment_EditProduct extends Fragment implements LayoutContainer {
     LinearLayout        LinearLayout_TitleProduct;
     CardView            CardView_ProductData;
     LinearLayout        LinearLayout_Buttons;
+
     //FUNCTIONAL
-    private final Manager_MenuFragments manager_MenuFragments;
+    private Manager_MenuFragments manager_MenuFragments;
 
     //DATA
 
@@ -34,6 +35,9 @@ public class Fragment_EditProduct extends Fragment implements LayoutContainer {
 
     public Fragment_EditProduct(Manager_MenuFragments manager_MenuFragments) {
         this.manager_MenuFragments = manager_MenuFragments;
+    }
+
+    public Fragment_EditProduct() {
     }
 
     @Override

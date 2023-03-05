@@ -88,9 +88,9 @@ public class Fragment_EditAccountInfo extends Fragment implements LayoutContaine
     //ANIMATIONS
     @Override
     public void StartAnimations() {
-        ConstraintLayout_ImageAccount   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
-        LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(500));
-        LinearLayout_Buttons            .startAnimation(Manager_Animation.getTranslationINfromDown(500));
+        ConstraintLayout_ImageAccount   .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+        LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(600));
+        LinearLayout_Buttons            .startAnimation(Manager_Animation.getTranslationINfromDown(700));
     }
 
     @Override

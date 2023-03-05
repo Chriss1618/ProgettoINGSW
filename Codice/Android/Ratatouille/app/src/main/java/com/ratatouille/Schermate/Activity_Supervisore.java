@@ -5,14 +5,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 
 import com.ratatouille.Controllers.Controller_Supervisore;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.R;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
-public class Activity_Supervisore extends AppCompatActivity {
+public class Activity_Supervisore extends AppCompatActivity implements LayoutContainer {
     //SYSTEM
     private static final String TAG = "Activity_Supervisore";
 
@@ -20,14 +25,34 @@ public class Activity_Supervisore extends AppCompatActivity {
     private final static int TAB_SUPERVISORE_INDEX_MENU         = 1;
     private final static int TAB_SUPERVISORE_INDEX_ACCOUNT      = 2;
 
-    Controller_Supervisore controller_supervisor;
-
     //LAYOUT
+    AnimatedBottomBar   Bottom_Bar_Supervisore;
 
     //FUNCTIONS
+    BottomBarListener       bottomBarListener;
+    Controller_Supervisore  controller_supervisor;
 
     //OTHER
-    AnimatedBottomBar Bottom_Bar_Supervisore;
+
+    @Override
+    public void onBackPressed() {
+        int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();
+        controller_supervisor.callEndAnimationOfFragment();
+        callBackStackAfterAnimation(numberOfBackStack); //dopo 300 millisecondi
+    }
+
+    private void callBackStackAfterAnimation(int numberOfBackStack){
+        final Handler handler = new Handler();
+        handler.postDelayed(()-> {
+            if (numberOfBackStack > 0) getSupportFragmentManager().popBackStack();
+            else super.onBackPressed();
+        },300);
+    }
+    private void clearBackStackPackage(){
+        for(int j  = getSupportFragmentManager().getBackStackEntryCount() ; j >0; j-- ){
+            getSupportFragmentManager().popBackStack();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,57 +63,73 @@ public class Activity_Supervisore extends AppCompatActivity {
         PrepareLayout();
     }
 
-    private void PrepareData() {
+    //DATA
+    @Override
+    public void PrepareData() {
 
     }
 
     //LAYOUT
-    private void PrepareLayout() {
+    @Override
+    public void PrepareLayout() {
+        bottomBarListener = new BottomBarListener();
         LinkLayout();
         SetDataOnLayout();
         SetActionsOfLayout();
     }
 
-    private void LinkLayout() {
+    @Override
+    public void LinkLayout() {
         Bottom_Bar_Supervisore = findViewById(R.id.bottom_bar_sup);
     }
-    private void SetDataOnLayout() {
+    @Override
+    public void SetDataOnLayout() {
         constructController();
         controller_supervisor.showMain();
     }
-    private void SetActionsOfLayout() {
+    @Override
+    public void SetActionsOfLayout() {
+        setListener();
         setBottomBar();
     }
 
+    private void setListener(){
+        bottomBarListener.hideBottomBarListener(this::hideBottomBar);
+        bottomBarListener.showBottomBarLinstener(this::showBottomBar);
+    }
+
+    //BottomBar
     private void setBottomBar(){
         Bottom_Bar_Supervisore.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
             @Override
             public void onTabSelected(int from, @Nullable AnimatedBottomBar.Tab tab, int to, @NonNull AnimatedBottomBar.Tab tab1) {
-                Log.d(TAG, "onTabSelected: from->"+from);
-                Log.d(TAG, "onTabSelected: to->"+to);
-
-                setTAB(to);
+                Log.d(TAG, "onTabSelected: from->"+from+" to->"+to);
+                tabSelected(to);
             }
 
             @Override
-            public void onTabReselected(int i, @NonNull AnimatedBottomBar.Tab tab) {
-                Log.d(TAG, "onTabReselected: i->"+i);
-                setTAB(i);
+            public void onTabReselected(int to, @NonNull AnimatedBottomBar.Tab tab) {
+                Log.d(TAG, "onTabReselected: from->"+to+" to->"+to);
+                tabSelected(to);
             }
         });
 
     }
+    private void tabSelected(int indexTab){
+        controller_supervisor.callEndAnimationOfFragment();
+        controller_supervisor.resetMainPackage();
 
-    private void setTAB(int indexTab){
+        final Handler handler = new Handler();
+        handler.postDelayed(()-> changeTAB(indexTab) ,300);
+    }
+    private void changeTAB(int indexTab){
+        clearBackStackPackage();
         switch (indexTab){
-            case TAB_SUPERVISORE_INDEX_INVENTARIO:
-                controller_supervisor.showINVENTORY();
+            case TAB_SUPERVISORE_INDEX_INVENTARIO: controller_supervisor.showMENU();
                 break;
-            case TAB_SUPERVISORE_INDEX_MENU:
-                controller_supervisor.showMENU();
+            case TAB_SUPERVISORE_INDEX_MENU: controller_supervisor.showMENU();
                 break;
-            case TAB_SUPERVISORE_INDEX_ACCOUNT:
-                controller_supervisor.showACCOUNT();
+            case TAB_SUPERVISORE_INDEX_ACCOUNT: controller_supervisor.showACCOUNT();
                 break;
         }
     }
@@ -98,7 +139,30 @@ public class Activity_Supervisore extends AppCompatActivity {
         controller_supervisor = new Controller_Supervisore(
                 this,
                 findViewById(R.id.fragment_container_view_supervisore),
-                getSupportFragmentManager()
+                getSupportFragmentManager(),
+                bottomBarListener
         );
     }
+
+    //ANIMATIONS
+    @Override
+    public void StartAnimations() {
+
+    }
+    @Override
+    public void EndAnimations() {
+
+    }
+
+    public void hideBottomBar(){
+        Bottom_Bar_Supervisore.startAnimation(Manager_Animation.getTranslationOUTtoDownS(500));
+        final Handler handler = new Handler();
+        handler.postDelayed(()-> Bottom_Bar_Supervisore.setVisibility(View.GONE),500);
+    }
+    public void showBottomBar(){
+        Bottom_Bar_Supervisore.startAnimation(Manager_Animation.getTranslationINfromDown(300));
+        final Handler handler = new Handler();
+        handler.postDelayed(()-> Bottom_Bar_Supervisore.setVisibility(View.VISIBLE),300);
+    }
+
 }

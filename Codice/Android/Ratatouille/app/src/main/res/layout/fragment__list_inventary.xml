@@ -1,14 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Schermate.Inventario.Fragment_ListInventary">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="LIST INVENTORY" />
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <LinearLayout
+            android:id="@+id/toolbar_menu_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="16dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginStart="16dp">
+                <TextView
+                    android:id="@+id/text_view_title_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="@string/inventario"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="16dp">
+
+                <ImageView
+                    android:id="@+id/ic_add_product"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add_category"
+                    android:contentDescription="@string/icon_add" />
+                <ImageView
+                    android:id="@+id/ic_delete_product"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_trash_category"
+                    android:contentDescription="@string/icon_delete"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/edit_text_name_category"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:autofillHints=""
+
+                android:background="@drawable/background_search_category"
+                android:ems="10"
+                android:hint="@string/cerca_prodotto_in_dispensa"
+                android:inputType="text"
+                android:paddingStart="42dp"
+                android:textColorHint="@color/Gray"
+                android:text=""
+                android:textColor="@color/Gray"
+
+                android:textColorLink="@color/MainColor"
+                android:textCursorDrawable="@color/MainColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:contentDescription="@string/icon_add"
+                android:src="@drawable/ic_search"
+                app:layout_constraintStart_toStartOf="@+id/edit_text_name_category"
+                app:layout_constraintTop_toTopOf="@+id/edit_text_name_category" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp">
+
+            <ScrollView
+                android:id="@+id/scrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_info_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:fontFamily="@font/sf_compact_rounded_bold"
+                        android:text="PRODOTTI PRESENTI"
+                        android:textColor="@color/DarkGray"
+                        android:textSize="17sp" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_products_exist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/sf_compact_rounded_bold"
+                        android:text="PRODOTTI MANCANTI"
+                        android:textColor="@color/DarkGray"
+                        android:textSize="17sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_products_finished"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+
 
 </FrameLayout>

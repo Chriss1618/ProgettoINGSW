@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
 import com.ratatouille.Schermate.Account.Fragment_AccountInfo;
 import com.ratatouille.Schermate.Account.Fragment_EditAccountInfo;
 import com.ratatouille.Schermate.Staff.Fragment_NewStaffMember;
@@ -30,16 +31,18 @@ public class Manager_AccountFragments {
     private final android.view.View View;
 
     //FUNCTIONAL
+    private BottomBarListener       bottomBarListener;
     private final FragmentManager   fragmentManager;
     public int                      onMain;
     public int                      from;
 
-    public Manager_AccountFragments(Context context, android.view.View view, FragmentManager fragmentManager) {
+    public Manager_AccountFragments(Context context, android.view.View view, FragmentManager fragmentManager,BottomBarListener bottomBarListener) {
         Fragments = new ArrayList<>();
 
-        this.context = context;
-        this.View = view;
-        this.fragmentManager = fragmentManager;
+        this.context            = context;
+        this.View               = view;
+        this.fragmentManager    = fragmentManager;
+        this.bottomBarListener  = bottomBarListener;
 
         Fragments.add(new Fragment_AccountInfo(this));
         Fragments.add(new Fragment_EditAccountInfo(this));
@@ -84,11 +87,22 @@ public class Manager_AccountFragments {
         loadFragmentAsMain(TAG_ACCOUNT_INFO);
     }
     public void showAccountEdit     (String Account){
+
+        hideBottomBar();
+
         Bundle arguments = new Bundle();
         arguments.putString("account", Account);
         Fragments.get(INDEX_ACCOUNT_EDIT).setArguments(arguments);
 
         loadFragmentAsNormal(TAG_ACCOUNT_EDIT);
+    }
+
+    //FUNCTIONAL
+    public void hideBottomBar(){
+        bottomBarListener.hideBottomBarLinstener.hideBottomBar();
+    }
+    public void showBottomBar(){
+        bottomBarListener.showBottomBarLinstener.showBottomBar();
     }
 
     //ANIMATIONS
@@ -100,6 +114,7 @@ public class Manager_AccountFragments {
                 Objects.requireNonNull(accountInfo).EndAnimations();
                 break;
             case INDEX_ACCOUNT_EDIT:
+                showBottomBar();
                 onMain = INDEX_ACCOUNT_INFO;
                 Fragment_EditAccountInfo editAccountInfo = (Fragment_EditAccountInfo)fragmentManager.findFragmentByTag(TAG_ACCOUNT_EDIT);
                 Objects.requireNonNull(editAccountInfo).EndAnimations();

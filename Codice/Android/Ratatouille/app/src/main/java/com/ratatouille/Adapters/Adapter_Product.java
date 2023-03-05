@@ -23,9 +23,11 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     private static final String TAG = "Adapter_Product";
 
     //LAYOUT
-    private final ArrayList<String>         TitleProducts;
     private final RecycleEventListener      RecycleEventListener;
     private ViewHolder                      Holder;
+
+    //DATA
+    private final ArrayList<String>         TitleProducts;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         CardView    Card_View_Element_Product;

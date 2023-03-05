@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 
 import com.ratatouille.Controllers.Controller_Amministratore;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
 import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.R;
 
@@ -24,12 +27,13 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     private final static int TAB_AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
     //LAYOUT
+    AnimatedBottomBar Bottom_Bar_Amministratore;
 
     //FUNCTIONAL
-    Controller_Amministratore controller_administrator;
+    Controller_Amministratore   controller_administrator;
+    BottomBarListener           bottomBarListener;
 
     //OTHER
-    AnimatedBottomBar Bottom_Bar_Amministratore;
 
     @Override
     public void onBackPressed() {
@@ -63,20 +67,20 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
 
     }
 
-
     //DATA
     @Override
     public void PrepareData() {
 
     }
 
-
     //LAYOUT
     @Override
     public void PrepareLayout() {
+        bottomBarListener = new BottomBarListener();
+
         LinkLayout();
-        SetDataOnLayout();
         SetActionsOfLayout();
+        SetDataOnLayout();
     }
 
     @Override
@@ -84,20 +88,22 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
         Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_amm);
     }
     @Override
+    public void SetActionsOfLayout() {
+        setBottomBar();
+        setListener();
+    }
+    @Override
     public void SetDataOnLayout() {
         constructController();
         controller_administrator.showMain();
     }
 
-
-
-
-
-    @Override
-    public void SetActionsOfLayout() {
-        setBottomBar();
+    private void setListener(){
+        bottomBarListener.hideBottomBarListener(this::hideBottomBar);
+        bottomBarListener.showBottomBarLinstener(this::showBottomBar);
     }
 
+    //BottomBar
     private void setBottomBar(){
         Bottom_Bar_Amministratore.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
             @Override
@@ -114,16 +120,14 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
         });
 
     }
-
     private void tabSelected(int indexTab){
         controller_administrator.callEndAnimationOfFragment();
         controller_administrator.resetMainPackage();
 
         final Handler handler = new Handler();
-        handler.postDelayed(()-> setTAB(indexTab) ,300);
+        handler.postDelayed(()-> changeTAB(indexTab) ,300);
     }
-
-    private void setTAB(int indexTab){
+    private void changeTAB(int indexTab){
         clearBackStackPackage();
         switch (indexTab){
             case TAB_AMMINISTRATORE_INDEX_STATS: controller_administrator.showSTATS();
@@ -142,7 +146,8 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
         controller_administrator = new Controller_Amministratore(
                 this,
                 findViewById(R.id.fragment_container_view_amministratore),
-                getSupportFragmentManager()
+                getSupportFragmentManager(),
+                bottomBarListener
         );
 
     }
@@ -153,9 +158,20 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     public void StartAnimations() {
 
     }
-
     @Override
     public void EndAnimations() {
 
     }
+
+    public void hideBottomBar(){
+        Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationOUTtoDownS(500));
+        final Handler handler = new Handler();
+        handler.postDelayed(()-> Bottom_Bar_Amministratore.setVisibility(View.GONE),500);
+    }
+    public void showBottomBar(){
+        Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationINfromDown(300));
+        final Handler handler = new Handler();
+        handler.postDelayed(()-> Bottom_Bar_Amministratore.setVisibility(View.VISIBLE),300);
+    }
+
 }

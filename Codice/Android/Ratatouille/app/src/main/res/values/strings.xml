@@ -41,4 +41,6 @@
     <string name="numero_tavoli">Numero Tavoli:</string>
     <string name="informazioni_attivit">Informazioni Attività</string>
     <string name="annulla">ANNULLA</string>
+    <string name="inventario">Inventario</string>
+    <string name="cerca_prodotto_in_dispensa">Cerca Prodotto in dispensa</string>
 </resources>

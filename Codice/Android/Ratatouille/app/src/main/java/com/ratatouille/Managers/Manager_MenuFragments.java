@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
 import com.ratatouille.R;
 import com.ratatouille.Schermate.Menu.Fragment_EditProduct;
 import com.ratatouille.Schermate.Menu.Fragment_InfoProduct;
@@ -40,16 +41,18 @@ public class Manager_MenuFragments {
     private final View                  View;
 
     //FUNCTIONAL
+    private BottomBarListener       bottomBarListener;
     private final FragmentManager   fragmentManager;
     public int                      onMain;
     public int                      from;
 
-    public Manager_MenuFragments(Context context, View view, FragmentManager fragmentManager) {
+    public Manager_MenuFragments(Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Fragments = new ArrayList<>();
 
-        this.context = context;
-        this.View = view;
-        this.fragmentManager = fragmentManager;
+        this.context                = context;
+        this.View                   = view;
+        this.fragmentManager        = fragmentManager;
+        this.bottomBarListener      = bottomBarListener;
 
         Fragments.add(new Fragment_ListCategory(this));
         Fragments.add(new Fragment_ListProducts(this));
@@ -59,7 +62,21 @@ public class Manager_MenuFragments {
 
         this.onMain = INDEX_MENU_LIST_CATEGORY;
     }
+    public Manager_MenuFragments(Context context, View view, FragmentManager fragmentManager) {
+        Fragments = new ArrayList<>();
 
+        this.context                = context;
+        this.View                   = view;
+        this.fragmentManager        = fragmentManager;
+
+        Fragments.add(new Fragment_ListCategory(this));
+        Fragments.add(new Fragment_ListProducts(this));
+        Fragments.add(new Fragment_InfoProduct(this));
+        Fragments.add(new Fragment_NewProduct(this));
+        Fragments.add(new Fragment_EditProduct(this));
+
+        this.onMain = INDEX_MENU_LIST_CATEGORY;
+    }
     //ShowPages
     public void loadFragmentAsMain(String Tag){
         fragmentManager.beginTransaction()
@@ -123,14 +140,23 @@ public class Manager_MenuFragments {
         arguments.putString("product", product);
         Fragments.get(INDEX_MENU_EDIT_PRODUCT).setArguments(arguments);
 
+        hideBottomBar();
         loadFragmentAsNormal(TAG_MENU_EDIT_PRODUCT);
     }
     public void showAddProduct      (String category){
         Bundle arguments = new Bundle();
         arguments.putString("category", category);
         Fragments.get(INDEX_MENU_NEW_PRODUCT).setArguments(arguments);
-
+        hideBottomBar();
         loadFragmentAsNormal(TAG_MENU_NEW_PRODUCT);
+    }
+
+    //FUNCTIONAL
+    public void hideBottomBar(){
+        bottomBarListener.hideBottomBarLinstener.hideBottomBar();
+    }
+    public void showBottomBar(){
+        bottomBarListener.showBottomBarLinstener.showBottomBar();
     }
 
     //ANIMATIONS
@@ -155,11 +181,13 @@ public class Manager_MenuFragments {
                 onMain = INDEX_MENU_INFO_PRODUCT;
                 Fragment_EditProduct editProduct = (Fragment_EditProduct)fragmentManager.findFragmentByTag(TAG_MENU_EDIT_PRODUCT);
                 Objects.requireNonNull(editProduct).EndAnimations();
+                showBottomBar();
                 break;
             case INDEX_MENU_NEW_PRODUCT:
                 onMain = INDEX_MENU_LIST_PRODUCTS;
                 Fragment_NewProduct newProduct = (Fragment_NewProduct)fragmentManager.findFragmentByTag(TAG_MENU_NEW_PRODUCT);
                 Objects.requireNonNull(newProduct).EndAnimations();
+                showBottomBar();
                 break;
 
 

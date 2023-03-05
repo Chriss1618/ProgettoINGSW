@@ -110,8 +110,7 @@ public class Fragment_NewStaffMember extends Fragment implements LayoutContainer
         Card_View_Chef.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));
 
         Linear_Layout_Dati_Membro.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(800));
-        Linear_Layout_Buttons.startAnimation(Manager_Animation.getTranslationINfromDown(600));
-
+        Linear_Layout_Buttons.startAnimation(Manager_Animation.getTranslationINfromDown(1000));
     }
 
     public void EndAnimations(){

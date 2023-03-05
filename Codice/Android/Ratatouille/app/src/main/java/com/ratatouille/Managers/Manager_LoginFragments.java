@@ -74,19 +74,4 @@ public class Manager_LoginFragments {
 
     //ANIMATION
 
-    private void changeConstraint(View view,ConstraintLayout constraintLayout){
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(constraintLayout);
-        constraintSet.connect(view.getId(),ConstraintSet.TOP,constraintLayout.getId(),ConstraintSet.TOP,0);
-        constraintSet.applyTo(constraintLayout);
-        constraintLayout.invalidate();
-    }
-    private void backConstraint(View view,ConstraintLayout constraintLayout,View view2){
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(constraintLayout);
-        constraintSet.connect(view2.getId(),ConstraintSet.TOP,view.getId(),ConstraintSet.BOTTOM,0);
-        constraintSet.applyTo(constraintLayout);
-        constraintLayout.invalidate();
-    }
-
 }
