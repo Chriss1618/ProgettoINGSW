@@ -38,17 +38,17 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     @Override
     public void onBackPressed() {
         int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();
-
-        controller_administrator.callEndAnimationOfFragment();
-        callBackStackAfterAnimation(numberOfBackStack); //dopo 300 millisecondi
+        callBackStackAfterAnimation(numberOfBackStack);
     }
 
     private void callBackStackAfterAnimation(int numberOfBackStack){
-        final Handler handler = new Handler();
-        handler.postDelayed(()-> {
-            if (numberOfBackStack > 0) getSupportFragmentManager().popBackStack();
-            else super.onBackPressed();
-        },300);
+        if (numberOfBackStack > 0) {
+            controller_administrator.callEndAnimationOfFragment();
+            final Handler handler = new Handler();
+            handler.postDelayed(()-> getSupportFragmentManager().popBackStack(),300);//dopo 300 millisecondi
+        }else{
+            super.onBackPressed();
+        }
     }
     private void clearBackStackPackage(){
         for(int j  = getSupportFragmentManager().getBackStackEntryCount() ; j >0; j-- ){

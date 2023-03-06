@@ -63,17 +63,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
-            <ImageView
-                android:id="@+id/image_view_chose_photo"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:background="@drawable/background_circle_main_color"
-                android:elevation="3dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_add_photo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_image_account"

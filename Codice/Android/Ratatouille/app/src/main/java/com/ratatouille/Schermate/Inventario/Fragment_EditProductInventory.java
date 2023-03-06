@@ -2,20 +2,38 @@ package com.ratatouille.Schermate.Inventario;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.R;
 
 public class Fragment_EditProductInventory extends Fragment implements LayoutContainer {
+    //SYSTEM
+    private static final String TAG = "Fragment_EditProductInv";
 
+    //LAYOUT
+    View            View_Fragment;
+    TextView        TextView_Title;
+    CardView        CardView_Product;
+    LinearLayout    LinearLayout_Buttons;
 
-    public Fragment_EditProductInventory() {
-        // Required empty public constructor
+    //FUNCTIONAL
+    Manager_InventoryFragments manager_inventoryFragments;
+    //DATA
+
+    //OTHER...
+
+    public Fragment_EditProductInventory(Manager_InventoryFragments manager_inventoryFragments) {
+        this.manager_inventoryFragments = manager_inventoryFragments;
     }
 
 
@@ -29,8 +47,12 @@ public class Fragment_EditProductInventory extends Fragment implements LayoutCon
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__edit_product_inventory, container, false);
+        View_Fragment = inflater.inflate(R.layout.fragment__edit_product_inventory, container, false);
+
+        PrepareData();
+        PrepareLayout();
+
+        return View_Fragment;
     }
 
     //DATA
@@ -42,12 +64,18 @@ public class Fragment_EditProductInventory extends Fragment implements LayoutCon
     //LAYOUT
     @Override
     public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
 
+        StartAnimations();
     }
 
     @Override
     public void LinkLayout() {
-
+        TextView_Title          = View_Fragment.findViewById(R.id.text_view_title_product);
+        CardView_Product        = View_Fragment.findViewById(R.id.card_view_element_product);
+        LinearLayout_Buttons    = View_Fragment.findViewById(R.id.linear_layout_buttons);
     }
     @Override
     public void SetActionsOfLayout() {
@@ -58,14 +86,17 @@ public class Fragment_EditProductInventory extends Fragment implements LayoutCon
 
     }
 
-
     //ANIMATINOS
     @Override
     public void StartAnimations() {
-
+        TextView_Title          .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+        CardView_Product        .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));
+        LinearLayout_Buttons    .startAnimation(Manager_Animation.getTranslationINfromDown(600));
     }
     @Override
     public void EndAnimations() {
-
+        TextView_Title          .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        CardView_Product        .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        LinearLayout_Buttons    .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
     }
 }

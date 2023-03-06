@@ -38,16 +38,16 @@ public class Activity_Chef extends AppCompatActivity implements LayoutContainer 
     @Override
     public void onBackPressed() {
         int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();
-        controller_chef.callEndAnimationOfFragment();
-        callBackStackAfterAnimation(numberOfBackStack); //dopo 300 millisecondi
+        callBackStackAfterAnimation(numberOfBackStack);
     }
-
     private void callBackStackAfterAnimation(int numberOfBackStack){
-        final Handler handler = new Handler();
-        handler.postDelayed(()-> {
-            if (numberOfBackStack > 0) getSupportFragmentManager().popBackStack();
-            else super.onBackPressed();
-        },300);
+        if (numberOfBackStack > 0) {
+            controller_chef.callEndAnimationOfFragment();
+            final Handler handler = new Handler();
+            handler.postDelayed(()-> getSupportFragmentManager().popBackStack(),300);//dopo 300 millisecondi
+        }else{
+            super.onBackPressed();
+        }
     }
     private void clearBackStackPackage(){
         for(int j  = getSupportFragmentManager().getBackStackEntryCount() ; j >0; j-- ){

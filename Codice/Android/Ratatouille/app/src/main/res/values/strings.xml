@@ -43,4 +43,8 @@
     <string name="annulla">ANNULLA</string>
     <string name="inventario">Inventario</string>
     <string name="cerca_prodotto_in_dispensa">Cerca Prodotto in dispensa</string>
+    <string name="prodotti_mancanti">PRODOTTI MANCANTI</string>
+    <string name="prodotti_presenti">PRODOTTI PRESENTI</string>
+    <string name="inserisci_il_nome_prodotto">Inserisci il Nome Prodotto</string>
+    <string name="prezzo_per_singola_unita">PREZZO PER SINGOLA UNITA\'</string>
 </resources>

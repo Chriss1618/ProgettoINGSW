@@ -54,10 +54,10 @@ public class Manager_InventoryFragments {
         this.fragmentManager    = fragmentManager;
         this.bottomBarListener  = bottomBarListener;
 
-        Fragments.add(new Fragment_ListInventary());
-        Fragments.add(new Fragment_NewProductInventory());
-        Fragments.add(new Fragment_InfoProductInventory());
-        Fragments.add(new Fragment_EditProductInventory());
+        Fragments.add(new Fragment_ListInventary(this));
+        Fragments.add(new Fragment_NewProductInventory(this));
+        Fragments.add(new Fragment_InfoProductInventory(this));
+        Fragments.add(new Fragment_EditProductInventory(this));
 
         this.onMain = INDEX_INVENTORY_LIST_INVENTORY;
     }
@@ -92,10 +92,10 @@ public class Manager_InventoryFragments {
                 showNewProductInventory();
                 break;
             case INDEX_INVENTORY_INFO_PRODUCT_INVENTORY:
-                showInfoProductInventory();
+                showInfoProductInventory(msg);
                 break;
             case INDEX_INVENTORY_EDIT_PRODUCT_INVENTORY:
-                showEditProductInventory();
+                showEditProductInventory(msg);
                 break;
         }
     }
@@ -104,10 +104,25 @@ public class Manager_InventoryFragments {
         loadFragmentAsMain(TAG_INVENTORY_LIST);
     }
     public void showNewProductInventory     (){
+        hideBottomBar();
+        loadFragmentAsNormal(TAG_INVENTORY_NEW_PRODUCT);
     }
-    public void showInfoProductInventory    (){
+    public void showInfoProductInventory    (String product){
+        Bundle arguments = new Bundle();
+        arguments.putString("product", product);
+        Fragments.get(INDEX_INVENTORY_INFO_PRODUCT_INVENTORY).setArguments(arguments);
+
+        loadFragmentAsNormal(TAG_INVENTORY_INFO_PRODUCT);
+
     }
-    public void showEditProductInventory    (){
+    public void showEditProductInventory    (String product){
+        Bundle arguments = new Bundle();
+        arguments.putString("product", product);
+        Fragments.get(INDEX_INVENTORY_EDIT_PRODUCT_INVENTORY).setArguments(arguments);
+
+        hideBottomBar();
+        loadFragmentAsNormal(TAG_INVENTORY_EDIT_PRODUCT);
+
     }
 
     //FUNCTIONAL

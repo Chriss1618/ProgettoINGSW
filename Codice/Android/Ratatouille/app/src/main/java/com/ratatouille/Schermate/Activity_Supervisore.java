@@ -32,21 +32,22 @@ public class Activity_Supervisore extends AppCompatActivity implements LayoutCon
     BottomBarListener       bottomBarListener;
     Controller_Supervisore  controller_supervisor;
 
-    //OTHER
+    //OTHER...
 
     @Override
     public void onBackPressed() {
         int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();
-        controller_supervisor.callEndAnimationOfFragment();
-        callBackStackAfterAnimation(numberOfBackStack); //dopo 300 millisecondi
+        callBackStackAfterAnimation(numberOfBackStack);
     }
 
     private void callBackStackAfterAnimation(int numberOfBackStack){
-        final Handler handler = new Handler();
-        handler.postDelayed(()-> {
-            if (numberOfBackStack > 0) getSupportFragmentManager().popBackStack();
-            else super.onBackPressed();
-        },300);
+        if (numberOfBackStack > 0) {
+            controller_supervisor.callEndAnimationOfFragment();
+            final Handler handler = new Handler();
+            handler.postDelayed(()-> getSupportFragmentManager().popBackStack(),300);//dopo 300 millisecondi
+        }else{
+            super.onBackPressed();
+        }
     }
     private void clearBackStackPackage(){
         for(int j  = getSupportFragmentManager().getBackStackEntryCount() ; j >0; j-- ){
@@ -125,11 +126,11 @@ public class Activity_Supervisore extends AppCompatActivity implements LayoutCon
     private void changeTAB(int indexTab){
         clearBackStackPackage();
         switch (indexTab){
-            case TAB_SUPERVISORE_INDEX_INVENTARIO: controller_supervisor.showMENU();
+            case TAB_SUPERVISORE_INDEX_INVENTARIO:  controller_supervisor.showINVENTORY();
                 break;
-            case TAB_SUPERVISORE_INDEX_MENU: controller_supervisor.showMENU();
+            case TAB_SUPERVISORE_INDEX_MENU:        controller_supervisor.showMENU();
                 break;
-            case TAB_SUPERVISORE_INDEX_ACCOUNT: controller_supervisor.showACCOUNT();
+            case TAB_SUPERVISORE_INDEX_ACCOUNT:     controller_supervisor.showACCOUNT();
                 break;
         }
     }

@@ -15,7 +15,7 @@ import com.ratatouille.R;
 
 import java.util.ArrayList;
 
-public class Adapter_ProductExist extends RecyclerView.Adapter<Adapter_ProductExist.ViewHolder> {
+public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_ProductInventory.ViewHolder> {
     //SYTEM
     private static final String TAG = "Adapter_ProductExist";
 
@@ -26,7 +26,7 @@ public class Adapter_ProductExist extends RecyclerView.Adapter<Adapter_ProductEx
     //DATA
     ArrayList<String> TitleProducts;
 
-    public Adapter_ProductExist(ArrayList<String> TitleProducts, RecycleEventListener recycleEventListener) {
+    public Adapter_ProductInventory(ArrayList<String> TitleProducts, RecycleEventListener recycleEventListener) {
         this.TitleProducts = TitleProducts;
         this.RecycleEventListener = recycleEventListener;
     }
@@ -53,7 +53,7 @@ public class Adapter_ProductExist extends RecyclerView.Adapter<Adapter_ProductEx
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product_exist,parent,false);
-        return new Adapter_ProductExist.ViewHolder(view);
+        return new Adapter_ProductInventory.ViewHolder(view);
     }
 
     @Override
@@ -70,10 +70,15 @@ public class Adapter_ProductExist extends RecyclerView.Adapter<Adapter_ProductEx
 
     //LAYOUT
     private void initializeLayout( final int position){
-
+        setActions(position);
     }
 
     private void setActions( final int position){
+        this.Holder.Card_View_Element_Product.setOnClickListener(view ->onClickItem(position) );
+    }
 
+    //ACTIONS
+    private void onClickItem(final int position){
+        RecycleEventListener.AdapterListener.onClickItem(TitleProducts.get(position));
     }
 }

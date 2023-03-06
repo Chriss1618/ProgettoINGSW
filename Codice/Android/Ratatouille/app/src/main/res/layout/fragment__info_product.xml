@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/SoftGray"
     tools:context=".Schermate.Menu.Fragment_InfoProduct">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -187,38 +186,38 @@
                     android:gravity="start"
                     android:textSize="20sp"
                     android:textColor="@color/Black"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/text_view_product_ingredienti"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autoSizeTextType="uniform"
-                    android:fontFamily="@font/sf_compact_rounded"
-                    android:text="@string/Esempio_Ingerdienti"
-                    android:gravity="start"
-                    android:textSize="15sp"
-                    android:textColor="@color/Gray"
-                    android:layout_marginBottom="16dp"/>
-                <TextView
-                    android:id="@+id/text_view_product_dosi"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autoSizeTextType="uniform"
-                    android:fontFamily="@font/sf_compact_rounded"
-                    android:text="@string/Esempio_Dosi"
-                    android:gravity="end"
-                    android:textSize="15sp"
-                    android:textColor="@color/Gray"
-                    android:layout_marginBottom="16dp"/>
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/text_view_product_ingredienti"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/sf_compact_rounded"
+                        android:text="@string/Esempio_Ingerdienti"
+                        android:gravity="start"
+                        android:textSize="15sp"
+                        android:textColor="@color/Gray"
+                        android:layout_marginBottom="16dp"/>
+                    <TextView
+                        android:id="@+id/text_view_product_dosi"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/sf_compact_rounded"
+                        android:text="@string/Esempio_Dosi"
+                        android:gravity="end"
+                        android:textSize="15sp"
+                        android:textColor="@color/Gray"
+                        android:layout_marginBottom="16dp"/>
+                </LinearLayout>
 
             </LinearLayout>
 
