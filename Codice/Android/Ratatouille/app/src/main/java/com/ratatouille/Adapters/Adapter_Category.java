@@ -23,9 +23,15 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     private static final String TAG = "Adapter_Category";
 
     //LAYOUT
-    private final ArrayList<String>         TitleCategories;
-    private final RecycleEventListener      RecycleEventListener;
     private ViewHolder                      Holder;
+
+    //FUNCTIONAL
+    private final RecycleEventListener      RecycleEventListener;
+
+    //DATA
+    private final ArrayList<String>         TitleCategories;
+
+    //OTHER...
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         CardView        Card_View_Element_Category;
@@ -51,6 +57,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category,parent,false);
         return new ViewHolder(view);
     }
+
     @Override
     public int getItemCount() {
         return TitleCategories.size();

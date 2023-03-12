@@ -3,6 +3,7 @@ package com.ratatouille.Managers;
 import android.content.Context;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -47,9 +48,9 @@ public class Manager_Ordini {
         this.View = view;
         this.fragmentManager = fragmentManager;
 
-        Fragments.add(new Fragment_ListOrders());
-        Fragments.add(new Fragment_TableOrders());
-        Fragments.add(new Fragment_HystoryOrders());
+        Fragments.add(new Fragment_ListOrders(this));
+        Fragments.add(new Fragment_TableOrders(this));
+        Fragments.add(new Fragment_HystoryOrders(this));
 
         onMain = INDEX_ORDINI_LIST_ORDERS;
     }
@@ -81,7 +82,7 @@ public class Manager_Ordini {
                 showListOrders();
                 break;
             case INDEX_ORDINI_TABLE_ORDERS:
-                showTableOrders();
+                showTableOrders(msg);
                 break;
             case INDEX_ORDINI_HISTORY_ORDERS:
                 showHistoryOrders();
@@ -92,29 +93,38 @@ public class Manager_Ordini {
     public void showListOrders      (){
         loadFragmentAsMain(TAG_ORDINI_LIST_ORDERS);
     }
-    public void showTableOrders     (){
+    public void showTableOrders     (String table){
+        Bundle arguments = new Bundle();
+        arguments.putString("table", table);
+        Fragments.get(INDEX_ORDINI_TABLE_ORDERS).setArguments(arguments);
 
+        loadFragmentAsNormal(TAG_ORDINI_TABLE_ORDERS);
     }
     public void showHistoryOrders   (){
+        loadFragmentAsNormal(TAG_ORDINI_HISTORY_ORDERS);
     }
 
     //ANIMATIONS
     public void callEndAnimationOfFragment(){
+        int temp = from;
         from = onMain;
         switch (onMain){
             case INDEX_ORDINI_LIST_ORDERS:
+                Log.d(TAG, "callEndAnimationOfFragment: listOrder");
                 Fragment_ListOrders listOrders = (Fragment_ListOrders)fragmentManager.findFragmentByTag(TAG_ORDINI_LIST_ORDERS);
                 Objects.requireNonNull(listOrders).EndAnimations();
                 break;
             case INDEX_ORDINI_TABLE_ORDERS:
                 onMain = INDEX_ORDINI_LIST_ORDERS;
+                Log.d(TAG, "callEndAnimationOfFragment: tableOrders");
                 Fragment_TableOrders tableOrders = (Fragment_TableOrders)fragmentManager.findFragmentByTag(TAG_ORDINI_TABLE_ORDERS);
                 Objects.requireNonNull(tableOrders).EndAnimations();
                 break;
             case INDEX_ORDINI_HISTORY_ORDERS:
-                onMain = INDEX_ORDINI_LIST_ORDERS;
-                Fragment_HystoryOrders hystoryOrders = (Fragment_HystoryOrders)fragmentManager.findFragmentByTag(TAG_ORDINI_HISTORY_ORDERS);
-                Objects.requireNonNull(hystoryOrders).EndAnimations();
+                onMain = temp;
+                Log.d(TAG, "callEndAnimationOfFragment: historyOrder");
+                Fragment_HystoryOrders historyOrders = (Fragment_HystoryOrders)fragmentManager.findFragmentByTag(TAG_ORDINI_HISTORY_ORDERS);
+                Objects.requireNonNull(historyOrders).EndAnimations();
                 break;
         }
     }
