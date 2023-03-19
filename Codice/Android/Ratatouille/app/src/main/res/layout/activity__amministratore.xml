@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Schermate.Activity_Amministratore">
-
     <LinearLayout
         android:id="@+id/linear_layout_container_fragment"
         android:layout_width="match_parent"
@@ -18,11 +17,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_container_view_Amministratore"
-
+            android:id="@+id/fragment_container_view_amministratore"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+            android:layout_height="match_parent"
+            android:name="com.ratatouille.Schermate.BlankFragment"
+            tools:layout="@layout/fragment_blank"/>
     </LinearLayout>
 
     <nl.joery.animatedbottombar.AnimatedBottomBar

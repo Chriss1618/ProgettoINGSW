@@ -1,14 +1,610 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Schermate.Inventario.Fragment_EditProductInventory">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <LinearLayout
+            android:id="@+id/toolbar_title_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="16dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginStart="16dp">
+                <TextView
+                    android:visibility="visible"
+                    android:id="@id/text_view_title_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="Modifica Prodotto"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="16dp">
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_element_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="90dp"
+            app:cardUseCompatPadding="true">
+            <ScrollView
+                android:id="@+id/scrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/button_cameriere"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraint_layout_image_account"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            >
+                            <ImageView
+                                android:id="@+id/image_view_chose_photo"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/background_circle_main_color"
+                                android:elevation="3dp"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_add_photo"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:contentDescription="@string/Descrizione_IMAGEVIEW_icon_set_imagine_profile" />
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/view2"
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
+                                android:layout_centerHorizontal="true"
+                                android:elevation="12dp"
+                                app:cardCornerRadius="80dp"
+                                android:backgroundTint="@color/Gray"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:id="@+id/image_view_account"
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:layout_gravity="center"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:contentDescription="@string/Descrizione_IMAGEVIEW_imagine_profile" />
+                            </androidx.cardview.widget.CardView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_margin="8dp"
+                            android:layout_weight="1"
+
+                            android:gravity="start"
+                            android:orientation="vertical"
+                            android:paddingTop="8dp">
+
+                            <EditText
+                                android:id="@+id/edit_text_nome_prodotto"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+
+                                android:layout_marginTop="4dp"
+                                android:autofillHints=""
+
+                                android:background="@drawable/background_edit_text_stroke_white"
+                                android:ems="10"
+                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                android:gravity="center"
+                                android:hint="@string/inserisci_il_nome_prodotto"
+                                android:inputType="text"
+                                android:text=""
+                                android:textColor="@color/Black"
+                                android:textColorHint="@color/Black"
+                                android:textColorLink="@color/MainColor"
+
+                                android:textCursorDrawable="@color/MainColor"
+                                android:textSize="19sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center"
+                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                android:text="@string/prezzo_per_singola_unita"
+                                android:textColor="@color/DarkGray"
+                                android:textSize="13sp" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/text_view_price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/sf_compact_rounded_heavy"
+                                    android:gravity="start"
+                                    android:includeFontPadding="false"
+                                    android:maxLength="20"
+                                    android:maxLines="1"
+                                    android:text="€"
+                                    android:textColor="@color/MainColor"
+                                    android:textSize="23sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_text_euro"
+                                    android:layout_width="90dp"
+                                    android:layout_height="50dp"
+
+                                    android:layout_gravity="center_vertical"
+                                    android:autofillHints=""
+                                    android:background="@drawable/background_edit_text_stroke_white"
+                                    android:ems="10"
+                                    android:fontFamily="@font/sf_compact_rounded_bold"
+                                    android:gravity="center"
+                                    android:hint="0"
+                                    android:inputType="textEmailAddress"
+
+                                    android:text=""
+                                    android:textColor="@color/MainColor"
+                                    android:textColorHint="@color/MainColor"
+                                    android:textColorLink="@color/MainColor"
+
+                                    android:textCursorDrawable="@color/MainColor"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/sf_compact_rounded_heavy"
+                                    android:gravity="start"
+                                    android:includeFontPadding="false"
+                                    android:maxLength="20"
+                                    android:maxLines="1"
+                                    android:text=","
+                                    android:textColor="@color/MainColor"
+                                    android:textSize="23sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_text_centesimi"
+                                    android:layout_width="90dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:autofillHints=""
+                                    android:background="@drawable/background_edit_text_stroke_white"
+                                    android:ems="10"
+                                    android:fontFamily="@font/sf_compact_rounded_bold"
+                                    android:gravity="center"
+                                    android:hint="00"
+                                    android:inputType="textEmailAddress"
+                                    android:text=""
+
+                                    android:textColor="@color/Black"
+                                    android:textColorHint="@color/MainColor"
+                                    android:textColorLink="@color/MainColor"
+
+                                    android:textCursorDrawable="@color/MainColor"
+                                    android:textSize="19dp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="4dp"
+                                    android:gravity="center_horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="16dp"
+                                        android:gravity="center"
+                                        android:fontFamily="@font/sf_compact_rounded_bold"
+                                        android:text="GRANDEZZA"
+                                        android:textColor="@color/DarkGray"
+                                        android:textSize="13sp" />
+                                    <EditText
+                                        android:id="@+id/edit_text_grandezza"
+                                        android:layout_width="90dp"
+                                        android:layout_height="50dp"
+
+                                        android:layout_gravity="center_vertical"
+                                        android:autofillHints=""
+                                        android:background="@drawable/background_edit_text_stroke_white"
+                                        android:ems="10"
+                                        android:fontFamily="@font/sf_compact_rounded_bold"
+                                        android:gravity="center"
+                                        android:hint="0"
+                                        android:inputType="textEmailAddress"
+
+                                        android:text=""
+                                        android:textColor="@color/MainColor"
+                                        android:textColorHint="@color/MainColor"
+                                        android:textColorLink="@color/MainColor"
+
+                                        android:textCursorDrawable="@color/MainColor"
+                                        android:textSize="19sp" />
+                                </LinearLayout>
+
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="8dp"
+                                        android:gravity="center"
+                                        android:fontFamily="@font/sf_compact_rounded_bold"
+                                        android:text="UNITA MISURA"
+                                        android:textColor="@color/DarkGray"
+                                        android:textSize="13sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="end"
+                                        android:orientation="vertical">
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                                android:text="KILO"
+                                                android:textColor="@color/DarkGray"
+                                                android:textSize="13sp" />
+                                            <TextView
+                                                android:id="@+id/text_view_kg"
+                                                android:layout_width="50dp"
+                                                android:layout_height="40dp"
+                                                android:paddingStart="2dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:background="@drawable/background_mesure_left"
+                                                android:layout_marginStart="8dp"
+                                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                                android:gravity="center"
+                                                android:text="Kg"
+
+                                                android:textColor="@color/Black"
+                                                android:textColorHint="@color/MainColor"
+                                                android:textColorLink="@color/MainColor"
+
+                                                android:textSize="15sp" />
+                                            <TextView
+                                                android:id="@+id/text_view_gr"
+                                                android:layout_width="50dp"
+                                                android:layout_height="40dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:background="@drawable/background_mesure_center"
+                                                android:layout_marginStart="1dp"
+                                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                                android:gravity="center"
+                                                android:text="gr"
+
+                                                android:textColor="@color/Black"
+                                                android:textColorHint="@color/MainColor"
+                                                android:textColorLink="@color/MainColor"
+
+                                                android:textSize="15sp" />
+                                            <TextView
+                                                android:id="@+id/text_view_mr"
+                                                android:layout_width="50dp"
+                                                android:layout_height="40dp"
+                                                android:paddingEnd="2dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:background="@drawable/background_mesure_right"
+                                                android:layout_marginStart="1dp"
+                                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                                android:gravity="center"
+                                                android:text="mg"
+
+                                                android:textColor="@color/Black"
+                                                android:textColorHint="@color/MainColor"
+                                                android:textColorLink="@color/MainColor"
+
+                                                android:textSize="15sp" />
+                                        </LinearLayout>
+                                        <LinearLayout
+                                            android:layout_marginTop="8dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                                android:text="LITRO"
+                                                android:textColor="@color/DarkGray"
+                                                android:textSize="13sp" />
+                                            <TextView
+                                                android:id="@+id/text_view_l"
+                                                android:layout_width="50dp"
+                                                android:layout_height="40dp"
+                                                android:paddingStart="2dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:background="@drawable/background_mesure_left"
+                                                android:layout_marginStart="8dp"
+                                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                                android:gravity="center"
+                                                android:text="L"
+
+                                                android:textColor="@color/Black"
+                                                android:textColorHint="@color/MainColor"
+                                                android:textColorLink="@color/MainColor"
+
+                                                android:textSize="15sp" />
+                                            <TextView
+                                                android:id="@+id/text_view_cl"
+                                                android:layout_width="50dp"
+                                                android:layout_height="40dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:background="@drawable/background_mesure_center"
+                                                android:layout_marginStart="1dp"
+                                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                                android:gravity="center"
+                                                android:text="cl"
+
+                                                android:textColor="@color/Black"
+                                                android:textColorHint="@color/MainColor"
+                                                android:textColorLink="@color/MainColor"
+
+                                                android:textSize="15sp" />
+                                            <TextView
+                                                android:id="@+id/text_view_ml"
+                                                android:layout_width="50dp"
+                                                android:layout_height="40dp"
+                                                android:paddingEnd="2dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:background="@drawable/background_mesure_right"
+                                                android:layout_marginStart="1dp"
+                                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                                android:gravity="center"
+                                                android:text="ml"
+
+                                                android:textColor="@color/Black"
+                                                android:textColorHint="@color/MainColor"
+                                                android:textColorLink="@color/MainColor"
+
+                                                android:textSize="15sp" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_compact_rounded_heavy"
+                            android:text="Descrizione"
+                            android:gravity="start"
+                            android:textSize="20sp"
+                            android:textColor="@color/Black"/>
+                        <EditText
+                            android:id="@+id/edit_text_descrizione"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+
+                            android:layout_marginTop="4dp"
+                            android:autofillHints=""
+                            android:fontFamily="@font/sf_compact_rounded"
+                            android:background="@drawable/background_edit_text_stroke_white"
+                            android:ems="10"
+                            android:hint="Inserisci la descrizione del Prodotto"
+                            android:textSize="16sp"
+                            android:textColorHint="@color/Black"
+                            android:inputType="textEmailAddress"
+                            android:padding="8dp"
+                            android:maxLength="500"
+                            android:gravity="top|start"
+                            android:text=""
+                            android:textColor="@color/Black"
+
+                            android:textColorLink="@color/MainColor"
+                            android:textCursorDrawable="@color/MainColor" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="start"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="16dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                android:text="QUANTITA' IN DISPENSA"
+                                android:textColor="@color/DarkGray"
+                                android:textSize="13sp" />
+                            <EditText
+                                android:id="@+id/edit_text_qta"
+                                android:layout_width="90dp"
+                                android:layout_height="50dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_gravity="center_vertical"
+                                android:autofillHints=""
+                                android:background="@drawable/background_edit_text_stroke_white"
+                                android:ems="10"
+                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                android:gravity="center"
+                                android:hint="0"
+                                android:inputType="textEmailAddress"
+
+                                android:text=""
+                                android:textColor="@color/MainColor"
+                                android:textColorHint="@color/MainColor"
+                                android:textColorLink="@color/MainColor"
+
+                                android:textCursorDrawable="@color/MainColor"
+                                android:textSize="19sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:id="@+id/linear_layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="36dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_annulla"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="8dp"
+            app:cardUseCompatPadding="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingEnd="36dp"
+                android:paddingStart="36dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:gravity="center"
+                    android:autoSizeMaxTextSize="25sp"
+                    android:autoSizeMinTextSize="9sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+
+                    android:text="ANNULLA"
+                    android:textColor="@color/MainColor"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_margin="8dp"
+            android:id="@+id/card_view_salva"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="20dp"
+            app:cardUseCompatPadding="true"
+
+            android:background="@color/MainColor">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingEnd="36dp"
+                android:paddingStart="36dp"
+                android:background="@color/MainColor">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:gravity="center"
+                    android:autoSizeMaxTextSize="25sp"
+                    android:autoSizeMinTextSize="9sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+
+                    android:text="SALVA"
+                    android:maxLines="1"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
 
 </FrameLayout>

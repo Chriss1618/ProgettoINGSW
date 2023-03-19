@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tab_inventory"
+        android:icon="@drawable/inventory"
+        android:title="@string/Inventario" />
+    <item
+        android:id="@+id/tab_ordini"
+        android:icon="@drawable/ordini"
+        android:title="@string/ordini" />
+    <item
+        android:id="@+id/tab_menu"
+        android:icon="@drawable/tab_menu"
+        android:title="@string/Menu" />
+    <item
+        android:id="@+id/tab_account"
+        android:icon="@drawable/tab_account"
+        android:title="@string/Account" />
+</menu>

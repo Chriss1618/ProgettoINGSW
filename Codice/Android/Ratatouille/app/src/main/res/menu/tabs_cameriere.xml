@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_ordini_cameriere"
+        android:icon="@drawable/ordini_cameriere"
+        android:title="@string/ordini_cameriere" />
+    <item
+        android:id="@+id/tab_account"
+        android:icon="@drawable/tab_account"
+        android:title="@string/Account" />
+</menu>

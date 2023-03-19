@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ratatouille">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ratatouille"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_ratatouille"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ratatouille">
-        <activity
-            android:name=".Schermate.Activity_Account"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity android:name=".Schermate.Activity_Cameriere"></activity>
-        <activity android:name=".Schermate.Activity_Chef" />
-        <activity android:name=".Schermate.Activity_Supervisore" />
-        <activity android:name=".Schermate.Activity_Amministratore" />
-        <activity android:name=".Schermate.Login.Activity_Login"
+
+        <activity android:name=".Schermate.Activity_ChooseRole"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Schermate.Activity_Cameriere" />
+        <activity android:name=".Schermate.Activity_Chef" />
+        <activity android:name=".Schermate.Activity_Supervisore" />
+        <activity android:name=".Schermate.Activity_Amministratore" />
+        <activity android:name=".Schermate.Login.Activity_Login" />
+
     </application>
 
 </manifest>

@@ -2,65 +2,154 @@ package com.ratatouille.Schermate.OrdiniCameriere;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.ratatouille.Adapters.Adapter_Product;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Managers.Manager_MenuFragments;
+import com.ratatouille.Managers.Manager_Ordini_Cameriere;
 import com.ratatouille.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_TableInfo#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_TableInfo extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class Fragment_TableInfo extends Fragment implements LayoutContainer {
+    //SYSTEM
+    private static final String TAG = "Fragment_TableInfo";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //LAYOUT
+    private View            View_fragment;
+    private TextView        Text_View_Title;
+    private CardView        CardView_ActivateTable;
+    private LinearLayout    LinearLayout_Total;
+    private RecyclerView    Recycler_Products;
+    private CardView        CardView_AggiungiOrdine;
+    //FUNCTIONAL
+    private RecycleEventListener        RecycleEventListener;
+    private Manager_Ordini_Cameriere    managerOrdiniCameriere;
 
-    public Fragment_TableInfo() {
-        // Required empty public constructor
-    }
+    //DATA
+    private ArrayList<String>   TitleProducts;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_TableInfo.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_TableInfo newInstance(String param1, String param2) {
-        Fragment_TableInfo fragment = new Fragment_TableInfo();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    //OTHER...
+
+    public Fragment_TableInfo(Manager_Ordini_Cameriere managerOrdiniCameriere) {
+        this.managerOrdiniCameriere = managerOrdiniCameriere;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        RecycleEventListener = new RecycleEventListener();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__table_info, container, false);
+        View_fragment = inflater.inflate(R.layout.fragment__table_info, container, false);
+
+        PrepareData();
+        PrepareLayout();
+
+        StartAnimations();
+
+        return View_fragment;
+    }
+
+    //DATA
+    @Override
+    public void PrepareData() {
+        TitleProducts = new ArrayList<>();
+        TitleProducts.add("Pizza Tonno");
+        TitleProducts.add("Pizza Margherita");
+        TitleProducts.add("Panino al Salame");
+        TitleProducts.add("Carbonara");
+    }
+
+    //LAYOUT
+    @Override
+    public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
+    }
+
+    @Override
+    public void LinkLayout() {
+        Text_View_Title         = View_fragment.findViewById(R.id.text_view_title);
+        CardView_ActivateTable  = View_fragment.findViewById(R.id.card_view_element_sala);
+        Recycler_Products       = View_fragment.findViewById(R.id.recycler_table_orders);
+        CardView_AggiungiOrdine = View_fragment.findViewById(R.id.card_view_aggiungi);
+        LinearLayout_Total      = View_fragment.findViewById(R.id.linear_layout_total);
+    }
+    @Override
+    public void SetActionsOfLayout() {
+        RecycleEventListener.setOnClickItemAdapterListener(this::onClickProduct);
+        CardView_AggiungiOrdine.setOnClickListener(view -> onClickAddOrder());
+    }
+    @Override
+    public void SetDataOnLayout() {
+        initListProductsRV();
+    }
+    private void initListProductsRV( ){
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
+        Recycler_Products.setLayoutManager(mLayoutManager);
+        Recycler_Products.setNestedScrollingEnabled(false);
+        Adapter_Product adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,false);
+        Recycler_Products.setAdapter(adapter_product);
+    }
+    //ACTIONS
+    private void onClickProduct(String Product){
+        Log.d(TAG, "PreparerData: Hai premuto l'item->"+Product);
+        EndAnimations();
+        final Handler handler = new Handler();
+        handler.postDelayed(()->
+                        sendActionToManager(Manager_Ordini_Cameriere.INDEX_ORDINI_CAMERIERE_INFO_PRODUCT,Product),
+                300);
+    }
+    private void onClickAddOrder(){
+        Log.d(TAG, "PreparerData: Hai premuto Aggiungi Ordine");
+        EndAnimations();
+        final Handler handler = new Handler();
+        handler.postDelayed(()->
+                        sendActionToManager(Manager_Ordini_Cameriere.INDEX_ORDINI_CAMERIERE_LIST_CATEGORY,""),
+                300);
+    }
+    //FUNCTIONAL
+    private void sendActionToManager(int index,String msg){
+        this.managerOrdiniCameriere.showFragment(index,msg);
+    }
+    //ANIMATIONS
+    @Override
+    public void StartAnimations() {
+        Text_View_Title         .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+        CardView_ActivateTable  .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));
+        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));
+        CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationINfromDown(600));
+        LinearLayout_Total      .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+    }
+
+    @Override
+    public void EndAnimations() {
+        Text_View_Title         .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        CardView_ActivateTable  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+        CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationOUTtoDownS(300));
+        LinearLayout_Total      .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }
 }

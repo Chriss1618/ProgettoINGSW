@@ -1,66 +1,177 @@
 package com.ratatouille.Schermate.Menu;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.ratatouille.Adapters.Adapter_Category;
+import com.ratatouille.Controllers.Controller_Amministratore;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
+import com.ratatouille.Schermate.Activity_Amministratore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_ListCategory#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_ListCategory extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class Fragment_ListCategory extends Fragment implements LayoutContainer {
+    //SYSTEM
+    private static final String TAG = "Fragment_ListCategory";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //LAYOUT
+    private View            View_fragment;
+    private TextView        Text_View_TitleCategory;
+    private RecyclerView    Recycler_Categories;
+    private LinearLayout    LinearLayout_NewCategory;
+    private LinearLayout    LinearLayout_BackGroundNewCategory;
+    private ImageView       Image_View_AddCategory;
 
-    public Fragment_ListCategory() {
-        // Required empty public constructor
-    }
+    //FUNCTIONAL
+    private final Manager_MenuFragments     manager_MenuFragments;
+    private RecycleEventListener            RecycleEventListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_ListCategory.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_ListCategory newInstance(String param1, String param2) {
-        Fragment_ListCategory fragment = new Fragment_ListCategory();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    //DATA
+    private ArrayList<String> TitleCategories;
+
+    //OTHERS...
+
+
+    public Fragment_ListCategory(Manager_MenuFragments manager_menuFragments) {
+        this.manager_MenuFragments = manager_menuFragments;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        RecycleEventListener = new RecycleEventListener();
+
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View_fragment = inflater.inflate(R.layout.fragment__list_category, container, false);
+        PrepareData();
+        PrepareLayout();
+
+        StartAnimations();
+        return View_fragment;
+    }
+
+    //DATA
+    @Override
+    public void PrepareData(){
+            TitleCategories = new ArrayList<>();
+            TitleCategories.add("Primo");
+            TitleCategories.add("Secondo");
+            TitleCategories.add("Antipasti");
+            TitleCategories.add("Contorno");
+    }
+
+    //LAYOUT
+    @Override
+    public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__list_category, container, false);
+    public void LinkLayout() {
+        Text_View_TitleCategory             = View_fragment.findViewById(R.id.text_view_title_category);
+        Image_View_AddCategory              = View_fragment.findViewById(R.id.ic_add_category);
+        Recycler_Categories                 = View_fragment.findViewById(R.id.recycler_categories);
+        LinearLayout_NewCategory            = View_fragment.findViewById(R.id.linear_layout_new_category);
+        LinearLayout_BackGroundNewCategory  = View_fragment.findViewById(R.id.darkRL);
     }
+    @Override
+    public void SetDataOnLayout() {
+        initCategoryRV();
+        initDialog();
+    }
+    @Override
+    public void SetActionsOfLayout() {
+        RecycleEventListener    .setOnClickItemAdapterListener(this::onClickCategory);
+        Image_View_AddCategory  .setOnClickListener(view ->onClickNewCategory());
+    }
+
+    private void initCategoryRV(){
+        Adapter_Category adapter_category = new Adapter_Category(TitleCategories, RecycleEventListener);
+        Recycler_Categories.setAdapter(adapter_category);
+
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        Recycler_Categories.setLayoutManager(mLayoutManager);
+        Recycler_Categories.setNestedScrollingEnabled(false);
+    }
+    private void initDialog(){
+
+
+    }
+    //ACTIONS
+    private void onClickCategory(String Category){
+        Log.d(TAG, "Ricevuto da Listener->"+Category);
+        EndAnimations();
+        final Handler handler = new Handler();
+        handler.postDelayed(()->
+                sendActionToManager(Manager_MenuFragments.INDEX_MENU_LIST_PRODUCTS,Category),
+                300);
+    }
+
+    private void onClickNewCategory(){
+        showDialogNewCategory();
+    }
+
+    //FUNCTIONAL
+    private void sendActionToManager(int index,String msg){
+        this.manager_MenuFragments.showFragment(index,msg);
+    }
+
+    private void showDialogNewCategory(){
+        CardView CardView_Cancel    = LinearLayout_NewCategory.findViewById(R.id.card_view_annulla);
+        CardView CardView_Add       = LinearLayout_NewCategory.findViewById(R.id.card_view_aggiungi);
+
+        CardView_Cancel.setOnClickListener(view -> dismissDialogNewCategory());
+
+        LinearLayout_NewCategory            .setVisibility(View.VISIBLE);
+        LinearLayout_BackGroundNewCategory  .setVisibility(View.VISIBLE);
+        LinearLayout_NewCategory.startAnimation(Manager_Animation.getTranslationINfromUp(500));
+        LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeIn(500));
+    }
+
+    private void dismissDialogNewCategory(){
+        LinearLayout_NewCategory.setVisibility(View.GONE);
+        LinearLayout_BackGroundNewCategory.setVisibility(View.GONE);
+        LinearLayout_NewCategory.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+        LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeOut(500));
+    }
+
+    //ANIMATIONS
+    @Override
+    public void StartAnimations(){
+        Text_View_TitleCategory.setText(R.string.Menu);
+        Text_View_TitleCategory     .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+        Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+    }
+    @Override
+    public void EndAnimations(){
+        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        Recycler_Categories     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+    }
+
+
 }

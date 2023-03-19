@@ -1,14 +1,487 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/SoftGray"
     tools:context=".Schermate.Menu.Fragment_EditProduct">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <LinearLayout
+            android:id="@+id/toolbar_title_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="16dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginStart="16dp">
+                <TextView
+                    android:visibility="visible"
+                    android:id="@id/text_view_title_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="Nome Prodotto"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="16dp">
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_element_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="90dp"
+            app:cardUseCompatPadding="true">
+            <ScrollView
+                android:id="@+id/scrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/button_cameriere"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:weightSum="2">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp">
+
+                            <ImageView
+                                android:id="@+id/image_view_account"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/background_circle_main_color"
+                                android:elevation="3dp"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_add_photo"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/card_view_image_product"
+                                android:layout_width="200dp"
+                                android:layout_height="130dp"
+                                android:layout_weight="1"
+                                android:elevation="1dp"
+                                app:cardCornerRadius="20dp"
+                                app:cardUseCompatPadding="true"
+                                android:backgroundTint="@color/Gray"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+
+                                    <ImageView
+                                        android:id="@+id/image_view_product"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="200dp"
+                                        android:clickable="true"
+                                        android:elevation="2dp"
+                                        android:src="@drawable/exemple_product" />
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:layout_weight="1"
+
+                            android:gravity="start"
+                            android:orientation="vertical"
+                            android:paddingTop="8dp">
+
+                            <EditText
+                                android:id="@+id/edit_text_nome_prodotto"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+
+                                android:layout_marginTop="4dp"
+                                android:autofillHints=""
+
+                                android:background="@drawable/background_edit_text_stroke_white"
+                                android:ems="10"
+                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                android:gravity="center"
+                                android:hint="Inserisci il Nome Prodotto"
+                                android:inputType="text"
+                                android:paddingStart="16sp"
+                                android:text=""
+                                android:textColor="@color/Black"
+                                android:textColorHint="@color/Black"
+                                android:textColorLink="@color/MainColor"
+
+                                android:textCursorDrawable="@color/MainColor"
+                                android:textSize="19sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/text_view_price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/sf_compact_rounded_heavy"
+                                    android:gravity="start"
+                                    android:includeFontPadding="false"
+                                    android:maxLength="20"
+                                    android:maxLines="1"
+                                    android:text="€"
+                                    android:textColor="@color/MainColor"
+                                    android:textSize="23sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_text_euro"
+                                    android:layout_width="90dp"
+                                    android:layout_height="50dp"
+
+                                    android:layout_gravity="center_vertical"
+                                    android:autofillHints=""
+                                    android:background="@drawable/background_edit_text_stroke_white"
+                                    android:ems="10"
+                                    android:fontFamily="@font/sf_compact_rounded_bold"
+                                    android:gravity="center"
+                                    android:hint="0"
+                                    android:inputType="textEmailAddress"
+
+                                    android:text=""
+                                    android:textColor="@color/MainColor"
+                                    android:textColorHint="@color/MainColor"
+                                    android:textColorLink="@color/MainColor"
+
+                                    android:textCursorDrawable="@color/MainColor"
+                                    android:textSize="19sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/sf_compact_rounded_heavy"
+                                    android:gravity="start"
+                                    android:includeFontPadding="false"
+                                    android:maxLength="20"
+                                    android:maxLines="1"
+                                    android:text=","
+                                    android:textColor="@color/MainColor"
+                                    android:textSize="23sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_text_centesimi"
+                                    android:layout_width="90dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:autofillHints=""
+                                    android:background="@drawable/background_edit_text_stroke_white"
+                                    android:ems="10"
+                                    android:fontFamily="@font/sf_compact_rounded_bold"
+                                    android:gravity="center"
+                                    android:hint="00"
+                                    android:inputType="textEmailAddress"
+                                    android:text=""
+
+                                    android:textColor="@color/Black"
+                                    android:textColorHint="@color/MainColor"
+                                    android:textColorLink="@color/MainColor"
+
+                                    android:textCursorDrawable="@color/MainColor"
+                                    android:textSize="19dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_compact_rounded_heavy"
+                        android:text="Descrizione"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        android:textColor="@color/Black"/>
+                    <EditText
+                        android:id="@+id/edit_text_descrizione"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+
+                        android:layout_marginTop="4dp"
+                        android:autofillHints=""
+                        android:fontFamily="@font/sf_compact_rounded"
+                        android:background="@drawable/background_edit_text_stroke_white"
+                        android:ems="10"
+                        android:hint="Inserisci la descrizione del Prodotto"
+                        android:textSize="16sp"
+                        android:textColorHint="@color/Black"
+                        android:inputType="textEmailAddress"
+                        android:padding="8dp"
+                        android:maxLength="500"
+                        android:gravity="top|start"
+                        android:text=""
+                        android:textColor="@color/Black"
+
+                        android:textColorLink="@color/MainColor"
+                        android:textCursorDrawable="@color/MainColor" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_compact_rounded_heavy"
+                        android:text="Allergeni"
+                        android:gravity="start"
+                        android:textSize="20sp"
+                        android:textColor="@color/Black"/>
+                    <EditText
+                        android:id="@+id/edit_text_allergeni"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+
+                        android:layout_marginTop="4dp"
+                        android:autofillHints=""
+
+                        android:background="@drawable/background_edit_text_stroke_white"
+                        android:ems="10"
+                        android:hint="Inserisci gli Allergeni"
+                        android:textSize="16sp"
+                        android:textColorHint="@color/Black"
+                        android:inputType="textEmailAddress"
+                        android:padding="8dp"
+                        android:maxLength="500"
+                        android:gravity="top|start"
+                        android:text=""
+                        android:textColor="@color/Black"
+
+                        android:textColorLink="@color/MainColor"
+                        android:textCursorDrawable="@color/MainColor" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:layout_marginTop="16dp">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="start"
+                            android:layout_marginStart="16dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_heavy"
+                                android:text="Ingredienti"
+                                android:gravity="start"
+                                android:textSize="20sp"
+                                android:textColor="@color/Black"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="end"
+                            android:layout_marginEnd="16dp">
+
+                            <ImageView
+                                android:id="@+id/ic_add_ingrediente"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginStart="16dp"
+                                android:clickable="true"
+                                android:contentDescription="@string/icon_delete"
+                                android:src="@drawable/ic_add_category"
+                                tools:ignore="TouchTargetSizeCheck" />
+                            <ImageView
+                                android:id="@+id/ic_delete_ingrediente"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginStart="16dp"
+                                android:clickable="true"
+                                android:contentDescription="@string/icon_delete"
+                                android:src="@drawable/ic_trash_category"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="30dp"
+                        android:gravity="top"
+                        android:weightSum="2"
+                        android:padding="8dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/background_edit_text_stroke_white">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycle_view_ingredienti"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/sf_compact_rounded"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="Prodotto da passare in cucina" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:id="@+id/linear_layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="36dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_annulla"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="8dp"
+            app:cardUseCompatPadding="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingEnd="36dp"
+                android:paddingStart="36dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:gravity="center"
+                    android:autoSizeMaxTextSize="25sp"
+                    android:autoSizeMinTextSize="9sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+
+                    android:text="ANNULLA"
+                    android:textColor="@color/MainColor"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_margin="8dp"
+            android:id="@+id/card_view_salva"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="20dp"
+            app:cardUseCompatPadding="true"
+
+            android:background="@color/MainColor">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingEnd="36dp"
+                android:paddingStart="36dp"
+                android:background="@color/MainColor">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:gravity="center"
+                    android:autoSizeMaxTextSize="25sp"
+                    android:autoSizeMinTextSize="9sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+
+                    android:text="SALVA"
+                    android:maxLines="1"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
 
 </FrameLayout>

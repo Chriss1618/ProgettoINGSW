@@ -3,64 +3,121 @@ package com.ratatouille.Schermate.Ordini;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.ratatouille.Adapters.Adapter_OrderHistory;
+import com.ratatouille.Adapters.Adapter_TablesOrder;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Managers.Manager_Ordini;
 import com.ratatouille.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_HystoryOrders#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_HystoryOrders extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-//ciao amici
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public Fragment_HystoryOrders() {
-        // Required empty public constructor
-    }
+public class Fragment_HystoryOrders extends Fragment implements LayoutContainer {
+    //SYSTEM
+    private static final String TAG = "Fragment_HystoryOrders";
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_HystoryOrders.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_HystoryOrders newInstance(String param1, String param2) {
-        Fragment_HystoryOrders fragment = new Fragment_HystoryOrders();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    //LAYOUT
+    View                View_Fragment;
+    TextView            TextView_Title;
+    RecyclerView        recyclerView_OrdersTable;
+
+    //FUNCTIONAl
+    private Manager_Ordini          manager_ordini;
+    private RecycleEventListener    RecycleEventListener;
+
+    //DATA
+    ArrayList<String> OrdersTable;
+
+    //OTHER...
+
+
+    public Fragment_HystoryOrders(Manager_Ordini manager_ordini) {
+        this.manager_ordini = manager_ordini;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        RecycleEventListener = new RecycleEventListener();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__hystory_orders, container, false);
+        View_Fragment = inflater.inflate(R.layout.fragment__history_orders, container, false);
+
+        PrepareData();
+        PrepareLayout();
+
+        StartAnimations();
+
+        return View_Fragment;
+    }
+
+    //DATA
+    @Override
+    public void PrepareData() {
+        OrdersTable = new ArrayList<>();
+
+        OrdersTable.add("Cibo non Buono (3)");
+        OrdersTable.add("Morte in scatola (1)");
+        OrdersTable.add("Pizza Mangiabile");
+        OrdersTable.add("Lamentela Cliente");
+
+    }
+
+    //LAYOUT
+    @Override
+    public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
+    }
+
+    @Override
+    public void LinkLayout() {
+        TextView_Title              = View_Fragment.findViewById(R.id.text_view_title);
+        recyclerView_OrdersTable    = View_Fragment.findViewById(R.id.recycler_history_orders);
+    }
+    @Override
+    public void SetActionsOfLayout() {
+
+    }
+    @Override
+    public void SetDataOnLayout() {
+        initHistoryOrdersRV();
+    }
+
+    private void initHistoryOrdersRV(){
+        Adapter_OrderHistory adapter_orderHistory = new Adapter_OrderHistory(OrdersTable, RecycleEventListener);
+        recyclerView_OrdersTable.setAdapter(adapter_orderHistory);
+
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
+        recyclerView_OrdersTable.setLayoutManager(mLayoutManager);
+        recyclerView_OrdersTable.setNestedScrollingEnabled(false);
+    }
+    //ANIMATIONS
+    @Override
+    public void StartAnimations() {
+        TextView_Title              .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+        recyclerView_OrdersTable    .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+    }
+    @Override
+    public void EndAnimations() {
+        TextView_Title              .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        recyclerView_OrdersTable    .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
     }
 }

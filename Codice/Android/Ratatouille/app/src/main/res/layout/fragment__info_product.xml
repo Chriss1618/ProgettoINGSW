@@ -1,14 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/SoftGray"
     tools:context=".Schermate.Menu.Fragment_InfoProduct">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <LinearLayout
+            android:id="@+id/toolbar_menu_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="16dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginStart="16dp">
+                <TextView
+                    android:visibility="gone"
+                    android:id="@id/text_view_title_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="@string/Menu"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="16dp">
+                <ImageView
+                    android:id="@+id/ic_edit_product"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="icona edit" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_element_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardUseCompatPadding="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_image_product"
+                        android:layout_weight="1"
+                        android:layout_width="110dp"
+                        android:layout_height="120dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+                            <ImageView
+                                android:id="@+id/image_view_product"
+                                android:elevation = "2dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="180dp"
+                                android:clickable="true"
+                                android:src="@drawable/exemple_product"/>
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+                    <LinearLayout
+                        android:gravity="start"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:paddingTop="8dp">
+
+                        <TextView
+                            android:id="@+id/text_view_name_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_compact_rounded_bold"
+                            android:gravity="start"
+                            android:includeFontPadding="false"
+                            android:maxLength="30"
+                            android:text="Pizza Tonno"
+                            android:textColor="@color/Black"
+                            android:textSize="23sp" />
+
+                        <TextView
+                            android:id="@+id/text_view_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_compact_rounded_heavy"
+                            android:includeFontPadding="false"
+                            android:maxLength="20"
+                            android:maxLines="1"
+                            android:textSize="23sp"
+                            android:text="€ 0,00"
+                            android:gravity="start"
+                            android:textColor="@color/MainColor"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/text_view_product_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+
+                    android:autoSizeMaxTextSize="23sp"
+                    android:autoSizeMinTextSize="18sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/sf_compact_rounded"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua"
+                    android:gravity="center"
+                    android:textColor="@color/Gray"
+                    android:layout_marginBottom="16dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_compact_rounded_heavy"
+                    android:text="Allergeni"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:textColor="@color/Black"/>
+                <TextView
+                    android:id="@+id/text_view_product_allergeni"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeMinTextSize="10sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/sf_compact_rounded"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua"
+                    android:gravity="left"
+                    android:textColor="@color/Gray"
+                    android:layout_marginBottom="16dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_compact_rounded_heavy"
+                    android:text="Ingredienti"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:textColor="@color/Black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text_view_product_ingredienti"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/sf_compact_rounded"
+                        android:text="@string/Esempio_Ingerdienti"
+                        android:gravity="start"
+                        android:textSize="15sp"
+                        android:textColor="@color/Gray"
+                        android:layout_marginBottom="16dp"/>
+                    <TextView
+                        android:id="@+id/text_view_product_dosi"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/sf_compact_rounded"
+                        android:text="@string/Esempio_Dosi"
+                        android:gravity="end"
+                        android:textSize="15sp"
+                        android:textColor="@color/Gray"
+                        android:layout_marginBottom="16dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
 </FrameLayout>

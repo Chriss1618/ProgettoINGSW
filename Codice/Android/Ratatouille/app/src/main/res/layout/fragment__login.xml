@@ -17,14 +17,15 @@
         android:paddingStart="32dp"
         android:paddingTop="64dp"
         android:paddingEnd="32dp"
+        android:paddingBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:layout_width="230dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_login"
-            />
+            android:src="@drawable/ic_login" />
 
         <TextView
             android:layout_width="240dp"
@@ -44,15 +45,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:layout_marginStart="16dp"
             android:layout_marginTop="50dp"
             android:fontFamily="@font/sf_compact_rounded_bold"
-            android:text="@string/email"
 
+            android:text="@string/email"
             android:textColor="@color/MainColor"
             android:textSize="15sp"
-            android:textStyle="bold"
 
-            android:layout_marginStart="16dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,15 +84,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/sf_compact_rounded_bold"
-            android:text="@string/password"
 
+            android:text="@string/password"
             android:textColor="@color/MainColor"
             android:textSize="15sp"
-            android:textStyle="bold"
 
-            android:layout_marginStart="16dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

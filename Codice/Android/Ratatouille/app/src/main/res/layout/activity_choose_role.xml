@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Schermate.Activity_ChooseRole">
+
+    <android.widget.Button
+        android:id="@+id/button_amministratore"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/background_button_main"
+
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:fontFamily="@font/sf_compact_rounded"
+        android:paddingStart="36dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="32dp"
+
+        android:paddingBottom="13dp"
+        android:text="Amministratore"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_margin="32dp"
+        android:textStyle="bold"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"
+
+        android:maxLines="1"
+
+        />
+    <android.widget.Button
+        android:id="@+id/button_supervisore"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/background_button_main"
+
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:fontFamily="@font/sf_compact_rounded"
+        android:paddingStart="36dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="32dp"
+
+        android:paddingBottom="13dp"
+        android:text="Supervisore"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_margin="32dp"
+        android:textStyle="bold" />
+    <android.widget.Button
+        android:id="@+id/button_chef"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/background_button_main"
+
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:fontFamily="@font/sf_compact_rounded"
+        android:paddingStart="36dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="32dp"
+
+        android:paddingBottom="13dp"
+        android:text="chef"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_margin="32dp"
+        android:textStyle="bold" />
+    <android.widget.Button
+        android:id="@+id/button_cameriere"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/background_button_main"
+
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:fontFamily="@font/sf_compact_rounded"
+        android:paddingStart="36dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="32dp"
+
+        android:paddingBottom="13dp"
+        android:text="Cameriere"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_margin="32dp"
+        android:textStyle="bold" />
+
+</LinearLayout>

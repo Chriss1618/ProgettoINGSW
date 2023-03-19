@@ -14,6 +14,7 @@ import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.R;
 import com.ratatouille.Schermate.Activity_Amministratore;
+import com.ratatouille.Schermate.Activity_ChooseRole;
 
 public class Fragment_ConfirmPassword extends Fragment {
 
@@ -97,12 +98,12 @@ public class Fragment_ConfirmPassword extends Fragment {
 
     //ANIMATIONS
     private void animateIN(){
-        Fragment_View.startAnimation( Manager_Animation.getTranslateAnimatioINfromRight());
+        Fragment_View.startAnimation( Manager_Animation.getTranslateAnimatioINfromRight(500));
     }
 
     //ACTIONS
     private void startApp(){
-        Intent intent = new Intent(getContext(), Activity_Amministratore.class);
+        Intent intent = new Intent(getContext(), Activity_ChooseRole.class);
         getContext().startActivity(intent);
         getActivity().finish();
     }

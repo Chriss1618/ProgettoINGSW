@@ -2,65 +2,100 @@ package com.ratatouille.Schermate.Menu;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_NewProduct#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_NewProduct extends Fragment {
+public class Fragment_NewProduct extends Fragment implements LayoutContainer {
+    //SYSTEM
+    private static final String TAG = "Fragment_NewProduct";
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //LAYOUT
+    View                View_Fragment;
+    LinearLayout        LinearLayout_TitleProduct;
+    CardView            CardView_ProductData;
+    LinearLayout        LinearLayout_Buttons;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //FUNCTIONAL
+    private final Manager_MenuFragments manager_MenuFragments;
 
-    public Fragment_NewProduct() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_NewProduct.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_NewProduct newInstance(String param1, String param2) {
-        Fragment_NewProduct fragment = new Fragment_NewProduct();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    //DATA
+    //OTHER...
+    public Fragment_NewProduct(Manager_MenuFragments manager_MenuFragments) {
+        this.manager_MenuFragments = manager_MenuFragments;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__new_product, container, false);
+        View_Fragment = inflater.inflate(R.layout.fragment__new_product, container, false);
+
+        PrepareData();
+        PrepareLayout();
+
+        StartAnimations();
+        return View_Fragment;
+    }
+
+    //DATA
+    @Override
+    public void PrepareData() {
+
+    }
+
+    //LAYOUT
+    @Override
+    public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
+    }
+
+    @Override
+    public void LinkLayout() {
+        LinearLayout_TitleProduct   = View_Fragment.findViewById(R.id.toolbar_title_product);
+        CardView_ProductData        = View_Fragment.findViewById(R.id.card_view_element_product);
+        LinearLayout_Buttons        = View_Fragment.findViewById(R.id.linear_layout_buttons);
+    }
+    @Override
+    public void SetActionsOfLayout() {
+
+    }
+    @Override
+    public void SetDataOnLayout() {
+
+    }
+
+
+    //ANIMATIONS
+    @Override
+    public void StartAnimations() {
+        LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+        CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+        LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationINfromDown(500));
+    }
+    @Override
+    public void EndAnimations() {
+        LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+        CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(500));
+        LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationOUTtoDown(500));
     }
 }

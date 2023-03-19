@@ -5,6 +5,12 @@
     <color name="Black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E1342E</color>
+    <color name="Gray">#BFC5D6</color>
+    <color name="SoftGray">#F4F4F6</color>
 
+    <color name="DarkGray">#75787E</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="dark">#CD292831</color>
+
+    <color name="Green">#7DE14E</color>
 </resources>

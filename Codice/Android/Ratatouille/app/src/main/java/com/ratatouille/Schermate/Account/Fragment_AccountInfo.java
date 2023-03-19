@@ -2,65 +2,147 @@ package com.ratatouille.Schermate.Account;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Managers.Manager_AccountFragments;
+import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_AccountInfo#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_AccountInfo extends Fragment {
+import java.util.Set;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class Fragment_AccountInfo extends Fragment implements LayoutContainer {
+    //SYSTEM
+    private static final String TAG = "Fragment_AccountInfo";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //LAYOUT
+    View                View_Fragment;
+    LinearLayout        LinearLayout_TitleProduct;
+    ConstraintLayout    ConstraintLayout_ImageAccount;
+    LinearLayout        LinearLayout_InfoAccount;
 
-    public Fragment_AccountInfo() {
-        // Required empty public constructor
+    ImageView           Image_View_Account;
+    Button              Button_EditAccount;
+
+    //FUNCTIONAL
+    Manager_AccountFragments manager_accountFragments;
+
+    //DATA
+
+    //OTHER...
+
+    public Fragment_AccountInfo(Manager_AccountFragments manager_accountFragments) {
+        this.manager_accountFragments = manager_accountFragments;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_AccountInfo.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_AccountInfo newInstance(String param1, String param2) {
-        Fragment_AccountInfo fragment = new Fragment_AccountInfo();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__account_info, container, false);
+        View_Fragment = inflater.inflate(R.layout.fragment__account_info, container, false);
+        PrepareData();
+        PrepareLayout();
+
+        StartAnimations();
+        return View_Fragment;
+    }
+
+    //DATA
+    @Override
+    public void PrepareData() {
+
+    }
+    //LAYOUT
+    @Override
+    public void PrepareLayout() {
+        LinkLayout();
+        SetActionsOfLayout();
+        SetDataOnLayout();
+    }
+
+    @Override
+    public void LinkLayout() {
+        LinearLayout_TitleProduct       = View_Fragment.findViewById(R.id.toolbar_menu_account);
+        ConstraintLayout_ImageAccount   = View_Fragment.findViewById(R.id.constraint_layout_image_account);
+        LinearLayout_InfoAccount        = View_Fragment.findViewById(R.id.linear_layout_info_account);
+
+        Image_View_Account              = View_Fragment.findViewById(R.id.image_view_account);
+        Button_EditAccount              = View_Fragment.findViewById(R.id.button_edit_account);
+    }
+    @Override
+    public void SetActionsOfLayout() {
+        Button_EditAccount.setOnClickListener(view -> onClickEditAccount());
+    }
+    @Override
+    public void SetDataOnLayout() {
+        Glide.with(manager_accountFragments.context)
+                .load(getImage("exemple_product"))
+                .circleCrop()
+                .into(Image_View_Account);
+    }
+
+
+
+    public int getImage(String imageName) {
+        return this.getResources().getIdentifier(imageName, "drawable", manager_accountFragments.context.getPackageName());
+    }
+
+    //ACTIONS
+    private void onClickEditAccount(){
+        toEditAccountAnimation();
+        final Handler handler = new Handler();
+        handler.postDelayed(()->
+                sendActionToManager(Manager_AccountFragments.INDEX_ACCOUNT_EDIT,"Orazio Russo"),
+                300);
+
+    }
+    //FUNCTIONAL
+    private void sendActionToManager(int index,String msg){
+        this.manager_accountFragments.showFragment(index,msg);
+    }
+    //ANIMATIONS
+    @Override
+    public void StartAnimations() {
+        if(manager_accountFragments.from > manager_accountFragments.onMain){
+            ConstraintLayout_ImageAccount   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(500));
+        }else{
+            LinearLayout_TitleProduct       .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            ConstraintLayout_ImageAccount   .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
+            LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
+        }
+        Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationINfromDown(500));
+    }
+    @Override
+    public void EndAnimations() {
+        LinearLayout_TitleProduct           .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        ConstraintLayout_ImageAccount       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+        LinearLayout_InfoAccount            .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
+    }
+
+    public void toEditAccountAnimation(){
+        ConstraintLayout_ImageAccount       .startAnimation(Manager_Animation.getTranslationOUTtoUp(600));
+        LinearLayout_InfoAccount            .startAnimation(Manager_Animation.getFadeOut(300));
+        Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
     }
 }
