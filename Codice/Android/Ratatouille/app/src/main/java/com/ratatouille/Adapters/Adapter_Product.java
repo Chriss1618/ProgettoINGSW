@@ -1,6 +1,7 @@
 package com.ratatouille.Adapters;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
 import com.ratatouille.Interfaces.RecyclerInterfaces.onClickItemAdapterListener;
+import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
@@ -26,6 +29,8 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     private final RecycleEventListener      RecycleEventListener;
     private ViewHolder                      Holder;
 
+    //FUNCTIONAL
+    private boolean isFromLeft;
     //DATA
     private final ArrayList<String>         TitleProducts;
 
@@ -44,11 +49,11 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         }
     }
 
-    public Adapter_Product(ArrayList<String> TitleProducts, RecycleEventListener RecycleEventListener){
+    public Adapter_Product(ArrayList<String> TitleProducts, RecycleEventListener RecycleEventListener,boolean isFromLeft){
         this.TitleProducts          = TitleProducts;
         this.RecycleEventListener   = RecycleEventListener;
+        this.isFromLeft = isFromLeft;
     }
-
 
     @NonNull
     @Override
@@ -61,6 +66,11 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         this.Holder = holder;
         initializeLayout(position);
         setActions(position);
+
+        if (isFromLeft) {
+            this.Holder.Card_View_Element_Product.setVisibility(View.GONE);
+            StartAnimations(this.Holder.Card_View_Element_Product,position);
+        }
     }
 
     @Override
@@ -87,5 +97,15 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         RecycleEventListener.AdapterListener.onClickItem(TitleProducts.get(position));
     }
 
+    //ANIMATIONS
+    private void StartAnimations(CardView cardView,int position){
+
+        final Handler handler = new Handler();
+        handler.postDelayed(()->{
+            cardView.setVisibility(View.VISIBLE);
+            cardView .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(400));
+        }, (position + 1 ) * 100L);
+
+    }
 
 }

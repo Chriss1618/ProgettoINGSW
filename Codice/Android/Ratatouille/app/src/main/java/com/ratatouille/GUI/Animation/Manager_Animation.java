@@ -36,7 +36,6 @@ public class Manager_Animation {
         return set;
     }
 
-
     public static AnimationSet getTranslateAnimatioOUT(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
@@ -184,6 +183,44 @@ public class Manager_Animation {
         set.addAnimation(fadeOut);
         return set;
     }
+
+    public static AnimationSet getTranslationINfromDownSlower(int milliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        TranslateAnimation TA = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+                TranslateAnimation.RELATIVE_TO_PARENT,0.2f,
+                TranslateAnimation.RELATIVE_TO_PARENT,0f);
+        TA.setDuration(milliseconds);
+        TA.setInterpolator(new LinearInterpolator());
+
+        Animation fadeOut = new AlphaAnimation(0.0f , 1.0f);
+        fadeOut.setDuration(milliseconds);
+
+        set.addAnimation(TA);
+        set.addAnimation(fadeOut);
+        return set;
+    }
+    public static AnimationSet getTranslationOUTtoUpSlower(int miliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        TranslateAnimation TA = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+                TranslateAnimation.RELATIVE_TO_PARENT,-0.2f);
+        TA.setDuration(miliseconds);
+        TA.setInterpolator(new LinearInterpolator());
+
+        Animation fadeOut = new AlphaAnimation(1.0f ,0.0f);
+        fadeOut.setDuration(miliseconds);
+
+        set.addAnimation(TA);
+        set.addAnimation(fadeOut);
+        return set;
+    }
+
 
     public static AnimationSet getTranslationOUTtoDown(int milliseconds){
         AnimationSet set = new AnimationSet(true);

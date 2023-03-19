@@ -42,7 +42,6 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
 
     //OTHER...
 
-    //LAYOUT
     public Fragment_ListProducts(Manager_MenuFragments manager_menuFragments) {
         // Required empty public constructor
         this.manager_menuFragments = manager_menuFragments;
@@ -114,7 +113,10 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         Recycler_Products.setLayoutManager(mLayoutManager);
         Recycler_Products.setNestedScrollingEnabled(false);
-        Adapter_Product adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener);
+        boolean isFromLeft = true;
+        if(manager_menuFragments.from > manager_menuFragments.onMain) isFromLeft = false;
+
+        Adapter_Product adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,isFromLeft);
         Recycler_Products.setAdapter(adapter_product);
     }
 
@@ -159,7 +161,7 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
     }
     public void fromMenuAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationINfromDown(300));
-        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
+        //Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
 
     }
 
