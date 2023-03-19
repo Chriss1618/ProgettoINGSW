@@ -2,19 +2,22 @@ package com.ratatouille.Managers;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.ratatouille.Adapters.Adapter_ProductWaiter;
 import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
-import com.ratatouille.Schermate.Inventario.Fragment_EditProductInventory;
-import com.ratatouille.Schermate.Inventario.Fragment_InfoProductInventory;
-import com.ratatouille.Schermate.Inventario.Fragment_ListInventary;
-import com.ratatouille.Schermate.Inventario.Fragment_NewProductInventory;
-import com.ratatouille.Schermate.Ordini.Fragment_HystoryOrders;
-import com.ratatouille.Schermate.Ordini.Fragment_ListOrders;
-import com.ratatouille.Schermate.Ordini.Fragment_TableOrders;
+import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.R;
 import com.ratatouille.Schermate.OrdiniCameriere.Fragment_InfoProductCameriere;
 import com.ratatouille.Schermate.OrdiniCameriere.Fragment_ListCategoryCameriere;
 import com.ratatouille.Schermate.OrdiniCameriere.Fragment_ListProductsCameriere;
@@ -47,26 +50,36 @@ public class Manager_Ordini_Cameriere {
     private final Context               context;
     private final ArrayList<Fragment>   Fragments;
     private final View                  View;
+    private final BottomSheetDialog     bottomSheetDialog;
+    private RecyclerView                Recycler_Products;
 
     //FUNCTIONAL
-    private final BottomBarListener       bottomBarListener;
-    private final FragmentManager   fragmentManager;
-    public int                      onMain;
-    public int                      from;
+    private Adapter_ProductWaiter       adapter_product_waiter;
+    private RecycleEventListener        RecycleEventListener;
+    private final BottomBarListener     bottomBarListener;
+    private final FragmentManager       fragmentManager;
+    public int                          onMain;
+    public int                          from;
 
-    public Manager_Ordini_Cameriere(Context context, android.view.View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
+    //DATA
+    private ArrayList<String> ProductsReport;
+
+    public Manager_Ordini_Cameriere(Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Fragments = new ArrayList<>();
+        ProductsReport = new ArrayList<>();
 
         this.context            = context;
         this.View               = view;
         this.fragmentManager    = fragmentManager;
         this.bottomBarListener  = bottomBarListener;
 
-        Fragments.add(new Fragment_ListTables());
-        Fragments.add(new Fragment_TableInfo());
-        Fragments.add(new Fragment_ListCategoryCameriere());
-        Fragments.add(new Fragment_ListProductsCameriere());
-        Fragments.add(new Fragment_InfoProductCameriere());
+        this.bottomSheetDialog  = new BottomSheetDialog(this.context, R.style.BottomSheetDialogTheme);
+
+        Fragments.add(new Fragment_ListTables(this));
+        Fragments.add(new Fragment_TableInfo(this));
+        Fragments.add(new Fragment_ListCategoryCameriere(this));
+        Fragments.add(new Fragment_ListProductsCameriere(this));
+        Fragments.add(new Fragment_InfoProductCameriere(this));
         Fragments.add(new Fragment_ReportOrder());
 
         onMain = INDEX_ORDINI_CAMERIERE_LIST_TABLES;
@@ -99,16 +112,16 @@ public class Manager_Ordini_Cameriere {
                 showListTables();
                 break;
             case INDEX_ORDINI_CAMERIERE_TABLE_INFO:
-                showTableInfo();
+                showTableInfo(msg);
                 break;
             case INDEX_ORDINI_CAMERIERE_LIST_CATEGORY:
                 showListCategory();
                 break;
             case INDEX_ORDINI_CAMERIERE_LIST_PRODUCTS:
-                showListProducts();
+                showListProducts(msg);
                 break;
             case INDEX_ORDINI_CAMERIERE_INFO_PRODUCT:
-                showInfoProduct();
+                showInfoProduct(msg);
                 break;
             case INDEX_ORDINI_CAMERIERE_RESOCONTO_ORDERS:
                 showResocontoOrder();
@@ -120,18 +133,30 @@ public class Manager_Ordini_Cameriere {
     public void showListTables      (){
         loadFragmentAsMain(TAG_ORDINI_CAMERIERE_LIST_TABLES);
     }
-    public void showTableInfo       (){
+    public void showTableInfo       (String table){
+        Bundle arguments = new Bundle();
+        arguments.putString("table", table);
+        Fragments.get(INDEX_ORDINI_CAMERIERE_TABLE_INFO).setArguments(arguments);
 
+        loadFragmentAsNormal(TAG_ORDINI_CAMERIERE_TABLE_INFO);
     }
     public void showListCategory    (){
-
+        loadFragmentAsNormal(TAG_ORDINI_CAMERIERE_LIST_CATEGORY);
     }
-    public void showListProducts    (){
+    public void showListProducts    (String category){
+        Bundle arguments = new Bundle();
+        arguments.putString("category", category);
+        Fragments.get(INDEX_ORDINI_CAMERIERE_LIST_PRODUCTS).setArguments(arguments);
 
+        loadFragmentAsNormal(TAG_ORDINI_CAMERIERE_LIST_PRODUCTS);
     }
-    public void showInfoProduct     (){
+    public void showInfoProduct     (String product){
+        Bundle arguments = new Bundle();
+        arguments.putString("product", product);
+        Fragments.get(INDEX_ORDINI_CAMERIERE_INFO_PRODUCT).setArguments(arguments);
+        loadFragmentAsNormal(TAG_ORDINI_CAMERIERE_INFO_PRODUCT);
+    }
 
-    }
     public void showResocontoOrder  (){
 
     }
@@ -143,9 +168,58 @@ public class Manager_Ordini_Cameriere {
     public void showBottomBar(){
         bottomBarListener.showBottomBarLinstener.showBottomBar();
     }
+    
+    //BOTTOM SHEET
+    public void showBottomSheet(){
+        initBottomSheetDialog();
+        initListProductsRV();
+
+        bottomSheetDialog.show();
+    }
+    private void initBottomSheetDialog(){
+        bottomSheetDialog.setContentView(LayoutInflater.from(this.context).inflate(R.layout.bottom_sheet_record_orders,
+                View.findViewById(R.id.Bottom_sheet)));
+        BottomSheetBehavior<FrameLayout> bottomSheetBehavior = ((BottomSheetDialog)bottomSheetDialog).getBehavior();
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+    private void setRecycleEventListener(){
+        RecycleEventListener = new RecycleEventListener();
+
+        RecycleEventListener.setOnClickItemOptionAdapterListener(this::removeProduct);
+
+    }
+    private void initListProductsRV( ){
+        setRecycleEventListener();
+
+        Recycler_Products  = bottomSheetDialog.findViewById(R.id.recycler_products);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(context, 1);
+        Recycler_Products.setLayoutManager(mLayoutManager);
+        Recycler_Products.setNestedScrollingEnabled(true);
+        boolean isFromLeft = true;
+
+        adapter_product_waiter = new Adapter_ProductWaiter(context,this.ProductsReport, RecycleEventListener,false,true);
+        Recycler_Products.setAdapter(adapter_product_waiter);
+    }
+
+    public void addProduct(String product){
+        this.ProductsReport.add(product);
+     }
+    public void removeProduct(String name,int action){
+         Log.d(TAG, "removeProduct: ");
+         //this.ProductsReport.removeIf(name1 -> (name1.equals(name)));
+        for(int i = 0;i < ProductsReport.size();i++){
+            if(ProductsReport.get(i).equals(name)){
+                ProductsReport.remove(i);
+                Recycler_Products.invalidate();
+                adapter_product_waiter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
 
     //ANIMATIONS
     public void callEndAnimationOfFragment(){
+        int temp = from;
         from = onMain;
         switch (onMain){
             case INDEX_ORDINI_CAMERIERE_LIST_TABLES:
@@ -168,7 +242,7 @@ public class Manager_Ordini_Cameriere {
                 Objects.requireNonNull(listProductsCameriere).EndAnimations();
                 break;
             case INDEX_ORDINI_CAMERIERE_INFO_PRODUCT:
-                onMain = INDEX_ORDINI_CAMERIERE_LIST_PRODUCTS;
+                onMain = temp;
                 Fragment_InfoProductCameriere infoProductCameriere = (Fragment_InfoProductCameriere)fragmentManager.findFragmentByTag(TAG_ORDINI_CAMERIERE_INFO_PRODUCT);
                 Objects.requireNonNull(infoProductCameriere).EndAnimations();
                 break;

@@ -68,6 +68,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         PrepareData();
         PrepareLayout();
 
+        StartAnimations();
         return View_fragment;
     }
 
@@ -87,7 +88,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         LinkLayout();
         SetActionsOfLayout();
         SetDataOnLayout();
-        StartAnimations();
+
     }
 
     @Override
@@ -100,7 +101,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     }
     @Override
     public void SetDataOnLayout() {
-        initFeaturesRV();
+        initCategoryRV();
         initDialog();
     }
     @Override
@@ -109,7 +110,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         Image_View_AddCategory  .setOnClickListener(view ->onClickNewCategory());
     }
 
-    private void initFeaturesRV(){
+    private void initCategoryRV(){
         Adapter_Category adapter_category = new Adapter_Category(TitleCategories, RecycleEventListener);
         Recycler_Categories.setAdapter(adapter_category);
 
@@ -163,8 +164,8 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     @Override
     public void StartAnimations(){
         Text_View_TitleCategory.setText(R.string.Menu);
-        Text_View_TitleCategory     .startAnimation(Manager_Animation.getTranslationINfromUp(300));
-        Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
+        Text_View_TitleCategory     .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+        Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
     }
     @Override
     public void EndAnimations(){
