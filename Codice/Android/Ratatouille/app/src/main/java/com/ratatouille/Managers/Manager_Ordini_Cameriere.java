@@ -168,7 +168,7 @@ public class Manager_Ordini_Cameriere {
     public void showBottomBar(){
         bottomBarListener.showBottomBarLinstener.showBottomBar();
     }
-    
+
     //BOTTOM SHEET
     public void showBottomSheet(){
         initBottomSheetDialog();
@@ -197,7 +197,7 @@ public class Manager_Ordini_Cameriere {
         Recycler_Products.setNestedScrollingEnabled(true);
         boolean isFromLeft = true;
 
-        adapter_product_waiter = new Adapter_ProductWaiter(context,this.ProductsReport, RecycleEventListener,false,true);
+        adapter_product_waiter = new Adapter_ProductWaiter(this.ProductsReport, RecycleEventListener,false,true);
         Recycler_Products.setAdapter(adapter_product_waiter);
     }
 

@@ -35,25 +35,23 @@ public class Adapter_ProductWaiter extends RecyclerView.Adapter<Adapter_ProductW
     private ViewHolder  Holder;
     private TextView    TextView_PlusOne;
     //FUNCTIONAL
-    private boolean isFromLeft;
-    private Context Context;
-    private ArrayList<Boolean> isPlusShowing;
-    private ArrayList<Integer> plusValues;
-    final Handler handler_HidePlus = new Handler();
+    private boolean             isFromLeft;
+    private ArrayList<Boolean>  isPlusShowing;
+    private ArrayList<Integer>  plusValues;
+    final Handler               handler_HidePlus = new Handler();
 
     //DATA
     private final ArrayList<String> TitleProducts;
     private final boolean isReport;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        CardView    Card_View_Element_Product;
-        TextView    Text_View_Title_Product;
-        TextView    Text_View_Price_Product;
-        TextView    Text_view_Option;
-        TextView    Text_view_PlusOne;
-        ImageView   Image_View_Product;
-        CardView    Card_View_AddProduct;
-        LinearLayout LinearLayout_PlusOne;
+        CardView        Card_View_Element_Product;
+        TextView        Text_View_Title_Product;
+        TextView        Text_View_Price_Product;
+        TextView        Text_view_Option;
+        TextView        Text_view_PlusOne;
+        ImageView       Image_View_Product;
+        CardView        Card_View_AddProduct;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,12 +62,10 @@ public class Adapter_ProductWaiter extends RecyclerView.Adapter<Adapter_ProductW
             Card_View_AddProduct        = itemView.findViewById(R.id.card_view_add_product);
             Text_view_Option            = itemView.findViewById(R.id.text_view_option);
             Text_view_PlusOne           = itemView.findViewById(R.id.text_view_plus_one);
-            LinearLayout_PlusOne        = itemView.findViewById(R.id.linear_layout_plus_one);
         }
     }
 
-    public Adapter_ProductWaiter(Context context,ArrayList<String> TitleProducts, RecycleEventListener RecycleEventListener, boolean isFromLeft, boolean isReport){
-        this.Context                = context;
+    public Adapter_ProductWaiter(ArrayList<String> TitleProducts, RecycleEventListener RecycleEventListener, boolean isFromLeft, boolean isReport){
         this.TitleProducts          = TitleProducts;
         this.RecycleEventListener   = RecycleEventListener;
         this.isFromLeft             = isFromLeft;
@@ -104,7 +100,6 @@ public class Adapter_ProductWaiter extends RecyclerView.Adapter<Adapter_ProductW
     public int getItemCount() {
         return TitleProducts.size();
     }
-
 
     //LAYOUT
     private void initializeLayout( ViewHolder Holder,final int position){

@@ -114,7 +114,7 @@ public class Fragment_ListProductsCameriere extends Fragment implements LayoutCo
         boolean isFromLeft = true;
         if(managerOrdiniCameriere.from > managerOrdiniCameriere.onMain) isFromLeft = false;
 
-        Adapter_ProductWaiter adapter_product_waiter = new Adapter_ProductWaiter(getContext(),TitleProducts, RecycleEventListener,isFromLeft,false);
+        Adapter_ProductWaiter adapter_product_waiter = new Adapter_ProductWaiter(TitleProducts, RecycleEventListener,isFromLeft,false);
         Recycler_Products.setAdapter(adapter_product_waiter);
     }
 
