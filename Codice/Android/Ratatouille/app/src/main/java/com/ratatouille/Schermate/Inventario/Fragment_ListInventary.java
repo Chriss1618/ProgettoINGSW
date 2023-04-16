@@ -35,10 +35,13 @@ public class Fragment_ListInventary extends Fragment implements LayoutContainer 
     private RecyclerView    Recycler_Products_Exist;
     private RecyclerView    Recycler_Products_Missing;
     private ImageView       ImageView_AddProduct;
+    private ImageView       ImageView_DeleteProduct;
 
     //FUNCTIONAL
-    private RecycleEventListener        RecycleEventListener;
-    private Manager_InventoryFragments  manager_inventoryFragments;
+    private final RecycleEventListener          RecycleEventListener;
+    private final Manager_InventoryFragments    manager_inventoryFragments;
+    private Adapter_ProductInventory            adapter_product;
+    private boolean                             isDeleting;
     //DATA
     private ArrayList<String>   TitleProducts_Exist;
     private ArrayList<String>   TitleProducts_Missing;
@@ -46,6 +49,7 @@ public class Fragment_ListInventary extends Fragment implements LayoutContainer 
     //OTHER...
 
     public Fragment_ListInventary(Manager_InventoryFragments manager_inventoryFragments  ) {
+        this.RecycleEventListener                = new RecycleEventListener();
         this.manager_inventoryFragments     = manager_inventoryFragments;
     }
 
@@ -54,7 +58,6 @@ public class Fragment_ListInventary extends Fragment implements LayoutContainer 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RecycleEventListener = new RecycleEventListener();
     }
 
     @Override
@@ -79,6 +82,7 @@ public class Fragment_ListInventary extends Fragment implements LayoutContainer 
 
         TitleProducts_Missing.add("Pizza Tonno");
         TitleProducts_Missing.add("Pizza Margherita");
+        isDeleting = false;
     }
 
     //LAYOUT
@@ -99,11 +103,13 @@ public class Fragment_ListInventary extends Fragment implements LayoutContainer 
         Recycler_Products_Exist     = View_Fragment.findViewById(R.id.recycler_products_exist);
         Recycler_Products_Missing   = View_Fragment.findViewById(R.id.recycler_products_finished);
         ImageView_AddProduct        = View_Fragment.findViewById(R.id.ic_add_product);
+        ImageView_DeleteProduct     = View_Fragment.findViewById(R.id.ic_delete_product);
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener.setOnClickItemAdapterListener  (this::onClickProduct);
-        ImageView_AddProduct.setOnClickListener             (view -> onClickNewProduct());
+        RecycleEventListener    .setOnClickItemAdapterListener  (this::onClickProduct);
+        ImageView_AddProduct    .setOnClickListener             (view -> onClickNewProduct());
+        ImageView_DeleteProduct.setOnClickListener              (view -> onClickDeleteProduct());
     }
     @Override
     public void SetDataOnLayout() {
@@ -123,7 +129,7 @@ public class Fragment_ListInventary extends Fragment implements LayoutContainer 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         Recycler_Products_Missing.setLayoutManager(mLayoutManager);
         Recycler_Products_Missing.setNestedScrollingEnabled(false);
-        Adapter_ProductInventory adapter_product = new Adapter_ProductInventory(TitleProducts_Missing, RecycleEventListener);
+        adapter_product = new Adapter_ProductInventory(TitleProducts_Missing, RecycleEventListener);
         Recycler_Products_Missing.setAdapter(adapter_product);
     }
 
@@ -141,6 +147,15 @@ public class Fragment_ListInventary extends Fragment implements LayoutContainer 
         handler.postDelayed(()->
                         sendActionToManager(Manager_InventoryFragments.INDEX_INVENTORY_NEW_PRODUCT_INVENTORY,""),
                 300);
+    }
+    private void onClickDeleteProduct(){
+        if(isDeleting){
+            adapter_product.hideDeleteIcon();
+            isDeleting = false;
+        }else{
+            adapter_product.showDeleteIcon();
+            isDeleting = true;
+        }
     }
 
     //FUNCTIONAL

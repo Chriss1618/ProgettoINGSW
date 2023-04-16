@@ -3,13 +3,29 @@ package com.ratatouille.Schermate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
 public class Activity_ChooseRole extends AppCompatActivity {
     //SYSTEM
     private static final String TAG = "Activity_ChooseRole";
@@ -37,7 +53,8 @@ public class Activity_ChooseRole extends AppCompatActivity {
 
     //LAYOUT
     private void PrepareData() {
-
+        sendData();
+        getData();
     }
     private void PrepareLayout() {
         LinkLayout();
@@ -62,6 +79,88 @@ public class Activity_ChooseRole extends AppCompatActivity {
         Button_Cameriere        .setOnClickListener(view -> startCameriere());
     }
 
+    //CONNECTION
+    private void sendData(){
+        Thread thread = new Thread(this::ComunicateBackEnd);
+
+        thread.start();
+
+    }
+
+    private void ComunicateBackEnd(){
+        try {
+            URL urlGetAllProducts = new URL("http://s956013630.sito-web-online.it/App/test.php");
+            HttpURLConnection conn = (HttpURLConnection) urlGetAllProducts.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+
+            //INVIO Risposte
+            Uri.Builder builder = new Uri.Builder()
+                    .appendQueryParameter("nome", "porco")
+                    .appendQueryParameter("cognome", "dio");
+
+            String data = builder.build().getEncodedQuery();
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, StandardCharsets.UTF_8));
+            writer.write(data);
+            writer.flush();
+
+            //GET RESULT
+            InputStream inputStream = conn.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            StringBuilder builder2= new StringBuilder();
+
+            while((line = bufferedReader.readLine()) != null){
+                builder2.append(line);
+            }
+
+            JSONObject json_data = new JSONObject(builder2.toString());
+
+            //leggi Json Se hai un successo ritorni messageid;
+//                if (json_data.getInt("status")>0) {
+            Log.d(TAG, "getData: messaggio BackEnd->"+json_data );
+            Log.d(TAG, "sendData: messageFromAndroid:"+json_data.getString("messageFromAndroid"));
+//                    JSONArray document= new JSONArray(json_data.getString("messageFromAndroid"));
+//
+//                    for(int i = 0 ; i<document.length(); i++){
+//                        JSONObject singleDocument = new JSONObject(document.getString(i));
+//                        try {
+//                            Log.d(TAG, "getDocuments: data formatted->"+dateUpdate);
+//                            newFiles.add(new FileDocument(
+//                                    singleDocument.getString("document_id"),
+//                                    user_id,
+//                                    singleDocument.getString("plaza_id"),
+//                                    singleDocument.getString("name"),
+//                                    singleDocument.getString("plaza"),
+//                                    singleDocument.getString("filename"),
+//                                    singleDocument.getString("description"),
+//                                    dateUpdate
+//                            ));
+//
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+
+//                }
+
+            //CHIUSURA CONNESSIONE
+            bufferedReader.close();
+            os.flush();
+            os.close();
+            conn.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void getData(){
+
+    }
+
+    //ANIMATIONS
     private void startAmministratore(){
         Intent intent = new Intent(this, Activity_Amministratore.class);
         startActivity(intent);

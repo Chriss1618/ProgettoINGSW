@@ -40,11 +40,13 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     private LinearLayout    LinearLayout_NewCategory;
     private LinearLayout    LinearLayout_BackGroundNewCategory;
     private ImageView       Image_View_AddCategory;
+    private ImageView       Image_View_DeleteCategory;
 
     //FUNCTIONAL
     private final Manager_MenuFragments     manager_MenuFragments;
     private RecycleEventListener            RecycleEventListener;
-
+    private Adapter_Category                adapter_category;
+    private boolean                         isDeleting;
     //DATA
     private ArrayList<String> TitleCategories;
 
@@ -80,6 +82,8 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
             TitleCategories.add("Secondo");
             TitleCategories.add("Antipasti");
             TitleCategories.add("Contorno");
+
+            isDeleting = false;
     }
 
     //LAYOUT
@@ -95,6 +99,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     public void LinkLayout() {
         Text_View_TitleCategory             = View_fragment.findViewById(R.id.text_view_title_category);
         Image_View_AddCategory              = View_fragment.findViewById(R.id.ic_add_category);
+        Image_View_DeleteCategory           = View_fragment.findViewById(R.id.ic_delete_category);
         Recycler_Categories                 = View_fragment.findViewById(R.id.recycler_categories);
         LinearLayout_NewCategory            = View_fragment.findViewById(R.id.linear_layout_new_category);
         LinearLayout_BackGroundNewCategory  = View_fragment.findViewById(R.id.darkRL);
@@ -106,20 +111,21 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener    .setOnClickItemAdapterListener(this::onClickCategory);
-        Image_View_AddCategory  .setOnClickListener(view ->onClickNewCategory());
+        RecycleEventListener     .setOnClickItemAdapterListener(this::onClickCategory);
+        Image_View_AddCategory   .setOnClickListener(view ->onClickNewCategory());
+        Image_View_DeleteCategory.setOnClickListener(view -> onClickDeleteCategory());
     }
 
     private void initCategoryRV(){
-        Adapter_Category adapter_category = new Adapter_Category(TitleCategories, RecycleEventListener);
+        adapter_category = new Adapter_Category(TitleCategories, RecycleEventListener);
         Recycler_Categories.setAdapter(adapter_category);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         Recycler_Categories.setLayoutManager(mLayoutManager);
         Recycler_Categories.setNestedScrollingEnabled(false);
+        isDeleting = false;
     }
     private void initDialog(){
-
 
     }
     //ACTIONS
@@ -134,6 +140,16 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
 
     private void onClickNewCategory(){
         showDialogNewCategory();
+    }
+
+    private void onClickDeleteCategory(){
+        if(isDeleting){
+            adapter_category.hideDeleteIcon();
+            isDeleting = false;
+        }else{
+            adapter_category.showDeleteIcon();
+            isDeleting = true;
+        }
     }
 
     //FUNCTIONAL

@@ -1,6 +1,7 @@
 package com.ratatouille.Adapters;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
 import com.ratatouille.Interfaces.RecyclerInterfaces.onClickItemAdapterListener;
+import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
 
     //LAYOUT
     private ViewHolder                      Holder;
-
+    private ArrayList<ViewHolder>           Holders;
     //FUNCTIONAL
     private final RecycleEventListener      RecycleEventListener;
 
@@ -49,6 +52,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     public Adapter_Category(ArrayList<String> TitleCategories, RecycleEventListener RecycleEventListener){
         this.TitleCategories        = TitleCategories;
         this.RecycleEventListener   = RecycleEventListener;
+        this.Holders                = new ArrayList<>();
     }
 
     @NonNull
@@ -65,6 +69,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     @Override
     public void onBindViewHolder(@NonNull Adapter_Category.ViewHolder holder, int position) {
         this.Holder = holder;
+        this.Holders.add(holder);
         initializeLayout(position);
 
         setActions(position);
@@ -78,6 +83,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     }
     private void setActions(final int position){
         this.Holder.Card_View_Element_Category.setOnClickListener(view -> clickCategory(position));
+        this.Holders.get(position).Image_View_delete_element.setOnClickListener(view -> clickDeleteCategory(position));
     }
 
     //ACTIONS
@@ -87,6 +93,30 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         Log.d(TAG, " Array: "   + this.TitleCategories.get(position));
         Log.d(TAG, "--------------------------------------");
         RecycleEventListener.AdapterListener.onClickItem(TitleCategories.get(position));
+    }
+
+    private void clickDeleteCategory(int position){
+        Log.d(TAG, "clickDeleteCategory: "+this.Holders.get(position).Text_View_titoloCategory.getText().toString());
+
+    }
+
+    //ANIMATIONS
+
+    public void showDeleteIcon(){
+        for (ViewHolder holder:Holders) {
+            holder.Image_View_delete_element.setVisibility(View.VISIBLE);
+            holder.Image_View_delete_element.startAnimation(Manager_Animation.getFadeInZoom(200));
+        }
+    }
+
+    public void hideDeleteIcon(){
+        for (ViewHolder holder:Holders) {
+            holder.Image_View_delete_element.startAnimation(Manager_Animation.getFadeOutZoom(200));
+            final Handler handler = new Handler();
+            handler.postDelayed(()->
+                            holder.Image_View_delete_element.setVisibility(View.GONE),
+                    200);
+        }
     }
 
 

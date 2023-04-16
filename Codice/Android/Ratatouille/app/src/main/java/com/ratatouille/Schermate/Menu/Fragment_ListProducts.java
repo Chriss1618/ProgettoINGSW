@@ -33,9 +33,12 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
     private TextView        Text_View_TitleCategory;
     private RecyclerView    Recycler_Products;
     private ImageView       ImageView_AddProduct;
+    private ImageView       ImageView_deleteProduct;
     //FUNCTIONAL
-    private RecycleEventListener    RecycleEventListener;
-    private Manager_MenuFragments   manager_menuFragments;
+    private RecycleEventListener            RecycleEventListener;
+    private final Manager_MenuFragments     manager_menuFragments;
+    private Adapter_Product                 adapter_product;
+    private boolean                         isDeleting;
     //DATA
     private ArrayList<String>   TitleProducts;
     private String              Category_Name;
@@ -43,9 +46,8 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
     //OTHER...
 
     public Fragment_ListProducts(Manager_MenuFragments manager_menuFragments) {
-        // Required empty public constructor
         this.manager_menuFragments = manager_menuFragments;
-        Category_Name = "Nessuna Categoria";
+        this.Category_Name = "Nessuna Categoria";
     }
 
 
@@ -79,6 +81,8 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
         TitleProducts.add("Pizza Margherita");
         TitleProducts.add("Panino al Salame");
         TitleProducts.add("Carbonara");
+
+        isDeleting = false;
     }
 
     //LAYOUT
@@ -96,17 +100,20 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
         Text_View_TitleCategory     = View_fragment.findViewById(R.id.text_view_title_category);
         Recycler_Products           = View_fragment.findViewById(R.id.recycler_products);
         ImageView_AddProduct        = View_fragment.findViewById(R.id.ic_add_product);
+        ImageView_deleteProduct     = View_fragment.findViewById(R.id.ic_delete_product);
     }
 
     @Override
     public void SetDataOnLayout() {
         initListProductsRV();
         Text_View_TitleCategory.setText(Category_Name);
+
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener.setOnClickItemAdapterListener(this::onClickProduct);
-        ImageView_AddProduct.setOnClickListener(view -> onClickAddProduct());
+        RecycleEventListener    .setOnClickItemAdapterListener( this::onClickProduct);
+        ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
+        ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
     }
 
     private void initListProductsRV( ){
@@ -116,7 +123,7 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
         boolean isFromLeft = true;
         if(manager_menuFragments.from > manager_menuFragments.onMain) isFromLeft = false;
 
-        Adapter_Product adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,isFromLeft);
+        adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,isFromLeft);
         Recycler_Products.setAdapter(adapter_product);
     }
 
@@ -135,6 +142,15 @@ public class Fragment_ListProducts extends Fragment implements LayoutContainer {
         handler.postDelayed(()->
                         sendActionToManager(Manager_MenuFragments.INDEX_MENU_NEW_PRODUCT,Category_Name),
                 300);
+    }
+    private void onClickDeleteMember(){
+        if(isDeleting){
+            adapter_product.hideDeleteIcon();
+            isDeleting = false;
+        }else{
+            adapter_product.showDeleteIcon();
+            isDeleting = true;
+        }
     }
 
     //FUNCTIONAL

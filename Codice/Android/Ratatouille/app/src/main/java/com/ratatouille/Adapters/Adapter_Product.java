@@ -28,6 +28,7 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     //LAYOUT
     private final RecycleEventListener      RecycleEventListener;
     private ViewHolder                      Holder;
+    private ArrayList<ViewHolder>           Holders;
 
     //FUNCTIONAL
     private boolean isFromLeft;
@@ -39,20 +40,23 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         TextView    Text_View_Title_Product;
         TextView    Text_View_Price_Product;
         ImageView   Image_View_Product;
+        ImageView   Image_View_delete_element;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            Card_View_Element_Product  = itemView.findViewById(R.id.card_view_element_product);
-            Text_View_Title_Product    = itemView.findViewById(R.id.text_view_title_product);
-            Text_View_Price_Product    = itemView.findViewById(R.id.text_view_price);
+            Card_View_Element_Product   = itemView.findViewById(R.id.card_view_element_product);
+            Text_View_Title_Product     = itemView.findViewById(R.id.text_view_title_product);
+            Text_View_Price_Product     = itemView.findViewById(R.id.text_view_price);
             Image_View_Product          = itemView.findViewById(R.id.image_view_product);
+            Image_View_delete_element   = itemView.findViewById(R.id.ic_delete_on_element);
         }
     }
 
     public Adapter_Product(ArrayList<String> TitleProducts, RecycleEventListener RecycleEventListener,boolean isFromLeft){
         this.TitleProducts          = TitleProducts;
         this.RecycleEventListener   = RecycleEventListener;
-        this.isFromLeft = isFromLeft;
+        this.isFromLeft             = isFromLeft;
+        this.Holders                = new ArrayList<>();
     }
 
     @NonNull
@@ -64,6 +68,7 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         this.Holder = holder;
+        this.Holders.add(holder);
         initializeLayout(position);
         setActions(position);
 
@@ -86,8 +91,11 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
     private void setActions( final int position){
         this.Holder.Card_View_Element_Product.setOnClickListener(view -> clickProduct(position));
+        this.Holders.get(position).Image_View_delete_element.setOnClickListener(view -> clickDeleteCategory(position));
+
     }
 
+    //ACTIONS
     private void clickProduct( final int position){
         Log.d(TAG, "Premuto in Product--------------------");
         Log.d(TAG, " Holder: "  + this.Holder.Text_View_Title_Product.getText().toString());
@@ -95,6 +103,10 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         Log.d(TAG, "--------------------------------------");
 
         RecycleEventListener.AdapterListener.onClickItem(TitleProducts.get(position));
+    }
+    private void clickDeleteCategory(int position){
+        Log.d(TAG, "clickDeleteCategory: "+this.Holders.get(position).Text_View_Title_Product.getText().toString());
+
     }
 
     //ANIMATIONS
@@ -108,4 +120,20 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
     }
 
+    public void showDeleteIcon(){
+        for (ViewHolder holder:Holders) {
+            holder.Image_View_delete_element.setVisibility(View.VISIBLE);
+            holder.Image_View_delete_element.startAnimation(Manager_Animation.getFadeInZoom(200));
+        }
+    }
+
+    public void hideDeleteIcon(){
+        for (ViewHolder holder:Holders) {
+            holder.Image_View_delete_element.startAnimation(Manager_Animation.getFadeOutZoom(200));
+            final Handler handler = new Handler();
+            handler.postDelayed(()->
+                            holder.Image_View_delete_element.setVisibility(View.GONE),
+                    200);
+        }
+    }
 }

@@ -1,0 +1,139 @@
+public void getDocuments() {
+        //File Locali
+        progressBar.setVisibility(View.VISIBLE);
+
+        Documents = getLocal_DB_Documents();
+
+        String lastSync = getLastSync(Documents);
+        Log.d(TAG, "getDocuments: last Sync->"+lastSync);
+        //File Server
+        ArrayList<FileDocument> newFiles = new ArrayList<>(); //New File ricevuti dal Server
+
+        Log.d(TAG, "getDocuments: INIZIO");
+        Thread thread = new Thread(() -> {
+            try {
+                URL url = new URL(URL_GetDocuments);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                Log.d(TAG, "getDocuments: lastSync ="+ lastSync);
+
+                //INVIO Risposte
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("deviceID", deviceID)
+                        .appendQueryParameter("myDeviceID", String.valueOf(myDeviceID))
+                        .appendQueryParameter("int_id", int_id)
+                        .appendQueryParameter("user_id", user_id)
+                        .appendQueryParameter("customer_id", customer_id)
+                        .appendQueryParameter("customer_group_id",  String.valueOf(customer_group_id))
+                        .appendQueryParameter("plaza_id",plaza_id)
+                        .appendQueryParameter("last_date_update", lastSync);
+
+                String query = builder.build().getEncodedQuery();
+                Log.d(ContentValues.TAG, "JSON inviato al Server: "+ query);
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, StandardCharsets.UTF_8));
+                writer.write(query);
+                writer.flush();
+
+                //GET RESULT
+                InputStream inputStream = conn.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                StringBuilder builder2= new StringBuilder();
+
+                while((line = bufferedReader.readLine()) != null){
+                    builder2.append(line);
+                }
+
+                Log.d(ContentValues.TAG,"JSON Documenti ricevuto dal server:->" + builder2);
+
+                JSONObject json_data = new JSONObject(builder2.toString());
+                Log.d(ContentValues.TAG,"MSG ID:->" + json_data.getString("value"));
+
+                //leggi Json Se hai un successo ritorni messageid;
+                if (json_data.getInt("status")>0) {
+                    Log.d(TAG, "getDocuments: scorrendo i documenti Ricevuti->"+json_data.getInt("status") );
+                    JSONArray document= new JSONArray(json_data.getString("value"));
+                    for(int i = 0 ; i<document.length(); i++){
+                        JSONObject singleDocument = new JSONObject(document.getString(i));
+                        try {
+                            SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                            Date dateUpdate = sf.parse(singleDocument.getString("date_update"));
+                            Log.d(TAG, "getDocuments: data formatted->"+dateUpdate);
+                            newFiles.add(new FileDocument(
+                                    singleDocument.getString("document_id"),
+                                    user_id,
+                                    singleDocument.getString("plaza_id"),
+                                    singleDocument.getString("name"),
+                                    singleDocument.getString("plaza"),
+                                    singleDocument.getString("filename"),
+                                    singleDocument.getString("description"),
+                                    dateUpdate
+                            ));
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            String dateUpdate = singleDocument.getString("date_update");
+                            newFiles.add(new FileDocument(
+                                    singleDocument.getString("document_id"),
+                                    user_id,
+                                    singleDocument.getString("plaza_id"),
+                                    singleDocument.getString("name"),
+                                    singleDocument.getString("plaza"),
+                                    singleDocument.getString("filename"),
+                                    singleDocument.getString("description"),
+                                    dateUpdate
+                            ));
+                        }
+                    }
+
+                }
+
+                //CHIUSURA CONNESSIONE
+                bufferedReader.close();
+                os.flush();
+                os.close();
+                conn.disconnect();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+
+        while(thread.isAlive()){
+            Log.d(ContentValues.TAG, "attesa terminazione thread getDocuments ");
+        }
+        Log.d(ContentValues.TAG, "thread getDocuments: Terminato ");
+        Log.d(TAG, "getDocuments: NewFiles: "+newFiles.size());
+        if(newFiles.size() > 0 ) updateLocalDocuments(newFiles);
+
+        Log.d(TAG, "getDocuments: Documenti Dal Server -------------------- INIZIO");
+        for (FileDocument file: newFiles
+        ) {
+            Log.d(TAG, "getDocuments: *********");
+            Log.d(TAG, "getDocuments: Document ID: "+ file.getDocument_id());
+            Log.d(TAG, "getDocuments: fileName: "+ file.getNameFile());
+            Log.d(TAG, "getDocuments: Name: "+ file.getName());
+            Log.d(TAG, "getDocuments: lastUpdate "+ file.getData_updated());
+            Log.d(TAG, "getDocuments: *********");
+        }
+        Log.d(TAG, "getDocuments: Documenti Dal Server  ------------ FINE");
+
+        Documents = getLocal_DB_Documents();
+        Log.d(TAG, "getDocuments: Documenti Rilevanti --------------- INIZIO");
+        for (FileDocument file: Documents) {
+            Log.d(TAG, "getDocuments: *********");
+            Log.d(TAG, "getDocuments: Document ID: "+ file.getDocument_id());
+            Log.d(TAG, "getDocuments: fileName: "+ file.getNameFile());
+            Log.d(TAG, "getDocuments: Name: "+ file.getName());
+            Log.d(TAG, "getDocuments: lastUpdate "+ file.getData_updated());
+            Log.d(TAG, "getDocuments: *********");
+        }
+        Log.d(TAG, "getDocuments: Documenti Rilevanti --------------- FINE");
+        progressBar.setVisibility(View.GONE);
+    }
+    

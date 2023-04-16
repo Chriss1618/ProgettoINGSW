@@ -221,7 +221,6 @@ public class Manager_Animation {
         return set;
     }
 
-
     public static AnimationSet getTranslationOUTtoDown(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
@@ -275,6 +274,30 @@ public class Manager_Animation {
 
         set.addAnimation(TA);
         set.addAnimation(fadeOut);
+        return set;
+    }
+
+    public static AnimationSet getFadeInZoom(int milliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        Animation zoomIn = new ScaleAnimation(0.0f,1.0f,0.0f,1.0f);
+
+        zoomIn.setDuration(milliseconds);
+
+        set.addAnimation(zoomIn);
+        set.addAnimation(getFadeIn(milliseconds));
+        return set;
+    }
+
+    public static AnimationSet getFadeOutZoom(int milliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        Animation zoomOut = new ScaleAnimation(1.0f,0.0f,1.0f,0.0f);
+
+        zoomOut.setDuration(milliseconds);
+
+        set.addAnimation(zoomOut);
+        set.addAnimation(getFadeOut(milliseconds));
         return set;
     }
 

@@ -16,9 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ratatouille.Adapters.Adapter_Category;
 import com.ratatouille.Adapters.Adapter_Staff;
-import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
@@ -35,12 +33,14 @@ public class Fragment_ListStaff extends Fragment implements LayoutContainer {
     private View            Fragment_View;
     private RecyclerView    Recycler_StaffMembers;
     private ImageView       Image_View_AddMember;
+    private ImageView       Image_View_DeleteMember;
     private TextView        Text_View_Title_Staff;
 
     //FUNCTIONAL
-    private final Manager_StaffFragments  manager_staffFragments;
-    private RecycleEventListener    RecycleEventListener;
-
+    private final Manager_StaffFragments    manager_staffFragments;
+    private final RecycleEventListener      RecycleEventListener;
+    private Adapter_Staff                   adapter_staff;
+    private boolean                         isDeleting;
     //DATA
     private ArrayList<String> NameStuffMembers;
 
@@ -48,7 +48,7 @@ public class Fragment_ListStaff extends Fragment implements LayoutContainer {
 
     public Fragment_ListStaff(Manager_StaffFragments manager_staffFragments) {
         this.manager_staffFragments = manager_staffFragments;
-        RecycleEventListener = new RecycleEventListener();
+        this.RecycleEventListener   = new RecycleEventListener();
     }
 
 
@@ -79,6 +79,8 @@ public class Fragment_ListStaff extends Fragment implements LayoutContainer {
         NameStuffMembers.add("Nome Dipendente");
         NameStuffMembers.add("Nome Dipendente");
         NameStuffMembers.add("Nome Dipendente");
+
+        isDeleting = false;
     }
 
     //LAYOUT
@@ -93,12 +95,14 @@ public class Fragment_ListStaff extends Fragment implements LayoutContainer {
     public void LinkLayout() {
         Recycler_StaffMembers   = Fragment_View.findViewById(R.id.recycler_staff);
         Image_View_AddMember    = Fragment_View.findViewById(R.id.ic_add_staff);
+        Image_View_DeleteMember = Fragment_View.findViewById(R.id.ic_delete_staff);
         Text_View_Title_Staff   = Fragment_View.findViewById(R.id.text_view_title_staff);
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener.setOnClickItemAdapterListener( this::onClickStaffMember);
-        Image_View_AddMember.setOnClickListener(            view -> onClickAddNewMember());
+        RecycleEventListener    .setOnClickItemAdapterListener( this::onClickStaffMember);
+        Image_View_AddMember    .setOnClickListener(            view -> onClickAddNewMember());
+        Image_View_DeleteMember .setOnClickListener(            view -> onClickDeleteMember());
     }
     @Override
     public void SetDataOnLayout() {
@@ -106,7 +110,7 @@ public class Fragment_ListStaff extends Fragment implements LayoutContainer {
     }
 
     private void initFeaturesRV(){
-        Adapter_Staff adapter_staff = new Adapter_Staff(NameStuffMembers, RecycleEventListener);
+        adapter_staff = new Adapter_Staff(NameStuffMembers, RecycleEventListener);
         Recycler_StaffMembers.setAdapter(adapter_staff);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
@@ -125,6 +129,15 @@ public class Fragment_ListStaff extends Fragment implements LayoutContainer {
 
     }
 
+    private void onClickDeleteMember(){
+        if(isDeleting){
+            adapter_staff.hideDeleteIcon();
+            isDeleting = false;
+        }else{
+            adapter_staff.showDeleteIcon();
+            isDeleting = true;
+        }
+    }
     private void onClickAddNewMember(){
         EndAnimations();
         final Handler handler = new Handler();

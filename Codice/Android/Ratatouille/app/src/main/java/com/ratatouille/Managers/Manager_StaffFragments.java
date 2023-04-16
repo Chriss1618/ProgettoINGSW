@@ -28,12 +28,12 @@ public class Manager_StaffFragments {
     public static final String TAG_STAFF_NEW_MEMBER     = "newMember";
 
     //LAYOUT
-    private final Context               context;
+    public  final Context               context;
     private final ArrayList<Fragment>   Fragments;
     private final View                  View;
 
     //FUNCTIONAL
-    private final BottomBarListener           bottomBarListener;
+    private final BottomBarListener     bottomBarListener;
     private final FragmentManager       fragmentManager;
     public int                          onMain;
     public int                          from;
