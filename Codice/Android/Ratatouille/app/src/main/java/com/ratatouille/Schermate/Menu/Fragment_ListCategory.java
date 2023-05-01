@@ -1,6 +1,7 @@
 package com.ratatouille.Schermate.Menu;
 
 import android.app.Dialog;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -24,9 +25,23 @@ import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
 import com.ratatouille.Managers.Manager_MenuFragments;
+import com.ratatouille.Models.CategoriaMenu;
+import com.ratatouille.Models.EndPoints.EndPointer;
 import com.ratatouille.R;
 import com.ratatouille.Schermate.Activity_Amministratore;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Fragment_ListCategory extends Fragment implements LayoutContainer {
@@ -49,7 +64,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     private boolean                         isDeleting;
     //DATA
     private ArrayList<String> TitleCategories;
-
+    private ArrayList<CategoriaMenu> CategorieMenu;
     //OTHERS...
 
 
@@ -77,13 +92,94 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     //DATA
     @Override
     public void PrepareData(){
-            TitleCategories = new ArrayList<>();
-            TitleCategories.add("Primo");
-            TitleCategories.add("Secondo");
-            TitleCategories.add("Antipasti");
-            TitleCategories.add("Contorno");
+        TitleCategories = new ArrayList<>();
+        CategorieMenu = new ArrayList<>();
+        Thread thread = new Thread(this::getDataFromServer);
 
-            isDeleting = false;
+        thread.start();
+
+        while(thread.isAlive()) {}
+        setData();
+    }
+
+    private void setData(){
+
+        for(CategoriaMenu categoriaMenu : CategorieMenu)
+            TitleCategories.add(categoriaMenu.getNomeCategoria());
+
+        isDeleting = false;
+
+    }
+    private void getDataFromServer(){
+        TitleCategories = new ArrayList<>();
+
+        try {
+            String url = EndPointer.StandardPath+EndPointer.VERSION_ENDPOINT+EndPointer.SELECT+"/CategoriaMenu.php";
+            Log.d(TAG, "getDataFromServer: Url : "+ url);
+            URL urlGetAllCategories = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) urlGetAllCategories.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+
+            //INVIO Risposte
+            Uri.Builder builder = new Uri.Builder()
+                    .appendQueryParameter("id_ristorante", "1");
+
+            String data = builder.build().getEncodedQuery();
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, StandardCharsets.UTF_8));
+            writer.write(data);
+            writer.flush();
+
+            //GET RESULT
+            InputStream inputStream = conn.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            StringBuilder builder2= new StringBuilder();
+
+            while((line = bufferedReader.readLine()) != null){
+                builder2.append(line);
+            }
+
+            JSONObject json_data = new JSONObject(builder2.toString());
+
+            Log.d(TAG, "getData: messaggio BackEnd->"+json_data );
+            if(json_data.getString("status").equals("0")){
+                return;
+            }
+
+            //leggi Json Se hai un successo ritorni messageid
+            Log.d(TAG, "sendData: messageFromAndroid:"+json_data.getString("msg"));
+
+
+            JSONArray Msg= new JSONArray(json_data.getString("msg"));
+
+            for(int i = 0 ; i<Msg.length(); i++){
+                JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
+                try {
+                    CategorieMenu.add(new CategoriaMenu(
+                            Categoria_Json.getString("NomeCategoria"),
+                            Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
+                    ));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            Log.d(TAG, "getDataFromServer: numero Categorie Salvate ->"+CategorieMenu.size());
+
+
+            //CHIUSURA CONNESSIONE
+            bufferedReader.close();
+            os.flush();
+            os.close();
+            conn.disconnect();
+
+        } catch (Exception e) {
+            Log.d(TAG, "getDataFromServer: Errore di Comunicazione con il BeckEnd");
+            e.printStackTrace();
+        }
     }
 
     //LAYOUT
