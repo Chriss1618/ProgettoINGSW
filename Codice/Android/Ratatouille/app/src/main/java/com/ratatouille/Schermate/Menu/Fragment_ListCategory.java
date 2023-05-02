@@ -1,6 +1,7 @@
 package com.ratatouille.Schermate.Menu;
 
-import android.app.Dialog;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,13 +15,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_Category;
-import com.ratatouille.Controllers.Controller_Amministratore;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
@@ -29,20 +30,10 @@ import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Models.EndPoints.EndPointer;
 import com.ratatouille.Models.ServerCommunication;
 import com.ratatouille.R;
-import com.ratatouille.Schermate.Activity_Amministratore;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Fragment_ListCategory extends Fragment implements LayoutContainer {
@@ -57,14 +48,14 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     private LinearLayout    LinearLayout_BackGroundNewCategory;
     private ImageView       Image_View_AddCategory;
     private ImageView       Image_View_DeleteCategory;
+    private TextView        Text_View_Empty;
 
     //FUNCTIONAL
     private final Manager_MenuFragments     manager_MenuFragments;
     private RecycleEventListener            RecycleEventListener;
     private Adapter_Category                adapter_category;
-    private boolean                         isDeleting;
+    private boolean                         isDeleting = false;
     //DATA
-    private ArrayList<String> TitleCategories;
     private ArrayList<CategoriaMenu> CategorieMenu;
     //OTHERS...
 
@@ -76,9 +67,9 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RecycleEventListener    = new RecycleEventListener();
 
-        RecycleEventListener = new RecycleEventListener();
-
+        CategorieMenu           = new ArrayList<>();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,60 +81,67 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         return View_fragment;
     }
 
-    //DATA
+    //DATA *****************************************************************************
     @Override
     public void PrepareData(){
-        TitleCategories = new ArrayList<>();
-        CategorieMenu = new ArrayList<>();
-        Thread thread = new Thread(this::getDataFromServer);
-
-        thread.start();
-
-        while(thread.isAlive()) {}
-        setData();
+        if(CategorieMenu.isEmpty()){
+            getCategoriesFromServer();
+        }
     }
 
-    private void setData(){
-
-        for(CategoriaMenu categoriaMenu : CategorieMenu)
-            TitleCategories.add(categoriaMenu.getNomeCategoria());
-
-        isDeleting = false;
-
-    }
-    private void getDataFromServer(){
-        TitleCategories = new ArrayList<>();
-
-        ServerCommunication serverCommunication = new ServerCommunication();
-
-        Uri.Builder dataToSend = new Uri.Builder()
-                .appendQueryParameter("id_ristorante", "1");
-        String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/CategoriaMenu.php";
-
-        try {
-            JSONArray Msg = serverCommunication.getDataFromBackEnd(dataToSend,url);
-
+    private void setCategories(JSONArray Msg) throws org.json.JSONException{
+        if( Msg != null ){
             for(int i = 0 ; i<Msg.length(); i++){
                 JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
-                try {
+
+                CategorieMenu.add(new CategoriaMenu(
+                        Categoria_Json.getString("NomeCategoria"),
+                        Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
+                ));
+            }
+        }
+    }
+
+    private void getCategoriesFromServer(){
+        Uri.Builder dataToSend  = new Uri.Builder().appendQueryParameter("id_ristorante", "1");
+        String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/CategoriaMenu.php";
+
+        try {
+            JSONArray Json_Categories = new ServerCommunication().getData( dataToSend, url);
+            setCategories( Json_Categories );
+        }catch ( Exception e ){
+            Log.e(TAG, "getDataFromServer: ",e);
+        }
+    }
+
+    private boolean sendNewCategoryToServer(String newCategory){
+        Uri.Builder dataToSend = new Uri.Builder().appendQueryParameter("id_ristorante", "1")
+                .appendQueryParameter("NameCategory",newCategory);
+        String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/CategoriaMenu.php";
+
+        try {
+            JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
+            if( Msg != null ){
+                for(int i = 0 ; i<Msg.length(); i++){
+                    JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
+
                     CategorieMenu.add(new CategoriaMenu(
                             Categoria_Json.getString("NomeCategoria"),
                             Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
                     ));
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-            Log.d(TAG, "getDataFromServer: numero Categorie Salvate ->"+CategorieMenu.size());
 
+            }else{
+                return false;
+            }
         }catch (Exception e){
-            Log.d(TAG, "getDataFromServer: errore Json");
             Log.e(TAG, "getDataFromServer: ",e);
         }
-
+        return true;
     }
 
-    //LAYOUT
+
+    //LAYOUT****************************************************************************
     @Override
     public void PrepareLayout() {
         LinkLayout();
@@ -160,6 +158,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         Recycler_Categories                 = View_fragment.findViewById(R.id.recycler_categories);
         LinearLayout_NewCategory            = View_fragment.findViewById(R.id.linear_layout_new_category);
         LinearLayout_BackGroundNewCategory  = View_fragment.findViewById(R.id.darkRL);
+        Text_View_Empty                     = View_fragment.findViewById(R.id.text_view_empty);
     }
     @Override
     public void SetDataOnLayout() {
@@ -174,24 +173,35 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     }
 
     private void initCategoryRV(){
-        adapter_category = new Adapter_Category(TitleCategories, RecycleEventListener);
+        adapter_category = new Adapter_Category(CategorieMenu, RecycleEventListener);
         Recycler_Categories.setAdapter(adapter_category);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         Recycler_Categories.setLayoutManager(mLayoutManager);
         Recycler_Categories.setNestedScrollingEnabled(false);
-        isDeleting = false;
+        checkEmptyRecycle();
+
     }
     private void initDialog(){
 
     }
-    //ACTIONS
+    private void checkEmptyRecycle(){
+        if(CategorieMenu.isEmpty()) {
+            Text_View_Empty.setVisibility(View.VISIBLE);
+            Recycler_Categories.setVisibility(View.GONE);
+        }else{
+            Text_View_Empty.setVisibility(View.GONE);
+            Recycler_Categories.setVisibility(View.VISIBLE);
+
+        }
+    }
+    //ACTIONS*************************************************************************
     private void onClickCategory(String Category){
         Log.d(TAG, "Ricevuto da Listener->"+Category);
         EndAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(()->
-                sendActionToManager(Manager_MenuFragments.INDEX_MENU_LIST_PRODUCTS,Category),
+                sendActionToManager(Category),
                 300);
     }
 
@@ -209,21 +219,25 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         }
     }
 
-    //FUNCTIONAL
-    private void sendActionToManager(int index,String msg){
-        this.manager_MenuFragments.showFragment(index,msg);
+    //FUNCTIONAL *********************************************************************
+    private void sendActionToManager(String msg){
+        this.manager_MenuFragments.showFragment(Manager_MenuFragments.INDEX_MENU_LIST_PRODUCTS,msg);
     }
 
     private void showDialogNewCategory(){
         CardView CardView_Cancel    = LinearLayout_NewCategory.findViewById(R.id.card_view_annulla);
         CardView CardView_Add       = LinearLayout_NewCategory.findViewById(R.id.card_view_aggiungi);
+        EditText EditText_NewCategoryName = LinearLayout_NewCategory.findViewById(R.id.edit_text_nome_categoria);
 
-        CardView_Cancel.setOnClickListener(view -> dismissDialogNewCategory());
+        CardView_Cancel .setOnClickListener(view -> dismissDialogNewCategory());
+        CardView_Add    .setOnClickListener(view -> addCategory( EditText_NewCategoryName.getText().toString()));
 
         LinearLayout_NewCategory            .setVisibility(View.VISIBLE);
         LinearLayout_BackGroundNewCategory  .setVisibility(View.VISIBLE);
-        LinearLayout_NewCategory.startAnimation(Manager_Animation.getTranslationINfromUp(500));
-        LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeIn(500));
+        LinearLayout_NewCategory            .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+        LinearLayout_BackGroundNewCategory  .startAnimation(Manager_Animation.getFadeIn(500));
+
+        EditText_NewCategoryName.setText("");
     }
 
     private void dismissDialogNewCategory(){
@@ -233,6 +247,56 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeOut(500));
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private void addCategory(String newCategory){
+        hideKeyboardFrom();
+        if(newCategory.equals("") || newCategory.length() < 4){
+            ShowNameCategoryNotValid();
+        }else if(sendNewCategoryToServer(newCategory)){
+            adapter_category.notifyDataSetChanged();
+            checkEmptyRecycle();
+            showSuccessfullyAddedNewCategory();
+        }
+    }
+
+    private void ShowNameCategoryNotValid(){
+
+    }
+
+    private void showSuccessfullyAddedNewCategory(){
+        LinearLayout LinearLayout_Accepted       = LinearLayout_NewCategory.findViewById(R.id.linear_layout_category_accepted);
+        LinearLayout LinearLayout_InsertCategory = LinearLayout_NewCategory.findViewById(R.id.linear_layout_insert_category);
+
+        LinearLayout_InsertCategory.setAnimation( Manager_Animation.getFadeOut(200));
+
+        final Handler handler = new Handler();
+        handler.postDelayed(()-> {
+            LinearLayout_InsertCategory.setVisibility(View.INVISIBLE);
+
+            new Handler().postDelayed( () ->{
+                LinearLayout_InsertCategory.setVisibility(View.GONE);
+                LinearLayout_Accepted.setVisibility(View.VISIBLE);
+                LinearLayout_Accepted.setAnimation( Manager_Animation.getFadeIn(200));
+                new Handler().postDelayed( () ->{
+                    dismissDialogNewCategory();
+                    new Handler().postDelayed( () ->{
+                        LinearLayout_Accepted       .setVisibility(View.GONE);
+                        LinearLayout_InsertCategory .setVisibility(View.VISIBLE);
+                    },500);
+
+                },1500);
+
+            },500);
+
+
+        },200);
+
+    }
+
+    public void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.requireView().getWindowToken(), 0);
+    }
     //ANIMATIONS
     @Override
     public void StartAnimations(){
@@ -245,6 +309,4 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         Recycler_Categories     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }
-
-
 }

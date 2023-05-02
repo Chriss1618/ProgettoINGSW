@@ -17,6 +17,7 @@ import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
 import com.ratatouille.Interfaces.RecyclerInterfaces.onClickItemAdapterListener;
 import com.ratatouille.Managers.Manager_MenuFragments;
+import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     private final RecycleEventListener      RecycleEventListener;
 
     //DATA
-    private final ArrayList<String>         TitleCategories;
+    private final ArrayList<CategoriaMenu>    TitleCategories;
 
     //OTHER...
 
@@ -49,7 +50,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         }
     }
 
-    public Adapter_Category(ArrayList<String> TitleCategories, RecycleEventListener RecycleEventListener){
+    public Adapter_Category(ArrayList<CategoriaMenu> TitleCategories, RecycleEventListener RecycleEventListener){
         this.TitleCategories        = TitleCategories;
         this.RecycleEventListener   = RecycleEventListener;
         this.Holders                = new ArrayList<>();
@@ -79,7 +80,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
 
     //LAYOUT
     private void initializeLayout(final int position){
-        this.Holder.Text_View_titoloCategory.setText(TitleCategories.get(position));
+        this.Holder.Text_View_titoloCategory.setText(TitleCategories.get(position).getNomeCategoria());
     }
     private void setActions(final int position){
         this.Holder.Card_View_Element_Category.setOnClickListener(view -> clickCategory(position));
@@ -92,7 +93,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         Log.d(TAG, " Holder: "  + this.Holder.Text_View_titoloCategory.getText().toString());
         Log.d(TAG, " Array: "   + this.TitleCategories.get(position));
         Log.d(TAG, "--------------------------------------");
-        RecycleEventListener.AdapterListener.onClickItem(TitleCategories.get(position));
+        RecycleEventListener.AdapterListener.onClickItem(TitleCategories.get(position).getNomeCategoria());
     }
 
     private void clickDeleteCategory(int position){

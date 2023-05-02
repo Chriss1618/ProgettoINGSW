@@ -22,6 +22,7 @@ import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_Ordini_Cameriere;
+import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class Fragment_ListCategoryCameriere extends Fragment implements LayoutCo
     private Manager_Ordini_Cameriere managerOrdiniCameriere;
 
     //DATA
-    private ArrayList<String> TitleCategories;
+    private ArrayList<CategoriaMenu> TitleCategories;
 
     //OTHER...
 
@@ -79,10 +80,10 @@ public class Fragment_ListCategoryCameriere extends Fragment implements LayoutCo
     @Override
     public void PrepareData(){
         TitleCategories = new ArrayList<>();
-        TitleCategories.add("Primo");
-        TitleCategories.add("Secondo");
-        TitleCategories.add("Antipasti");
-        TitleCategories.add("Contorno");
+        TitleCategories.add(new CategoriaMenu("Primo",1));
+        TitleCategories.add(new CategoriaMenu("Primo",1));
+        TitleCategories.add(new CategoriaMenu("Primo",1));
+        TitleCategories.add(new CategoriaMenu("Primo",1));
     }
 
     //LAYOUT

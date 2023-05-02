@@ -13,80 +13,80 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class ServerCommunication {
     private static final String TAG = "ServerCommunication";
+    private HttpURLConnection conn;
 
     private Uri.Builder dataToSend ;
     private String url;
-    private JSONArray jsonArray;
+    private JSONArray jsonArray = null;
 
-    public JSONArray getDataFromBackEnd(Uri.Builder dataToSend, String url){
+    public JSONArray getData(Uri.Builder dataToSend, String url){
         this.dataToSend = dataToSend;
         this.url = url;
-        this.jsonArray = null;
+
         Thread thread = new Thread(this::getDataFromServer);
 
         thread.start();
-
         while(thread.isAlive()) {}
 
         return jsonArray;
-
-
     }
 
     private void getDataFromServer(){
         try {
-            Log.d(TAG, "getDataFromServer: Url : "+ url);
-            URL urlGetAllCategories = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) urlGetAllCategories.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
+            conn = startConnectionWithServer();
 
-            //INVIO Risposte
-            String data = dataToSend.build().getEncodedQuery();
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, StandardCharsets.UTF_8));
-            writer.write(data);
-            writer.flush();
+            sendDataToServer();
 
-            //GET RESULT
-            InputStream inputStream = conn.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            StringBuilder builder2= new StringBuilder();
+            JSONObject json_data = getResponseFromServer() ;
 
-            while((line = bufferedReader.readLine()) != null){
-                builder2.append(line);
-            }
-
-            JSONObject json_data = new JSONObject(builder2.toString());
-
-            Log.d(TAG, "getData: messaggio BackEnd->"+json_data );
-            if(json_data.getString("status").equals("0")){
-                return;
-            }
-
-            //leggi Json Se hai un successo ritorni messageid
-            Log.d(TAG, "sendData: messageFromAndroid:"+json_data.getString("msg"));
-
-
+            Log.d(TAG, "getDataFromServer: risposta dal Server ->"+json_data);
+            //Salvataggio messaggio ricevuto
             jsonArray = new JSONArray(json_data.getString("msg"));
-
-            //CHIUSURA CONNESSIONE
-            bufferedReader.close();
-            os.flush();
-            os.close();
+            if(json_data.getString("status").equals("0")){
+                return ;
+            }
             conn.disconnect();
-
         } catch (Exception e) {
             Log.d(TAG, "getDataFromServer: Errore di Comunicazione con il BeckEnd");
             e.printStackTrace();
         }
     }
 
+    private HttpURLConnection startConnectionWithServer() throws Exception {
+        URL urlGetAllCategories = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) urlGetAllCategories.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        return conn;
+    }
+
+    private void sendDataToServer() throws Exception{
+        String data = dataToSend.build().getEncodedQuery();
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, StandardCharsets.UTF_8));
+        writer.write(data);
+        writer.flush();
+        os.flush();
+        os.close();
+    }
+
+    private JSONObject getResponseFromServer() throws Exception{
+        InputStream inputStream = conn.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        StringBuilder builder= new StringBuilder();
+
+        while((line = bufferedReader.readLine()) != null){
+            builder.append(line);
+        }
+        bufferedReader.close();
+        return new JSONObject( builder.toString() );
+    }
 }

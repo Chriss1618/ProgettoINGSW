@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Schermate.Activity_Amministratore">
+    tools:context=".Schermate.Activity_Amministratore"
+    android:id="@+id/constraint_layout_amministratore">
     <LinearLayout
         android:id="@+id/linear_layout_container_fragment"
         android:layout_width="match_parent"

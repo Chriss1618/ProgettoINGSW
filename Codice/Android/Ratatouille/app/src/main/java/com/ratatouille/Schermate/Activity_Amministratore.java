@@ -3,6 +3,7 @@ package com.ratatouille.Schermate;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +35,7 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     BottomBarListener           bottomBarListener;
 
     //OTHER
-
+    private boolean canChangeTab = true;
     @Override
     public void onBackPressed() {
         int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();
@@ -120,12 +121,25 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
         });
 
     }
+
+    private void disableBottomBar(){
+        for(int i = 0; i < 4; i++){
+                Bottom_Bar_Amministratore.setTabEnabledAt(i,false);
+        }
+    }
+    private void enableBottomBar(){
+        for(int i = 0; i < 4; i++){
+          Bottom_Bar_Amministratore.setTabEnabledAt(i,true);
+        }
+    }
     private void tabSelected(int indexTab){
         controller_administrator.callEndAnimationOfFragment();
         controller_administrator.resetMainPackage();
-
+        disableBottomBar();
         final Handler handler = new Handler();
-        handler.postDelayed(()-> changeTAB(indexTab) ,300);
+        handler.postDelayed(()-> changeTAB(indexTab),300);
+
+        new Handler().postDelayed(this::enableBottomBar,600);
     }
     private void changeTAB(int indexTab){
         clearBackStackPackage();
