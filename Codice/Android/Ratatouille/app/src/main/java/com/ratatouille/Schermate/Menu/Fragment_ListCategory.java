@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -206,7 +208,8 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     }
 
     private void onClickNewCategory(){
-        showDialogNewCategory();
+        DialogNewCategory dialogNewCategory = new DialogNewCategory();
+        dialogNewCategory.showDialogNewCategory();
     }
 
     private void onClickDeleteCategory(){
@@ -224,74 +227,118 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         this.manager_MenuFragments.showFragment(Manager_MenuFragments.INDEX_MENU_LIST_PRODUCTS,msg);
     }
 
-    private void showDialogNewCategory(){
-        CardView CardView_Cancel    = LinearLayout_NewCategory.findViewById(R.id.card_view_annulla);
-        CardView CardView_Add       = LinearLayout_NewCategory.findViewById(R.id.card_view_aggiungi);
-        EditText EditText_NewCategoryName = LinearLayout_NewCategory.findViewById(R.id.edit_text_nome_categoria);
+    public class DialogNewCategory{
+        CardView CardView_Cancel;
+        CardView CardView_Add;
+        EditText EditText_NewCategoryName;
+        TextView TextView_Warning;
 
-        CardView_Cancel .setOnClickListener(view -> dismissDialogNewCategory());
-        CardView_Add    .setOnClickListener(view -> addCategory( EditText_NewCategoryName.getText().toString()));
+        public DialogNewCategory() {
 
-        LinearLayout_NewCategory            .setVisibility(View.VISIBLE);
-        LinearLayout_BackGroundNewCategory  .setVisibility(View.VISIBLE);
-        LinearLayout_NewCategory            .startAnimation(Manager_Animation.getTranslationINfromUp(500));
-        LinearLayout_BackGroundNewCategory  .startAnimation(Manager_Animation.getFadeIn(500));
-
-        EditText_NewCategoryName.setText("");
-    }
-
-    private void dismissDialogNewCategory(){
-        LinearLayout_NewCategory.setVisibility(View.GONE);
-        LinearLayout_BackGroundNewCategory.setVisibility(View.GONE);
-        LinearLayout_NewCategory.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
-        LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeOut(500));
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private void addCategory(String newCategory){
-        hideKeyboardFrom();
-        if(newCategory.equals("") || newCategory.length() < 4){
-            ShowNameCategoryNotValid();
-        }else if(sendNewCategoryToServer(newCategory)){
-            adapter_category.notifyDataSetChanged();
-            checkEmptyRecycle();
-            showSuccessfullyAddedNewCategory();
         }
-    }
 
-    private void ShowNameCategoryNotValid(){
+        private void showDialogNewCategory(){
+            Log.d(TAG, "showDialogNewCategory: Started");
+            CardView_Cancel    = LinearLayout_NewCategory.findViewById(R.id.card_view_annulla);
+            CardView_Add       = LinearLayout_NewCategory.findViewById(R.id.card_view_aggiungi);
+            EditText_NewCategoryName = LinearLayout_NewCategory.findViewById(R.id.edit_text_nome_categoria);
+            TextView_Warning = LinearLayout_NewCategory.findViewById(R.id.text_view_warning);
 
-    }
+            CardView_Cancel .setOnClickListener(view -> dismissDialogNewCategory());
+            CardView_Add    .setOnClickListener(view -> addCategory( EditText_NewCategoryName.getText().toString().replaceAll("\\s+$", "")));
 
-    private void showSuccessfullyAddedNewCategory(){
-        LinearLayout LinearLayout_Accepted       = LinearLayout_NewCategory.findViewById(R.id.linear_layout_category_accepted);
-        LinearLayout LinearLayout_InsertCategory = LinearLayout_NewCategory.findViewById(R.id.linear_layout_insert_category);
+            LinearLayout_NewCategory            .setVisibility(View.VISIBLE);
+            LinearLayout_BackGroundNewCategory  .setVisibility(View.VISIBLE);
 
-        LinearLayout_InsertCategory.setAnimation( Manager_Animation.getFadeOut(200));
+            LinearLayout_NewCategory            .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_BackGroundNewCategory  .startAnimation(Manager_Animation.getFadeIn(500));
 
-        final Handler handler = new Handler();
-        handler.postDelayed(()-> {
-            LinearLayout_InsertCategory.setVisibility(View.INVISIBLE);
+            EditText_NewCategoryName.setText("");
+            
 
-            new Handler().postDelayed( () ->{
-                LinearLayout_InsertCategory.setVisibility(View.GONE);
-                LinearLayout_Accepted.setVisibility(View.VISIBLE);
-                LinearLayout_Accepted.setAnimation( Manager_Animation.getFadeIn(200));
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        private void addCategory(String newCategory){
+            hideKeyboardFrom();
+            if(newCategory.equals("") || newCategory.length() < 4){
+                ShowNameCategoryNotValid();
+            }else if(sendNewCategoryToServer(newCategory)){
+                adapter_category.notifyDataSetChanged();
+                checkEmptyRecycle();
+                showSuccessfullyAddedNewCategory();
+            }
+        }
+
+        private void ShowNameCategoryNotValid(){
+            TextView_Warning.setVisibility(View.VISIBLE);
+            TextView_Warning.startAnimation( Manager_Animation.getFadeIn(300));
+
+            EditText_NewCategoryName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    if(EditText_NewCategoryName.getText().toString().replaceAll("\\s+$", "").length() < 4 && EditText_NewCategoryName.getText().toString().replaceAll("\\s+$", "").length() >0){
+                        ShowNameCategoryNotValid();
+                    }else{
+                        HideNameCategoryNotValid();
+                    }
+                }
+            });
+        }
+
+        private void HideNameCategoryNotValid(){
+            TextView_Warning.setVisibility(View.INVISIBLE);
+        }
+        private void showSuccessfullyAddedNewCategory(){
+            HideNameCategoryNotValid();
+            LinearLayout LinearLayout_Accepted       = LinearLayout_NewCategory.findViewById(R.id.linear_layout_category_accepted);
+            LinearLayout LinearLayout_InsertCategory = LinearLayout_NewCategory.findViewById(R.id.linear_layout_insert_category);
+
+            LinearLayout_InsertCategory.setAnimation( Manager_Animation.getFadeOut(200));
+
+            final Handler handler = new Handler();
+            handler.postDelayed(()-> {
+                LinearLayout_InsertCategory.setVisibility(View.INVISIBLE);
+
                 new Handler().postDelayed( () ->{
-                    dismissDialogNewCategory();
+                    LinearLayout_InsertCategory.setVisibility(View.GONE);
+                    LinearLayout_Accepted.setVisibility(View.VISIBLE);
+                    LinearLayout_Accepted.setAnimation( Manager_Animation.getFadeIn(200));
                     new Handler().postDelayed( () ->{
-                        LinearLayout_Accepted       .setVisibility(View.GONE);
-                        LinearLayout_InsertCategory .setVisibility(View.VISIBLE);
-                    },500);
+                        dismissDialogNewCategory();
+                        new Handler().postDelayed( () ->{
+                            LinearLayout_Accepted       .setVisibility(View.GONE);
+                            LinearLayout_InsertCategory .setVisibility(View.VISIBLE);
+                        },500);
 
-                },1500);
+                    },1500);
 
-            },500);
+                },500);
 
 
-        },200);
+            },200);
+
+        }
+
+        private void dismissDialogNewCategory(){
+            LinearLayout_NewCategory.setVisibility(View.GONE);
+            LinearLayout_BackGroundNewCategory.setVisibility(View.GONE);
+            LinearLayout_NewCategory.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+            LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeOut(500));
+        }
 
     }
+
 
     public void hideKeyboardFrom() {
         InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);

@@ -127,19 +127,18 @@
         android:visibility="gone"
         android:orientation="vertical" />
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/linear_layout_new_category"
          android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:visibility="gone"
         android:background="@drawable/background_edit_text_stroke_white">
 
-
         <LinearLayout
-            android:id="@+id/linear_layout_insert_category"
             android:visibility="visible"
+            android:id="@+id/linear_layout_insert_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -165,10 +164,10 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="12dp"
                 android:autofillHints=""
-
+                android:maxLength="30"
                 android:background="@drawable/background_edit_text_stroke_white"
                 android:ems="10"
-                android:hint="Nome Categoria"
+                android:hint="@string/nome_categoria"
                 android:textSize="15dp"
 
                 android:inputType="text"
@@ -179,6 +178,21 @@
 
                 android:textColorLink="@color/MainColor"
                 android:textCursorDrawable="@color/MainColor"/>
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/text_view_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_warning_24"
+                android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="start"
+                android:text="@string/nome_troppo_corto"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <LinearLayout
                 android:id="@+id/linear_layout_buttons"
                 android:layout_width="match_parent"
