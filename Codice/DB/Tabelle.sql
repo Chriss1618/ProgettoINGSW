@@ -62,6 +62,19 @@ CREATE TABLE Prodotto (
     CONSTRAINT FK_CategoriaMenuProdotto FOREIGN KEY (ID_CategoryMenu) REFERENCES CategoriaMenu(ID_CategoryMenu) ON DELETE CASCADE
 );
 
+CREATE TABLE ProdottoOrdinato (
+    ID_ProdottoOrdinato INTEGER AUTO_INCREMENT,
+	ID_Ordine INTEGER ,
+    ID_Prodotto INTEGER ,
+    ID_Utente INTEGER ,
+    DataCompletamento TIMESTAMP,
+    
+    PRIMARY KEY (ID_ProdottoOrdinato),
+    CONSTRAINT FK_OrdineProdottoOrdinato FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine),
+    CONSTRAINT FK_ProdottoProdottoOrdinato FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto(ID_Prodotto),
+    CONSTRAINT FK_UtenteProdottoOrdinato FOREIGN KEY (ID_Utente) REFERENCES Utente(ID_Utente)
+);
+
 CREATE TABLE Ingrediente (
 	ID_Ingrediente INTEGER AUTO_INCREMENT,
 	ID_Ristorante INTEGER NOT NULL,
@@ -76,6 +89,7 @@ CREATE TABLE Ingrediente (
 CREATE TABLE Ricettario (
 	ID_Prodotto INTEGER NOT NULL ,
 	ID_Ingrediente INTEGER NOT NULL ,
+    qta FLOAT(6,2) NOT NULL,
     PRIMARY KEY (ID_Prodotto,ID_Ingrediente),
     CONSTRAINT FK_ProdottoIngrediente FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto(ID_Prodotto) ON DELETE CASCADE,
     CONSTRAINT FK_IngredienteProdotto FOREIGN KEY (ID_Ingrediente) REFERENCES Ingrediente(ID_Ingrediente) ON DELETE CASCADE
