@@ -15,10 +15,8 @@
         if($result = $con->query($sql)){
             $arrayJson['status'] = 1;
             if($result->num_rows > 0 ){
-                //echo $result->num_rows;
                 $messageArray = [];
                 while($row = $result->fetch_array()){
-                    //$message =   $row['nome']. ' '. $row['cognome'];
                     $message = array (
                         'NomeCategoria' => $row['NameCategory'],
                         'ID_CategoriaMenu' => $row['ID_CategoryMenu']
