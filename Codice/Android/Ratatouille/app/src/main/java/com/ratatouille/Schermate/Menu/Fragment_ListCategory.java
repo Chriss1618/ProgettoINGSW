@@ -194,7 +194,6 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         }else{
             Text_View_Empty.setVisibility(View.GONE);
             Recycler_Categories.setVisibility(View.VISIBLE);
-
         }
     }
     //ACTIONS*************************************************************************
@@ -338,7 +337,6 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         }
 
     }
-
 
     public void hideKeyboardFrom() {
         InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
