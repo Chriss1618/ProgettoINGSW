@@ -2,6 +2,7 @@ package com.ratatouille.Schermate.Menu;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -36,7 +37,15 @@ import com.ratatouille.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.Socket;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
+import okio.ByteString;
 
 public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     //SYSTEM
@@ -57,10 +66,11 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     private RecycleEventListener            RecycleEventListener;
     private Adapter_Category                adapter_category;
     private boolean                         isDeleting = false;
-    //DATA
-    private ArrayList<CategoriaMenu> CategorieMenu;
-    //OTHERS...
 
+    //DATA
+    private ArrayList<CategoriaMenu> ListCategoryMenu;
+
+    //OTHERS...
 
     public Fragment_ListCategory(Manager_MenuFragments manager_menuFragments) {
         this.manager_MenuFragments = manager_menuFragments;
@@ -71,7 +81,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         super.onCreate(savedInstanceState);
         RecycleEventListener    = new RecycleEventListener();
 
-        CategorieMenu           = new ArrayList<>();
+        ListCategoryMenu = new ArrayList<>();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,14 +90,68 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         PrepareLayout();
 
         StartAnimations();
+
+
         return View_fragment;
     }
 
     //DATA *****************************************************************************
     @Override
     public void PrepareData(){
-        if(CategorieMenu.isEmpty()){
+        if(ListCategoryMenu.isEmpty()){
             getCategoriesFromServer();
+        }
+        startRatchet();
+    }
+
+    private void startRatchet(){
+        Log.d(TAG, "startRatchet: Started Ratchet Comunication");
+        OkHttpClient httpClient = new OkHttpClient();
+        String      url         = EndPointer.StandardPath;
+        String url2 = "http://s956013630.sito-web-online.it/Chat.php";
+        Request request = new Request.Builder().url("ws://82.165.88.150:8080").build();
+        SocketListener socketListener = new SocketListener();
+
+        WebSocket webSocket = httpClient.newWebSocket(request,socketListener);
+
+
+    }
+
+    public class SocketListener extends WebSocketListener {
+
+        public SocketListener() {
+            super();
+        }
+
+        @Override
+        public void onOpen(WebSocket webSocket, Response response) {
+            super.onOpen(webSocket, response);
+        }
+
+        @Override
+        public void onMessage(WebSocket webSocket, String text) {
+            super.onMessage(webSocket, text);
+            Log.d(TAG, "Ratchet=> Text:"+ text);
+        }
+
+        @Override
+        public void onMessage(WebSocket webSocket, ByteString bytes) {
+            super.onMessage(webSocket, bytes);
+        }
+
+        @Override
+        public void onClosing(WebSocket webSocket, int code, String reason) {
+            super.onClosing(webSocket, code, reason);
+        }
+
+        @Override
+        public void onClosed(WebSocket webSocket, int code, String reason) {
+            super.onClosed(webSocket, code, reason);
+        }
+
+        @Override
+        public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+            super.onFailure(webSocket, t, response);
         }
     }
 
@@ -96,7 +160,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
             for(int i = 0 ; i<Msg.length(); i++){
                 JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
 
-                CategorieMenu.add(new CategoriaMenu(
+                ListCategoryMenu.add(new CategoriaMenu(
                         Categoria_Json.getString("NomeCategoria"),
                         Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
                 ));
@@ -127,7 +191,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
                 for(int i = 0 ; i<Msg.length(); i++){
                     JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
 
-                    CategorieMenu.add(new CategoriaMenu(
+                    ListCategoryMenu.add(new CategoriaMenu(
                             Categoria_Json.getString("NomeCategoria"),
                             Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
                     ));
@@ -175,7 +239,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     }
 
     private void initCategoryRV(){
-        adapter_category = new Adapter_Category(CategorieMenu, RecycleEventListener);
+        adapter_category = new Adapter_Category(ListCategoryMenu, RecycleEventListener);
         Recycler_Categories.setAdapter(adapter_category);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -188,7 +252,7 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
 
     }
     private void checkEmptyRecycle(){
-        if(CategorieMenu.isEmpty()) {
+        if(ListCategoryMenu.isEmpty()) {
             Text_View_Empty.setVisibility(View.VISIBLE);
             Recycler_Categories.setVisibility(View.GONE);
         }else{

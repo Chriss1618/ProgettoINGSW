@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.R;
 import com.ratatouille.Schermate.Menu.Fragment_EditProduct;
 import com.ratatouille.Schermate.Menu.Fragment_InfoProduct;
@@ -46,6 +47,9 @@ public class Manager_MenuFragments {
     public int                      onMain;
     public int                      from;
 
+    //DATA
+    private ArrayList<CategoriaMenu> ListCategory;
+
     public Manager_MenuFragments(Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Fragments = new ArrayList<>();
 
@@ -80,7 +84,7 @@ public class Manager_MenuFragments {
     //ShowPages
     public void loadFragmentAsMain(String Tag){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), Fragments.get(onMain), Tag)
+                .replace(View.getId(), Fragments.get(INDEX_MENU_LIST_CATEGORY), Tag)
                 .setReorderingAllowed(true)
                 .commit();
     }

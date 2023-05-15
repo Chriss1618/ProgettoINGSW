@@ -13,7 +13,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -45,7 +44,7 @@ public class ServerCommunication {
 
             JSONObject json_data = getResponseFromServer() ;
 
-            Log.d(TAG, "getDataFromServer: risposta dal Server ->"+json_data);
+            Log.d(TAG, "getDataFromServer: response Server ->"+json_data);
             //Salvataggio messaggio ricevuto
             jsonArray = new JSONArray(json_data.getString("msg"));
             if(json_data.getString("status").equals("0")){

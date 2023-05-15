@@ -1,6 +1,5 @@
 package com.ratatouille.Adapters;
 
-import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
-import com.ratatouille.Interfaces.RecyclerInterfaces.onClickItemAdapterListener;
-import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.R;
 
@@ -28,7 +25,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
 
     //LAYOUT
     private ViewHolder                      Holder;
-    private ArrayList<ViewHolder>           Holders;
+    final private ArrayList<ViewHolder>     Holders;
     //FUNCTIONAL
     private final RecycleEventListener      RecycleEventListener;
 
