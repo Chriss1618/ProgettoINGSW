@@ -10,7 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ratatouille.Controllers.Controller_Login;
+import com.ratatouille.Models.EndPoints.EndPointer;
+import com.ratatouille.Models.FCMService;
+import com.ratatouille.Models.ServerCommunication;
 import com.ratatouille.R;
 
 import org.json.JSONArray;
@@ -55,6 +59,7 @@ public class Activity_ChooseRole extends AppCompatActivity {
     private void PrepareData() {
         sendData();
         getData();
+        setToken();
     }
     private void PrepareLayout() {
         LinkLayout();
@@ -79,11 +84,30 @@ public class Activity_ChooseRole extends AppCompatActivity {
         Button_Cameriere        .setOnClickListener(view -> startCameriere());
     }
 
+    private void setToken(){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (! task.isSuccessful() ) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                return;
+            }
+
+            String token = task.getResult();
+            Log.d(TAG, "FCM registration token: " + token);
+
+            String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + "/RealTimeMessaging" + "/sendOrder.php";
+            Uri.Builder dataToSend  = new Uri.Builder().appendQueryParameter("token", token);
+            new ServerCommunication().getData(dataToSend,url);
+        });
+
+
+    }
     //CONNECTION
     private void sendData(){
         Thread thread = new Thread(this::ComunicateBackEnd);
 
         thread.start();
+
+
 
     }
 

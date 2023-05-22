@@ -3,6 +3,7 @@ package com.ratatouille.Schermate.Menu;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -35,6 +36,7 @@ import com.ratatouille.Models.ServerCommunication;
 import com.ratatouille.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.Socket;
@@ -101,58 +103,12 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
         if(ListCategoryMenu.isEmpty()){
             getCategoriesFromServer();
         }
-        startRatchet();
+        //startRatchet();
+        startListening();
     }
 
-    private void startRatchet(){
-        Log.d(TAG, "startRatchet: Started Ratchet Comunication");
-        OkHttpClient httpClient = new OkHttpClient();
-        String      url         = EndPointer.StandardPath;
-        String url2 = "http://s956013630.sito-web-online.it/Chat.php";
-        Request request = new Request.Builder().url("ws://82.165.88.150:8080").build();
-        SocketListener socketListener = new SocketListener();
+    private void startListening() {
 
-        WebSocket webSocket = httpClient.newWebSocket(request,socketListener);
-
-
-    }
-
-    public class SocketListener extends WebSocketListener {
-
-        public SocketListener() {
-            super();
-        }
-
-        @Override
-        public void onOpen(WebSocket webSocket, Response response) {
-            super.onOpen(webSocket, response);
-        }
-
-        @Override
-        public void onMessage(WebSocket webSocket, String text) {
-            super.onMessage(webSocket, text);
-            Log.d(TAG, "Ratchet=> Text:"+ text);
-        }
-
-        @Override
-        public void onMessage(WebSocket webSocket, ByteString bytes) {
-            super.onMessage(webSocket, bytes);
-        }
-
-        @Override
-        public void onClosing(WebSocket webSocket, int code, String reason) {
-            super.onClosing(webSocket, code, reason);
-        }
-
-        @Override
-        public void onClosed(WebSocket webSocket, int code, String reason) {
-            super.onClosed(webSocket, code, reason);
-        }
-
-        @Override
-        public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-            super.onFailure(webSocket, t, response);
-        }
     }
 
     private void setCategories(JSONArray Msg) throws org.json.JSONException{

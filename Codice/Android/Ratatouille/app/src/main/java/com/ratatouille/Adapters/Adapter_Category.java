@@ -26,6 +26,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     //LAYOUT
     private ViewHolder                      Holder;
     final private ArrayList<ViewHolder>     Holders;
+
     //FUNCTIONAL
     private final RecycleEventListener      RecycleEventListener;
 

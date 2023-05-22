@@ -46,7 +46,7 @@ public class ServerCommunication {
 
             Log.d(TAG, "getDataFromServer: response Server ->"+json_data);
             //Salvataggio messaggio ricevuto
-            jsonArray = new JSONArray(json_data.getString("msg"));
+            jsonArray = new JSONArray( json_data.getString("msg") );
             if(json_data.getString("status").equals("0")){
                 return ;
             }
