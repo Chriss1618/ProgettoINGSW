@@ -30,10 +30,8 @@ public class Fragment_AccountInfo extends Fragment implements LayoutContainer {
     //LAYOUT
     View                View_Fragment;
     LinearLayout        LinearLayout_TitleProduct;
-    ConstraintLayout    ConstraintLayout_ImageAccount;
     LinearLayout        LinearLayout_InfoAccount;
 
-    ImageView           Image_View_Account;
     Button              Button_EditAccount;
 
     //FUNCTIONAL
@@ -82,10 +80,8 @@ public class Fragment_AccountInfo extends Fragment implements LayoutContainer {
     @Override
     public void LinkLayout() {
         LinearLayout_TitleProduct       = View_Fragment.findViewById(R.id.toolbar_menu_account);
-        ConstraintLayout_ImageAccount   = View_Fragment.findViewById(R.id.constraint_layout_image_account);
         LinearLayout_InfoAccount        = View_Fragment.findViewById(R.id.linear_layout_info_account);
 
-        Image_View_Account              = View_Fragment.findViewById(R.id.image_view_account);
         Button_EditAccount              = View_Fragment.findViewById(R.id.button_edit_account);
     }
     @Override
@@ -94,10 +90,7 @@ public class Fragment_AccountInfo extends Fragment implements LayoutContainer {
     }
     @Override
     public void SetDataOnLayout() {
-        Glide.with(manager_accountFragments.context)
-                .load(getImage("exemple_product"))
-                .circleCrop()
-                .into(Image_View_Account);
+
     }
 
 
@@ -123,11 +116,9 @@ public class Fragment_AccountInfo extends Fragment implements LayoutContainer {
     @Override
     public void StartAnimations() {
         if(manager_accountFragments.from > manager_accountFragments.onMain){
-            ConstraintLayout_ImageAccount   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
             LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(500));
         }else{
             LinearLayout_TitleProduct       .startAnimation(Manager_Animation.getTranslationINfromUp(500));
-            ConstraintLayout_ImageAccount   .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
             LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
         }
         Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationINfromDown(500));
@@ -135,13 +126,11 @@ public class Fragment_AccountInfo extends Fragment implements LayoutContainer {
     @Override
     public void EndAnimations() {
         LinearLayout_TitleProduct           .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
-        ConstraintLayout_ImageAccount       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
         LinearLayout_InfoAccount            .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
         Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
     }
 
     public void toEditAccountAnimation(){
-        ConstraintLayout_ImageAccount       .startAnimation(Manager_Animation.getTranslationOUTtoUp(600));
         LinearLayout_InfoAccount            .startAnimation(Manager_Animation.getFadeOut(300));
         Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
     }

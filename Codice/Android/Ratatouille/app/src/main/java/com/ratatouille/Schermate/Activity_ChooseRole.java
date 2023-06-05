@@ -103,9 +103,9 @@ public class Activity_ChooseRole extends AppCompatActivity {
     }
     //CONNECTION
     private void sendData(){
-        Thread thread = new Thread(this::ComunicateBackEnd);
-
-        thread.start();
+//        Thread thread = new Thread(this::ComunicateBackEnd);
+//
+//        thread.start();
 
 
 

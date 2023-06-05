@@ -36,6 +36,7 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
 
     //OTHER
     private boolean canChangeTab = true;
+
     @Override
     public void onBackPressed() {
         int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();

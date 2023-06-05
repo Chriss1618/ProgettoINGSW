@@ -193,8 +193,6 @@ public class Manager_MenuFragments {
                 Objects.requireNonNull(newProduct).EndAnimations();
                 showBottomBar();
                 break;
-
-
         }
     }
 

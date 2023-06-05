@@ -25,9 +25,6 @@ public class FCMService extends FirebaseMessagingService {
         Map<String, String> data = message.getData();
         Log.d(TAG, "onMessageReceived: get Title ->" + data.get("key1"));
         Log.d(TAG, "onMessageReceived: get Title ->" + data.get("key2"));
-
-
-
     }
 
 }
