@@ -5,13 +5,14 @@ import android.content.Context;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Interfaces.Controller;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.Managers.Manager_StatsFragments;
 
-public class Controller_Supervisore {
+public class Controller_Supervisore implements Controller {
     //SYSTEM
     public final static int SUPERVISORE_INDEX_INVENTARIO    = 0;
     public final static int SUPERVISORE_INDEX_MENU          = 1;
@@ -70,6 +71,16 @@ public class Controller_Supervisore {
     //Show Pages
     public void showMain(){
         showINVENTORY();
+    }
+
+    @Override
+    public void changeOnMain(int indexMain) {
+
+    }
+
+    @Override
+    public void closeView() {
+
     }
 
     public void showINVENTORY(){

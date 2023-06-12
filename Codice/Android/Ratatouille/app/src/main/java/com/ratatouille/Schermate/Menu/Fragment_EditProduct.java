@@ -6,22 +6,21 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
 
-public class Fragment_EditProduct extends Fragment implements LayoutContainer {
+public class Fragment_EditProduct extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_EditProduct";
 
     //LAYOUT
-    View                View_Fragment;
+    android.view.View View_Fragment;
     LinearLayout        LinearLayout_TitleProduct;
     CardView            CardView_ProductData;
     LinearLayout        LinearLayout_Buttons;
@@ -48,8 +47,8 @@ public class Fragment_EditProduct extends Fragment implements LayoutContainer {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View_Fragment = inflater.inflate(R.layout.fragment__edit_product, container, false);
 

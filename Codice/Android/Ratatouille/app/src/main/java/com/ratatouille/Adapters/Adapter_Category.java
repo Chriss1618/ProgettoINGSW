@@ -18,6 +18,8 @@ import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.ViewHolder>{
     //SYSTEM
@@ -29,7 +31,12 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
 
     //FUNCTIONAL
     private final RecycleEventListener      RecycleEventListener;
+    private Observer observer = new Observer() {
+        @Override
+        public void update(Observable observable, Object o) {
 
+        }
+    };
     //DATA
     private final ArrayList<CategoriaMenu>    TitleCategories;
 

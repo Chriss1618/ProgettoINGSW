@@ -14,14 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
-public class Fragment_InfoProduct extends Fragment implements LayoutContainer {
+public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_InfoProduct";
-    private static final String PRODUCT_TAG = "product";
+    private static final String PRODUCT_TAG = "stringToPass";
 
     //LAYOUT
     private View        View_fragment;

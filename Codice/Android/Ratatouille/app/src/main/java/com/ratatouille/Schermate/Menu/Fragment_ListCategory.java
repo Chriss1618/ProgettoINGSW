@@ -27,8 +27,8 @@ import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_Category;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Models.EndPoints.EndPointer;
@@ -49,7 +49,7 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
 
-public class Fragment_ListCategory extends Fragment implements LayoutContainer {
+public class Fragment_ListCategory extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_ListCategory";
 
@@ -373,5 +373,12 @@ public class Fragment_ListCategory extends Fragment implements LayoutContainer {
     public void EndAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         Recycler_Categories     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EndAnimations();
+
     }
 }

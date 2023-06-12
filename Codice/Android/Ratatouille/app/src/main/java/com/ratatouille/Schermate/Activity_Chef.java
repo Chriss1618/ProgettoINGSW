@@ -7,17 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 
 import com.ratatouille.Controllers.Controller_Chef;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Listeners.BottomBarListener;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
-public class Activity_Chef extends AppCompatActivity implements LayoutContainer {
+public class Activity_Chef extends AppCompatActivity implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Activity_Chef";
 
@@ -95,7 +94,10 @@ public class Activity_Chef extends AppCompatActivity implements LayoutContainer 
     }
 
     private void setListener(){
-        bottomBarListener.hideBottomBarListener(this::hideBottomBar);
+        bottomBarListener.hideBottomBarListener( ()->{
+            int a;
+        } );
+        bottomBarListener.hideBottomBarListener(this::hideBottomBarr);
         bottomBarListener.showBottomBarLinstener(this::showBottomBar);
     }
 
@@ -157,15 +159,15 @@ public class Activity_Chef extends AppCompatActivity implements LayoutContainer 
 
     }
 
-    public void hideBottomBar(){
+    public void hideBottomBarr(){
         Bottom_Bar_Chef.startAnimation(Manager_Animation.getTranslationOUTtoDownS(500));
         final Handler handler = new Handler();
-        handler.postDelayed(()-> Bottom_Bar_Chef.setVisibility(View.GONE),500);
+        handler.postDelayed(()-> Bottom_Bar_Chef.setVisibility(android.view.View.GONE),500);
     }
     public void showBottomBar(){
         Bottom_Bar_Chef.startAnimation(Manager_Animation.getTranslationINfromDown(300));
         final Handler handler = new Handler();
-        handler.postDelayed(()-> Bottom_Bar_Chef.setVisibility(View.VISIBLE),300);
+        handler.postDelayed(()-> Bottom_Bar_Chef.setVisibility(android.view.View.VISIBLE),300);
     }
 
 }

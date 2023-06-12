@@ -9,28 +9,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_Staff;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
 
-public class Fragment_ListStaff extends Fragment implements LayoutContainer {
+public class Fragment_ListStaff extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_ListStaff";
 
     //LAYOUT
-    private View            Fragment_View;
+    private android.view.View Fragment_View;
     private RecyclerView    Recycler_StaffMembers;
     private ImageView       Image_View_AddMember;
     private ImageView       Image_View_DeleteMember;
@@ -60,8 +57,8 @@ public class Fragment_ListStaff extends Fragment implements LayoutContainer {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         Fragment_View = inflater.inflate(R.layout.fragment_list_staff, container, false);
 
         PrepareData();

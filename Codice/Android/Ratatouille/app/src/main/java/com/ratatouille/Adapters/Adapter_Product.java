@@ -1,6 +1,5 @@
 package com.ratatouille.Adapters;
 
-import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.RecyclerInterfaces.onClickItemAdapterListener;
-import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
 import java.util.ArrayList;

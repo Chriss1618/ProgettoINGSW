@@ -7,22 +7,20 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_InventoryFragments;
-import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
 
-public class Fragment_InfoProductInventory extends Fragment implements LayoutContainer {
+public class Fragment_InfoProductInventory extends Fragment implements ViewLayout {
     //SYSTEM
 
     //LAYOUT
-    private View            View_Fragment;
+    private android.view.View View_Fragment;
     private ImageView       ImageView_EditProduct;
     private CardView        CardView_Product;
     //FUNCTIONAL
@@ -47,8 +45,8 @@ public class Fragment_InfoProductInventory extends Fragment implements LayoutCon
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View_Fragment = inflater.inflate(R.layout.fragment__info_product_inventory, container, false);
 

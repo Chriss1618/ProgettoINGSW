@@ -9,29 +9,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ratatouille.Adapters.Adapter_Product;
 import com.ratatouille.Adapters.Adapter_ProductWaiter;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
 import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
-import com.ratatouille.Managers.Manager_MenuFragments;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_Ordini_Cameriere;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
 
-public class Fragment_ListProductsCameriere extends Fragment implements LayoutContainer {
+public class Fragment_ListProductsCameriere extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_ListProductsCa";
     private static final String CATEGORY_TAG = "category";
 
     //LAYOUT
-    private View            View_fragment;
+    private android.view.View View_fragment;
     private TextView        Text_View_TitleCategory;
     private RecyclerView    Recycler_Products;
     private ImageView       ImageView_Resoconto;
@@ -59,8 +56,8 @@ public class Fragment_ListProductsCameriere extends Fragment implements LayoutCo
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View_fragment = inflater.inflate(R.layout.fragment__list_products__cameriere, container, false);
         PrepareData();

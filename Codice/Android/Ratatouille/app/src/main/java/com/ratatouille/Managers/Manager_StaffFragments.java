@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Schermate.Menu.Fragment_InfoProduct;
 import com.ratatouille.Schermate.Menu.Fragment_ListProducts;
 import com.ratatouille.Schermate.Staff.Fragment_ListStaff;
@@ -17,7 +18,7 @@ import com.ratatouille.Schermate.Staff.Fragment_NewStaffMember;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Manager_StaffFragments {
+public class Manager_StaffFragments implements SubController {
     //SYSTEM
     private static final String TAG = "Manager_StaffFragments_CLass";
 
@@ -71,6 +72,18 @@ public class Manager_StaffFragments {
     public void showMain(){
         showListStaff();
     }
+
+    @Override
+    public void changeOnMain(int indexMain, String msg) {
+
+    }
+
+    @Override
+    public void closeView() {
+
+    }
+
+
     public void showFragment(int index,String msg){
         from = onMain;
         onMain = index;

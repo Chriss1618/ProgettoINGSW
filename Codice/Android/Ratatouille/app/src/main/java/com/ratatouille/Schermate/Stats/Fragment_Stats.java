@@ -10,10 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,22 +24,21 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_StatsFragments;
 import com.ratatouille.R;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Fragment_Stats extends Fragment implements LayoutContainer {
+public class Fragment_Stats extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_Stats";
 
     //LAYOUT
-    View        view_fragment;
+    android.view.View view_fragment;
     PieChart    Pie_Chart_Productivity;
 
     ArrayList<PieEntry> pieEntries;
@@ -83,8 +79,8 @@ public class Fragment_Stats extends Fragment implements LayoutContainer {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         view_fragment =  inflater.inflate(R.layout.fragment__stats, container, false);
 
         PrepareData();
@@ -236,10 +232,10 @@ public class Fragment_Stats extends Fragment implements LayoutContainer {
     @Override
     public void StartAnimations(){
         final Handler handler = new Handler();
-        Pie_Chart_Productivity.setVisibility(View.GONE);
+        Pie_Chart_Productivity.setVisibility(android.view.View.GONE);
         Pie_Chart_Productivity.animate().rotation(240).start();
         handler.postDelayed(()->{
-                Pie_Chart_Productivity.setVisibility(View.VISIBLE);
+                Pie_Chart_Productivity.setVisibility(android.view.View.VISIBLE);
                 Pie_Chart_Productivity.startAnimation(Manager_Animation.getFadeIn(400));
                 Pie_Chart_Productivity.animate().rotationBy(120).setDuration(600).start();
             },400

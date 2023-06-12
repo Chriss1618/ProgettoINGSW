@@ -8,28 +8,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_OrdersTable;
-import com.ratatouille.Adapters.Adapter_TablesOrder;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Managers.Manager_Ordini;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
 
-public class Fragment_TableOrders extends Fragment implements LayoutContainer {
+public class Fragment_TableOrders extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_TableOrders";
 
     //LAYOUT
-    View                View_Fragment;
+    android.view.View View_Fragment;
     TextView            TextView_Title;
     RecyclerView        recyclerView_OrdersTable;
     ImageView           ImageView_HistoryOrders;
@@ -59,8 +57,8 @@ public class Fragment_TableOrders extends Fragment implements LayoutContainer {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View_Fragment = inflater.inflate(R.layout.fragment__table_orders, container, false);
 

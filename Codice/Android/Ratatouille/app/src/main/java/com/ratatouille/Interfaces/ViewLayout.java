@@ -1,6 +1,6 @@
 package com.ratatouille.Interfaces;
 
-public interface LayoutContainer {
+public interface ViewLayout {
     void PrepareData();
     void PrepareLayout();
 

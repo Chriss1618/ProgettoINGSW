@@ -5,16 +5,13 @@ import android.view.View;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Listeners.BottomBarListener;
+import com.ratatouille.Interfaces.Controller;
 import com.ratatouille.Managers.Manager_AccountFragments;
-import com.ratatouille.Managers.Manager_InventoryFragments;
-import com.ratatouille.Managers.Manager_MenuFragments;
-import com.ratatouille.Managers.Manager_Ordini;
 import com.ratatouille.Managers.Manager_Ordini_Cameriere;
-import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.Managers.Manager_StatsFragments;
 
-public class Controller_Cameriere {
+public class Controller_Cameriere implements Controller {
     //SYSTEM
     public final static int CAMERIERE_INDEX_MENU        = 0;
     public final static int CAMERIERE_INDEX_ACCOUNT     = 1;
@@ -65,6 +62,16 @@ public class Controller_Cameriere {
         showORDINI_CAMERIERE();
     }
 
+    @Override
+    public void changeOnMain(int indexMain) {
+
+    }
+
+    @Override
+    public void closeView() {
+
+    }
+
     public void showORDINI_CAMERIERE(){
         manager_ordini_cameriere.showMain();
         managerOnMain = CAMERIERE_INDEX_MENU;
@@ -95,5 +102,6 @@ public class Controller_Cameriere {
                 break;
         }
     }
+
 
 }

@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ratatouille.Adapters.Adapter_ProductWaiter;
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Listeners.BottomBarListener;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.R;
 import com.ratatouille.Schermate.OrdiniCameriere.Fragment_InfoProductCameriere;
 import com.ratatouille.Schermate.OrdiniCameriere.Fragment_ListCategoryCameriere;
@@ -251,7 +251,6 @@ public class Manager_Ordini_Cameriere {
                 Fragment_ReportOrder reportOrder = (Fragment_ReportOrder)fragmentManager.findFragmentByTag(TAG_ORDINI_CAMERIERE_RESOCONTO_ORDERS);
                 Objects.requireNonNull(reportOrder).EndAnimations();
                 break;
-
 
         }
     }

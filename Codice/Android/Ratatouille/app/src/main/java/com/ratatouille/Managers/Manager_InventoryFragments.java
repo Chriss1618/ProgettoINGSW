@@ -7,16 +7,11 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Schermate.Inventario.Fragment_EditProductInventory;
 import com.ratatouille.Schermate.Inventario.Fragment_InfoProductInventory;
 import com.ratatouille.Schermate.Inventario.Fragment_ListInventary;
 import com.ratatouille.Schermate.Inventario.Fragment_NewProductInventory;
-import com.ratatouille.Schermate.Menu.Fragment_EditProduct;
-import com.ratatouille.Schermate.Menu.Fragment_InfoProduct;
-import com.ratatouille.Schermate.Menu.Fragment_ListCategory;
-import com.ratatouille.Schermate.Menu.Fragment_ListProducts;
-import com.ratatouille.Schermate.Menu.Fragment_NewProduct;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -158,10 +153,6 @@ public class Manager_InventoryFragments {
                 Objects.requireNonNull(editProductInventory).EndAnimations();
                 showBottomBar();
                 break;
-
-
         }
     }
-
-
 }

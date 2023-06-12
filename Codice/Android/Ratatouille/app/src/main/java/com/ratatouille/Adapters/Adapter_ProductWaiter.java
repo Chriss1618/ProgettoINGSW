@@ -1,27 +1,20 @@
 package com.ratatouille.Adapters;
 
-import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
-import com.ratatouille.Managers.Manager_Ordini_Cameriere;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

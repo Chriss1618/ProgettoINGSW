@@ -2,26 +2,24 @@ package com.ratatouille.Schermate.Account;
 
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.R;
 
-public class Fragment_EditAccountInfo extends Fragment implements LayoutContainer {
+public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_EditAccountInf";
 
     //LAYOUT
-    View                View_Fragment;
+    android.view.View View_Fragment;
     ConstraintLayout    ConstraintLayout_ImageAccount;
     LinearLayout        LinearLayout_InfoAccount;
     LinearLayout        LinearLayout_Buttons;
@@ -46,8 +44,8 @@ public class Fragment_EditAccountInfo extends Fragment implements LayoutContaine
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         View_Fragment = inflater.inflate(R.layout.fragment__edit_account_info, container, false);
 
         PrepareData();

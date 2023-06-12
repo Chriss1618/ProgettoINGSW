@@ -2,33 +2,25 @@ package com.ratatouille.Schermate.Account;
 
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_AccountFragments;
-import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
-import java.util.Set;
-
-public class Fragment_AccountInfo extends Fragment implements LayoutContainer {
+public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_AccountInfo";
 
     //LAYOUT
-    View                View_Fragment;
+    android.view.View View_Fragment;
     LinearLayout        LinearLayout_TitleProduct;
     LinearLayout        LinearLayout_InfoAccount;
 
@@ -54,8 +46,8 @@ public class Fragment_AccountInfo extends Fragment implements LayoutContainer {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         View_Fragment = inflater.inflate(R.layout.fragment__account_info, container, false);
         PrepareData();
         PrepareLayout();

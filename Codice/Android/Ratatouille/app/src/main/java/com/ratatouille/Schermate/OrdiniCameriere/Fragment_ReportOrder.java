@@ -5,13 +5,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
-public class Fragment_ReportOrder extends Fragment implements LayoutContainer {
+public class Fragment_ReportOrder extends Fragment implements ViewLayout {
 
     public Fragment_ReportOrder() {
     }
@@ -25,8 +24,8 @@ public class Fragment_ReportOrder extends Fragment implements LayoutContainer {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment__report_order, container, false);
     }

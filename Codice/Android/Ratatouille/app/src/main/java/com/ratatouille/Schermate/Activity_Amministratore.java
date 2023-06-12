@@ -10,53 +10,40 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
+import com.ratatouille.Controllers.ControllerFactory;
 import com.ratatouille.Controllers.Controller_Amministratore;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.Controller;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
-public class Activity_Amministratore extends AppCompatActivity implements LayoutContainer {
+public class Activity_Amministratore extends AppCompatActivity implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Activity_Amministratore";
-
-    private final static int TAB_AMMINISTRATORE_INDEX_STATS     = 0;
-    private final static int TAB_AMMINISTRATORE_INDEX_STAFF     = 1;
-    private final static int TAB_AMMINISTRATORE_INDEX_MENU      = 2;
-    private final static int TAB_AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
     //LAYOUT
     AnimatedBottomBar Bottom_Bar_Amministratore;
 
     //FUNCTIONAL
-    Controller_Amministratore   controller_administrator;
-    BottomBarListener           bottomBarListener;
+    private static final int            TYPE_CONTROLLER             = ControllerFactory.CONTROLLER_AMMINISTRATORE;
+    private Controller                  ControllerAmministratore;
+    private final BottomBarListener     bottomBarListener = new BottomBarListener();;
 
     //OTHER
     private boolean canChangeTab = true;
 
     @Override
     public void onBackPressed() {
-        int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();
-        callBackStackAfterAnimation(numberOfBackStack);
-    }
-
-    private void callBackStackAfterAnimation(int numberOfBackStack){
-        if (numberOfBackStack > 0) {
-            controller_administrator.callEndAnimationOfFragment();
-            final Handler handler = new Handler();
-            handler.postDelayed(()-> getSupportFragmentManager().popBackStack(),300);//dopo 300 millisecondi
+        if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
+            ControllerAmministratore.closeView();
         }else{
             super.onBackPressed();
         }
     }
-    private void clearBackStackPackage(){
-        for(int j  = getSupportFragmentManager().getBackStackEntryCount() ; j >0; j-- ){
-            getSupportFragmentManager().popBackStack();
-        }
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +65,6 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     //LAYOUT
     @Override
     public void PrepareLayout() {
-        bottomBarListener = new BottomBarListener();
-
         LinkLayout();
         SetActionsOfLayout();
         SetDataOnLayout();
@@ -97,7 +82,7 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     @Override
     public void SetDataOnLayout() {
         constructController();
-        controller_administrator.showMain();
+        ControllerAmministratore.showMain();
     }
 
     private void setListener(){
@@ -109,64 +94,39 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     private void setBottomBar(){
         Bottom_Bar_Amministratore.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
             @Override
-            public void onTabSelected(int from, @Nullable AnimatedBottomBar.Tab tab, int to, @NonNull AnimatedBottomBar.Tab tab1) {
-                Log.d(TAG, "onTabSelected: from->"+from+" to->"+to);
-                tabSelected(to);
+            public void onTabSelected(int from, @Nullable AnimatedBottomBar.Tab tab, int indexTo, @NonNull AnimatedBottomBar.Tab tab1) {
+                Log.d(TAG, "onTabSelected: from->"+from+" to->"+indexTo);
+                tabSelected( indexTo );
             }
 
             @Override
-            public void onTabReselected(int to, @NonNull AnimatedBottomBar.Tab tab) {
-                Log.d(TAG, "onTabReselected: from->"+to+" to->"+to);
-                tabSelected(to);
+            public void onTabReselected(int indexTo, @NonNull AnimatedBottomBar.Tab tab) {
+                Log.d(TAG, "onTabReselected: from->"+indexTo+" to->"+indexTo);
+                tabSelected( indexTo );
             }
         });
 
     }
 
-    private void disableBottomBar(){
-        for(int i = 0; i < 4; i++){
-                Bottom_Bar_Amministratore.setTabEnabledAt(i,false);
-        }
-    }
-    private void enableBottomBar(){
-        for(int i = 0; i < 4; i++){
-          Bottom_Bar_Amministratore.setTabEnabledAt(i,true);
-        }
-    }
-    private void tabSelected(int indexTab){
-        controller_administrator.callEndAnimationOfFragment();
-        controller_administrator.resetMainPackage();
+     private void tabSelected(int indexTab){
         disableBottomBar();
-        final Handler handler = new Handler();
-        handler.postDelayed(()-> changeTAB(indexTab),300);
+
+        ControllerAmministratore.changeOnMain(indexTab);
 
         new Handler().postDelayed(this::enableBottomBar,600);
-    }
-    private void changeTAB(int indexTab){
-        clearBackStackPackage();
-        switch (indexTab){
-            case TAB_AMMINISTRATORE_INDEX_STATS: controller_administrator.showSTATS();
-                break;
-            case TAB_AMMINISTRATORE_INDEX_STAFF: controller_administrator.showSTAFF();
-                break;
-            case TAB_AMMINISTRATORE_INDEX_MENU: controller_administrator.showMENU();
-                break;
-            case TAB_AMMINISTRATORE_INDEX_ACCOUNT: controller_administrator.showACCOUNT();
-                break;
-        }
     }
 
     //FUNCTIONAL
     private void constructController() {
-        controller_administrator = new Controller_Amministratore(
-                this,
-                findViewById(R.id.fragment_container_view_amministratore),
-                getSupportFragmentManager(),
-                bottomBarListener
+        ControllerAmministratore = ControllerFactory.createController(
+            TYPE_CONTROLLER,
+            this,
+            findViewById(R.id.fragment_container_view_amministratore),
+            getSupportFragmentManager(),
+            bottomBarListener
         );
 
     }
-
 
     //ANIMATIONS
     @Override
@@ -176,6 +136,18 @@ public class Activity_Amministratore extends AppCompatActivity implements Layout
     @Override
     public void EndAnimations() {
 
+    }
+
+    private void disableBottomBar(){
+        for(int i = 0; i < 4; i++){
+            Bottom_Bar_Amministratore.setTabEnabledAt(i,false);
+        }
+    }
+
+    private void enableBottomBar(){
+        for(int i = 0; i < 4; i++){
+            Bottom_Bar_Amministratore.setTabEnabledAt(i,true);
+        }
     }
 
     public void hideBottomBar(){

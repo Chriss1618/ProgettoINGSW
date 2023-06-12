@@ -2,20 +2,19 @@ package com.ratatouille.Managers;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Listeners.BottomBarListener;
+import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Schermate.Account.Fragment_AccountInfo;
 import com.ratatouille.Schermate.Account.Fragment_EditAccountInfo;
-import com.ratatouille.Schermate.Staff.Fragment_NewStaffMember;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Manager_AccountFragments {
+public class Manager_AccountFragments implements SubController {
     //SYSTEM
     private static final String TAG = "Manager_AccountFragment";
 
@@ -68,6 +67,18 @@ public class Manager_AccountFragments {
     public void showMain(){
        showAccoutnInfo();
     }
+
+    @Override
+    public void changeOnMain(int indexMain, String msg) {
+
+    }
+
+    @Override
+    public void closeView() {
+
+    }
+
+
     public void showFragment(int index,String msg){
         from = onMain;
         onMain = index;

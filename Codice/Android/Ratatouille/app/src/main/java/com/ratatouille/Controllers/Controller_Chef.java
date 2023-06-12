@@ -5,15 +5,14 @@ import android.view.View;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Listeners.BottomBarListener;
+import com.ratatouille.Interfaces.Controller;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_Ordini;
-import com.ratatouille.Managers.Manager_StaffFragments;
-import com.ratatouille.Managers.Manager_StatsFragments;
 
-public class Controller_Chef {
+public class Controller_Chef implements Controller {
     //SYSTEM
     public final static int CHEF_INDEX_INVENTORY     = 0;
     public final static int CHEF_INDEX_ORDERS       = 1;
@@ -83,6 +82,16 @@ public class Controller_Chef {
     //Show Pages
     public void showMain(){
         showORDINI();
+    }
+
+    @Override
+    public void changeOnMain(int indexMain) {
+
+    }
+
+    @Override
+    public void closeView() {
+
     }
 
     public void showINVENTORY(){

@@ -7,17 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 
 import com.ratatouille.Controllers.Controller_Supervisore;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
-public class Activity_Supervisore extends AppCompatActivity implements LayoutContainer {
+public class Activity_Supervisore extends AppCompatActivity implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Activity_Supervisore";
 
@@ -158,12 +157,12 @@ public class Activity_Supervisore extends AppCompatActivity implements LayoutCon
     public void hideBottomBar(){
         Bottom_Bar_Supervisore.startAnimation(Manager_Animation.getTranslationOUTtoDownS(500));
         final Handler handler = new Handler();
-        handler.postDelayed(()-> Bottom_Bar_Supervisore.setVisibility(View.GONE),500);
+        handler.postDelayed(()-> Bottom_Bar_Supervisore.setVisibility(android.view.View.GONE),500);
     }
     public void showBottomBar(){
         Bottom_Bar_Supervisore.startAnimation(Manager_Animation.getTranslationINfromDown(300));
         final Handler handler = new Handler();
-        handler.postDelayed(()-> Bottom_Bar_Supervisore.setVisibility(View.VISIBLE),300);
+        handler.postDelayed(()-> Bottom_Bar_Supervisore.setVisibility(android.view.View.VISIBLE),300);
     }
 
 }

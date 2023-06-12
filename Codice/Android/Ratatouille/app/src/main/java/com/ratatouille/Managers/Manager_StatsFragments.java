@@ -6,12 +6,13 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Schermate.Stats.Fragment_Stats;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Manager_StatsFragments {
+public class Manager_StatsFragments implements SubController {
     //SYSTEM
     private static final String TAG = "Manager_StatsFragments_Class";
 
@@ -58,6 +59,18 @@ public class Manager_StatsFragments {
     public void showMain(){
         showStats();
     }
+
+    @Override
+    public void changeOnMain(int indexMain, String msg) {
+
+    }
+
+    @Override
+    public void closeView() {
+
+    }
+
+
     public void showFragment(int index,String msg){
         from = onMain;
         onMain = index;

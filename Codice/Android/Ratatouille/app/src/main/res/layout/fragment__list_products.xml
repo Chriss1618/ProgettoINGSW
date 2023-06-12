@@ -25,8 +25,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="start"
-                android:layout_marginStart="16dp">
+                android:gravity="start|center_vertical"
+                android:layout_marginStart="0dp">
+
+                <ImageView
+                    android:id="@+id/ic_back"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/icon_add"
+                    android:src="@drawable/ic_back" />
+
                 <TextView
                     android:id="@+id/text_view_title_category"
                     android:layout_width="wrap_content"

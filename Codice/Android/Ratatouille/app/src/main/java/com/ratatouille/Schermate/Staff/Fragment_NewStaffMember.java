@@ -7,35 +7,28 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.LayoutContainer;
+import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.R;
 
-import org.w3c.dom.CharacterData;
-
-import java.security.SecureRandom;
 import java.util.Random;
 
-public class Fragment_NewStaffMember extends Fragment implements LayoutContainer {
+public class Fragment_NewStaffMember extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_NewStaffMember";
     private static final int INDEX_WAITER = 0;
     private static final int INDEX_SUPERVISORE = 1;
     private static final int INDEX_CHEF = 2;
     //LAYOUT
-    View            Fragment_View;
+    android.view.View Fragment_View;
 
     TextView        Text_View_title_staff;
     TextView        Text_View_ScegliRuolo;
@@ -68,8 +61,8 @@ public class Fragment_NewStaffMember extends Fragment implements LayoutContainer
         }
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Fragment_View = inflater.inflate(R.layout.fragment__new_staff_member, container, false);
         PrepareData();

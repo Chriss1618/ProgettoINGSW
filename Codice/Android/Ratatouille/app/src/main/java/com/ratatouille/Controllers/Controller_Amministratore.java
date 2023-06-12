@@ -2,30 +2,40 @@ package com.ratatouille.Controllers;
 
 import android.content.Context;
 
+import android.os.Handler;
 import android.view.View;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Interfaces.Controller;
+import com.ratatouille.Interfaces.SubController;
+import com.ratatouille.Managers.ManagerFactory;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.Managers.Manager_StatsFragments;
 
-public class Controller_Amministratore {
+import java.util.ArrayList;
+
+public class Controller_Amministratore implements Controller {
     //SYSTEM
     public final static int AMMINISTRATORE_INDEX_STATS     = 0;
     public final static int AMMINISTRATORE_INDEX_STAFF     = 1;
     public final static int AMMINISTRATORE_INDEX_MENU      = 2;
     public final static int AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
+    int[] TAG_MENU = {ManagerFactory.MANAGER_STATS, ManagerFactory.MANAGER_STAFF,ManagerFactory.MANAGER_MENU,ManagerFactory.MANAGER_ACCOUNT};
+
     //FUNCTIONAL
+    private static final int           MAIN =  ManagerFactory.MANAGER_STATS;
     public int                         managerOnMain;
     private final FragmentManager      fragmentManager;
 
-    public Manager_StaffFragments      manager_staffFragments;
-    public Manager_StatsFragments      manager_statsFragments;
-    public Manager_MenuFragments       manager_menuFragments;
-    public Manager_AccountFragments    manager_accountFragments;
+    public Manager_StaffFragments       manager_staffFragments;
+    public Manager_StatsFragments       manager_statsFragments;
+    public Manager_MenuFragments        manager_menuFragments;
+    public Manager_AccountFragments     manager_accountFragments;
+    private ArrayList<SubController>    Managers;
 
     //LAYOUT
     private final Context               context;
@@ -37,7 +47,16 @@ public class Controller_Amministratore {
         this.View               = view;
         this.fragmentManager    = fragmentManager;
         this.bottomBarListener  = bottomBarListener;
-        this.managerOnMain      = AMMINISTRATORE_INDEX_STATS;
+
+        Managers = new ArrayList<>();
+        for (int indexManager : TAG_MENU) {
+            Managers.add(ManagerFactory.createSubController(
+                    indexManager,
+                    context,
+                    view,
+                    fragmentManager,
+                    bottomBarListener));
+        }
 
         constructManagerSTATS();
         constructManagerSTAFF();
@@ -79,10 +98,42 @@ public class Controller_Amministratore {
     }
 
     //Show Pages
+    @Override
     public void showMain(){
-        showSTATS();
+        showOnMain(MAIN);
     }
 
+    @Override
+    public void changeOnMain(int indexMain) {
+        closeView();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(()->{
+
+            fragmentManager.popBackStack();
+            showOnMain(indexMain);
+
+        },300);
+    }
+
+    private void showOnMain(int indexMain){
+        clearBackStackPackage();
+        managerOnMain = indexMain;
+        Managers.get(indexMain).showMain();
+    }
+    @Override
+    public void closeView(){
+        Managers.get(managerOnMain).closeView();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(fragmentManager::popBackStack,300);
+    }
+
+    private void clearBackStackPackage(){
+        for(int j  = fragmentManager.getBackStackEntryCount() ; j >0; j-- ){
+            fragmentManager.popBackStack();
+        }
+    }
     public void showSTAFF(){
         manager_staffFragments.showMain();
         managerOnMain = AMMINISTRATORE_INDEX_STAFF;
@@ -116,6 +167,7 @@ public class Controller_Amministratore {
 
     //ANIMATIONS
     public void callEndAnimationOfFragment(){
+
         switch (managerOnMain){
             case AMMINISTRATORE_INDEX_STATS:
                 manager_statsFragments.callEndAnimationOfFragment();
