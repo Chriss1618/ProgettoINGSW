@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.ratatouille.Controllers.Controller_Supervisore;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
@@ -94,8 +94,8 @@ public class Activity_Supervisore extends AppCompatActivity implements ViewLayou
     }
 
     private void setListener(){
-        bottomBarListener.hideBottomBarListener(this::hideBottomBar);
-        bottomBarListener.showBottomBarLinstener(this::showBottomBar);
+        bottomBarListener.setHideBottomBarListener(this::hideBottomBar);
+        bottomBarListener.setShowBottomBarListener(this::showBottomBar);
     }
 
     //BottomBar

@@ -122,10 +122,10 @@ public class Manager_InventoryFragments {
 
     //FUNCTIONAL
     public void hideBottomBar(){
-        bottomBarListener.hideBottomBarLinstener.hideBottomBar();
+        bottomBarListener.hideBottomBar();
     }
     public void showBottomBar(){
-        bottomBarListener.showBottomBarLinstener.showBottomBar();
+        bottomBarListener.showBottomBar();
     }
 
     //ANIMATIONS

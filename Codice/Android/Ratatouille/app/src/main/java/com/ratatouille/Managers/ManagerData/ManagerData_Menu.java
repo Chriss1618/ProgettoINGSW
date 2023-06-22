@@ -2,16 +2,7 @@ package com.ratatouille.Managers.ManagerData;
 
 import android.net.Uri;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.ratatouille.Adapters.Adapter_Category;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
-import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Models.EndPoints.EndPointer;
 import com.ratatouille.Models.ServerCommunication;

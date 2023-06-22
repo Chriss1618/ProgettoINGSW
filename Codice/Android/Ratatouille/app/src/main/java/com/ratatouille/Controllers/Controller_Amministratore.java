@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.view.View;
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Interfaces.Controller;
 import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Managers.ManagerFactory;

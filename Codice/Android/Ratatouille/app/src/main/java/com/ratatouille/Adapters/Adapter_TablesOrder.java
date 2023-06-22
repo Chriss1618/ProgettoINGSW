@@ -79,6 +79,6 @@ public class Adapter_TablesOrder extends RecyclerView.Adapter<Adapter_TablesOrde
         Log.d(TAG, " Holder: "  + this.Holder.Text_View_titoloTavolo.getText().toString());
         Log.d(TAG, " Array: "   + this.NumberTables.get(position));
         Log.d(TAG, "--------------------------------------");
-        RecycleEventListener.AdapterListener.onClickItem(NumberTables.get(position));
+        RecycleEventListener.onClickItem(NumberTables.get(position));
     }
 }

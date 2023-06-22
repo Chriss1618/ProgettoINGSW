@@ -130,10 +130,10 @@ public class Manager_MenuFragments implements SubController {
 
     //FUNCTIONAL
     public void hideBottomBar(){
-        bottomBarListener.hideBottomBarLinstener.hideBottomBar();
+        bottomBarListener.hideBottomBar();
     }
     public void showBottomBar(){
-        bottomBarListener.showBottomBarLinstener.showBottomBar();
+        bottomBarListener.showBottomBar();
     }
 
     //ANIMATIONS

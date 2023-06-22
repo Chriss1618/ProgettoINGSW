@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_Staff;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.R;

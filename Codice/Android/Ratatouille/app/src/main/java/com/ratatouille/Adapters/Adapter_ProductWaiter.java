@@ -114,7 +114,7 @@ public class Adapter_ProductWaiter extends RecyclerView.Adapter<Adapter_ProductW
         Log.d(TAG, " Array: "   + this.TitleProducts.get(position));
         Log.d(TAG, "--------------------------------------");
 
-        RecycleEventListener.AdapterListener.onClickItem(TitleProducts.get(position));
+        RecycleEventListener.onClickItem(TitleProducts.get(position));
     }
     private void clickAddProduct(ViewHolder Holder,final int position){
 //        Log.d(TAG, "Premuto in Add Product Option --------------------");
@@ -134,7 +134,7 @@ public class Adapter_ProductWaiter extends RecyclerView.Adapter<Adapter_ProductW
     private void sendOption(int milliseconds,String product, int action){
         final Handler handler1 = new Handler();
         handler1.postDelayed(()->{
-            RecycleEventListener.AdapterOptionListener.onClickItemOption(product,action);
+            RecycleEventListener.onClickItemOption(product,action);
         },milliseconds);
     }
 

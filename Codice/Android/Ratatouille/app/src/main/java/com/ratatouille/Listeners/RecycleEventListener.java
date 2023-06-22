@@ -2,20 +2,20 @@ package com.ratatouille.Listeners;
 
 public class RecycleEventListener {
     //INTERFACE
-    private interface onClickItemAdapterListener {
+    public interface onClickItemAdapterListener {
         void onClickItem(String ItemName);
     }
-    private interface onCheckItemAdapterListener {
+    public interface onCheckItemAdapterListener {
         void onCheckItem(String ItemName, Boolean flag);
     }
-    private interface onClickItemOptionListener {
+    public interface onClickItemOptionListener {
         void onClickItemOption(String ItemNameOption,int action);
     }
 
     //FUNCTIONAL
-    private onClickItemAdapterListener AdapterListener;
-    private onCheckItemAdapterListener AdapterCheckListener;
-    private onClickItemOptionListener AdapterOptionListener;
+    private onClickItemAdapterListener  AdapterListener;
+    private onCheckItemAdapterListener  AdapterCheckListener;
+    private onClickItemOptionListener   AdapterOptionListener;
 
     public RecycleEventListener() {
         this.AdapterListener        = null;
@@ -37,5 +37,19 @@ public class RecycleEventListener {
     }
 
     //Methods
-
+    public void onClickItem(String ItemName){
+        if(AdapterListener != null ){
+            AdapterListener.onClickItem(ItemName);
+        }
+    }
+    public void onCheckItem(String ItemName, Boolean flag){
+        if(AdapterCheckListener != null ){
+            AdapterCheckListener.onCheckItem(ItemName,flag);
+        }
+    }
+    public void onClickItemOption(String ItemNameOption,int action){
+        if(AdapterOptionListener != null ){
+            AdapterOptionListener.onClickItemOption(ItemNameOption,action);
+        }
+    }
 }

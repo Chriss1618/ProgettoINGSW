@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.R;
 
@@ -81,8 +81,6 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         setActions(position);
     }
 
-
-
     //LAYOUT
     private void initializeLayout(final int position){
         this.Holder.Text_View_titoloCategory.setText(TitleCategories.get(position).getNomeCategoria());
@@ -98,7 +96,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         Log.d(TAG, " Holder: "  + this.Holder.Text_View_titoloCategory.getText().toString());
         Log.d(TAG, " Array: "   + this.TitleCategories.get(position));
         Log.d(TAG, "--------------------------------------");
-        RecycleEventListener.AdapterListener.onClickItem(TitleCategories.get(position).getNomeCategoria());
+        RecycleEventListener.onClickItem(TitleCategories.get(position).getNomeCategoria());
     }
 
     private void clickDeleteCategory(int position){

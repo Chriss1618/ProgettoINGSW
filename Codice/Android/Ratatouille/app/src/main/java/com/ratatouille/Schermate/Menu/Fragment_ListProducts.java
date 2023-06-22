@@ -111,7 +111,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener    .setOnClickItemAdapterListener( this::onClickProduct);
+
+        RecycleEventListener    .setOnClickItemAdapterListener( this::onClickProduct );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
     }
@@ -128,7 +129,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     }
 
     //ACTIONS
-    private void onClickProduct(String Product){
+    public void onClickProduct(String Product){
         Log.d(TAG, "PreparerData: Hai premuto l'item->"+Product);
         toProductAnimations();
         final Handler handler = new Handler();

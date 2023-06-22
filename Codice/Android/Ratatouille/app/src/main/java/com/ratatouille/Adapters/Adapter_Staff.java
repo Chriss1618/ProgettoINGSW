@@ -92,7 +92,7 @@ public class Adapter_Staff extends RecyclerView.Adapter<Adapter_Staff.ViewHolder
         Log.d(TAG, " Array: "   + this.NameStuffMembers.get(position));
         Log.d(TAG, "--------------------------------------");
 
-        RecycleEventListener.AdapterListener.onClickItem(NameStuffMembers.get(position));
+        RecycleEventListener.onClickItem(NameStuffMembers.get(position));
     }
 //ANIMATIONS
 

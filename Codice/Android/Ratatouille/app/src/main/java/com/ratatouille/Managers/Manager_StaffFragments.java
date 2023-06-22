@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Interfaces.BottomBarInterfaces.BottomBarListener;
+import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Schermate.Menu.Fragment_InfoProduct;
 import com.ratatouille.Schermate.Menu.Fragment_ListProducts;
@@ -107,10 +107,10 @@ public class Manager_StaffFragments implements SubController {
 
     //FUNCTIONAL
     public void hideBottomBar(){
-        bottomBarListener.hideBottomBarLinstener.hideBottomBar();
+        bottomBarListener.hideBottomBar();
     }
     public void showBottomBar(){
-        bottomBarListener.showBottomBarLinstener.showBottomBar();
+        bottomBarListener.showBottomBar();
     }
 
     //ANIMATIONS

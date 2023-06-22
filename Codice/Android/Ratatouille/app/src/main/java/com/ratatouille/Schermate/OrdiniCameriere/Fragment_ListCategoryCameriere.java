@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.ratatouille.Adapters.Adapter_Category;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Managers.Manager_Ordini_Cameriere;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.R;

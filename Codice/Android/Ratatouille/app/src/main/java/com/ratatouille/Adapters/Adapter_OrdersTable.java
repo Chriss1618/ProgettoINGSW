@@ -78,7 +78,7 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
         Log.d(TAG, " Array      : "   + this.OrdersTable.get(position));
         Log.d(TAG, "--------------------------------------");
 
-        RecycleEventListener.AdapterCheckListener.onCheckItem(OrdersTable.get(position),isChecked);
+        RecycleEventListener.onCheckItem(OrdersTable.get(position),isChecked);
     }
 
 }

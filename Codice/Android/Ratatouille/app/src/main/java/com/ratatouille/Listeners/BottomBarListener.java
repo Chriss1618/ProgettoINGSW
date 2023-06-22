@@ -2,18 +2,18 @@ package com.ratatouille.Listeners;
 
 public class BottomBarListener {
     //INTERFACE
-    private interface ShowBottomBarListener {
+    public interface ShowBottomBarListener {
         void showBottomBar();
     }
-    private interface HideBottomBarListener {
+    public interface HideBottomBarListener {
         void hideBottomBar();
 
     }
 
-    private interface EnableBottomBarListener {
+    public interface EnableBottomBarListener {
         void enableBottomBar();
     }
-    private interface DisableBottomBarListener {
+    public interface DisableBottomBarListener {
         void disableBottomBar();
     }
 

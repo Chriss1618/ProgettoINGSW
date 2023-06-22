@@ -85,7 +85,7 @@ public class Adapter_TablesWaiter extends RecyclerView.Adapter<Adapter_TablesWai
         Log.d(TAG, " Array: "   + this.Tables.get(position));
         Log.d(TAG, "--------------------------------------");
 
-        RecycleEventListener.AdapterListener.onClickItem(Tables.get(position));
+        RecycleEventListener.onClickItem(Tables.get(position));
     }
 
 }

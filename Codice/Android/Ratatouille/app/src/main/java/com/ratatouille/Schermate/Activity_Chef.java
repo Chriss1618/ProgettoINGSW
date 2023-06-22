@@ -94,11 +94,8 @@ public class Activity_Chef extends AppCompatActivity implements ViewLayout {
     }
 
     private void setListener(){
-        bottomBarListener.hideBottomBarListener( ()->{
-            int a;
-        } );
-        bottomBarListener.hideBottomBarListener(this::hideBottomBarr);
-        bottomBarListener.showBottomBarLinstener(this::showBottomBar);
+        bottomBarListener.setHideBottomBarListener(this::hideBottomBarr);
+        bottomBarListener.setShowBottomBarListener(this::showBottomBar);
     }
 
     //BottomBar

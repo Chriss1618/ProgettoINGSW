@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Interfaces.RecyclerInterfaces.onClickItemAdapterListener;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
@@ -100,7 +99,7 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         Log.d(TAG, " Array: "   + this.TitleProducts.get(position));
         Log.d(TAG, "--------------------------------------");
 
-        RecycleEventListener.AdapterListener.onClickItem(TitleProducts.get(position));
+        RecycleEventListener.onClickItem(TitleProducts.get(position));
     }
     private void clickDeleteCategory(int position){
         Log.d(TAG, "clickDeleteCategory: "+this.Holders.get(position).Text_View_Title_Product.getText().toString());

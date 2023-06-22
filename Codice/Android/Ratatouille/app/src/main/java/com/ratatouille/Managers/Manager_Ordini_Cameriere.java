@@ -163,10 +163,10 @@ public class Manager_Ordini_Cameriere {
 
     //FUNCTIONAL
     public void hideBottomBar(){
-        bottomBarListener.hideBottomBarLinstener.hideBottomBar();
+        bottomBarListener.hideBottomBar();
     }
     public void showBottomBar(){
-        bottomBarListener.showBottomBarLinstener.showBottomBar();
+        bottomBarListener.showBottomBar();
     }
 
     //BOTTOM SHEET

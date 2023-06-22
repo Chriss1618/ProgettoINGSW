@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_ProductInventory;
 import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.RecyclerInterfaces.RecycleEventListener;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.R;
