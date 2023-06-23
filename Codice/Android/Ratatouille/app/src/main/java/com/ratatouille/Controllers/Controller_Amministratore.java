@@ -65,8 +65,7 @@ public class Controller_Amministratore implements Controller {
                         view,
                         fragmentManager,
                         bottomBarListener));
-            } catch (IllegalAccessException | InstantiationException | InvocationTargetException |
-                     NoSuchMethodException e) {
+            } catch (IllegalAccessException | InstantiationException e) {
                 Log.e(TAG, "Controller_Amministratore: ", e);
             }
         }

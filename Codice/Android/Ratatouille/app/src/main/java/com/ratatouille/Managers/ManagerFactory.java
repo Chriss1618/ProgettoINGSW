@@ -24,11 +24,16 @@ public class ManagerFactory {
         classMap.put(INDEX_TYPE_MANAGER_ACCOUNT,    Manager_AccountFragments.class);
     }
 
-    public static SubController createSubController(int typeManager, Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    public static SubController createSubController(int typeManager, Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) throws IllegalAccessException, InstantiationException {
         try{
             return constructSubController_NoBottomBar(typeManager, context, view, fragmentManager);
-        }catch (NoSuchMethodException e){ //No public constructor con Signature specificata per il tipo di Manager
-            return constructSubController(typeManager, context, view, fragmentManager, bottomBarListener);
+        }catch (InvocationTargetException | NoSuchMethodException e){ //No public constructor con Signature specificata per il tipo di Manager
+            try{
+                return constructSubController(typeManager, context, view, fragmentManager, bottomBarListener);
+            }catch ( InvocationTargetException | NoSuchMethodException e1 ) { //No public constructor con Signature specificata per il tipo di Manager
+                throw new IllegalArgumentException("Invalid Manager type.");
+            }
+
         }
     }
 

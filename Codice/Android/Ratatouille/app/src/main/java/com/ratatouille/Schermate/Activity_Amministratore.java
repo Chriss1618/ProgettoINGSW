@@ -28,7 +28,7 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     AnimatedBottomBar Bottom_Bar_Amministratore;
 
     //FUNCTIONAL
-    private static final int            TYPE_CONTROLLER             = ControllerFactory.CONTROLLER_AMMINISTRATORE;
+    private static final int            TYPE_CONTROLLER             = ControllerFactory.INDEX_TYPE_CONTROLLER_AMMINISTRATORE;
     private Controller                  ControllerAmministratore;
     private final BottomBarListener     bottomBarListener = new BottomBarListener();;
 
@@ -127,7 +127,7 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
                 bottomBarListener
             );
         } catch (IllegalAccessException | InstantiationException e) {
-            throw new RuntimeException(e);
+            Log.e(TAG, "constructController: ", e);
         }
 
     }
