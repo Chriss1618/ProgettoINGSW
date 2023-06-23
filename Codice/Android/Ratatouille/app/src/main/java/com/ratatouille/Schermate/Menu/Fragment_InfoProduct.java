@@ -98,7 +98,7 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
         EndAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(()->
-                        sendActionToManager(Manager_MenuFragments.INDEX_MENU_EDIT_PRODUCT,Product_Name),
+                        sendActionToManager(MenuViewFactory.INDEX_MENU_EDIT_PRODUCT,Product_Name),
                 300);
     }
 

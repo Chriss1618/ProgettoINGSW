@@ -101,7 +101,7 @@ public class Controller_Supervisore implements Controller {
         switch (managerOnMain){
             case SUPERVISORE_INDEX_INVENTARIO:  this.manager_inventoryFragments.onMain  = Manager_InventoryFragments.INDEX_INVENTORY_LIST_INVENTORY;
                 break;
-            case SUPERVISORE_INDEX_MENU:        this.manager_menuFragments.onMain       = Manager_MenuFragments.INDEX_MENU_LIST_CATEGORY;
+            case SUPERVISORE_INDEX_MENU:        this.manager_menuFragments.onMain       = Manager_MenuFragments.MAIN;
                 break;
             case SUPERVISORE_INDEX_ACCOUNT:     this.manager_accountFragments.onMain    = Manager_AccountFragments.INDEX_ACCOUNT_INFO;
                 break;

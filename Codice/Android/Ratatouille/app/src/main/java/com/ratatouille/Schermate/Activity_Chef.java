@@ -49,9 +49,7 @@ public class Activity_Chef extends AppCompatActivity implements ViewLayout {
         }
     }
     private void clearBackStackPackage(){
-        for(int j  = getSupportFragmentManager().getBackStackEntryCount() ; j >0; j-- ){
-            getSupportFragmentManager().popBackStack();
-        }
+        for(int j  = getSupportFragmentManager().getBackStackEntryCount() ; j > 0; j-- ) getSupportFragmentManager().popBackStack();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.ratatouille.Managers.ManagerData;
+package com.ratatouille.Managers.ManagersData;
 
 import android.net.Uri;
 import android.util.Log;

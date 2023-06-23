@@ -118,13 +118,17 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
 
     //FUNCTIONAL
     private void constructController() {
-        ControllerAmministratore = ControllerFactory.createController(
-            TYPE_CONTROLLER,
-            this,
-            findViewById(R.id.fragment_container_view_amministratore),
-            getSupportFragmentManager(),
-            bottomBarListener
-        );
+        try {
+            ControllerAmministratore = ControllerFactory.createController(
+                TYPE_CONTROLLER,
+                this,
+                findViewById(R.id.fragment_container_view_amministratore),
+                getSupportFragmentManager(),
+                bottomBarListener
+            );
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

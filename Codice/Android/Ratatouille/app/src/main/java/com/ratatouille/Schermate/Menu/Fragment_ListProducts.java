@@ -134,14 +134,14 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         toProductAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(()->
-                sendActionToManager(Manager_MenuFragments.INDEX_MENU_INFO_PRODUCT,Product),
+                sendActionToManager(MenuViewFactory.INDEX_MENU_INFO_PRODUCT,Product),
                 300);
     }
     private void onClickAddProduct(){
         toProductAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(()->
-                        sendActionToManager(Manager_MenuFragments.INDEX_MENU_NEW_PRODUCT,Category_Name),
+                        sendActionToManager(MenuViewFactory.INDEX_MENU_NEW_PRODUCT,Category_Name),
                 300);
     }
     private void onClickDeleteMember(){

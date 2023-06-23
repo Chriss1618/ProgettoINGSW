@@ -243,7 +243,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
     //FUNCTIONAL *********************************************************************
     private void sendActionToManager(String msg){
-        this.manager_MenuFragments.showFragment(Manager_MenuFragments.INDEX_MENU_LIST_PRODUCTS,msg);
+        this.manager_MenuFragments.showFragment(MenuViewFactory.INDEX_MENU_LIST_PRODUCTS,msg);
     }
 
     public class DialogNewCategory{

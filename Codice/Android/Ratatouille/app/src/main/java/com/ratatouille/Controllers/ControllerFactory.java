@@ -14,7 +14,7 @@ public class ControllerFactory {
     public static final int CONTROLLER_CHEF             = 2;
     public static final int CONTROLLER_CAMERIERE        = 3;
 
-    public static Controller createController(int typeController, Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener){
+    public static Controller createController(int typeController, Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) throws IllegalAccessException, InstantiationException {
         switch (typeController){
             case CONTROLLER_AMMINISTRATORE:
                 return new Controller_Amministratore(

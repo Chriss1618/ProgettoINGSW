@@ -3,6 +3,7 @@ package com.ratatouille.Controllers;
 import android.content.Context;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import androidx.fragment.app.FragmentManager;
 
@@ -15,19 +16,26 @@ import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.Managers.Manager_StatsFragments;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class Controller_Amministratore implements Controller {
+    private static final String TAG = "Controller_Amministratore";
     //SYSTEM
     public final static int AMMINISTRATORE_INDEX_STATS     = 0;
     public final static int AMMINISTRATORE_INDEX_STAFF     = 1;
     public final static int AMMINISTRATORE_INDEX_MENU      = 2;
     public final static int AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
-    int[] TAG_MENU = {ManagerFactory.MANAGER_STATS, ManagerFactory.MANAGER_STAFF,ManagerFactory.MANAGER_MENU,ManagerFactory.MANAGER_ACCOUNT};
+    static int[] TAG_ADMINISTRATOR = {
+            ManagerFactory.INDEX_TYPE_MANAGER_STATS,
+            ManagerFactory.INDEX_TYPE_MANAGER_STAFF,
+            ManagerFactory.INDEX_TYPE_MANAGER_MENU,
+            ManagerFactory.INDEX_TYPE_MANAGER_ACCOUNT
+    };
 
     //FUNCTIONAL
-    private static final int           MAIN =  ManagerFactory.MANAGER_STATS;
+    private static final int           MAIN =  TAG_ADMINISTRATOR[0];
     public int                         managerOnMain;
     private final FragmentManager      fragmentManager;
 
@@ -49,13 +57,18 @@ public class Controller_Amministratore implements Controller {
         this.bottomBarListener  = bottomBarListener;
 
         Managers = new ArrayList<>();
-        for (int indexManager : TAG_MENU) {
-            Managers.add(ManagerFactory.createSubController(
-                    indexManager,
-                    context,
-                    view,
-                    fragmentManager,
-                    bottomBarListener));
+        for (int typeManager : TAG_ADMINISTRATOR) {
+            try {
+                Managers.add(ManagerFactory.createSubController(
+                        typeManager,
+                        context,
+                        view,
+                        fragmentManager,
+                        bottomBarListener));
+            } catch (IllegalAccessException | InstantiationException | InvocationTargetException |
+                     NoSuchMethodException e) {
+                Log.e(TAG, "Controller_Amministratore: ", e);
+            }
         }
 
         constructManagerSTATS();
@@ -158,7 +171,7 @@ public class Controller_Amministratore implements Controller {
                 break;
             case AMMINISTRATORE_INDEX_STAFF:    this.manager_staffFragments.onMain = Manager_StaffFragments.INDEX_STAFF_LIST;
                 break;
-            case AMMINISTRATORE_INDEX_MENU:     this.manager_menuFragments.onMain = Manager_MenuFragments.INDEX_MENU_LIST_CATEGORY;
+            case AMMINISTRATORE_INDEX_MENU:     this.manager_menuFragments.onMain = Manager_MenuFragments.MAIN;
                 break;
             case AMMINISTRATORE_INDEX_ACCOUNT:  this.manager_accountFragments.onMain = Manager_AccountFragments.INDEX_ACCOUNT_INFO;
                 break;
@@ -176,7 +189,7 @@ public class Controller_Amministratore implements Controller {
                 manager_staffFragments.callEndAnimationOfFragment();
                 break;
             case AMMINISTRATORE_INDEX_MENU:
-                manager_menuFragments.callEndAnimationOfFragment();
+                //manager_menuFragments.callEndAnimationOfFragment();
                 break;
             case AMMINISTRATORE_INDEX_ACCOUNT:
                 manager_accountFragments.callEndAnimationOfFragment();

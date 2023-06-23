@@ -118,7 +118,7 @@ public class Controller_Chef implements Controller {
                 break;
             case CHEF_INDEX_ORDERS:     this.manager_ordini.onMain              = Manager_Ordini.INDEX_ORDINI_LIST_ORDERS;
                 break;
-            case CHEF_INDEX_MENU:       this.manager_menuFragments.onMain       = Manager_MenuFragments.INDEX_MENU_LIST_CATEGORY;
+            case CHEF_INDEX_MENU:       this.manager_menuFragments.onMain       = Manager_MenuFragments.MAIN;
                 break;
             case CHEF_INDEX_ACCOUNT:    this.manager_accountFragments.onMain    = Manager_AccountFragments.INDEX_ACCOUNT_INFO;
                 break;
