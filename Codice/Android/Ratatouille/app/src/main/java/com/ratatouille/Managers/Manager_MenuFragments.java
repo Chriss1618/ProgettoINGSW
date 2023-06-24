@@ -3,6 +3,7 @@ package com.ratatouille.Managers;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -55,7 +56,11 @@ public class Manager_MenuFragments implements SubController {
 
     private void addFragments(){
         for (int indexView : LIST_INDEX_VIEW) {
-            Views.add( MenuViewFactory.createView(indexView,this));
+            try{
+                Views.add( MenuViewFactory.createView(indexView,this));
+            } catch (IllegalAccessException | InstantiationException e) {
+                Log.e(TAG, "Manager_MenuFragments: ", e);
+            }
         }
     }
     //ShowPages
