@@ -16,7 +16,6 @@ import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.Managers.Manager_StatsFragments;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class Controller_Amministratore implements Controller {
@@ -27,7 +26,7 @@ public class Controller_Amministratore implements Controller {
     public final static int AMMINISTRATORE_INDEX_MENU      = 2;
     public final static int AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
-    static int[] TAG_ADMINISTRATOR = {
+    static int[] LIST_INDEX_MANAGERS = {
             ManagerFactory.INDEX_TYPE_MANAGER_STATS,
             ManagerFactory.INDEX_TYPE_MANAGER_STAFF,
             ManagerFactory.INDEX_TYPE_MANAGER_MENU,
@@ -35,7 +34,7 @@ public class Controller_Amministratore implements Controller {
     };
 
     //FUNCTIONAL
-    private static final int           MAIN =  TAG_ADMINISTRATOR[0];
+    private static final int           MAIN =  LIST_INDEX_MANAGERS[0];
     public int                         managerOnMain;
     private final FragmentManager      fragmentManager;
 
@@ -57,10 +56,10 @@ public class Controller_Amministratore implements Controller {
         this.bottomBarListener  = bottomBarListener;
 
         Managers = new ArrayList<>();
-        for (int typeManager : TAG_ADMINISTRATOR) {
+        for (int indexManager : LIST_INDEX_MANAGERS) {
             try {
                 Managers.add(ManagerFactory.createSubController(
-                        typeManager,
+                        indexManager,
                         context,
                         view,
                         fragmentManager,

@@ -1,8 +1,8 @@
 package com.ratatouille.Managers;
 
-
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentManager;
 import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Managers.ManagersAction.ManagerAction_Menu;
+import com.ratatouille.Models.Action;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Schermate.Menu.MenuViewFactory;
 
@@ -40,28 +42,26 @@ public class Manager_MenuFragments implements SubController {
     private final FragmentManager   fragmentManager;
     public int                      onMain;
     public int                      from;
+    private ManagerAction_Menu      ManagerAction;
 
     //DATA
     private ArrayList<CategoriaMenu> ListCategory;
 
     public Manager_MenuFragments(Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Views = new ArrayList<>();
+        this.ManagerAction = new ManagerAction_Menu();
+
         this.context                = context;
         this.View                   = view;
         this.fragmentManager        = fragmentManager;
         this.bottomBarListener      = bottomBarListener;
-
         addFragments();
     }
 
     private void addFragments(){
-        for (int indexView : LIST_INDEX_VIEW) {
-            try{
-                Views.add( MenuViewFactory.createView(indexView,this));
-            } catch (IllegalAccessException | InstantiationException e) {
-                Log.e(TAG, "Manager_MenuFragments: ", e);
-            }
-        }
+        for (int indexView : LIST_INDEX_VIEW)
+            try{ Views.add( MenuViewFactory.createView(indexView,this)); }
+            catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
     }
     //ShowPages
     public void loadFragmentAsMain(int Tag){
@@ -84,16 +84,18 @@ public class Manager_MenuFragments implements SubController {
         showFragment(MAIN,null);
     }
 
-    public void getInputAction(String action){
-        switch (action){
-
-        }
+    public void HandleAction(Action action){
+        ManagerAction.handleAction(action);
     }
 
     @Override
     public void changeOnMain(int indexMain, String msg) {
         closeView();
-        showFragment(indexMain,msg);
+        final Handler handler = new Handler();
+        handler.postDelayed(()->
+                showFragment(indexMain,msg),
+                300);
+
     }
 
     @Override

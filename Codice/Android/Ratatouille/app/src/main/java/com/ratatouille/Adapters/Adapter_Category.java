@@ -37,6 +37,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
 
         }
     };
+
     //DATA
     private final ArrayList<CategoriaMenu>    TitleCategories;
 

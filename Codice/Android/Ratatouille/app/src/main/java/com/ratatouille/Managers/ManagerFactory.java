@@ -33,7 +33,6 @@ public class ManagerFactory {
             }catch ( InvocationTargetException | NoSuchMethodException e1 ) { //No public constructor con Signature specificata per il tipo di Manager
                 throw new IllegalArgumentException("Invalid Manager type.");
             }
-
         }
     }
 

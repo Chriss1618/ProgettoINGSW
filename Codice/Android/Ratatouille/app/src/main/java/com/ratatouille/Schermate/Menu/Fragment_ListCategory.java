@@ -30,6 +30,8 @@ import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_MenuFragments;
+import com.ratatouille.Managers.ManagersAction.ManagerAction_Menu;
+import com.ratatouille.Models.Action;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Models.EndPoints.EndPointer;
 import com.ratatouille.Models.ServerCommunication;
@@ -103,7 +105,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         if(ListCategoryMenu.isEmpty()){
             getCategoriesFromServer();
         }
-        //startRatchet();
+
         startListening();
     }
 
@@ -218,17 +220,17 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
     //ACTIONS*************************************************************************
     private void onClickCategory(String Category){
-        Log.d(TAG, "Ricevuto da Listener->"+Category);
-        EndAnimations();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                sendActionToManager(Category),
-                300);
+        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_OPEN_LIST_PRODUCTS,Category,manager_MenuFragments);
+        manager_MenuFragments.HandleAction(action);
     }
 
     private void onClickNewCategory(){
-        DialogNewCategory dialogNewCategory = new DialogNewCategory();
-        dialogNewCategory.showDialogNewCategory();
+        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_ADD_CATEGORY,null,manager_MenuFragments);
+        action.setCallBack(() -> {
+            DialogNewCategory dialogNewCategory = new DialogNewCategory();
+            dialogNewCategory.showDialogNewCategory();
+        });
+        manager_MenuFragments.HandleAction(action);
     }
 
     private void onClickDeleteCategory(){

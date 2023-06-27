@@ -133,8 +133,8 @@ public class Manager_InventoryFragments {
         from = onMain;
         switch (onMain){
             case INDEX_INVENTORY_LIST_INVENTORY:
-                Fragment_ListInventary listInventary = (Fragment_ListInventary)fragmentManager.findFragmentByTag(TAG_INVENTORY_LIST);
-                Objects.requireNonNull(listInventary).EndAnimations();
+                Fragment_ListInventary listInventory = (Fragment_ListInventary)fragmentManager.findFragmentByTag(TAG_INVENTORY_LIST);
+                Objects.requireNonNull(listInventory).EndAnimations();
                 break;
             case INDEX_INVENTORY_NEW_PRODUCT_INVENTORY:
                 onMain = INDEX_INVENTORY_LIST_INVENTORY;
