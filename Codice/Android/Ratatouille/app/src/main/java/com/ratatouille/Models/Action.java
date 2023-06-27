@@ -6,24 +6,23 @@ public class Action {
     private SubController Manager;
     private Integer actionType;
     private Object Data;
-    private functionCallBack functionCallBack = null;
+    private FunctionCallBack functionCallBack;
 
-
-    public interface functionCallBack{
+    public interface FunctionCallBack{
         void execute();
     }
 
 
-    public Action(Integer actionType, Object data, SubController manager) {
+    public Action(Integer actionType, Object data, SubController manager,FunctionCallBack functionCallBack) {
         this.Manager = manager;
         this.actionType = actionType;
         this.Data = data;
+        this.functionCallBack = functionCallBack;
     }
 
     public Integer getActionType() {
         return actionType;
     }
-
 
     public Object getData() {
         return Data;
@@ -31,10 +30,6 @@ public class Action {
 
     public SubController getManager() {
         return Manager;
-    }
-
-    public void setCallBack(functionCallBack functionCallBack){
-        this.functionCallBack = functionCallBack;
     }
 
     public void callBack(){

@@ -121,14 +121,13 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         Recycler_Products.setLayoutManager(mLayoutManager);
         Recycler_Products.setNestedScrollingEnabled(false);
-        boolean isFromLeft = true;
-        if(manager_menuFragments.from > manager_menuFragments.onMain) isFromLeft = false;
+        boolean isFromLeft = manager_menuFragments.from <= manager_menuFragments.onMain;
 
         adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,isFromLeft);
         Recycler_Products.setAdapter(adapter_product);
     }
 
-    //ACTIONS
+    //ACTIONS *************************************************************************
     public void onClickProduct(String Product){
         Log.d(TAG, "PreparerData: Hai premuto l'item->"+Product);
         toProductAnimations();

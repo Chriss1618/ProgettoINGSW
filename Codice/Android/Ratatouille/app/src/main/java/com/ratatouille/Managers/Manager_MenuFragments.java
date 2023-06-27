@@ -38,11 +38,11 @@ public class Manager_MenuFragments implements SubController {
     private final View                  View;
 
     //FUNCTIONAL
-    private BottomBarListener       bottomBarListener;
-    private final FragmentManager   fragmentManager;
-    public int                      onMain;
-    public int                      from;
-    private ManagerAction_Menu      ManagerAction;
+    private final BottomBarListener     bottomBarListener;
+    private final FragmentManager       fragmentManager;
+    private final ManagerAction_Menu    ManagerAction;
+    public int    onMain;
+    public int    from;
 
     //DATA
     private ArrayList<CategoriaMenu> ListCategory;
@@ -63,14 +63,16 @@ public class Manager_MenuFragments implements SubController {
             try{ Views.add( MenuViewFactory.createView(indexView,this)); }
             catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
     }
+
+
     //ShowPages
-    public void loadFragmentAsMain(int Tag){
+    private void loadFragmentAsMain(int Tag){
         fragmentManager.beginTransaction()
                 .replace(View.getId(), (Fragment) Views.get(MAIN), String.valueOf(Tag))
                 .setReorderingAllowed(true)
                 .commit();
     }
-    public void loadFragmentAsNormal(int Tag){
+    private void loadFragmentAsNormal(int Tag){
         fragmentManager.beginTransaction()
                 .replace(View.getId(), (Fragment) Views.get(onMain), String.valueOf(Tag))
                 .setReorderingAllowed(true)
@@ -95,7 +97,6 @@ public class Manager_MenuFragments implements SubController {
         handler.postDelayed(()->
                 showFragment(indexMain,msg),
                 300);
-
     }
 
     @Override
@@ -114,7 +115,6 @@ public class Manager_MenuFragments implements SubController {
 
         if( indexFragment == MAIN ) loadFragmentAsMain( LIST_INDEX_VIEW[indexFragment] );
         else loadFragmentAsNormal( LIST_INDEX_VIEW[indexFragment] );
-
     }
 
     //FUNCTIONAL
@@ -129,7 +129,6 @@ public class Manager_MenuFragments implements SubController {
     public void callEndAnimationOfFragment(){
         from = onMain;
         ViewLayout View = (ViewLayout)fragmentManager.findFragmentById(LIST_INDEX_VIEW[onMain]);
-        //ViewLayout View = (ViewLayout)fragmentManager.findFragmentByTag(TAG_MENU[onMain]);
         Objects.requireNonNull(View).EndAnimations();
 
         onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));

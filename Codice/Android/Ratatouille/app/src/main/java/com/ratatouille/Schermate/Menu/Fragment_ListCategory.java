@@ -2,8 +2,6 @@ package com.ratatouille.Schermate.Menu;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -38,18 +36,9 @@ import com.ratatouille.Models.ServerCommunication;
 import com.ratatouille.R;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.Socket;
 import java.util.ArrayList;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
-import okio.ByteString;
 
 public class Fragment_ListCategory extends Fragment implements ViewLayout {
     //SYSTEM
@@ -191,8 +180,8 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener        .setOnClickItemAdapterListener( this::onClickCategory);
-        Image_View_AddCategory      .setOnClickListener(view ->onClickNewCategory());
+        RecycleEventListener        .setOnClickItemAdapterListener( this::onClickCategory );
+        Image_View_AddCategory      .setOnClickListener(view -> onClickAddCategory());
         Image_View_DeleteCategory   .setOnClickListener(view -> onClickDeleteCategory());
     }
 
@@ -218,19 +207,20 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
             Recycler_Categories.setVisibility(View.VISIBLE);
         }
     }
-    //ACTIONS*************************************************************************
-    private void onClickCategory(String Category){
-        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_OPEN_LIST_PRODUCTS,Category,manager_MenuFragments);
+
+    //ACTIONS *************************************************************************
+    private void SendAction(Action action){
         manager_MenuFragments.HandleAction(action);
     }
 
-    private void onClickNewCategory(){
-        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_ADD_CATEGORY,null,manager_MenuFragments);
-        action.setCallBack(() -> {
-            DialogNewCategory dialogNewCategory = new DialogNewCategory();
-            dialogNewCategory.showDialogNewCategory();
-        });
-        manager_MenuFragments.HandleAction(action);
+    private void onClickCategory(String Category){
+        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_OPEN_LIST_PRODUCTS,Category,manager_MenuFragments,null);
+        SendAction(action);
+    }
+
+    private void onClickAddCategory(){
+        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_SHOW_ADD_CATEGORY,null,manager_MenuFragments,this::ShowDialogNewCategory);
+        SendAction(action);
     }
 
     private void onClickDeleteCategory(){
@@ -244,11 +234,11 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
 
     //FUNCTIONAL *********************************************************************
-    private void sendActionToManager(String msg){
-        this.manager_MenuFragments.showFragment(MenuViewFactory.INDEX_MENU_LIST_PRODUCTS,msg);
+    private void ShowDialogNewCategory(){
+        DialogNewCategory dialogNewCategory = new DialogNewCategory();
+        dialogNewCategory.showDialogNewCategory();
     }
-
-    public class DialogNewCategory{
+    private class DialogNewCategory{
         CardView CardView_Cancel;
         CardView CardView_Add;
         EditText EditText_NewCategoryName;
@@ -377,10 +367,4 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         Recycler_Categories     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        EndAnimations();
-
-    }
 }

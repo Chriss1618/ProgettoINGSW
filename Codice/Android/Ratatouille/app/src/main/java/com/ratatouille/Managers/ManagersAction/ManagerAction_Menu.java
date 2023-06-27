@@ -3,11 +3,6 @@ package com.ratatouille.Managers.ManagersAction;
 import android.os.Handler;
 import android.util.Log;
 
-import com.ratatouille.Interfaces.SubController;
-import com.ratatouille.Managers.Manager_AccountFragments;
-import com.ratatouille.Managers.Manager_MenuFragments;
-import com.ratatouille.Managers.Manager_StaffFragments;
-import com.ratatouille.Managers.Manager_StatsFragments;
 import com.ratatouille.Models.Action;
 import com.ratatouille.Schermate.Menu.MenuViewFactory;
 
@@ -15,21 +10,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ManagerAction_Menu {
+    //SYSTEM
     private static final String TAG = "ManagerAction_Menu";
-    public final static int INDEX_ACTION_OPEN_LIST_PRODUCTS   = 0;
-    public final static int INDEX_ACTION_ADD_CATEGORY   = 1;
 
-    public final Map<Integer, ActionHandler> actionHandlerMap  = new HashMap<>();
+    //FUNCTIONAL
+    public final static int INDEX_ACTION_OPEN_LIST_PRODUCTS     = 0;
+    public final static int INDEX_ACTION_SHOW_ADD_CATEGORY      = 1;
 
-    public ManagerAction_Menu() {
-        initializeActionHandlers();
-    }
+    private final Map<Integer, ActionHandler> actionHandlerMap;
 
     private interface ActionHandler{
         void handleAction(Action action);
     }
 
-    private static class GetCategorieActionHandler implements ActionHandler {
+    //ACTIONS HANDLED **************************************************************
+    private static class OpenListProducts_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
             String categoria = (String) action.getData();
@@ -40,26 +35,24 @@ public class ManagerAction_Menu {
         }
     }
 
-    private static class AddNewCategoryActionHandler implements ActionHandler {
+    private static class showAddNewCategory_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: AddNewCategoryActionHandler->");
             action.callBack();
         }
     }
+    //******************************************************************************
 
-    private void initializeActionHandlers() {
-        actionHandlerMap.put(INDEX_ACTION_OPEN_LIST_PRODUCTS, new GetCategorieActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_ADD_CATEGORY, new AddNewCategoryActionHandler());
+    public ManagerAction_Menu() {
+        actionHandlerMap = new HashMap<>();
+        actionHandlerMap.put(INDEX_ACTION_OPEN_LIST_PRODUCTS,   new OpenListProducts_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_SHOW_ADD_CATEGORY,    new showAddNewCategory_ActionHandler());
     }
 
     public void handleAction(Action action) {
         ActionHandler handler = actionHandlerMap.get(action.getActionType());
-        if (handler != null) {
-            handler.handleAction(action);
-        }
+        if (handler != null) handler.handleAction(action);
     }
-
-
 
 }

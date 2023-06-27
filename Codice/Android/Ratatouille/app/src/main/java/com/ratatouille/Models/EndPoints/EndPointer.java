@@ -1,7 +1,6 @@
 package com.ratatouille.Models.EndPoints;
 
 public class EndPointer {
-
     public static final String StandardPath = "http://s956013630.sito-web-online.it/App";
 
     public static final String VERSION_ENDPOINT = "/v1";
