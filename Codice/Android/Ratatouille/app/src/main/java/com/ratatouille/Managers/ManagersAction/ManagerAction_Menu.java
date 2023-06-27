@@ -9,6 +9,7 @@ import com.ratatouille.Schermate.Menu.MenuViewFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+//STRATEGY PATTERN
 public class ManagerAction_Menu {
     //SYSTEM
     private static final String TAG = "ManagerAction_Menu";

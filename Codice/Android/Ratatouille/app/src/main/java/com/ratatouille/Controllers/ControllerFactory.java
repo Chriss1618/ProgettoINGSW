@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+//FACTORY PATTERN
 public class ControllerFactory {
     public static final int INDEX_TYPE_CONTROLLER_AMMINISTRATORE   = 0;
     public static final int INDEX_TYPE_CONTROLLER_SUPERVISORE      = 1;
