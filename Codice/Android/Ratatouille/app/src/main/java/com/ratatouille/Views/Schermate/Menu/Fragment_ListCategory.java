@@ -26,14 +26,15 @@ import android.widget.TextView;
 import com.ratatouille.Adapters.Adapter_Category;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
+import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Models.Action.*;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Models.EndPoints.EndPointer;
+import com.ratatouille.Models.Request.Request;
 import com.ratatouille.Models.ServerCommunication;
 import com.ratatouille.R;
 
@@ -57,20 +58,16 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     private TextView        Text_View_Empty;
 
     //FUNCTIONAL
-    private  Manager_MenuFragments     manager_MenuFragments;
-    Manager manager;
-    private RecycleEventListener            RecycleEventListener;
-    private Adapter_Category                adapter_category;
-    private boolean                         isDeleting = false;
+    private final Manager           manager;
+    private RecycleEventListener    RecycleEventListener;
+    private Adapter_Category        adapter_category;
+    private boolean                 isDeleting = false;
 
     //DATA
     private ArrayList<CategoriaMenu> ListCategoryMenu;
 
     //OTHERS...
 
-    public Fragment_ListCategory(Manager_MenuFragments manager_menuFragments) {
-        this.manager_MenuFragments = manager_menuFragments;
-    }
     public Fragment_ListCategory(Manager manager,int a) {
         this.manager = manager;
     }
@@ -90,16 +87,14 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
         StartAnimations();
 
-
         return View_fragment;
     }
 
     //DATA *****************************************************************************
     @Override
     public void PrepareData(){
-        if(ListCategoryMenu.isEmpty()){
-            getCategoriesFromServer();
-        }
+        ListCategoryMenu.clear();
+        sendRequest();
 
         startListening();
     }
@@ -107,30 +102,20 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     private void startListening() {
 
     }
-
-    private void setCategories(JSONArray Msg) throws org.json.JSONException{
-        if( Msg != null ){
-            for(int i = 0 ; i<Msg.length(); i++){
-                JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
-
-                ListCategoryMenu.add(new CategoriaMenu(
-                        Categoria_Json.getString("NomeCategoria"),
-                        Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
-                ));
-            }
-        }
+    private void sendRequest(){
+        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
+        @SuppressWarnings("unchecked")
+        Request request = new Request(
+                manager.getSourceInfo(),
+                null,
+                ManagerRequestFactory.INDEX_REQUEST_CATEGORY,
+                (list)->getCategory( (ArrayList<CategoriaMenu>)list )
+        );
+        manager.HandleRequest(request);
     }
 
-    private void getCategoriesFromServer(){
-        Uri.Builder dataToSend  = new Uri.Builder().appendQueryParameter("id_ristorante", "1");
-        String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/CategoriaMenu.php";
-
-        try {
-            JSONArray Json_Categories = new ServerCommunication().getData( dataToSend, url);
-            setCategories( Json_Categories );
-        }catch ( Exception e ){
-            Log.e(TAG, "getDataFromServer: ",e);
-        }
+    public void getCategory(ArrayList<CategoriaMenu> ListCategorie){
+        ListCategoryMenu = ListCategorie;
     }
 
     private boolean sendNewCategoryToServer(String newCategory){
@@ -166,7 +151,6 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         LinkLayout();
         SetActionsOfLayout();
         SetDataOnLayout();
-
     }
 
     @Override

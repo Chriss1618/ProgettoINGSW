@@ -9,7 +9,7 @@ public class Request {
     private final FunctionCallBack functionCallBack;
 
     public interface FunctionCallBack{
-        void execute();
+        void execute(Object data);
     }
 
     public Request(SourceInfo sourceInfo, Object data, int typeRequest, FunctionCallBack functionCallBack) {
@@ -29,7 +29,7 @@ public class Request {
         return Data;
     }
 
-    public void callBack(){
-        if ( this.functionCallBack != null ) this.functionCallBack.execute();
+    public void callBack(Object data){
+        if ( this.functionCallBack != null ) this.functionCallBack.execute(data);
     }
 }

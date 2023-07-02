@@ -21,11 +21,12 @@ public class RequestCategory implements RequestHandler {
     private static final String TAG = "RequestCategory";
 
     //DATA
-    private final ArrayList<CategoriaMenu> ListCategoryMenu = new ArrayList<>();
+    private ArrayList<CategoriaMenu> ListCategoryMenu;
 
 
     private void setCategories(JSONArray Msg) throws org.json.JSONException{
         if( Msg != null ){
+            ListCategoryMenu = new ArrayList<>();
             for(int i = 0 ; i<Msg.length(); i++){
                 JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
 
@@ -53,5 +54,6 @@ public class RequestCategory implements RequestHandler {
     @Override
     public void handleRequest(Request request) {
         getCategoriesFromServer();
+        request.callBack(ListCategoryMenu);
     }
 }
