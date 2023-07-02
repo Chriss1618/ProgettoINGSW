@@ -27,6 +27,7 @@ import com.ratatouille.Adapters.Adapter_Category;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Manager;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.ManagersAction.ManagerAction_Menu;
 import com.ratatouille.Models.Action;
@@ -55,7 +56,8 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     private TextView        Text_View_Empty;
 
     //FUNCTIONAL
-    private final Manager_MenuFragments     manager_MenuFragments;
+    private  Manager_MenuFragments     manager_MenuFragments;
+    Manager manager;
     private RecycleEventListener            RecycleEventListener;
     private Adapter_Category                adapter_category;
     private boolean                         isDeleting = false;
@@ -67,6 +69,9 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
     public Fragment_ListCategory(Manager_MenuFragments manager_menuFragments) {
         this.manager_MenuFragments = manager_menuFragments;
+    }
+    public Fragment_ListCategory(Manager manager,int a) {
+        this.manager = manager;
     }
 
     @Override
@@ -198,6 +203,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     private void initDialog(){
 
     }
+
     private void checkEmptyRecycle(){
         if(ListCategoryMenu.isEmpty()) {
             Text_View_Empty.setVisibility(View.VISIBLE);
@@ -210,16 +216,16 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
     //ACTIONS *************************************************************************
     private void SendAction(Action action){
-        manager_MenuFragments.HandleAction(action);
+        manager.HandleAction(action);
     }
 
     private void onClickCategory(String Category){
-        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_OPEN_LIST_PRODUCTS,Category,manager_MenuFragments,null);
+        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_OPEN_LIST_PRODUCTS,Category,manager,null);
         SendAction(action);
     }
 
     private void onClickAddCategory(){
-        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_SHOW_ADD_CATEGORY,null,manager_MenuFragments,this::ShowDialogNewCategory);
+        Action action = new Action(ManagerAction_Menu.INDEX_ACTION_SHOW_ADD_CATEGORY,null,manager,this::ShowDialogNewCategory);
         SendAction(action);
     }
 

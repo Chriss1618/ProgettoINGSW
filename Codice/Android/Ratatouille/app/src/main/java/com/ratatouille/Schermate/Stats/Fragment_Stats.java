@@ -25,6 +25,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Manager;
 import com.ratatouille.Managers.Manager_StatsFragments;
 import com.ratatouille.R;
 
@@ -51,7 +52,8 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
     CardView            Card_view_Pie_Chart;
 
     //FUNCTIONAL
-    final Manager_StatsFragments manager_statsFragments;
+    Manager_StatsFragments manager_statsFragments;
+    Manager manager;
     //DATA
     ArrayList<String> OperatoriSala;
     ArrayList<Integer> OperatoriSala_Value ;
@@ -63,6 +65,13 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
     public Fragment_Stats(Manager_StatsFragments manager_statsFragments) {
         // Required empty public constructor
         this.manager_statsFragments = manager_statsFragments;
+        pieEntries = new ArrayList<>();
+        OperatoriSala = new ArrayList<>();
+        OperatoriSala_Value = new ArrayList<>();
+    }
+
+    public Fragment_Stats(Manager manager,int a) {
+        this.manager = manager;
         pieEntries = new ArrayList<>();
         OperatoriSala = new ArrayList<>();
         OperatoriSala_Value = new ArrayList<>();

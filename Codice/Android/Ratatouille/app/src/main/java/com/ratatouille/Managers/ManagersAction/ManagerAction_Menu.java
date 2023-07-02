@@ -3,6 +3,7 @@ package com.ratatouille.Managers.ManagersAction;
 import android.os.Handler;
 import android.util.Log;
 
+import com.ratatouille.ControlMapper;
 import com.ratatouille.Models.Action;
 import com.ratatouille.Schermate.Menu.MenuViewFactory;
 
@@ -32,7 +33,7 @@ public class ManagerAction_Menu {
 
             Log.d(TAG, "handleAction: GetCategorieActionHandler->"+ categoria);
 
-            action.getManager().changeOnMain(MenuViewFactory.INDEX_MENU_LIST_PRODUCTS,categoria);
+            action.getManager().changeOnMain(ControlMapper.INDEX_MENU_LIST_PRODUCTS,categoria);
         }
     }
 

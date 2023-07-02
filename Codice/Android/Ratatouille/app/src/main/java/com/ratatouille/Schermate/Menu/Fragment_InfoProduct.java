@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ratatouille.ControlMapper;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Manager;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
@@ -30,8 +32,8 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     private ImageView   ImageView_Edit_Product;
 
     //FUNCTIONAL
-    private final Manager_MenuFragments manager_MenuFragments;
-
+    private Manager_MenuFragments manager_MenuFragments;
+    Manager manager;
     //DATA
     private String Product_Name;
 
@@ -39,6 +41,9 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
 
     public Fragment_InfoProduct(Manager_MenuFragments manager_MenuFragments) {
         this.manager_MenuFragments = manager_MenuFragments;
+    }
+    public Fragment_InfoProduct(Manager manager,int a) {
+        this.manager = manager;
     }
 
 
@@ -98,7 +103,7 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
         EndAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(()->
-                        sendActionToManager(MenuViewFactory.INDEX_MENU_EDIT_PRODUCT,Product_Name),
+                        sendActionToManager(ControlMapper.INDEX_MENU_EDIT_PRODUCT,Product_Name),
                 300);
     }
 

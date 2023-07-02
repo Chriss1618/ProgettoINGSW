@@ -1,16 +1,14 @@
-package com.ratatouille.Controllers;
+package com.ratatouille;
 
 import android.content.Context;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Interfaces.Controller;
 import com.ratatouille.Interfaces.SubController;
-import com.ratatouille.Managers.ManagerFactory;
+import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
@@ -18,7 +16,8 @@ import com.ratatouille.Managers.Manager_StatsFragments;
 
 import java.util.ArrayList;
 
-public class Controller_Amministratore implements Controller {
+public class Controller implements com.ratatouille.Interfaces.Controller {
+
     private static final String TAG = "Controller_Amministratore";
     //SYSTEM
     public final static int AMMINISTRATORE_INDEX_STATS     = 0;
@@ -26,54 +25,52 @@ public class Controller_Amministratore implements Controller {
     public final static int AMMINISTRATORE_INDEX_MENU      = 2;
     public final static int AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
-    static int[] LIST_INDEX_MANAGERS = {
-            ManagerFactory.INDEX_TYPE_MANAGER_STATS,
-            ManagerFactory.INDEX_TYPE_MANAGER_STAFF,
-            ManagerFactory.INDEX_TYPE_MANAGER_MENU,
-            ManagerFactory.INDEX_TYPE_MANAGER_ACCOUNT
-    };
-
     //FUNCTIONAL
-    private static final int           MAIN =  LIST_INDEX_MANAGERS[0];
-    public int                         managerOnMain;
-    private final FragmentManager      fragmentManager;
+    public int typeController;
+    static int[] LIST_INDEX_MANAGERS = {
+    };
+    private static final int            MAIN = 0;
+    public int                          managerOnMain;
+    private final FragmentManager       fragmentManager;
 
-    public Manager_StaffFragments       manager_staffFragments;
-    public Manager_StatsFragments       manager_statsFragments;
-    public Manager_MenuFragments        manager_menuFragments;
-    public Manager_AccountFragments     manager_accountFragments;
-    private ArrayList<SubController>    Managers;
+    public Manager_StaffFragments manager_staffFragments;
+    public Manager_StatsFragments manager_statsFragments;
+    public Manager_MenuFragments manager_menuFragments;
+    public Manager_AccountFragments manager_accountFragments;
+    private ArrayList<SubController> Managers;
 
     //LAYOUT
-    private final Context               context;
-    private final View                  View;
-    private final BottomBarListener     bottomBarListener;
+    private final Context context;
+    private final android.view.View View;
+    private final BottomBarListener bottomBarListener;
 
-    public Controller_Amministratore(Context context, View view, FragmentManager fragmentManager,BottomBarListener bottomBarListener) {
+    public Controller(Context context, View view, FragmentManager fragmentManager,BottomBarListener bottomBarListener , int typeController) {
         this.context            = context;
         this.View               = view;
         this.fragmentManager    = fragmentManager;
         this.bottomBarListener  = bottomBarListener;
-        Log.d(TAG, "Controller_Amministratore: costruttore Controller Amministratore");
+        this.typeController     = typeController;
+        Log.d(TAG, "NEW V Controller: costruttore Controller ");
+
         Managers = new ArrayList<>();
-        for (int indexManager : LIST_INDEX_MANAGERS) {
-            Log.d(TAG, "Controller_Amministratore: Type indexMangaer:" + indexManager);
-            try {
-                Managers.add(ManagerFactory.createSubController(
-                        indexManager,
-                        context,
-                        view,
-                        fragmentManager,
-                        bottomBarListener));
-            } catch (IllegalAccessException | InstantiationException e) {
-                Log.e(TAG, "Controller_Amministratore: ", e);
-            }
+        LIST_INDEX_MANAGERS = ControlMapper.classControllerToManager.get(typeController);
+        assert LIST_INDEX_MANAGERS != null;
+        for (int indexManager : LIST_INDEX_MANAGERS ) {
+            Managers.add(new Manager(
+                                indexManager,
+                                context,
+                                view,
+                                fragmentManager,
+                                bottomBarListener
+                    )
+            );
         }
 
-        constructManagerSTATS();
-        constructManagerSTAFF();
-        constructManagerMENU();
-        constructManagerACCOUNT();
+//        constructManagerSTATS();
+//        constructManagerSTAFF();
+//        constructManagerMENU();
+//        constructManagerACCOUNT();
+        Log.d(TAG, "FINE NEW V Controller: costruttore Controller ");
     }
 
     //Constrictor Managers
@@ -195,5 +192,4 @@ public class Controller_Amministratore implements Controller {
                 break;
         }
     }
-
 }

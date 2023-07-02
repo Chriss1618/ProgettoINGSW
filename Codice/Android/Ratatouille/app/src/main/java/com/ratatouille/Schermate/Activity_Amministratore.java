@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
+import com.ratatouille.ControlMapper;
 import com.ratatouille.Controllers.ControllerFactory;
 import com.ratatouille.Controllers.Controller_Amministratore;
 import com.ratatouille.GUI.Animation.Manager_Animation;
@@ -31,14 +32,14 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     private static final int            TYPE_CONTROLLER             = ControllerFactory.INDEX_TYPE_CONTROLLER_AMMINISTRATORE;
     private Controller                  ControllerAmministratore;
     private final BottomBarListener     bottomBarListener = new BottomBarListener();;
-
+    private Controller controller;
     //OTHER
     private boolean canChangeTab = true;
 
     @Override
     public void onBackPressed() {
         if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
-            ControllerAmministratore.closeView();
+            controller.closeView();
         }else{
             super.onBackPressed();
         }
@@ -82,7 +83,7 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     @Override
     public void SetDataOnLayout() {
         constructController();
-        ControllerAmministratore.showMain();
+        controller.showMain();
     }
 
     private void setListener(){
@@ -111,25 +112,28 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
      private void tabSelected(int indexTab){
         disableBottomBar();
 
-        ControllerAmministratore.changeOnMain(indexTab);
+        controller.changeOnMain(indexTab);
 
         new Handler().postDelayed(this::enableBottomBar,600);
     }
 
     //FUNCTIONAL
     private void constructController() {
-        try {
-            ControllerAmministratore = ControllerFactory.createController(
-                TYPE_CONTROLLER,
-                this,
+//        try {
+//            ControllerAmministratore = ControllerFactory.createController(
+//                TYPE_CONTROLLER,
+//                this,
+//                findViewById(R.id.fragment_container_view_amministratore),
+//                getSupportFragmentManager(),
+//                bottomBarListener
+//            );
+//        } catch (IllegalAccessException | InstantiationException e) {
+//            Log.e(TAG, "constructController: ", e);
+//        }
+        controller = new com.ratatouille.Controller(this,
                 findViewById(R.id.fragment_container_view_amministratore),
                 getSupportFragmentManager(),
-                bottomBarListener
-            );
-        } catch (IllegalAccessException | InstantiationException e) {
-            Log.e(TAG, "constructController: ", e);
-        }
-
+                bottomBarListener, ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE);
     }
 
     //ANIMATIONS
@@ -143,15 +147,13 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     }
 
     private void disableBottomBar(){
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 4; i++)
             Bottom_Bar_Amministratore.setTabEnabledAt(i,false);
-        }
     }
 
     private void enableBottomBar(){
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 4; i++)
             Bottom_Bar_Amministratore.setTabEnabledAt(i,true);
-        }
     }
 
     public void hideBottomBar(){

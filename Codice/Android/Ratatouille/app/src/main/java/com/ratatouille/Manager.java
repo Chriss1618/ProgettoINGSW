@@ -1,4 +1,4 @@
-package com.ratatouille.Managers;
+package com.ratatouille;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,60 +9,66 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Listeners.BottomBarListener;
+import com.ratatouille.Interfaces.IViewFactory;
 import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Managers.ManagersAction.ManagerAction_Menu;
 import com.ratatouille.Models.Action;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Schermate.Menu.MenuViewFactory;
+import com.ratatouille.Schermate.ViewFactory;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Manager_MenuFragments implements SubController {
+public class Manager implements SubController {
+
     //SYSTEM
     private static final String TAG = "Manager_MenuFragments";
-    static int[] LIST_INDEX_VIEW = {
-//            MenuViewFactory.INDEX_MENU_LIST_CATEGORY,
-//            MenuViewFactory.INDEX_MENU_LIST_PRODUCTS,
-//            MenuViewFactory.INDEX_MENU_INFO_PRODUCT,
-//            MenuViewFactory.INDEX_MENU_NEW_PRODUCT,
-//            MenuViewFactory.INDEX_MENU_EDIT_PRODUCT
+    public int[] LIST_INDEX_VIEW = {
     };
-    public static final int MAIN = LIST_INDEX_VIEW[0];
-
+    public int MAIN = 0;
+    int typeManager;
     //LAYOUT
-    private final Context               context;
-    private final ArrayList<ViewLayout> Views;
-    private final View                  View;
+    protected final Context               context;
+    protected final ArrayList<ViewLayout> Views;
+    protected final View                  View;
 
     //FUNCTIONAL
-    private final BottomBarListener     bottomBarListener;
-    private final FragmentManager       fragmentManager;
-    private final ManagerAction_Menu    ManagerAction;
+    protected final BottomBarListener     bottomBarListener;
+    protected final FragmentManager       fragmentManager;
+    protected final ManagerAction_Menu    ManagerAction;
     public int    onMain;
     public int    from;
 
     //DATA
-    private ArrayList<CategoriaMenu> ListCategory;
+    protected ArrayList<CategoriaMenu> ListCategory;
 
-    public Manager_MenuFragments(Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
+    public Manager(int typeManager,Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
+        Log.d(TAG, "Manager: Costruttore");
         Views = new ArrayList<>();
+        this.typeManager = typeManager;
         this.ManagerAction = new ManagerAction_Menu();
 
         this.context                = context;
         this.View                   = view;
         this.fragmentManager        = fragmentManager;
         this.bottomBarListener      = bottomBarListener;
-        //addFragments();
+
+
+        LIST_INDEX_VIEW = ControlMapper.classManagerToView.get(typeManager);
+
+        addViews();
+
+        Log.d(TAG, "Manager: FINE Costruttore");
     }
 
-//    private void addFragments(){
-//        for (int indexView : LIST_INDEX_VIEW)
-//            try{ Views.add( MenuViewFactory.createView(indexView,this)); }
-//            catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
-//    }
+    private void addViews(){
+        for (int indexView : LIST_INDEX_VIEW)
+            try{ Views.add( new ViewFactory().createView(typeManager,indexView,this)); }
+            catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
+    }
 
     //ShowPages
     private void loadFragmentAsMain(int Tag){
@@ -82,7 +88,7 @@ public class Manager_MenuFragments implements SubController {
     @Override
     public void showMain(){
         onMain = MAIN;
-        showFragment(MAIN,null);
+        showView(MAIN,null);
     }
 
     public void HandleAction(Action action){
@@ -94,7 +100,7 @@ public class Manager_MenuFragments implements SubController {
         closeView();
         final Handler handler = new Handler();
         handler.postDelayed(()->
-                showFragment(indexMain,msg),
+                        showView(indexMain,msg),
                 300);
     }
 
@@ -105,7 +111,7 @@ public class Manager_MenuFragments implements SubController {
         onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));
     }
 
-    public void showFragment(int indexFragment,String msg){
+    public void showView(int indexFragment, String msg){
         from = onMain;
         onMain = indexFragment;
         Bundle arguments = new Bundle();
@@ -132,5 +138,6 @@ public class Manager_MenuFragments implements SubController {
 
         onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));
     }
+
 
 }

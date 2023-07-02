@@ -15,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_Product;
+import com.ratatouille.ControlMapper;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Manager;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
@@ -36,7 +38,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private ImageView       ImageView_deleteProduct;
     //FUNCTIONAL
     private RecycleEventListener            RecycleEventListener;
-    private final Manager_MenuFragments     manager_menuFragments;
+    private  Manager_MenuFragments     manager_menuFragments;
+    Manager manager;
     private Adapter_Product                 adapter_product;
     private boolean                         isDeleting;
     //DATA
@@ -47,6 +50,10 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
     public Fragment_ListProducts(Manager_MenuFragments manager_menuFragments) {
         this.manager_menuFragments = manager_menuFragments;
+        this.Category_Name = "Nessuna Categoria";
+    }
+    public Fragment_ListProducts(Manager manager,int a) {
+        this.manager = manager;
         this.Category_Name = "Nessuna Categoria";
     }
 
@@ -121,7 +128,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         Recycler_Products.setLayoutManager(mLayoutManager);
         Recycler_Products.setNestedScrollingEnabled(false);
-        boolean isFromLeft = manager_menuFragments.from <= manager_menuFragments.onMain;
+        boolean isFromLeft = manager.from <= manager.onMain;
 
         adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,isFromLeft);
         Recycler_Products.setAdapter(adapter_product);
@@ -133,14 +140,14 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         toProductAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(()->
-                sendActionToManager(MenuViewFactory.INDEX_MENU_INFO_PRODUCT,Product),
+                sendActionToManager(ControlMapper.INDEX_MENU_INFO_PRODUCT,Product),
                 300);
     }
     private void onClickAddProduct(){
         toProductAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(()->
-                        sendActionToManager(MenuViewFactory.INDEX_MENU_NEW_PRODUCT,Category_Name),
+                        sendActionToManager(ControlMapper.INDEX_MENU_NEW_PRODUCT,Category_Name),
                 300);
     }
     private void onClickDeleteMember(){
@@ -161,7 +168,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations(){
-        if(manager_menuFragments.from > manager_menuFragments.onMain){
+        if(manager.from > manager.onMain){
             Log.d(TAG, "StartAnimations: Da product");
             fromProductAnimations();
         }else{
@@ -178,7 +185,6 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     public void fromMenuAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationINfromDown(300));
         //Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
-
     }
 
     public void toMenuAnimations(){
