@@ -6,12 +6,11 @@ import android.view.View;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Interfaces.Controller;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_Ordini_Cameriere;
 import com.ratatouille.Managers.Manager_StatsFragments;
 
-public class Controller_Cameriere implements Controller {
+public class Controller_Cameriere extends Controller {
     //SYSTEM
     public final static int CAMERIERE_INDEX_MENU        = 0;
     public final static int CAMERIERE_INDEX_ACCOUNT     = 1;

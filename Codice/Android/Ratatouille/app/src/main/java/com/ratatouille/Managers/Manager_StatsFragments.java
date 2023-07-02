@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Interfaces.SubController;
-import com.ratatouille.Schermate.Stats.Fragment_Stats;
+import com.ratatouille.Views.Schermate.Stats.Fragment_Stats;
 
 import java.util.ArrayList;
 import java.util.Objects;

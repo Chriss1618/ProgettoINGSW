@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Schermate.Activity_Cameriere">
+    tools:context=".Views.Schermate.Activity_Cameriere">
 
     <LinearLayout
         android:id="@+id/linear_layout_container_fragment"
@@ -19,7 +19,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_view_cameriere"
-            android:name="com.ratatouille.Schermate.BlankFragment"
+            android:name="com.ratatouille.Views.Schermate.BlankFragment"
             tools:layout="@layout/fragment_blank"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

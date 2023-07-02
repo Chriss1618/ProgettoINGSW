@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Schermate.Activity_Chef">
+    tools:context=".Views.Schermate.Activity_Chef">
     <LinearLayout
         android:id="@+id/linear_layout_container_fragment"
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:id="@+id/fragment_container_view_chef"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.ratatouille.Schermate.BlankFragment"
+            android:name="com.ratatouille.Views.Schermate.BlankFragment"
             tools:layout="@layout/fragment_blank" />
 
     </LinearLayout>

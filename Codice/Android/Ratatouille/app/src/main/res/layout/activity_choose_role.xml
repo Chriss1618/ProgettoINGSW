@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".Schermate.Activity_ChooseRole">
+    tools:context=".Views.Schermate.Activity_ChooseRole">
 
     <android.widget.Button
         android:id="@+id/button_amministratore"

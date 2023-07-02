@@ -18,12 +18,12 @@ import com.ratatouille.Adapters.Adapter_ProductWaiter;
 import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.R;
-import com.ratatouille.Schermate.OrdiniCameriere.Fragment_InfoProductCameriere;
-import com.ratatouille.Schermate.OrdiniCameriere.Fragment_ListCategoryCameriere;
-import com.ratatouille.Schermate.OrdiniCameriere.Fragment_ListProductsCameriere;
-import com.ratatouille.Schermate.OrdiniCameriere.Fragment_ListTables;
-import com.ratatouille.Schermate.OrdiniCameriere.Fragment_ReportOrder;
-import com.ratatouille.Schermate.OrdiniCameriere.Fragment_TableInfo;
+import com.ratatouille.Views.Schermate.OrdiniCameriere.Fragment_InfoProductCameriere;
+import com.ratatouille.Views.Schermate.OrdiniCameriere.Fragment_ListCategoryCameriere;
+import com.ratatouille.Views.Schermate.OrdiniCameriere.Fragment_ListProductsCameriere;
+import com.ratatouille.Views.Schermate.OrdiniCameriere.Fragment_ListTables;
+import com.ratatouille.Views.Schermate.OrdiniCameriere.Fragment_ReportOrder;
+import com.ratatouille.Views.Schermate.OrdiniCameriere.Fragment_TableInfo;
 
 import java.util.ArrayList;
 import java.util.Objects;

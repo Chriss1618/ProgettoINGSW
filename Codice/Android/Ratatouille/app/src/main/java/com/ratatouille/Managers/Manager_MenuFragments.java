@@ -3,7 +3,6 @@ package com.ratatouille.Managers;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -12,10 +11,9 @@ import androidx.fragment.app.FragmentManager;
 import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Managers.ManagersAction.ManagerAction_Menu;
-import com.ratatouille.Models.Action;
+import com.ratatouille.Models.Action.Action;
 import com.ratatouille.Models.CategoriaMenu;
-import com.ratatouille.Schermate.Menu.MenuViewFactory;
+import com.ratatouille.Views.Schermate.Menu.MenuViewFactory;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -40,7 +38,7 @@ public class Manager_MenuFragments implements SubController {
     //FUNCTIONAL
     private final BottomBarListener     bottomBarListener;
     private final FragmentManager       fragmentManager;
-    private final ManagerAction_Menu    ManagerAction;
+    //private final ManagerAction_Menu    ManagerAction;
     public int    onMain;
     public int    from;
 
@@ -49,7 +47,7 @@ public class Manager_MenuFragments implements SubController {
 
     public Manager_MenuFragments(Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Views = new ArrayList<>();
-        this.ManagerAction = new ManagerAction_Menu();
+        //this.ManagerAction = new ManagerAction_Menu();
 
         this.context                = context;
         this.View                   = view;
@@ -86,7 +84,7 @@ public class Manager_MenuFragments implements SubController {
     }
 
     public void HandleAction(Action action){
-        ManagerAction.handleAction(action);
+        //ManagerAction.handleAction(action);
     }
 
     @Override

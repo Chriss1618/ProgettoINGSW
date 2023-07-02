@@ -6,11 +6,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import androidx.fragment.app.FragmentManager;
-
 import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Interfaces.Controller;
 import com.ratatouille.Interfaces.SubController;
-import com.ratatouille.Managers.ManagerFactory;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
@@ -18,7 +15,7 @@ import com.ratatouille.Managers.Manager_StatsFragments;
 
 import java.util.ArrayList;
 
-public class Controller_Amministratore implements Controller {
+public class Controller_Amministratore extends Controller {
     private static final String TAG = "Controller_Amministratore";
     //SYSTEM
     public final static int AMMINISTRATORE_INDEX_STATS     = 0;
@@ -27,10 +24,10 @@ public class Controller_Amministratore implements Controller {
     public final static int AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
     static int[] LIST_INDEX_MANAGERS = {
-            ManagerFactory.INDEX_TYPE_MANAGER_STATS,
-            ManagerFactory.INDEX_TYPE_MANAGER_STAFF,
-            ManagerFactory.INDEX_TYPE_MANAGER_MENU,
-            ManagerFactory.INDEX_TYPE_MANAGER_ACCOUNT
+//            ManagerFactory.INDEX_TYPE_MANAGER_STATS,
+//            ManagerFactory.INDEX_TYPE_MANAGER_STAFF,
+//            ManagerFactory.INDEX_TYPE_MANAGER_MENU,
+//            ManagerFactory.INDEX_TYPE_MANAGER_ACCOUNT
     };
 
     //FUNCTIONAL
@@ -50,6 +47,7 @@ public class Controller_Amministratore implements Controller {
     private final BottomBarListener     bottomBarListener;
 
     public Controller_Amministratore(Context context, View view, FragmentManager fragmentManager,BottomBarListener bottomBarListener) {
+        super();
         this.context            = context;
         this.View               = view;
         this.fragmentManager    = fragmentManager;
@@ -58,16 +56,16 @@ public class Controller_Amministratore implements Controller {
         Managers = new ArrayList<>();
         for (int indexManager : LIST_INDEX_MANAGERS) {
             Log.d(TAG, "Controller_Amministratore: Type indexMangaer:" + indexManager);
-            try {
-                Managers.add(ManagerFactory.createSubController(
-                        indexManager,
-                        context,
-                        view,
-                        fragmentManager,
-                        bottomBarListener));
-            } catch (IllegalAccessException | InstantiationException e) {
-                Log.e(TAG, "Controller_Amministratore: ", e);
-            }
+//            try {
+//                Managers.add(ManagerFactory.createSubController(
+//                        indexManager,
+//                        context,
+//                        view,
+//                        fragmentManager,
+//                        bottomBarListener));
+//            } catch (IllegalAccessException | InstantiationException e) {
+//                Log.e(TAG, "Controller_Amministratore: ", e);
+//            }
         }
 
         constructManagerSTATS();

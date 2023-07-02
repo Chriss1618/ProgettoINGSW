@@ -4,14 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 
-import com.ratatouille.Schermate.Login.Fragment.Fragment_ConfirmPassword;
-import com.ratatouille.Schermate.Login.Fragment.Fragment_Login;
+import com.ratatouille.Views.Schermate.Login.Fragment.Fragment_ConfirmPassword;
+import com.ratatouille.Views.Schermate.Login.Fragment.Fragment_Login;
 
 import java.util.ArrayList;
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:isScrollContainer="true"
-    tools:context=".Schermate.Account.Fragment_AccountInfo">
+    tools:context=".Views.Schermate.Account.Fragment_AccountInfo">
 
     <LinearLayout
         android:layout_width="match_parent"

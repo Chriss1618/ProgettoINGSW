@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Interfaces.SubController;
-import com.ratatouille.Schermate.Account.Fragment_AccountInfo;
-import com.ratatouille.Schermate.Account.Fragment_EditAccountInfo;
+import com.ratatouille.Views.Schermate.Account.Fragment_AccountInfo;
+import com.ratatouille.Views.Schermate.Account.Fragment_EditAccountInfo;
 
 import java.util.ArrayList;
 import java.util.Objects;

@@ -8,13 +8,9 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ratatouille.Schermate.Inventario.Fragment_EditProductInventory;
-import com.ratatouille.Schermate.Inventario.Fragment_InfoProductInventory;
-import com.ratatouille.Schermate.Inventario.Fragment_ListInventary;
-import com.ratatouille.Schermate.Inventario.Fragment_NewProductInventory;
-import com.ratatouille.Schermate.Ordini.Fragment_HystoryOrders;
-import com.ratatouille.Schermate.Ordini.Fragment_ListOrders;
-import com.ratatouille.Schermate.Ordini.Fragment_TableOrders;
+import com.ratatouille.Views.Schermate.Ordini.Fragment_HystoryOrders;
+import com.ratatouille.Views.Schermate.Ordini.Fragment_ListOrders;
+import com.ratatouille.Views.Schermate.Ordini.Fragment_TableOrders;
 
 import java.util.ArrayList;
 import java.util.Objects;

@@ -6,13 +6,13 @@ import android.view.View;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Interfaces.Controller;
+import com.ratatouille.Interfaces.IController;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_Ordini;
 
-public class Controller_Chef implements Controller {
+public class Controller_Chef extends Controller {
     //SYSTEM
     public final static int CHEF_INDEX_INVENTORY     = 0;
     public final static int CHEF_INDEX_ORDERS       = 1;

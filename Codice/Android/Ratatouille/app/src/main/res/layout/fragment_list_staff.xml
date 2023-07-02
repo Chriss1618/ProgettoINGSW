@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Schermate.Staff.Fragment_ListStaff">
+    tools:context=".Views.Schermate.Staff.Fragment_ListStaff">
 
 
     <LinearLayout

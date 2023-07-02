@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Schermate.Inventario.Fragment_EditProductInventory;
-import com.ratatouille.Schermate.Inventario.Fragment_InfoProductInventory;
-import com.ratatouille.Schermate.Inventario.Fragment_ListInventary;
-import com.ratatouille.Schermate.Inventario.Fragment_NewProductInventory;
+import com.ratatouille.Views.Schermate.Inventario.Fragment_EditProductInventory;
+import com.ratatouille.Views.Schermate.Inventario.Fragment_InfoProductInventory;
+import com.ratatouille.Views.Schermate.Inventario.Fragment_ListInventary;
+import com.ratatouille.Views.Schermate.Inventario.Fragment_NewProductInventory;
 
 import java.util.ArrayList;
 import java.util.Objects;

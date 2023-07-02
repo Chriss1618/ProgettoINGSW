@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ratatouille">
 
-        <activity android:name=".Schermate.Activity_ChooseRole"
+        <activity android:name=".Views.Schermate.Activity_ChooseRole"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,11 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Schermate.Activity_Cameriere" />
-        <activity android:name=".Schermate.Activity_Chef" />
-        <activity android:name=".Schermate.Activity_Supervisore" />
-        <activity android:name=".Schermate.Activity_Amministratore" />
-        <activity android:name=".Schermate.Login.Activity_Login" />
+        <activity android:name=".Views.Schermate.Activity_Cameriere" />
+        <activity android:name=".Views.Schermate.Activity_Chef" />
+        <activity android:name=".Views.Schermate.Activity_Supervisore" />
+        <activity android:name=".Views.Schermate.Activity_Amministratore" />
+        <activity android:name=".Views.Schermate.Login.Activity_Login" />
 
         <service
             android:name=".Models.FCMService"
