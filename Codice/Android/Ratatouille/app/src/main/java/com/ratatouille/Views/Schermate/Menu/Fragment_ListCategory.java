@@ -2,14 +2,11 @@ package com.ratatouille.Views.Schermate.Menu;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.ratatouille.Adapters.Adapter_Category;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
@@ -33,14 +29,8 @@ import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Action.*;
 import com.ratatouille.Models.CategoriaMenu;
-import com.ratatouille.Models.EndPoints.EndPointer;
 import com.ratatouille.Models.Request.Request;
-import com.ratatouille.Models.ServerCommunication;
 import com.ratatouille.R;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class Fragment_ListCategory extends Fragment implements ViewLayout {
@@ -93,57 +83,16 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     //DATA *****************************************************************************
     @Override
     public void PrepareData(){
-        ListCategoryMenu.clear();
         sendRequest();
-
-        startListening();
     }
 
-    private void startListening() {
-
-    }
     private void sendRequest(){
         manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
         @SuppressWarnings("unchecked")
-        Request request = new Request(
-                manager.getSourceInfo(),
-                null,
-                ManagerRequestFactory.INDEX_REQUEST_CATEGORY,
-                (list)->getCategory( (ArrayList<CategoriaMenu>)list )
-        );
+        Request request = new Request(manager.getSourceInfo(), null, ManagerRequestFactory.INDEX_REQUEST_CATEGORY,
+                (list)-> ListCategoryMenu = (ArrayList<CategoriaMenu>)list );
         manager.HandleRequest(request);
     }
-
-    public void getCategory(ArrayList<CategoriaMenu> ListCategorie){
-        ListCategoryMenu = ListCategorie;
-    }
-
-    private boolean sendNewCategoryToServer(String newCategory){
-        Uri.Builder dataToSend = new Uri.Builder().appendQueryParameter("id_ristorante", "1")
-                .appendQueryParameter("NameCategory",newCategory);
-        String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/CategoriaMenu.php";
-
-        try {
-            JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
-            if( Msg != null ){
-                for(int i = 0 ; i<Msg.length(); i++){
-                    JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
-
-                    ListCategoryMenu.add(new CategoriaMenu(
-                            Categoria_Json.getString("NomeCategoria"),
-                            Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
-                    ));
-                }
-
-            }else{
-                return false;
-            }
-        }catch (Exception e){
-            Log.e(TAG, "getDataFromServer: ",e);
-        }
-        return true;
-    }
-
 
     //LAYOUT****************************************************************************
     @Override
@@ -206,7 +155,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
     private void onClickCategory(String Category){
         manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
-        Action action = new Action(ActionsListCategory.INDEX_ACTION_OPEN_LIST_PRODUCTS,Category,manager,null,manager.getSourceInfo());
+        Action action = new Action(ActionsListCategory.INDEX_ACTION_OPEN_LIST_PRODUCTS, Category,manager,manager.getSourceInfo());
         SendAction(action);
     }
 
@@ -231,6 +180,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         DialogNewCategory dialogNewCategory = new DialogNewCategory();
         dialogNewCategory.showDialogNewCategory();
     }
+
     private class DialogNewCategory{
         CardView CardView_Cancel;
         CardView CardView_Add;
@@ -258,20 +208,25 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
             LinearLayout_BackGroundNewCategory  .startAnimation(Manager_Animation.getFadeIn(500));
 
             EditText_NewCategoryName.setText("");
-            
-
         }
 
-        @SuppressLint("NotifyDataSetChanged")
         private void addCategory(String newCategory){
             hideKeyboardFrom();
             if(newCategory.equals("") || newCategory.length() < 4){
                 ShowNameCategoryNotValid();
-            }else if(sendNewCategoryToServer(newCategory)){
-                adapter_category.notifyDataSetChanged();
-                checkEmptyRecycle();
-                showSuccessfullyAddedNewCategory();
+            }else{
+                manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
+                Action action = new Action(ActionsListCategory.INDEX_ACTION_ADD_CATEGORY,newCategory,manager,(category)->addCategoryView( (CategoriaMenu)category ), manager.getSourceInfo());
+                SendAction(action);
             }
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        private void addCategoryView(CategoriaMenu newCategory){
+            ListCategoryMenu.add(newCategory);
+            adapter_category.notifyDataSetChanged();
+            checkEmptyRecycle();
+            showSuccessfullyAddedNewCategory();
         }
 
         private void ShowNameCategoryNotValid(){

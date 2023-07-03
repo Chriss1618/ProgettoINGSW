@@ -21,7 +21,6 @@ public class ControllerFactory {
 
     private static final Map<Integer, Class<? extends Controller>> classMap = new HashMap<>();
     static {
-        classMap.put(INDEX_TYPE_CONTROLLER_AMMINISTRATORE,  Controller_Amministratore.class);
         classMap.put(INDEX_TYPE_CONTROLLER_SUPERVISORE,    Controller_Supervisore.class);
         classMap.put(INDEX_TYPE_CONTROLLER_CHEF,           Controller_Chef.class);
         classMap.put(INDEX_TYPE_CONTROLLER_CAMERIERE,      Controller_Cameriere.class);

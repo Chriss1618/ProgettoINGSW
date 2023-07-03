@@ -14,7 +14,6 @@ import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Models.Action.*;
-import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Models.Request.Request;
 import com.ratatouille.Models.SourceInfo;
 import com.ratatouille.Views.Schermate.Menu.MenuViewFactory;
@@ -27,10 +26,9 @@ public class Manager implements SubController {
 
     //SYSTEM
     private static final String TAG = "Manager_MenuFragments";
-    public int[] LIST_INDEX_VIEW = {
-    };
+    public int[] LIST_INDEX_VIEW;
     public int MAIN = 0;
-    private SourceInfo sourceInfo;
+    private final SourceInfo sourceInfo;
 
     //LAYOUT
     protected final Context               context;
@@ -46,7 +44,6 @@ public class Manager implements SubController {
     public int    from;
 
     //DATA
-    protected ArrayList<CategoriaMenu> ListCategory;
 
     public Manager(SourceInfo sourceInfo,Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Log.d(TAG, "Manager: Costruttore");

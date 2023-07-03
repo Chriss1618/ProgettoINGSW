@@ -26,7 +26,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Managers.Manager_StatsFragments;
 import com.ratatouille.R;
 
 import java.text.SimpleDateFormat;
@@ -52,7 +51,6 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
     CardView            Card_view_Pie_Chart;
 
     //FUNCTIONAL
-    Manager_StatsFragments manager_statsFragments;
     Manager manager;
     //DATA
     ArrayList<String> OperatoriSala;
@@ -62,14 +60,6 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
     String dataTo;
     //OTHER..
 
-    public Fragment_Stats(Manager_StatsFragments manager_statsFragments) {
-        // Required empty public constructor
-        this.manager_statsFragments = manager_statsFragments;
-        pieEntries = new ArrayList<>();
-        OperatoriSala = new ArrayList<>();
-        OperatoriSala_Value = new ArrayList<>();
-    }
-
     public Fragment_Stats(Manager manager,int a) {
         this.manager = manager;
         pieEntries = new ArrayList<>();
@@ -77,19 +67,15 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
         OperatoriSala_Value = new ArrayList<>();
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-
     }
 
     @Override
-    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                          Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view_fragment =  inflater.inflate(R.layout.fragment__stats, container, false);
 
         PrepareData();
@@ -110,7 +96,6 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
         OperatoriSala.add("Marco Mengoni");
         OperatoriSala.add("Francesco Figa");
         OperatoriSala.add("Eminem");
-
 
         OperatoriSala_Value.add(25);
         OperatoriSala_Value.add(30);

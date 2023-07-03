@@ -14,7 +14,6 @@ import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.Managers.Manager_StaffFragments;
-import com.ratatouille.Managers.Manager_StatsFragments;
 import com.ratatouille.Models.SourceInfo;
 
 import java.util.ArrayList;
@@ -37,7 +36,6 @@ public class Controller implements IController {
     private FragmentManager       fragmentManager;
 
     public Manager_StaffFragments       manager_staffFragments;
-    public Manager_StatsFragments       manager_statsFragments;
     public Manager_MenuFragments        manager_menuFragments;
     public Manager_AccountFragments     manager_accountFragments;
     private ArrayList<SubController> Managers;
@@ -119,10 +117,7 @@ public class Controller implements IController {
         manager_staffFragments.showMain();
         managerOnMain = AMMINISTRATORE_INDEX_STAFF;
     }
-    public void showSTATS(){
-        manager_statsFragments.showMain();
-        managerOnMain = AMMINISTRATORE_INDEX_STATS;
-    }
+
     public void showMENU(){
         manager_menuFragments.showMain();
         managerOnMain = AMMINISTRATORE_INDEX_MENU;
@@ -135,8 +130,6 @@ public class Controller implements IController {
     //FUNCTIONAL
     public void resetMainPackage(){
         switch (managerOnMain){
-            case AMMINISTRATORE_INDEX_STATS:    this.manager_statsFragments.onMain = Manager_StatsFragments.INDEX_STAT_PRODUCTIVITY;
-                break;
             case AMMINISTRATORE_INDEX_STAFF:    this.manager_staffFragments.onMain = Manager_StaffFragments.INDEX_STAFF_LIST;
                 break;
             case AMMINISTRATORE_INDEX_MENU:     this.manager_menuFragments.onMain = Manager_MenuFragments.MAIN;
@@ -148,11 +141,7 @@ public class Controller implements IController {
 
     //ANIMATIONS
     public void callEndAnimationOfFragment(){
-
         switch (managerOnMain){
-            case AMMINISTRATORE_INDEX_STATS:
-                manager_statsFragments.callEndAnimationOfFragment();
-                break;
             case AMMINISTRATORE_INDEX_STAFF:
                 manager_staffFragments.callEndAnimationOfFragment();
                 break;

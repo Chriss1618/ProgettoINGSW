@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.Managers.Manager_Ordini_Cameriere;
-import com.ratatouille.Managers.Manager_StatsFragments;
 
 public class Controller_Cameriere extends Controller {
     //SYSTEM
@@ -83,8 +82,6 @@ public class Controller_Cameriere extends Controller {
     //FUNCTIONAL
     public void resetMainPackage(){
         switch (managerOnMain){
-            case CAMERIERE_INDEX_MENU:      this.manager_ordini_cameriere.onMain = Manager_StatsFragments.INDEX_STAT_PRODUCTIVITY;
-                break;
             case CAMERIERE_INDEX_ACCOUNT:   this.manager_accountFragments.onMain = Manager_AccountFragments.INDEX_ACCOUNT_INFO;
                 break;
         }
@@ -101,6 +98,5 @@ public class Controller_Cameriere extends Controller {
                 break;
         }
     }
-
 
 }

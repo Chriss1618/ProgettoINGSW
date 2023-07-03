@@ -3,7 +3,6 @@ package com.ratatouille.Views.Schermate;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,10 +12,8 @@ import android.view.View;
 import com.ratatouille.Controllers.Controller;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.ControllerFactory;
-import com.ratatouille.Controllers.Controller_Amministratore;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Interfaces.IController;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
