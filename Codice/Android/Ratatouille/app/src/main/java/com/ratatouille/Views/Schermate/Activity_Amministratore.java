@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.Controller;
-import com.ratatouille.Controllers.ControllerFactory;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.BottomBarListener;
 import com.ratatouille.Interfaces.ViewLayout;

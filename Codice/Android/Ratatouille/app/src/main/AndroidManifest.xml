@@ -20,9 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.Schermate.Activity_Cameriere" />
-        <activity android:name=".Views.Schermate.Activity_Chef" />
-        <activity android:name=".Views.Schermate.Activity_Supervisore" />
         <activity android:name=".Views.Schermate.Activity_Amministratore" />
         <activity android:name=".Views.Schermate.Login.Activity_Login" />
 

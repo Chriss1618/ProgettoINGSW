@@ -1,25 +1,20 @@
 package com.ratatouille.Views.Schermate.OrdiniCameriere;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.ratatouille.Adapters.Adapter_TablesWaiter;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Managers.Manager_Ordini_Cameriere;
 import com.ratatouille.R;
-
 import java.util.ArrayList;
 
 public class Fragment_ListTables extends Fragment implements ViewLayout {
@@ -33,16 +28,12 @@ public class Fragment_ListTables extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private RecycleEventListener        RecycleEventListener;
-    //private Manager_Ordini_Cameriere    managerOrdiniCameriere;
     private Manager manager;
     //DATA
     private ArrayList<String>   TablesWaiter;
 
     //OTHER...
 
-    public Fragment_ListTables(Manager_Ordini_Cameriere managerOrdiniCameriere) {
-        //this.managerOrdiniCameriere = managerOrdiniCameriere;
-    }
     public Fragment_ListTables(Manager manager, int a) {
         this.manager = manager;
     }
@@ -112,17 +103,10 @@ public class Fragment_ListTables extends Fragment implements ViewLayout {
     private void onClickTable(String table){
         Log.d(TAG, "PreparerData: Hai premuto l'item->"+table);
         EndAnimations();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                        sendActionToManager(Manager_Ordini_Cameriere.INDEX_ORDINI_CAMERIERE_TABLE_INFO,table),
-                300);
     }
 
 
     //FUNCTIONAL
-    private void sendActionToManager(int index,String msg){
-        //this.managerOrdiniCameriere.showFragment(index,msg);
-    }
     //ANIMATIONS
     @Override
     public void StartAnimations() {

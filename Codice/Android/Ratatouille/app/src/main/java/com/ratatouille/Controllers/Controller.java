@@ -11,9 +11,6 @@ import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Interfaces.IController;
 import com.ratatouille.Interfaces.SubController;
 import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Managers.Manager_AccountFragments;
-import com.ratatouille.Managers.Manager_MenuFragments;
-import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.Models.SourceInfo;
 
 import java.util.ArrayList;
@@ -35,9 +32,6 @@ public class Controller implements IController {
     public int                          managerOnMain;
     private FragmentManager       fragmentManager;
 
-    public Manager_StaffFragments       manager_staffFragments;
-    public Manager_MenuFragments        manager_menuFragments;
-    public Manager_AccountFragments     manager_accountFragments;
     private ArrayList<SubController> Managers;
 
     //LAYOUT
@@ -109,46 +103,6 @@ public class Controller implements IController {
     private void clearBackStackPackage(){
         for(int j  = fragmentManager.getBackStackEntryCount() ; j >0; j-- ){
             fragmentManager.popBackStack();
-        }
-    }
-    public void showSTAFF(){
-        manager_staffFragments.showMain();
-        managerOnMain = AMMINISTRATORE_INDEX_STAFF;
-    }
-
-    public void showMENU(){
-        manager_menuFragments.showMain();
-        managerOnMain = AMMINISTRATORE_INDEX_MENU;
-    }
-    public void showACCOUNT(){
-        managerOnMain = AMMINISTRATORE_INDEX_ACCOUNT;
-        manager_accountFragments.showMain();
-    }
-
-    //FUNCTIONAL
-    public void resetMainPackage(){
-        switch (managerOnMain){
-            case AMMINISTRATORE_INDEX_STAFF:    this.manager_staffFragments.onMain = Manager_StaffFragments.INDEX_STAFF_LIST;
-                break;
-            case AMMINISTRATORE_INDEX_MENU:     this.manager_menuFragments.onMain = Manager_MenuFragments.MAIN;
-                break;
-            case AMMINISTRATORE_INDEX_ACCOUNT:  this.manager_accountFragments.onMain = Manager_AccountFragments.INDEX_ACCOUNT_INFO;
-                break;
-        }
-    }
-
-    //ANIMATIONS
-    public void callEndAnimationOfFragment(){
-        switch (managerOnMain){
-            case AMMINISTRATORE_INDEX_STAFF:
-                manager_staffFragments.callEndAnimationOfFragment();
-                break;
-            case AMMINISTRATORE_INDEX_MENU:
-                //manager_menuFragments.callEndAnimationOfFragment();
-                break;
-            case AMMINISTRATORE_INDEX_ACCOUNT:
-                manager_accountFragments.callEndAnimationOfFragment();
-                break;
         }
     }
 }

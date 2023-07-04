@@ -1,12 +1,10 @@
 package com.ratatouille.Views.Schermate.OrdiniCameriere;
 
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,16 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.ratatouille.Adapters.Adapter_Category;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Managers.Manager_Ordini_Cameriere;
 import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.R;
-
 import java.util.ArrayList;
 
 
@@ -41,7 +36,6 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
 
     //FUNCTIONAL
     private RecycleEventListener RecycleEventListener;
-    //private Manager_Ordini_Cameriere managerOrdiniCameriere;
     private Manager manager;
 
     //DATA
@@ -49,10 +43,6 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
 
     //OTHER...
 
-
-    public Fragment_ListCategoryCameriere(Manager_Ordini_Cameriere managerOrdiniCameriere) {
-        //this.managerOrdiniCameriere = managerOrdiniCameriere;
-    }
     public Fragment_ListCategoryCameriere(Manager manager, int a) {
         this.manager = manager;
     }
@@ -131,10 +121,6 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     private void onClickCategory(String Category){
         Log.d(TAG, "Ricevuto da Listener->"+Category);
         EndAnimations();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                        sendActionToManager(Manager_Ordini_Cameriere.INDEX_ORDINI_CAMERIERE_LIST_PRODUCTS,Category),
-                300);
     }
 
     private void onClickShowResoconto(){
@@ -143,9 +129,6 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     }
 
     //FUNCTIONAL
-    private void sendActionToManager(int index,String msg){
-        //this.managerOrdiniCameriere.showFragment(index,msg);
-    }
 
     private void showDialogNewCategory(){
         CardView CardView_Cancel    = LinearLayout_NewCategory.findViewById(R.id.card_view_annulla);

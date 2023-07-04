@@ -1,18 +1,14 @@
 package com.ratatouille.Views.Schermate.Menu;
 
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
 public class Fragment_NewProduct extends Fragment implements ViewLayout {
@@ -26,13 +22,10 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     LinearLayout        LinearLayout_Buttons;
 
     //FUNCTIONAL
-    //private Manager_MenuFragments manager_MenuFragments;
     private Manager manager;
     //DATA
     //OTHER...
-    public Fragment_NewProduct(Manager_MenuFragments manager_MenuFragments) {
-        //this.manager_MenuFragments = manager_MenuFragments;
-    }
+
     public Fragment_NewProduct(Manager manager_MenuFragments,int a) {
         this.manager = manager_MenuFragments;
     }

@@ -9,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Managers.Manager_AccountFragments;
 import com.ratatouille.R;
 
 public class Fragment_AccountInfo extends Fragment implements ViewLayout {
@@ -35,9 +33,6 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
 
     //OTHER...
 
-    public Fragment_AccountInfo(Manager_AccountFragments manager_accountFragments) {
-        //this.manager_accountFragments = manager_accountFragments;
-    }
     public Fragment_AccountInfo(Manager manager, int a) {
         this.manager = manager;
     }
@@ -89,34 +84,23 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
 
     }
 
-
-
-    public int getImage(String imageName) {
-        return this.getResources().getIdentifier(imageName, "drawable", manager.context.getPackageName());
-    }
-
     //ACTIONS
     private void onClickEditAccount(){
         toEditAccountAnimation();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                sendActionToManager(Manager_AccountFragments.INDEX_ACCOUNT_EDIT,"Orazio Russo"),
-                300);
 
     }
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        //this.manager_accountFragments.showFragment(index,msg);
     }
     //ANIMATIONS
     @Override
     public void StartAnimations() {
-//        if(manager_accountFragments.from > manager_accountFragments.onMain){
-//            LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(500));
-//        }else{
-//            LinearLayout_TitleProduct       .startAnimation(Manager_Animation.getTranslationINfromUp(500));
-//            LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
-//        }
+        if(manager.from > manager.onMain){
+            LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(500));
+        }else{
+            LinearLayout_TitleProduct       .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
+        }
         Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationINfromDown(500));
     }
     @Override

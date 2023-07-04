@@ -1,21 +1,16 @@
 package com.ratatouille.Views.Schermate.OrdiniCameriere;
 
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Managers.Manager_Ordini_Cameriere;
 import com.ratatouille.R;
-
 import java.util.ArrayList;
 
 
@@ -30,7 +25,6 @@ public class Fragment_InfoProductCameriere extends Fragment implements ViewLayou
 
     //FUNCTIONAL
     private RecycleEventListener        RecycleEventListener;
-    //private Manager_Ordini_Cameriere    managerOrdiniCameriere;
     private Manager manager;
 
     //DATA
@@ -38,9 +32,6 @@ public class Fragment_InfoProductCameriere extends Fragment implements ViewLayou
 
     //OTHER...
 
-    public Fragment_InfoProductCameriere(Manager_Ordini_Cameriere managerOrdiniCameriere) {
-        //this.managerOrdiniCameriere = managerOrdiniCameriere;
-    }
     public Fragment_InfoProductCameriere(Manager manager, int a) {
         this.manager = manager;
     }

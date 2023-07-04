@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Controllers.Controller_Login;
+import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.R;
 
 import java.util.ArrayList;

@@ -1,26 +1,21 @@
 package com.ratatouille.Views.Schermate.Ordini;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.ratatouille.Adapters.Adapter_OrdersTable;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Managers.Manager_Ordini;
 import com.ratatouille.R;
-
 import java.util.ArrayList;
 
 public class Fragment_TableOrders extends Fragment implements ViewLayout {
@@ -35,7 +30,6 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
     Button              Button_ConfirmOrders;
 
     //FUNCTIONAl
-    //private Manager_Ordini          manager_ordini;
     private RecycleEventListener    RecycleEventListener;
     private Manager manager;
 
@@ -44,10 +38,6 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
 
     //OTHER...
 
-
-    public Fragment_TableOrders(Manager_Ordini manager_ordini) {
-        //this.manager_ordini = manager_ordini;
-    }
     public Fragment_TableOrders(Manager manager, int a) {
         this.manager = manager;
     }
@@ -125,17 +115,8 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
     }
     private void onHistoryClick(){
         EndAnimations();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                        sendActionToManager(Manager_Ordini.INDEX_ORDINI_HISTORY_ORDERS,""),
-                300);
     }
     //FUNCTIONAL
-    private void sendActionToManager(int index,String msg){
-        //this.manager_ordini.showFragment(index,msg);
-    }
-
-
     //ANIMATIONS
     @Override
     public void StartAnimations() {

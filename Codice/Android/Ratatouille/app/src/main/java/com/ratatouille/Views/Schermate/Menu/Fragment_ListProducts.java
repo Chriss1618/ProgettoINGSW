@@ -20,7 +20,6 @@ import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Managers.Manager_MenuFragments;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
@@ -38,7 +37,6 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private ImageView       ImageView_deleteProduct;
     //FUNCTIONAL
     private RecycleEventListener            RecycleEventListener;
-    //private  Manager_MenuFragments     manager_menuFragments;
     Manager manager;
     private Adapter_Product                 adapter_product;
     private boolean                         isDeleting;
@@ -48,10 +46,6 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
     //OTHER...
 
-    public Fragment_ListProducts(Manager_MenuFragments manager_menuFragments) {
-        //this.manager_menuFragments = manager_menuFragments;
-        this.Category_Name = "Nessuna Categoria";
-    }
     public Fragment_ListProducts(Manager manager,int a) {
         this.manager = manager;
         this.Category_Name = "Nessuna Categoria";
@@ -138,17 +132,9 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     public void onClickProduct(String Product){
         Log.d(TAG, "PreparerData: Hai premuto l'item->"+Product);
         toProductAnimations();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                sendActionToManager(ControlMapper.INDEX_MENU_INFO_PRODUCT,Product),
-                300);
     }
     private void onClickAddProduct(){
         toProductAnimations();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                        sendActionToManager(ControlMapper.INDEX_MENU_NEW_PRODUCT,Category_Name),
-                300);
     }
     private void onClickDeleteMember(){
         if(isDeleting){
@@ -161,9 +147,6 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     }
 
     //FUNCTIONAL
-    private void sendActionToManager(int index,String msg){
-        //this.manager_menuFragments.showFragment(index,msg);
-    }
 
     //ANIMATIONS
     @Override

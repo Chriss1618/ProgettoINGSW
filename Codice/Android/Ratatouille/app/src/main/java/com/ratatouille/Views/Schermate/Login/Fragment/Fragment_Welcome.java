@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Controllers.Controller_Login;
+import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 

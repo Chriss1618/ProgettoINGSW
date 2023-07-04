@@ -1,19 +1,15 @@
 package com.ratatouille.Views.Schermate.Inventario;
 
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.R;
 
 public class Fragment_NewProductInventory extends Fragment implements ViewLayout {
@@ -27,15 +23,11 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     LinearLayout    LinearLayout_Buttons;
 
     //FUNCTIONAL
-    //Manager_InventoryFragments manager_inventoryFragments;
     private Manager manager;
     //DATA
 
     //OTHER...
 
-    public Fragment_NewProductInventory(Manager_InventoryFragments manager_inventoryFragments) {
-        //this.manager_inventoryFragments = manager_inventoryFragments;
-    }
     public Fragment_NewProductInventory(Manager manager, int a) {
         this.manager = manager;
     }

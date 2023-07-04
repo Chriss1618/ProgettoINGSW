@@ -1,23 +1,18 @@
 package com.ratatouille.Views.Schermate.Ordini;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.ratatouille.Adapters.Adapter_OrderHistory;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Managers.Manager_Ordini;
 import com.ratatouille.R;
-
 import java.util.ArrayList;
 
 
@@ -31,7 +26,6 @@ public class Fragment_HystoryOrders extends Fragment implements ViewLayout {
     RecyclerView        recyclerView_OrdersTable;
 
     //FUNCTIONAl
-    //private Manager_Ordini          manager_ordini;
     private Manager manager;
     private RecycleEventListener    RecycleEventListener;
 
@@ -40,10 +34,6 @@ public class Fragment_HystoryOrders extends Fragment implements ViewLayout {
 
     //OTHER...
 
-
-    public Fragment_HystoryOrders(Manager_Ordini manager_ordini) {
-        //this.manager_ordini = manager_ordini;
-    }
     public Fragment_HystoryOrders(Manager manager, int a) {
         this.manager = manager;
     }

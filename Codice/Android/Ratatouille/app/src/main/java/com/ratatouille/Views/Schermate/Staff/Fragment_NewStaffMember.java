@@ -2,25 +2,19 @@ package com.ratatouille.Views.Schermate.Staff;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.R;
-
 import java.util.Random;
 
 public class Fragment_NewStaffMember extends Fragment implements ViewLayout {
@@ -52,10 +46,6 @@ public class Fragment_NewStaffMember extends Fragment implements ViewLayout {
 
     //OTHER...
 
-    public Fragment_NewStaffMember(Manager_StaffFragments manager_staffFragments) {
-        //this.manager_staffFragments = manager_staffFragments;
-        this.context = manager_staffFragments.context;
-    }
     public Fragment_NewStaffMember(Manager manager, int a) {
         this.manager = manager;
     }

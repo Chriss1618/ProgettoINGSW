@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.R;
 
 public class Fragment_EditProductInventory extends Fragment implements ViewLayout {
@@ -27,16 +26,12 @@ public class Fragment_EditProductInventory extends Fragment implements ViewLayou
     LinearLayout    LinearLayout_Buttons;
 
     //FUNCTIONAL
-    //Manager_InventoryFragments manager_inventoryFragments;
     private Manager manager;
 
     //DATA
 
     //OTHER...
 
-    public Fragment_EditProductInventory(Manager_InventoryFragments manager_inventoryFragments) {
-        //this.manager_inventoryFragments = manager_inventoryFragments;
-    }
     public Fragment_EditProductInventory(Manager manager, int a) {
         this.manager = manager;
     }

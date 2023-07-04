@@ -1,23 +1,19 @@
 package com.ratatouille.Views.Schermate.Inventario;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.ratatouille.Adapters.Adapter_ProductInventory;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
@@ -38,7 +34,6 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private final RecycleEventListener          RecycleEventListener;
-    //private Manager_InventoryFragments    manager_inventoryFragments;
     private Manager manager;
     private Adapter_ProductInventory            adapter_product;
     private boolean                             isDeleting;
@@ -48,10 +43,6 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     //OTHER...
 
-    public Fragment_ListInventary(Manager_InventoryFragments manager_inventoryFragments  ) {
-        this.RecycleEventListener                = new RecycleEventListener();
-        //this.manager_inventoryFragments     = manager_inventoryFragments;
-    }
     public Fragment_ListInventary(Manager manager, int a) {
         this.manager = manager;
         this.RecycleEventListener                = new RecycleEventListener();
@@ -139,17 +130,9 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     //ACTIONS
     private void onClickProduct(String product) {
         EndAnimations();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                        sendActionToManager(Manager_InventoryFragments.INDEX_INVENTORY_INFO_PRODUCT_INVENTORY,product),
-                300);
     }
     private void onClickNewProduct(){
         EndAnimations();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                        sendActionToManager(Manager_InventoryFragments.INDEX_INVENTORY_NEW_PRODUCT_INVENTORY,""),
-                300);
     }
     private void onClickDeleteProduct(){
         if(isDeleting){
@@ -162,9 +145,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     }
 
     //FUNCTIONAL
-    private void sendActionToManager(int index,String msg){
-        //this.manager_inventoryFragments.showFragment(index,msg);
-    }
+
 
     //ANIMATIONS
     @Override
