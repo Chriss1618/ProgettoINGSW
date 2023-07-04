@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_TablesOrder;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
@@ -32,7 +33,8 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
     ImageView           ImageView_HistoryOrders;
 
     //FUNCTIONAl
-    private Manager_Ordini          manager_ordini;
+    //private Manager_Ordini          manager_ordini;
+    private Manager manager;
     private RecycleEventListener    RecycleEventListener;
 
     //DATA
@@ -41,7 +43,10 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
     //OTHER...
 
     public Fragment_ListOrders(Manager_Ordini manager_ordini) {
-        this.manager_ordini = manager_ordini;
+        //this.manager_ordini = manager_ordini;
+    }
+    public Fragment_ListOrders(Manager manager, int a) {
+        this.manager = manager;
     }
 
     @Override
@@ -128,7 +133,7 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.manager_ordini.showFragment(index,msg);
+        //this.manager_ordini.showFragment(index,msg);
     }
 
     //ANIMATIONS

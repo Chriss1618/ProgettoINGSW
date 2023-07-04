@@ -1,34 +1,28 @@
-package com.ratatouille.Views.Schermate.Menu;
+package com.ratatouille.Views.Schermate.Staff;
 
 import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Interfaces.IViewFactory;
 import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Controllers.SubControllers.Manager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class MenuViewFactory implements IViewFactory {
-    private static final String TAG = "MenuViewFactory";
+public class StaffViewFactory implements IViewFactory {
+    private static final String TAG = "StaffViewFactory";
 
     private static final Map<Integer, Class<? extends ViewLayout>> classMap = new HashMap<>();
     static {
-        classMap.put(ControlMapper.INDEX_MENU_LIST_CATEGORY,  Fragment_ListCategory.class);
-        classMap.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS,  Fragment_ListProducts.class);
-        classMap.put(ControlMapper.INDEX_MENU_INFO_PRODUCT,   Fragment_InfoProduct.class);
-        classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,    Fragment_NewProduct.class);
-        classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,   Fragment_EditProduct.class);
+        classMap.put(ControlMapper.INDEX_STAFF_LIST,  Fragment_ListStaff.class);
+        classMap.put(ControlMapper.INDEX_STAFF_NEW,   Fragment_NewStaffMember.class);
     }
 
     public static final Map<Integer, Integer> previousIndexMapMenu;
     static {
         previousIndexMapMenu = new HashMap<>();
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS, ControlMapper.INDEX_MENU_LIST_CATEGORY);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_INFO_PRODUCT, ControlMapper.INDEX_MENU_LIST_PRODUCTS);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_NEW_PRODUCT, ControlMapper.INDEX_MENU_LIST_PRODUCTS);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT, ControlMapper.INDEX_MENU_INFO_PRODUCT);
+        previousIndexMapMenu.put(ControlMapper.INDEX_STAFF_NEW, ControlMapper.INDEX_STAFF_LIST);
     }
 
     public ViewLayout createView(int typeView, Manager managerMenuFragments)throws IllegalAccessException, InstantiationException{

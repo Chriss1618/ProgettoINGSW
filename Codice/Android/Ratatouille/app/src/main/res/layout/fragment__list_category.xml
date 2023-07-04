@@ -80,8 +80,8 @@
                 android:paddingStart="42dp"
                 android:textColorHint="@color/Gray"
                 android:text=""
-                android:textColor="@color/Gray"
-
+                android:textColor="@color/Black"
+                android:focusable="true"
                 android:textColorLink="@color/MainColor"
                 android:textCursorDrawable="@color/MainColor"
                 app:layout_constraintStart_toStartOf="parent"

@@ -39,8 +39,10 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     };
 
     //DATA
-    private final ArrayList<CategoriaMenu>    TitleCategories;
-
+    private ArrayList<CategoriaMenu>    TitleCategories;
+    private ArrayList<CategoriaMenu>    CategorieFiltrate;
+    private boolean showDeleting;
+    private boolean SearchMode = false;
     //OTHER...
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -56,10 +58,12 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         }
     }
 
-    public Adapter_Category(ArrayList<CategoriaMenu> TitleCategories, RecycleEventListener RecycleEventListener){
-        this.TitleCategories        = TitleCategories;
+    public Adapter_Category(ArrayList<CategoriaMenu> TitleCategories, RecycleEventListener RecycleEventListener,boolean showDeleting){
+        this.TitleCategories        = new ArrayList<>(TitleCategories);
         this.RecycleEventListener   = RecycleEventListener;
         this.Holders                = new ArrayList<>();
+        this.CategorieFiltrate      = new ArrayList<>(TitleCategories);
+        this.showDeleting = showDeleting;
     }
 
     @NonNull
@@ -77,22 +81,26 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     public void onBindViewHolder(@NonNull Adapter_Category.ViewHolder holder, int position) {
         this.Holder = holder;
         this.Holders.add(holder);
-        initializeLayout(position);
+        initializeLayout(position,holder);
 
-        setActions(position);
+        setActions(position,holder);
     }
 
     //LAYOUT
-    private void initializeLayout(final int position){
+    private void initializeLayout(final int position,ViewHolder holder){
         this.Holder.Text_View_titoloCategory.setText(TitleCategories.get(position).getNomeCategoria());
+        if(showDeleting){
+            holder.Image_View_delete_element.setVisibility(View.VISIBLE);
+            holder.Image_View_delete_element.startAnimation(Manager_Animation.getFadeInZoom(200));
+        }
     }
-    private void setActions(final int position){
-        this.Holder.Card_View_Element_Category.setOnClickListener(view -> clickCategory(position));
-        this.Holders.get(position).Image_View_delete_element.setOnClickListener(view -> clickDeleteCategory(position));
+    private void setActions(final int position,ViewHolder holder){
+        holder.Card_View_Element_Category.setOnClickListener(view -> clickCategory(position,holder));
+        holder.Image_View_delete_element.setOnClickListener(view -> clickDeleteCategory(position,holder));
     }
 
     //ACTIONS
-    private void clickCategory(final int position){
+    private void clickCategory(final int position, ViewHolder holder){
         Log.d(TAG, "Premuto in Category-------------------");
         Log.d(TAG, " Holder: "  + this.Holder.Text_View_titoloCategory.getText().toString());
         Log.d(TAG, " Array: "   + this.TitleCategories.get(position));
@@ -100,14 +108,57 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         RecycleEventListener.onClickItem(TitleCategories.get(position).getNomeCategoria());
     }
 
-    private void clickDeleteCategory(int position){
-        Log.d(TAG, "clickDeleteCategory: "+this.Holders.get(position).Text_View_titoloCategory.getText().toString());
-
+    private void clickDeleteCategory(int position, ViewHolder holder){
+        Log.d(TAG, "clickDeleteCategory: "+holder.Text_View_titoloCategory.getText().toString());
+        RecycleEventListener.onClickItemOption(holder.Text_View_titoloCategory.getText().toString(),TitleCategories.get(position).getID_categoria());
     }
+
+    public void filterList(String filteredCategory){
+        if (filteredCategory.isEmpty()) {
+            TitleCategories = new ArrayList<>(CategorieFiltrate);
+        } else {
+            TitleCategories.clear();
+            for (CategoriaMenu item : CategorieFiltrate) {
+                if (item.getNomeCategoria().toLowerCase().contains(filteredCategory.toLowerCase())) {
+                    TitleCategories.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addItem(CategoriaMenu categoriaMenu) {
+        TitleCategories.add(categoriaMenu);
+        CategorieFiltrate.add(categoriaMenu);
+    }
+
+    public void removeItem(int id_cat) {
+        int index = TitleCategories.size();
+        for(int i = 0; i< TitleCategories.size();i++){
+            if(TitleCategories.get(i).getID_categoria() == id_cat){
+                TitleCategories.remove(i);
+                index = i;
+                notifyItemRemoved(i);
+                break;
+            }
+        }
+        for(int i = 0; i< CategorieFiltrate.size();i++){
+            if(CategorieFiltrate.get(i).getID_categoria() == id_cat){
+                CategorieFiltrate.remove(i);
+                break;
+            }
+        }
+
+        for (int i = index; i < TitleCategories.size(); i++) {
+            notifyItemChanged(i);
+        }
+    }
+
 
     //ANIMATIONS
 
     public void showDeleteIcon(){
+        showDeleting = true;
         for (ViewHolder holder:Holders) {
             holder.Image_View_delete_element.setVisibility(View.VISIBLE);
             holder.Image_View_delete_element.startAnimation(Manager_Animation.getFadeInZoom(200));
@@ -115,6 +166,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     }
 
     public void hideDeleteIcon(){
+        showDeleting = false;
         for (ViewHolder holder:Holders) {
             holder.Image_View_delete_element.startAnimation(Manager_Animation.getFadeOutZoom(200));
             final Handler handler = new Handler();

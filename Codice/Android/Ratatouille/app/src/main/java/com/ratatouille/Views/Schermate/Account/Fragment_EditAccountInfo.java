@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Managers.Manager_AccountFragments;
@@ -25,16 +26,19 @@ public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {
     LinearLayout        LinearLayout_Buttons;
 
     //FUNCTIONAL
-    Manager_AccountFragments manager_accountFragments;
+    //Manager_AccountFragments manager_accountFragments;
+    private Manager manager;
 
     //DATA
 
     //OTHER...
 
     public Fragment_EditAccountInfo(Manager_AccountFragments manager_accountFragments) {
-        this.manager_accountFragments = manager_accountFragments;
+        //this.manager_accountFragments = manager_accountFragments;
     }
-
+    public Fragment_EditAccountInfo(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

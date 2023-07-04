@@ -31,7 +31,7 @@ public class Manager implements SubController {
     private final SourceInfo sourceInfo;
 
     //LAYOUT
-    protected final Context               context;
+    public final Context               context;
     protected final ArrayList<ViewLayout> Views;
     protected final View                  View;
 

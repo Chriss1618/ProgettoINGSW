@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_Staff;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
@@ -34,8 +35,8 @@ public class Fragment_ListStaff extends Fragment implements ViewLayout {
     private TextView        Text_View_Title_Staff;
 
     //FUNCTIONAL
-    private final Manager_StaffFragments    manager_staffFragments;
-    private final RecycleEventListener      RecycleEventListener;
+    private RecycleEventListener      RecycleEventListener;
+    private Manager                     manager;
     private Adapter_Staff                   adapter_staff;
     private boolean                         isDeleting;
     //DATA
@@ -44,7 +45,11 @@ public class Fragment_ListStaff extends Fragment implements ViewLayout {
     //OTHER...
 
     public Fragment_ListStaff(Manager_StaffFragments manager_staffFragments) {
-        this.manager_staffFragments = manager_staffFragments;
+        //this.manager_staffFragments = manager_staffFragments;
+        this.RecycleEventListener   = new RecycleEventListener();
+    }
+    public Fragment_ListStaff(Manager manager, int a) {
+        this.manager = manager;
         this.RecycleEventListener   = new RecycleEventListener();
     }
 
@@ -117,7 +122,7 @@ public class Fragment_ListStaff extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.manager_staffFragments.showFragment(index,msg);
+        //this.manager.showFragment(index,msg);
     }
 
     //ACTION

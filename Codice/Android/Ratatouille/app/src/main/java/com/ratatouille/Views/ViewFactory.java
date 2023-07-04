@@ -6,9 +6,13 @@ import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Interfaces.IViewFactory;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
+import com.ratatouille.Views.Schermate.Account.AccountViewFactory;
+import com.ratatouille.Views.Schermate.Inventario.InventarioViewFactory;
 import com.ratatouille.Views.Schermate.Menu.MenuViewFactory;
+import com.ratatouille.Views.Schermate.Ordini.OrdiniViewFactory;
+import com.ratatouille.Views.Schermate.OrdiniCameriere.OrdiniCameriereViewFactory;
+import com.ratatouille.Views.Schermate.Staff.StaffViewFactory;
 import com.ratatouille.Views.Schermate.Stats.StatsViewFactory;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +23,13 @@ public class ViewFactory {
 
     private static final Map<Integer, Class<? extends IViewFactory>> classMap = new HashMap<>();
     static {
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_MENU,  MenuViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STATS,  StatsViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_MENU,         MenuViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STATS,        StatsViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STAFF,        StaffViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ACCOUNT,      AccountViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_INVENTORY,    InventarioViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI,       OrdiniViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI_CAMERIERE,  OrdiniCameriereViewFactory.class);
     }
 
     public ViewLayout createView(int typeManager,int typeView, Manager manager)throws IllegalAccessException, InstantiationException{

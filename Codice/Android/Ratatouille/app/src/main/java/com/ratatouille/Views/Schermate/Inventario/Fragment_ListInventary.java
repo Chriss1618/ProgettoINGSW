@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_ProductInventory;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
@@ -37,7 +38,8 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private final RecycleEventListener          RecycleEventListener;
-    private final Manager_InventoryFragments    manager_inventoryFragments;
+    //private Manager_InventoryFragments    manager_inventoryFragments;
+    private Manager manager;
     private Adapter_ProductInventory            adapter_product;
     private boolean                             isDeleting;
     //DATA
@@ -48,9 +50,12 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     public Fragment_ListInventary(Manager_InventoryFragments manager_inventoryFragments  ) {
         this.RecycleEventListener                = new RecycleEventListener();
-        this.manager_inventoryFragments     = manager_inventoryFragments;
+        //this.manager_inventoryFragments     = manager_inventoryFragments;
     }
-
+    public Fragment_ListInventary(Manager manager, int a) {
+        this.manager = manager;
+        this.RecycleEventListener                = new RecycleEventListener();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -158,7 +163,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.manager_inventoryFragments.showFragment(index,msg);
+        //this.manager_inventoryFragments.showFragment(index,msg);
     }
 
     //ANIMATIONS

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_ProductWaiter;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
@@ -34,7 +35,8 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
     private ImageView       ImageView_Resoconto;
     //FUNCTIONAL
     private RecycleEventListener    RecycleEventListener;
-    private Manager_Ordini_Cameriere managerOrdiniCameriere;
+    //private Manager_Ordini_Cameriere managerOrdiniCameriere;
+    private Manager manager;
     //DATA
     private ArrayList<String>   TitleProducts;
     private String              Category_Name;
@@ -42,9 +44,11 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
     //OTHER...
 
     public Fragment_ListProductsCameriere(Manager_Ordini_Cameriere managerOrdiniCameriere) {
-        this.managerOrdiniCameriere = managerOrdiniCameriere;
+        //this.managerOrdiniCameriere = managerOrdiniCameriere;
     }
-
+    public Fragment_ListProductsCameriere(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,7 +113,7 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
         Recycler_Products.setLayoutManager(mLayoutManager);
         Recycler_Products.setNestedScrollingEnabled(false);
         boolean isFromLeft = true;
-        if(managerOrdiniCameriere.from > managerOrdiniCameriere.onMain) isFromLeft = false;
+        //if(managerOrdiniCameriere.from > managerOrdiniCameriere.onMain) isFromLeft = false;
 
         Adapter_ProductWaiter adapter_product_waiter = new Adapter_ProductWaiter(TitleProducts, RecycleEventListener,isFromLeft,false);
         Recycler_Products.setAdapter(adapter_product_waiter);
@@ -126,29 +130,29 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
     }
 
     private void onClickResoconto(){
-        managerOrdiniCameriere.showBottomSheet();
+        //managerOrdiniCameriere.showBottomSheet();
     }
 
     private void onClickAddProduct(String Product, int action){
         Log.d(TAG, "onClickAddProduct");
-        this.managerOrdiniCameriere.addProduct(Product);
+        //this.managerOrdiniCameriere.addProduct(Product);
     }
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.managerOrdiniCameriere.showFragment(index,msg);
+        //this.managerOrdiniCameriere.showFragment(index,msg);
     }
 
     //ANIMATIONS
     @Override
     public void StartAnimations(){
-        if(managerOrdiniCameriere.from > managerOrdiniCameriere.onMain){
-            Log.d(TAG, "StartAnimations: Da product");
-            fromProductAnimations();
-        }else{
-            Log.d(TAG, "StartAnimations: Da Menu");
-            fromMenuAnimations();
-        }
+//        if(managerOrdiniCameriere.from > managerOrdiniCameriere.onMain){
+//            Log.d(TAG, "StartAnimations: Da product");
+//            fromProductAnimations();
+//        }else{
+//            Log.d(TAG, "StartAnimations: Da Menu");
+//            fromMenuAnimations();
+//        }
     }
 
     @Override

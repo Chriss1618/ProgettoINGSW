@@ -21,11 +21,13 @@ public class ActionsListCategory extends ActionsViewHandler{
     public final static int INDEX_ACTION_OPEN_LIST_PRODUCTS     = 0;
     public final static int INDEX_ACTION_SHOW_ADD_CATEGORY      = 1;
     public final static int INDEX_ACTION_ADD_CATEGORY           = 2;
+    public final static int INDEX_ACTION_REMOVE_CATEGORY        = 3;
     public ActionsListCategory() {
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_OPEN_LIST_PRODUCTS,   new OpenListProducts_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_SHOW_ADD_CATEGORY,   new showAddNewCategory_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_ADD_CATEGORY,   new AddNewCategory_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_REMOVE_CATEGORY,   new DeleteCategory_ActionHandler());
     }
 
     //ACTIONS HANDLED **************************************************************
@@ -87,6 +89,53 @@ public class ActionsListCategory extends ActionsViewHandler{
                 Log.e(TAG, "getDataFromServer: ",e);
             }
             Log.d(TAG, "sendNewCategoryToServer: true");
+            return true;
+
+
+        }
+    }
+    private static class DeleteCategory_ActionHandler implements ActionHandler {
+        private CategoriaMenu addedCategory;
+        @Override
+        public void handleAction(Action action) {
+            Log.d(TAG, "handleAction: DeleteCategoryActionHandler->");
+            int id_category = (int)action.getData();
+            if(sendDeleteCategoryToServer(id_category)){
+                action.callBack(id_category);
+                Log.d(TAG, "handleAction: Cancelled Categoria");
+            }else{
+                Log.d(TAG, "handleAction: Categoria Non Cancelled");
+            }
+        }
+
+        private boolean sendDeleteCategoryToServer(int id_category){
+            Log.d(TAG, "sendDeleteCategoryToServer: idCategory = "+id_category);
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("id_ristorante", "1")
+                    .appendQueryParameter("id_category",id_category+"");
+            String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/CategoriaMenu.php";
+
+            try {
+                JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
+                if( Msg != null ){
+
+//                    for(int i = 0 ; i<Msg.length(); i++){
+//                        JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
+//
+//                        addedCategory = new CategoriaMenu(
+//                                Categoria_Json.getString("NomeCategoria"),
+//                                Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
+//                        );
+//                    }
+
+                }else{
+                    Log.d(TAG, "sendDeleteCategoryToServer: false");
+                    return false;
+                }
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+            }
+            Log.d(TAG, "sendDeleteCategoryToServer: true");
             return true;
 
 

@@ -59,6 +59,7 @@ public class ServerCommunication {
 
     private HttpURLConnection startConnectionWithServer() throws Exception {
         URL urlGetAllCategories = new URL(url);
+        Log.d(TAG, "startConnectionWithServer: url-> "+url);
         HttpURLConnection conn = (HttpURLConnection) urlGetAllCategories.openConnection();
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_OrdersTable;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Listeners.RecycleEventListener;
@@ -34,8 +35,9 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
     Button              Button_ConfirmOrders;
 
     //FUNCTIONAl
-    private Manager_Ordini          manager_ordini;
+    //private Manager_Ordini          manager_ordini;
     private RecycleEventListener    RecycleEventListener;
+    private Manager manager;
 
     //DATA
     ArrayList<String> OrdersTable;
@@ -44,9 +46,11 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
 
 
     public Fragment_TableOrders(Manager_Ordini manager_ordini) {
-        this.manager_ordini = manager_ordini;
+        //this.manager_ordini = manager_ordini;
     }
-
+    public Fragment_TableOrders(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,7 +132,7 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
     }
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.manager_ordini.showFragment(index,msg);
+        //this.manager_ordini.showFragment(index,msg);
     }
 
 

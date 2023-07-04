@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.EndPoints.EndPointer;
 import com.ratatouille.Models.ServerCommunication;
 import com.ratatouille.R;
@@ -182,18 +183,22 @@ public class Activity_ChooseRole extends AppCompatActivity {
     //ANIMATIONS
     private void startAmministratore(){
         Intent intent = new Intent(this, Activity_Amministratore.class);
+        intent.putExtra("typeUser", ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE+"");
         startActivity(intent);
     }
     private void startSupervisore(){
-        Intent intent = new Intent(this, Activity_Supervisore.class);
+        Intent intent = new Intent(this, Activity_Amministratore.class);
+        intent.putExtra("typeUser", ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE+"");
         startActivity(intent);
     }
     private void startChef(){
-        Intent intent = new Intent(this, Activity_Chef.class);
+        Intent intent = new Intent(this, Activity_Amministratore.class);
+        intent.putExtra("typeUser", ControlMapper.INDEX_TYPE_CONTROLLER_CHEF+"");
         startActivity(intent);
     }
     private void startCameriere(){
-        Intent intent = new Intent(this, Activity_Cameriere.class);
+        Intent intent = new Intent(this, Activity_Amministratore.class);
+        intent.putExtra("typeUser", ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE+"");
         startActivity(intent);
     }
 

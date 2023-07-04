@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Managers.Manager_InventoryFragments;
 import com.ratatouille.R;
 
@@ -24,17 +26,20 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     private ImageView       ImageView_EditProduct;
     private CardView        CardView_Product;
     //FUNCTIONAL
-    private final Manager_InventoryFragments manager_inventoryFragments;
+    //private Manager_InventoryFragments manager_inventoryFragments;
+    private Manager manager;
     //DATA
 
     //OTHER..
 
 
     public Fragment_InfoProductInventory(Manager_InventoryFragments manager_inventoryFragments) {
-        this.manager_inventoryFragments = manager_inventoryFragments;
+        //this.manager_inventoryFragments = manager_inventoryFragments;
 
     }
-
+    public Fragment_InfoProductInventory(Manager manager, int a) {
+        this.manager = manager;
+    }
 
 
     @Override
@@ -97,7 +102,7 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.manager_inventoryFragments.showFragment(index,msg);
+        //this.manager_inventoryFragments.showFragment(index,msg);
     }
 
     //ANIMATIONS

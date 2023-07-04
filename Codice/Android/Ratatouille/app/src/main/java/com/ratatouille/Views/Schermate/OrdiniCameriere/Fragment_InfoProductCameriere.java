@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
@@ -29,7 +30,8 @@ public class Fragment_InfoProductCameriere extends Fragment implements ViewLayou
 
     //FUNCTIONAL
     private RecycleEventListener        RecycleEventListener;
-    private Manager_Ordini_Cameriere    managerOrdiniCameriere;
+    //private Manager_Ordini_Cameriere    managerOrdiniCameriere;
+    private Manager manager;
 
     //DATA
     private ArrayList<String> TitleProduct;
@@ -37,9 +39,11 @@ public class Fragment_InfoProductCameriere extends Fragment implements ViewLayou
     //OTHER...
 
     public Fragment_InfoProductCameriere(Manager_Ordini_Cameriere managerOrdiniCameriere) {
-        this.managerOrdiniCameriere = managerOrdiniCameriere;
+        //this.managerOrdiniCameriere = managerOrdiniCameriere;
     }
-
+    public Fragment_InfoProductCameriere(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

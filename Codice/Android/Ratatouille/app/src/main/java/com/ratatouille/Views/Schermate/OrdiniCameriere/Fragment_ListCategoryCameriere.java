@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_Category;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Listeners.RecycleEventListener;
@@ -40,7 +41,8 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
 
     //FUNCTIONAL
     private RecycleEventListener RecycleEventListener;
-    private Manager_Ordini_Cameriere managerOrdiniCameriere;
+    //private Manager_Ordini_Cameriere managerOrdiniCameriere;
+    private Manager manager;
 
     //DATA
     private ArrayList<CategoriaMenu> TitleCategories;
@@ -49,9 +51,11 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
 
 
     public Fragment_ListCategoryCameriere(Manager_Ordini_Cameriere managerOrdiniCameriere) {
-        this.managerOrdiniCameriere = managerOrdiniCameriere;
+        //this.managerOrdiniCameriere = managerOrdiniCameriere;
     }
-
+    public Fragment_ListCategoryCameriere(Manager manager, int a) {
+        this.manager = manager;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +116,7 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     }
 
     private void initCategoryRV(){
-        Adapter_Category adapter_category = new Adapter_Category(TitleCategories, RecycleEventListener);
+        Adapter_Category adapter_category = new Adapter_Category(TitleCategories, RecycleEventListener,false);
         Recycler_Categories.setAdapter(adapter_category);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -135,12 +139,12 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
 
     private void onClickShowResoconto(){
         Log.d(TAG, "onClickShowResoconto");
-        managerOrdiniCameriere.showBottomSheet();
+        //managerOrdiniCameriere.showBottomSheet();
     }
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.managerOrdiniCameriere.showFragment(index,msg);
+        //this.managerOrdiniCameriere.showFragment(index,msg);
     }
 
     private void showDialogNewCategory(){

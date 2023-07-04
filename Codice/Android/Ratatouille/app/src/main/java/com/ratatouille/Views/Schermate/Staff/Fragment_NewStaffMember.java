@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Managers.Manager_StaffFragments;
 import com.ratatouille.R;
 
@@ -27,32 +29,36 @@ public class Fragment_NewStaffMember extends Fragment implements ViewLayout {
     private static final int INDEX_WAITER = 0;
     private static final int INDEX_SUPERVISORE = 1;
     private static final int INDEX_CHEF = 2;
+
     //LAYOUT
     android.view.View Fragment_View;
-
     TextView        Text_View_title_staff;
     TextView        Text_View_ScegliRuolo;
     CardView        Card_View_Sala;
     CardView        Card_View_Supervisore;
     CardView        Card_View_Chef;
     CardView        Card_View_GeneratePassword;
-
     EditText        EditText_Password;
     LinearLayout    Linear_Layout_Dati_Membro;
     LinearLayout    Linear_Layout_Buttons;
 
     //FUNCTIONAL
-    private Manager_StaffFragments manager_staffFragments;
+    //private Manager_StaffFragments manager_staffFragments;
+    private Manager manager;
     private Context context;
+
     //DATA
     private int roleSelected = 99;
+
     //OTHER...
 
     public Fragment_NewStaffMember(Manager_StaffFragments manager_staffFragments) {
-        this.manager_staffFragments = manager_staffFragments;
+        //this.manager_staffFragments = manager_staffFragments;
         this.context = manager_staffFragments.context;
     }
-
+    public Fragment_NewStaffMember(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

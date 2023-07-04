@@ -7,14 +7,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 public class Fragment_ReportOrder extends Fragment implements ViewLayout {
-
+    private Manager manager;
     public Fragment_ReportOrder() {
     }
-
+    public Fragment_ReportOrder(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

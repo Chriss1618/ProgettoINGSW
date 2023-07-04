@@ -27,14 +27,14 @@ public class Fragment_EditProduct extends Fragment implements ViewLayout {
     LinearLayout        LinearLayout_Buttons;
 
     //FUNCTIONAL
-    private Manager_MenuFragments manager_MenuFragments;
+    //private Manager_MenuFragments manager_MenuFragments;
     Manager manager;
     //DATA
 
     //OTHER...
 
     public Fragment_EditProduct(Manager_MenuFragments manager_MenuFragments) {
-        this.manager_MenuFragments = manager_MenuFragments;
+        //this.manager_MenuFragments = manager_MenuFragments;
     }
     public Fragment_EditProduct(Manager manager_MenuFragments,int a) {
         this.manager = manager_MenuFragments;

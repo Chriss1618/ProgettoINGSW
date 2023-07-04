@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_Product;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
@@ -36,17 +37,19 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     private CardView        CardView_AggiungiOrdine;
     //FUNCTIONAL
     private RecycleEventListener        RecycleEventListener;
-    private Manager_Ordini_Cameriere    managerOrdiniCameriere;
-
+    //private Manager_Ordini_Cameriere    managerOrdiniCameriere;
+    private Manager manager;
     //DATA
     private ArrayList<String>   TitleProducts;
 
     //OTHER...
 
     public Fragment_TableInfo(Manager_Ordini_Cameriere managerOrdiniCameriere) {
-        this.managerOrdiniCameriere = managerOrdiniCameriere;
+        //this.managerOrdiniCameriere = managerOrdiniCameriere;
     }
-
+    public Fragment_TableInfo(Manager manager, int a) {
+        this.manager = manager;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +133,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     }
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.managerOrdiniCameriere.showFragment(index,msg);
+        //this.managerOrdiniCameriere.showFragment(index,msg);
     }
     //ANIMATIONS
     @Override

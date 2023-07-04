@@ -32,7 +32,7 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     private ImageView   ImageView_Edit_Product;
 
     //FUNCTIONAL
-    private Manager_MenuFragments manager_MenuFragments;
+    //private Manager_MenuFragments manager_MenuFragments;
     Manager manager;
     //DATA
     private String Product_Name;
@@ -40,7 +40,7 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     //OTHER...
 
     public Fragment_InfoProduct(Manager_MenuFragments manager_MenuFragments) {
-        this.manager_MenuFragments = manager_MenuFragments;
+        //this.manager_MenuFragments = manager_MenuFragments;
     }
     public Fragment_InfoProduct(Manager manager,int a) {
         this.manager = manager;
@@ -109,7 +109,7 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.manager_MenuFragments.showFragment(index,msg);
+        //this.manager_MenuFragments.showFragment(index,msg);
     }
 
     //ANIMATIONS

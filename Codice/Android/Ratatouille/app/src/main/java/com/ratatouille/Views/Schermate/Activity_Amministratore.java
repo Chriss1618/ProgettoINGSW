@@ -3,14 +3,13 @@ package com.ratatouille.Views.Schermate;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
-import com.ratatouille.Controllers.Controller;
 import com.ratatouille.Controllers.ControlMapper;
+import com.ratatouille.Controllers.Controller;
 import com.ratatouille.Controllers.ControllerFactory;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.BottomBarListener;
@@ -27,10 +26,10 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     AnimatedBottomBar Bottom_Bar_Amministratore;
 
     //FUNCTIONAL
-    private static final int            TYPE_CONTROLLER             = ControllerFactory.INDEX_TYPE_CONTROLLER_AMMINISTRATORE;
-    private Controller                  ControllerAmministratore;
+    private int typeUser;
     private final BottomBarListener     bottomBarListener = new BottomBarListener();;
     private Controller controller;
+
     //OTHER
     private boolean canChangeTab = true;
 
@@ -58,7 +57,7 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     //DATA
     @Override
     public void PrepareData() {
-
+        typeUser =  Integer.parseInt(getIntent().getStringExtra("typeUser"));
     }
 
     //LAYOUT
@@ -71,7 +70,23 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
 
     @Override
     public void LinkLayout() {
-        Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_amm);
+        switch (typeUser){
+            case ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE:
+                Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_amm);
+                break;
+            case ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE:
+
+                Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_sup);
+                break;
+            case ControlMapper.INDEX_TYPE_CONTROLLER_CHEF:
+
+                Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_chef);
+                break;
+            case ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE:
+                Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_cam);
+                break;
+        }
+        Bottom_Bar_Amministratore.setVisibility(View.VISIBLE);
     }
     @Override
     public void SetActionsOfLayout() {
@@ -118,7 +133,7 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
         controller = new Controller(this,
                 findViewById(R.id.fragment_container_view_amministratore),
                 getSupportFragmentManager(),
-                bottomBarListener, ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE);
+                bottomBarListener, typeUser);
     }
 
     //ANIMATIONS
@@ -132,12 +147,12 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     }
 
     private void disableBottomBar(){
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < controller.getNumberManagers(); i++)
             Bottom_Bar_Amministratore.setTabEnabledAt(i,false);
     }
 
     private void enableBottomBar(){
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < controller.getNumberManagers(); i++)
             Bottom_Bar_Amministratore.setTabEnabledAt(i,true);
     }
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_TablesWaiter;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Interfaces.ViewLayout;
 import com.ratatouille.Listeners.RecycleEventListener;
@@ -32,17 +33,19 @@ public class Fragment_ListTables extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private RecycleEventListener        RecycleEventListener;
-    private Manager_Ordini_Cameriere    managerOrdiniCameriere;
-
+    //private Manager_Ordini_Cameriere    managerOrdiniCameriere;
+    private Manager manager;
     //DATA
     private ArrayList<String>   TablesWaiter;
 
     //OTHER...
 
     public Fragment_ListTables(Manager_Ordini_Cameriere managerOrdiniCameriere) {
-        this.managerOrdiniCameriere = managerOrdiniCameriere;
+        //this.managerOrdiniCameriere = managerOrdiniCameriere;
     }
-
+    public Fragment_ListTables(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +121,7 @@ public class Fragment_ListTables extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.managerOrdiniCameriere.showFragment(index,msg);
+        //this.managerOrdiniCameriere.showFragment(index,msg);
     }
     //ANIMATIONS
     @Override

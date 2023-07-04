@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ratatouille.Adapters.Adapter_OrderHistory;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.RecycleEventListener;
 import com.ratatouille.Interfaces.ViewLayout;
@@ -30,7 +31,8 @@ public class Fragment_HystoryOrders extends Fragment implements ViewLayout {
     RecyclerView        recyclerView_OrdersTable;
 
     //FUNCTIONAl
-    private Manager_Ordini          manager_ordini;
+    //private Manager_Ordini          manager_ordini;
+    private Manager manager;
     private RecycleEventListener    RecycleEventListener;
 
     //DATA
@@ -40,7 +42,10 @@ public class Fragment_HystoryOrders extends Fragment implements ViewLayout {
 
 
     public Fragment_HystoryOrders(Manager_Ordini manager_ordini) {
-        this.manager_ordini = manager_ordini;
+        //this.manager_ordini = manager_ordini;
+    }
+    public Fragment_HystoryOrders(Manager manager, int a) {
+        this.manager = manager;
     }
 
     @Override

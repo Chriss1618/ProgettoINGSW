@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.ratatouille.Controllers.Controller;
 import com.ratatouille.Controllers.Controller_Supervisore;
 import com.ratatouille.GUI.Animation.Manager_Animation;
 import com.ratatouille.Listeners.BottomBarListener;
@@ -27,16 +28,20 @@ public class Activity_Supervisore extends AppCompatActivity implements ViewLayou
     //LAYOUT
     AnimatedBottomBar   Bottom_Bar_Supervisore;
 
-    //FUNCTIONS
+    //FUNCTIONAL
     BottomBarListener       bottomBarListener;
     Controller_Supervisore  controller_supervisor;
+    private Controller controller;
 
     //OTHER...
 
     @Override
     public void onBackPressed() {
-        int numberOfBackStack = getSupportFragmentManager().getBackStackEntryCount();
-        callBackStackAfterAnimation(numberOfBackStack);
+        if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
+            controller.closeView();
+        }else{
+            super.onBackPressed();
+        }
     }
 
     private void callBackStackAfterAnimation(int numberOfBackStack){

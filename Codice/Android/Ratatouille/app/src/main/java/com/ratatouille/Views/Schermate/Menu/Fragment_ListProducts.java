@@ -38,7 +38,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private ImageView       ImageView_deleteProduct;
     //FUNCTIONAL
     private RecycleEventListener            RecycleEventListener;
-    private  Manager_MenuFragments     manager_menuFragments;
+    //private  Manager_MenuFragments     manager_menuFragments;
     Manager manager;
     private Adapter_Product                 adapter_product;
     private boolean                         isDeleting;
@@ -49,7 +49,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     //OTHER...
 
     public Fragment_ListProducts(Manager_MenuFragments manager_menuFragments) {
-        this.manager_menuFragments = manager_menuFragments;
+        //this.manager_menuFragments = manager_menuFragments;
         this.Category_Name = "Nessuna Categoria";
     }
     public Fragment_ListProducts(Manager manager,int a) {
@@ -162,7 +162,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private void sendActionToManager(int index,String msg){
-        this.manager_menuFragments.showFragment(index,msg);
+        //this.manager_menuFragments.showFragment(index,msg);
     }
 
     //ANIMATIONS

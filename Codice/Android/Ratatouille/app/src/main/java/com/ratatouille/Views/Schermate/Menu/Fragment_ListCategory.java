@@ -32,6 +32,8 @@ import com.ratatouille.Models.CategoriaMenu;
 import com.ratatouille.Models.Request.Request;
 import com.ratatouille.R;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Fragment_ListCategory extends Fragment implements ViewLayout {
     //SYSTEM
@@ -46,6 +48,8 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     private ImageView       Image_View_AddCategory;
     private ImageView       Image_View_DeleteCategory;
     private TextView        Text_View_Empty;
+    private EditText        EditText_SearchCategory;
+
 
     //FUNCTIONAL
     private final Manager           manager;
@@ -111,6 +115,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         LinearLayout_NewCategory            = View_fragment.findViewById(R.id.linear_layout_new_category);
         LinearLayout_BackGroundNewCategory  = View_fragment.findViewById(R.id.darkRL);
         Text_View_Empty                     = View_fragment.findViewById(R.id.text_view_empty);
+        EditText_SearchCategory             = View_fragment.findViewById(R.id.edit_text_name_category);
     }
     @Override
     public void SetDataOnLayout() {
@@ -120,12 +125,29 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener        .setOnClickItemAdapterListener( this::onClickCategory );
+        RecycleEventListener        .setOnClickItemOptionAdapterListener( this::onClickDeleteCategory );
         Image_View_AddCategory      .setOnClickListener(view -> onClickAddCategory());
-        Image_View_DeleteCategory   .setOnClickListener(view -> onClickDeleteCategory());
+        Image_View_DeleteCategory   .setOnClickListener(view -> onClickDeleteCategories());
+        EditText_SearchCategory     .addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter_category.filterList(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void initCategoryRV(){
-        adapter_category = new Adapter_Category(ListCategoryMenu, RecycleEventListener);
+        adapter_category = new Adapter_Category(ListCategoryMenu, RecycleEventListener,false);
         Recycler_Categories.setAdapter(adapter_category);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -165,7 +187,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         SendAction(action);
     }
 
-    private void onClickDeleteCategory(){
+    private void onClickDeleteCategories(){
         if(isDeleting){
             adapter_category.hideDeleteIcon();
             isDeleting = false;
@@ -174,6 +196,26 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
             isDeleting = true;
         }
     }
+
+    private void onClickDeleteCategory(String categoryToDelete,int id_categoryToDelete){
+        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
+        Action action = new Action(ActionsListCategory.INDEX_ACTION_REMOVE_CATEGORY, id_categoryToDelete,manager,
+                (id_categoria)-> deleteItemFromRecycle( (Integer)id_categoria ),
+                manager.getSourceInfo());
+        SendAction(action);
+    }
+
+    private void deleteItemFromRecycle(Integer id_category){
+        for(int indexItem = 0; indexItem < ListCategoryMenu.size() ; indexItem++){
+            if(ListCategoryMenu.get(indexItem).getID_categoria() == id_category){
+                ListCategoryMenu.remove(indexItem);
+                adapter_category.removeItem(id_category);
+                break;
+            }
+        }
+
+    }
+
 
     //FUNCTIONAL *********************************************************************
     private void ShowDialogNewCategory(){
@@ -193,10 +235,10 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
         private void showDialogNewCategory(){
             Log.d(TAG, "showDialogNewCategory: Started");
-            CardView_Cancel    = LinearLayout_NewCategory.findViewById(R.id.card_view_annulla);
-            CardView_Add       = LinearLayout_NewCategory.findViewById(R.id.card_view_aggiungi);
-            EditText_NewCategoryName = LinearLayout_NewCategory.findViewById(R.id.edit_text_nome_categoria);
-            TextView_Warning = LinearLayout_NewCategory.findViewById(R.id.text_view_warning);
+            CardView_Cancel             = LinearLayout_NewCategory.findViewById(R.id.card_view_annulla);
+            CardView_Add                = LinearLayout_NewCategory.findViewById(R.id.card_view_aggiungi);
+            EditText_NewCategoryName    = LinearLayout_NewCategory.findViewById(R.id.edit_text_nome_categoria);
+            TextView_Warning            = LinearLayout_NewCategory.findViewById(R.id.text_view_warning);
 
             CardView_Cancel .setOnClickListener(view -> dismissDialogNewCategory());
             CardView_Add    .setOnClickListener(view -> addCategory( EditText_NewCategoryName.getText().toString().replaceAll("\\s+$", "")));
@@ -225,6 +267,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         private void addCategoryView(CategoriaMenu newCategory){
             ListCategoryMenu.add(newCategory);
             adapter_category.notifyDataSetChanged();
+            adapter_category.addItem(newCategory);
             checkEmptyRecycle();
             showSuccessfullyAddedNewCategory();
         }

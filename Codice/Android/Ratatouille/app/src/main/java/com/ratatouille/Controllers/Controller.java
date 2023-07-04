@@ -57,17 +57,14 @@ public class Controller implements IController {
         LIST_INDEX_MANAGERS = ControlMapper.classControllerToManager.get(typeController);
         assert LIST_INDEX_MANAGERS != null;
         for (int indexManager : LIST_INDEX_MANAGERS ) {
-            if(indexManager == 0 || indexManager == 2){
-                Managers.add(new Manager(
-                                new SourceInfo(indexManager,typeController),
-                                context,
-                                view,
-                                fragmentManager,
-                                bottomBarListener
-                        )
-                );
-            }
-
+            Managers.add(new Manager(
+                            new SourceInfo(indexManager,typeController),
+                            context,
+                            view,
+                            fragmentManager,
+                            bottomBarListener
+                    )
+            );
         }
 
         Log.d(TAG, "FINE NEW V Controller: costruttore Controller ");
@@ -76,7 +73,9 @@ public class Controller implements IController {
     public Controller() {
 
     }
-
+    public int getNumberManagers(){
+        return LIST_INDEX_MANAGERS.length;
+    }
     //Show Pages
     @Override
     public void showMain(){
@@ -96,8 +95,7 @@ public class Controller implements IController {
     private void showOnMain(int indexMain){
         clearBackStackPackage();
         Log.d(TAG, "showOnMain: index->"+indexMain);
-        managerOnMain = LIST_INDEX_MANAGERS[indexMain];
-        if(managerOnMain == 2) managerOnMain = 1;
+        managerOnMain = indexMain;
         Managers.get(managerOnMain).showMain();
     }
     @Override
