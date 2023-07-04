@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {

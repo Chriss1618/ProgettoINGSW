@@ -1,14 +1,11 @@
 package com.ratatouille.Views.Schermate.OrdiniCameriere;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 public class Fragment_ReportOrder extends Fragment implements ViewLayout {

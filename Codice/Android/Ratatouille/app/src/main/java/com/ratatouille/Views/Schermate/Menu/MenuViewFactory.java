@@ -2,8 +2,8 @@ package com.ratatouille.Views.Schermate.Menu;
 
 import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Interfaces.IViewFactory;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewFactory;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;

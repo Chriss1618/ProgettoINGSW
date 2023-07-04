@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
 

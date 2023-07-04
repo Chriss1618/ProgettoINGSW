@@ -19,21 +19,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.ratatouille.Adapters.Adapter_Category;
+import com.ratatouille.Controllers.Adapters.Adapter_Category;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Listeners.RecycleEventListener;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Models.Action.*;
-import com.ratatouille.Models.CategoriaMenu;
-import com.ratatouille.Models.Request.Request;
+import com.ratatouille.Models.Events.Action.*;
+import com.ratatouille.Models.Entity.CategoriaMenu;
+import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.R;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class Fragment_ListCategory extends Fragment implements ViewLayout {
     //SYSTEM

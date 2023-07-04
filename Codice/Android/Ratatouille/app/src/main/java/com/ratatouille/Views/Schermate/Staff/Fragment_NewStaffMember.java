@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import java.util.Random;
 

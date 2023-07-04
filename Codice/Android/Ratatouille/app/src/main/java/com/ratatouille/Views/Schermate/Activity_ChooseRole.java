@@ -1,21 +1,17 @@
 package com.ratatouille.Views.Schermate;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Models.EndPoints.EndPointer;
-import com.ratatouille.Models.ServerCommunication;
+import com.ratatouille.Models.API.Rest.EndPointer;
+import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.R;
-
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStream;
@@ -48,7 +44,6 @@ public class Activity_ChooseRole extends AppCompatActivity {
         PrepareData();
 
         PrepareLayout();
-
     }
 
     //LAYOUT

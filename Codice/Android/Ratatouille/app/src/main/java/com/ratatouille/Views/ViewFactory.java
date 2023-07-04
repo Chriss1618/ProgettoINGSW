@@ -1,10 +1,9 @@
 package com.ratatouille.Views;
 
 import android.util.Log;
-
 import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Interfaces.IViewFactory;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewFactory;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Views.Schermate.Account.AccountViewFactory;
 import com.ratatouille.Views.Schermate.Inventario.InventarioViewFactory;

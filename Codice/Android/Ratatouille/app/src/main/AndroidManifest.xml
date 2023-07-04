@@ -24,7 +24,7 @@
         <activity android:name=".Views.Schermate.Login.Activity_Login" />
 
         <service
-            android:name=".Models.FCMService"
+            android:name=".Models.API.Firebase.FCMService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

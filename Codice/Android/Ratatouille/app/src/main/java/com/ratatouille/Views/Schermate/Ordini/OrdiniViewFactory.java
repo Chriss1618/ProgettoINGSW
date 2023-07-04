@@ -4,13 +4,8 @@ import android.util.Log;
 
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Interfaces.IViewFactory;
-import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Views.Schermate.Menu.Fragment_EditProduct;
-import com.ratatouille.Views.Schermate.Menu.Fragment_InfoProduct;
-import com.ratatouille.Views.Schermate.Menu.Fragment_ListCategory;
-import com.ratatouille.Views.Schermate.Menu.Fragment_ListProducts;
-import com.ratatouille.Views.Schermate.Menu.Fragment_NewProduct;
+import com.ratatouille.Models.Interfaces.IViewFactory;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;

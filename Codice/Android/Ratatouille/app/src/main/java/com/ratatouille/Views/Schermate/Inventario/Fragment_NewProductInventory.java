@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 public class Fragment_NewProductInventory extends Fragment implements ViewLayout {

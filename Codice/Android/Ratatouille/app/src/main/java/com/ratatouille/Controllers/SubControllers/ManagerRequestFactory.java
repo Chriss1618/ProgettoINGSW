@@ -2,7 +2,7 @@ package com.ratatouille.Controllers.SubControllers;
 
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestCategory;
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestHandler;
-import com.ratatouille.Models.Request.Request;
+import com.ratatouille.Models.Events.Request.Request;
 
 import java.util.HashMap;
 import java.util.Map;

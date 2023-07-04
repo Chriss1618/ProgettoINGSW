@@ -2,15 +2,12 @@ package com.ratatouille.Views.Schermate.Login.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.ratatouille.GUI.Animation.Manager_Animation;
+import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Activity_ChooseRole;

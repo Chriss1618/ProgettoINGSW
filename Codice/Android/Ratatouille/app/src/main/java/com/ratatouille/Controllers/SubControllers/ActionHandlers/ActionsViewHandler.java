@@ -1,6 +1,6 @@
 package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 
-import com.ratatouille.Models.Action.Action;
+import com.ratatouille.Models.Events.Action.Action;
 
 import java.util.Map;
 

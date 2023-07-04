@@ -10,9 +10,9 @@ import android.view.View;
 
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.Controller;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Listeners.BottomBarListener;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;

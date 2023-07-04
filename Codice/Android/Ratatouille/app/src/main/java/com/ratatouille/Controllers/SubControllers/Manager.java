@@ -5,20 +5,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Interfaces.SubController;
-import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Models.Action.*;
-import com.ratatouille.Models.Request.Request;
-import com.ratatouille.Models.SourceInfo;
+import com.ratatouille.Models.Events.Action.Action;
+import com.ratatouille.Models.Interfaces.SubController;
+import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Listeners.BottomBarListener;
+import com.ratatouille.Models.Events.Request.Request;
+import com.ratatouille.Models.Events.SourceInfo;
 import com.ratatouille.Views.Schermate.Menu.MenuViewFactory;
 import com.ratatouille.Views.ViewFactory;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -117,7 +114,9 @@ public class Manager implements SubController {
     public void closeView() {
         from = onMain;
         Views.get(onMain).EndAnimations();
-        fragmentManager.popBackStack();
+        final Handler handler = new Handler();
+        handler.postDelayed(fragmentManager::popBackStack,300);
+
         onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));
     }
 

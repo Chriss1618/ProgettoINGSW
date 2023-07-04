@@ -5,19 +5,19 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.os.Handler;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.ratatouille.Adapters.Adapter_Category;
+import com.ratatouille.Controllers.Adapters.Adapter_Category;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Interfaces.ViewLayout;
-import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Models.CategoriaMenu;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Listeners.RecycleEventListener;
+import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.R;
 import java.util.ArrayList;
 

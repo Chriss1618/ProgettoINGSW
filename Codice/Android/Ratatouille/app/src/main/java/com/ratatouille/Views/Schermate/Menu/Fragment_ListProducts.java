@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ratatouille.Adapters.Adapter_Product;
-import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Controllers.Adapters.Adapter_Product;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Listeners.RecycleEventListener;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
 
@@ -35,6 +33,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private RecyclerView    Recycler_Products;
     private ImageView       ImageView_AddProduct;
     private ImageView       ImageView_deleteProduct;
+    private ImageView       ImageView_Back;
     //FUNCTIONAL
     private RecycleEventListener            RecycleEventListener;
     Manager manager;
@@ -102,20 +101,21 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         Recycler_Products           = View_fragment.findViewById(R.id.recycler_products);
         ImageView_AddProduct        = View_fragment.findViewById(R.id.ic_add_product);
         ImageView_deleteProduct     = View_fragment.findViewById(R.id.ic_delete_product);
+        ImageView_Back              = View_fragment.findViewById(R.id.ic_back);
     }
 
     @Override
     public void SetDataOnLayout() {
         initListProductsRV();
         Text_View_TitleCategory.setText(Category_Name);
-
     }
+
     @Override
     public void SetActionsOfLayout() {
-
         RecycleEventListener    .setOnClickItemAdapterListener( this::onClickProduct );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
+        ImageView_Back          .setOnClickListener(            view -> manager.closeView());
     }
 
     private void initListProductsRV( ){

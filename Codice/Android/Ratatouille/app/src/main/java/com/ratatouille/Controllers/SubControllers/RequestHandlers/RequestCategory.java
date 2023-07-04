@@ -2,18 +2,13 @@ package com.ratatouille.Controllers.SubControllers.RequestHandlers;
 
 import android.net.Uri;
 import android.util.Log;
-
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
-import com.ratatouille.Models.CategoriaMenu;
-import com.ratatouille.Models.EndPoints.EndPointer;
-import com.ratatouille.Models.Request.Request;
-import com.ratatouille.Models.ServerCommunication;
-
+import com.ratatouille.Models.Entity.CategoriaMenu;
+import com.ratatouille.Models.API.Rest.EndPointer;
+import com.ratatouille.Models.Events.Request.Request;
+import com.ratatouille.Models.API.Rest.ServerCommunication;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class RequestCategory implements RequestHandler {
 

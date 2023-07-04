@@ -8,10 +8,10 @@ import android.view.View;
 import androidx.fragment.app.FragmentManager;
 
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Interfaces.IController;
-import com.ratatouille.Interfaces.SubController;
-import com.ratatouille.Listeners.BottomBarListener;
-import com.ratatouille.Models.SourceInfo;
+import com.ratatouille.Models.Interfaces.IController;
+import com.ratatouille.Models.Interfaces.SubController;
+import com.ratatouille.Models.Listeners.BottomBarListener;
+import com.ratatouille.Models.Events.SourceInfo;
 
 import java.util.ArrayList;
 
@@ -95,9 +95,6 @@ public class Controller implements IController {
     @Override
     public void closeView(){
         Managers.get(managerOnMain).closeView();
-
-        final Handler handler = new Handler();
-        handler.postDelayed(fragmentManager::popBackStack,300);
     }
 
     private void clearBackStackPackage(){

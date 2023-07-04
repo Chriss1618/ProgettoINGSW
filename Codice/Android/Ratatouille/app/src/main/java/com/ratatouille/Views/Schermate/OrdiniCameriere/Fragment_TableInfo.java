@@ -10,11 +10,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.ratatouille.Adapters.Adapter_Product;
+import com.ratatouille.Controllers.Adapters.Adapter_Product;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Listeners.RecycleEventListener;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import java.util.ArrayList;
 

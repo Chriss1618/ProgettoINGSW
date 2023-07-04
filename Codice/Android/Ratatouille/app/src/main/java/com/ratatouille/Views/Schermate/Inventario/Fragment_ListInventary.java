@@ -4,16 +4,16 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.os.Handler;
+
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.ratatouille.Adapters.Adapter_ProductInventory;
+import com.ratatouille.Controllers.Adapters.Adapter_ProductInventory;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.GUI.Animation.Manager_Animation;
-import com.ratatouille.Listeners.RecycleEventListener;
-import com.ratatouille.Interfaces.ViewLayout;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Listeners.RecycleEventListener;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
 import java.util.ArrayList;

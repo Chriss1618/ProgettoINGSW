@@ -1,13 +1,11 @@
 package com.ratatouille.Controllers.SubControllers;
 
 import android.util.Log;
-
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsViewHandler;
-import com.ratatouille.Models.Action.Action;
-
+import com.ratatouille.Models.Events.Action.Action;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
