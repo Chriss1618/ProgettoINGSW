@@ -111,7 +111,7 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
     }
 
     //ACTIONS
-    private void onClickProduct(String Product){
+    private void onClickProduct(Object Product){
         Log.d(TAG, "PreparerData: Hai premuto l'item->"+Product);
         toProductAnimations();
     }

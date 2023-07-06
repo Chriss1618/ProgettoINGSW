@@ -57,7 +57,6 @@ public class Activity_ChooseRole extends AppCompatActivity {
         SetDataOnLayout();
         SetActionsOfLayout();
     }
-
     private void LinkLayout() {
         Button_Amministratore   = findViewById(R.id.button_amministratore);
         Button_Supervisore      = findViewById(R.id.button_supervisore);
@@ -69,10 +68,10 @@ public class Activity_ChooseRole extends AppCompatActivity {
     }
 
     private void SetActionsOfLayout() {
-        Button_Amministratore   .setOnClickListener(view -> startAmministratore());
-        Button_Supervisore      .setOnClickListener(view -> startSupervisore());
-        Button_Chef             .setOnClickListener(view -> startChef());
-        Button_Cameriere        .setOnClickListener(view -> startCameriere());
+        Button_Amministratore   .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE));
+        Button_Supervisore      .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE));
+        Button_Chef             .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CHEF));
+        Button_Cameriere        .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE));
     }
 
     private void setToken(){
@@ -134,32 +133,9 @@ public class Activity_ChooseRole extends AppCompatActivity {
             JSONObject json_data = new JSONObject(builder2.toString());
 
             //leggi Json Se hai un successo ritorni messageid;
-//                if (json_data.getInt("status")>0) {
             Log.d(TAG, "getData: messaggio BackEnd->"+json_data );
             Log.d(TAG, "sendData: messageFromAndroid:"+json_data.getString("messageFromAndroid"));
-//                    JSONArray document= new JSONArray(json_data.getString("messageFromAndroid"));
-//
-//                    for(int i = 0 ; i<document.length(); i++){
-//                        JSONObject singleDocument = new JSONObject(document.getString(i));
-//                        try {
-//                            Log.d(TAG, "getDocuments: data formatted->"+dateUpdate);
-//                            newFiles.add(new FileDocument(
-//                                    singleDocument.getString("document_id"),
-//                                    user_id,
-//                                    singleDocument.getString("plaza_id"),
-//                                    singleDocument.getString("name"),
-//                                    singleDocument.getString("plaza"),
-//                                    singleDocument.getString("filename"),
-//                                    singleDocument.getString("description"),
-//                                    dateUpdate
-//                            ));
-//
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
 
-//                }
 
             //CHIUSURA CONNESSIONE
             bufferedReader.close();
@@ -175,26 +151,11 @@ public class Activity_ChooseRole extends AppCompatActivity {
 
     }
 
+    private void startApp(int typeUser){
+        Intent intent = new Intent(this, Activity_Amministratore.class);
+        intent.putExtra("typeUser", typeUser+"");
+        startActivity(intent);
+    }
     //ANIMATIONS
-    private void startAmministratore(){
-        Intent intent = new Intent(this, Activity_Amministratore.class);
-        intent.putExtra("typeUser", ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE+"");
-        startActivity(intent);
-    }
-    private void startSupervisore(){
-        Intent intent = new Intent(this, Activity_Amministratore.class);
-        intent.putExtra("typeUser", ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE+"");
-        startActivity(intent);
-    }
-    private void startChef(){
-        Intent intent = new Intent(this, Activity_Amministratore.class);
-        intent.putExtra("typeUser", ControlMapper.INDEX_TYPE_CONTROLLER_CHEF+"");
-        startActivity(intent);
-    }
-    private void startCameriere(){
-        Intent intent = new Intent(this, Activity_Amministratore.class);
-        intent.putExtra("typeUser", ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE+"");
-        startActivity(intent);
-    }
 
 }

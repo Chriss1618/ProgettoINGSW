@@ -118,11 +118,10 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     @Override
     public void SetDataOnLayout() {
         initCategoryRV();
-        initDialog();
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener        .setOnClickItemAdapterListener( this::onClickCategory );
+        RecycleEventListener        .setOnClickItemAdapterListener( (item)-> onClickCategory( (CategoriaMenu)item ) );
         RecycleEventListener        .setOnClickItemOptionAdapterListener( this::onClickDeleteCategory );
         Image_View_AddCategory      .setOnClickListener(view -> onClickAddCategory());
         Image_View_DeleteCategory   .setOnClickListener(view -> onClickDeleteCategories());
@@ -154,9 +153,6 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         checkEmptyRecycle();
 
     }
-    private void initDialog(){
-
-    }
 
     private void checkEmptyRecycle(){
         if(ListCategoryMenu.isEmpty()) {
@@ -173,9 +169,9 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         manager.HandleAction(action);
     }
 
-    private void onClickCategory(String Category){
+    private void onClickCategory(CategoriaMenu Category){
         manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
-        Action action = new Action(ActionsListCategory.INDEX_ACTION_OPEN_LIST_PRODUCTS, Category,manager,manager.getSourceInfo());
+        Action action = new Action(ActionsListCategory.INDEX_ACTION_OPEN_LIST_PRODUCTS, Category,manager,this::EndAnimations,manager.getSourceInfo());
         SendAction(action);
     }
 
@@ -203,6 +199,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         SendAction(action);
     }
 
+    //FUNCTIONAL *********************************************************************
     private void deleteItemFromRecycle(Integer id_category){
         for(int indexItem = 0; indexItem < ListCategoryMenu.size() ; indexItem++){
             if(ListCategoryMenu.get(indexItem).getID_categoria() == id_category){
@@ -214,8 +211,6 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
     }
 
-
-    //FUNCTIONAL *********************************************************************
     private void ShowDialogNewCategory(){
         DialogNewCategory dialogNewCategory = new DialogNewCategory();
         dialogNewCategory.showDialogNewCategory();
@@ -343,6 +338,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.requireView().getWindowToken(), 0);
     }
+
     //ANIMATIONS
     @Override
     public void StartAnimations(){

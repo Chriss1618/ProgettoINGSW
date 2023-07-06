@@ -105,7 +105,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         Recycler_Products.setAdapter(adapter_product);
     }
     //ACTIONS
-    private void onClickProduct(String Product){
+    private void onClickProduct(Object Product){
         Log.d(TAG, "PreparerData: Hai premuto l'item->"+Product);
         EndAnimations();
     }

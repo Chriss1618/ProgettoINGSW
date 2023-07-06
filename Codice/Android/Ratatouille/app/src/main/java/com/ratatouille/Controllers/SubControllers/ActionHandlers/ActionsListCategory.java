@@ -31,10 +31,10 @@ public class ActionsListCategory extends ActionsViewHandler{
     private static class OpenListProducts_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
-            String categoria = (String) action.getData();
+            CategoriaMenu categoria = (CategoriaMenu) action.getData();
 
-            Log.d(TAG, "handleAction: GetCategorieActionHandler->"+ categoria);
-
+            Log.d(TAG, "handleAction: GetCategorieActionHandler->"+ categoria.getNomeCategoria());
+            action.callBack();
             action.getManager().changeOnMain(ControlMapper.INDEX_MENU_LIST_PRODUCTS,categoria);
         }
     }

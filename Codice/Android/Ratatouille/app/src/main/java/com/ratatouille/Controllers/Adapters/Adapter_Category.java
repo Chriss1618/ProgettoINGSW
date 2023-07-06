@@ -88,7 +88,9 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
 
     //LAYOUT
     private void initializeLayout(final int position,ViewHolder holder){
-        this.Holder.Text_View_titoloCategory.setText(TitleCategories.get(position).getNomeCategoria());
+        String nomeCategoria = TitleCategories.get(position).getNomeCategoria().substring(0, 1).toUpperCase();
+        nomeCategoria += TitleCategories.get(position).getNomeCategoria().substring(1);
+        this.Holder.Text_View_titoloCategory.setText(nomeCategoria);
         if(showDeleting){
             holder.Image_View_delete_element.setVisibility(View.VISIBLE);
             holder.Image_View_delete_element.startAnimation(Manager_Animation.getFadeInZoom(200));
@@ -102,10 +104,10 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
     //ACTIONS
     private void clickCategory(final int position, ViewHolder holder){
         Log.d(TAG, "Premuto in Category-------------------");
-        Log.d(TAG, " Holder: "  + this.Holder.Text_View_titoloCategory.getText().toString());
+        Log.d(TAG, " Holder: "  + holder.Text_View_titoloCategory.getText().toString());
         Log.d(TAG, " Array: "   + this.TitleCategories.get(position));
         Log.d(TAG, "--------------------------------------");
-        RecycleEventListener.onClickItem(TitleCategories.get(position).getNomeCategoria());
+        RecycleEventListener.onClickItem(TitleCategories.get(position));
     }
 
     private void clickDeleteCategory(int position, ViewHolder holder){

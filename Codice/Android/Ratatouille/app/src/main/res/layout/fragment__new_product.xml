@@ -85,7 +85,7 @@
                             android:layout_marginTop="16dp">
 
                             <ImageView
-                                android:id="@+id/image_view_account"
+                                android:id="@+id/image_view_add_from_gallery"
                                 android:layout_width="45dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center"

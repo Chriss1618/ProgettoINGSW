@@ -100,7 +100,7 @@ public class Fragment_ListTables extends Fragment implements ViewLayout {
     }
 
     //ACTIONS
-    private void onClickTable(String table){
+    private void onClickTable(Object table){
         Log.d(TAG, "PreparerData: Hai premuto l'item->"+table);
         EndAnimations();
     }

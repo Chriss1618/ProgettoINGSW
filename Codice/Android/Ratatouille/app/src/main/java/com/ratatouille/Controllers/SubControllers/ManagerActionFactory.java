@@ -4,6 +4,7 @@ import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsViewHandler;
 import com.ratatouille.Models.Events.Action.Action;
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +20,7 @@ public class ManagerActionFactory {
         //MENU
         classMap.put(ControlMapper.INDEX_MENU_LIST_CATEGORY,  ActionsListCategory.class);
         classMap.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS,  ActionsListProducts.class);
-//        classMap.put(ControlMapper.INDEX_MENU_INFO_PRODUCT,  MenuViewFactory.class);
+        classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,  ActionsNewProduct.class);
 //        classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,  MenuViewFactory.class);
 //        classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,  MenuViewFactory.class);
 

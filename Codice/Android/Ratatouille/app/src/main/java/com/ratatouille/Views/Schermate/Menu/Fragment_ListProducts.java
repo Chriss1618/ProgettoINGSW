@@ -14,7 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Controllers.Adapters.Adapter_Product;
+import com.ratatouille.Controllers.ControlMapper;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.CategoriaMenu;
+import com.ratatouille.Models.Entity.Product;
+import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
@@ -36,11 +41,12 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private ImageView       ImageView_Back;
     //FUNCTIONAL
     private RecycleEventListener            RecycleEventListener;
-    Manager manager;
+    private final Manager                   manager;
     private Adapter_Product                 adapter_product;
     private boolean                         isDeleting;
     //DATA
     private ArrayList<String>   TitleProducts;
+    private CategoriaMenu       Categoria;
     private String              Category_Name;
 
     //OTHER...
@@ -54,11 +60,11 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            Category_Name = getArguments().getString(CATEGORY_TAG);
+        if (manager.getData() != null) {
+            Categoria = (CategoriaMenu) manager.getData();
         }
-        Log.d(TAG, "onCreate: category passed:"+ Category_Name);
-
+        Log.d(TAG, "onCreate: category passed:"+ Categoria.getID_categoria());
+        Category_Name = Categoria.getNomeCategoria();
         RecycleEventListener = new RecycleEventListener();
     }
 
@@ -112,7 +118,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener    .setOnClickItemAdapterListener( this::onClickProduct );
+        RecycleEventListener    .setOnClickItemAdapterListener((item)-> onClickProduct( (Product)item ) );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
         ImageView_Back          .setOnClickListener(            view -> manager.closeView());
@@ -129,12 +135,18 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     }
 
     //ACTIONS *************************************************************************
-    public void onClickProduct(String Product){
-        Log.d(TAG, "PreparerData: Hai premuto l'item->"+Product);
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
+
+    public void onClickProduct(Product product){
+        //Log.d(TAG, "PreparerData: Hai premuto l'item->"+product);
         toProductAnimations();
     }
     private void onClickAddProduct(){
-        toProductAnimations();
+        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_PRODUCTS);
+        Action action = new Action(ActionsListProducts.INDEX_ACTION_OPEN_NEW_PRODUCT,Categoria,manager,this::toProductAnimations,manager.getSourceInfo());
+        SendAction(action);
     }
     private void onClickDeleteMember(){
         if(isDeleting){

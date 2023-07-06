@@ -128,7 +128,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     }
 
     //ACTIONS
-    private void onClickProduct(String product) {
+    private void onClickProduct(Object product) {
         EndAnimations();
     }
     private void onClickNewProduct(){

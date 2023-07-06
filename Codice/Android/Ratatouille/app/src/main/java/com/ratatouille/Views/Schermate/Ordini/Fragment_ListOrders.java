@@ -107,7 +107,7 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
     }
 
     //ACTIONS
-    private void onClickTable(String table){
+    private void onClickTable(Object table){
         EndAnimations();
     }
     private void onHistoryClick(){

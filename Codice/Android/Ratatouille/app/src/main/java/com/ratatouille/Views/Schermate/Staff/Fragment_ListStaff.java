@@ -115,7 +115,7 @@ public class Fragment_ListStaff extends Fragment implements ViewLayout {
     //FUNCTIONAL
 
     //ACTION
-    private void onClickStaffMember(String StaffMember){
+    private void onClickStaffMember(Object StaffMember){
         Log.d(TAG, "Ricevuto da Listener->"+StaffMember);
 
     }

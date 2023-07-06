@@ -41,6 +41,7 @@ public class Manager implements SubController {
     public int    from;
 
     //DATA
+    private Object data;
 
     public Manager(SourceInfo sourceInfo,Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Log.d(TAG, "Manager: Costruttore");
@@ -65,6 +66,7 @@ public class Manager implements SubController {
     public SourceInfo getSourceInfo() {
         return sourceInfo;
     }
+    public Object getData(){ return data;}
 
     private void addViews(){
         for (int indexView : LIST_INDEX_VIEW)
@@ -102,8 +104,8 @@ public class Manager implements SubController {
     }
 
     @Override
-    public void changeOnMain(int indexMain, String msg) {
-        closeView();
+    public void changeOnMain(int indexMain, Object msg) {
+        //closeView();
         final Handler handler = new Handler();
         handler.postDelayed(()->
                         showView(indexMain,msg),
@@ -120,13 +122,10 @@ public class Manager implements SubController {
         onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));
     }
 
-    public void showView(int indexFragment, String msg){
+    public void showView(int indexFragment, Object msg){
         from = onMain;
         onMain = indexFragment;
-        Bundle arguments = new Bundle();
-        arguments.putString("stringToPass", msg);
-        ((Fragment) Views.get(indexFragment) ).setArguments(arguments);
-
+        data = msg;
         if( indexFragment == MAIN ) loadFragmentAsMain( LIST_INDEX_VIEW[indexFragment] );
         else loadFragmentAsNormal( LIST_INDEX_VIEW[indexFragment] );
     }

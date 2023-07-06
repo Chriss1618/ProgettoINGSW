@@ -118,7 +118,7 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
 
     }
     //ACTIONS
-    private void onClickCategory(String Category){
+    private void onClickCategory(Object Category){
         Log.d(TAG, "Ricevuto da Listener->"+Category);
         EndAnimations();
     }

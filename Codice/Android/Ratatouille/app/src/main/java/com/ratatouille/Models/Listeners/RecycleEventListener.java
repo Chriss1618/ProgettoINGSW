@@ -3,7 +3,7 @@ package com.ratatouille.Models.Listeners;
 public class RecycleEventListener {
     //INTERFACE
     public interface onClickItemAdapterListener {
-        void onClickItem(String ItemName);
+        void onClickItem(Object Item);
     }
     public interface onCheckItemAdapterListener {
         void onCheckItem(String ItemName, Boolean flag);
@@ -37,7 +37,7 @@ public class RecycleEventListener {
     }
 
     //Methods
-    public void onClickItem(String ItemName){
+    public void onClickItem(Object ItemName){
         if(AdapterListener != null ){
             AdapterListener.onClickItem(ItemName);
         }
