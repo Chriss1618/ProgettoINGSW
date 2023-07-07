@@ -1,8 +1,20 @@
 package com.ratatouille.Views.Schermate.Menu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -10,18 +22,29 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.jcraft.jsch.SftpException;
+import com.ratatouille.Models.API.Rest.EndPointer;
+import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
+import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //SYSTEM
@@ -41,6 +64,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
     //DATA
     private CategoriaMenu Categoria;
+    private Product         NewProduct;
     //OTHER...
 
     public Fragment_NewProduct(Manager manager_MenuFragments,int a) {
@@ -73,7 +97,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //DATA
     @Override
     public void PrepareData() {
-
+        NewProduct = new Product();
     }
 
     //LAYOUT
@@ -111,6 +135,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         resultLauncher.launch(intent);
     }
+
+
     //*******************************
 
     //FUNCTIONAL *********************
@@ -120,11 +146,52 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
                 if(result.getData() != null) {
                     Uri imgUri = result.getData().getData();
                     ImageView_ProductImage.setImageURI(imgUri);
+                    NewProduct.setUriImageProduct(imgUri);
+                    sendPhoto();
                 }
             }catch (Exception e) {
                 Log.e(TAG, "setResultLauncher: No ImageSelected",e );
             }
         });
+    }
+
+    public Bitmap getBitmapFromUri(Uri uri) {
+        try {
+            InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void sendPhoto(){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Bitmap bitmapProduct = getBitmapFromUri(NewProduct.getUriImageProduct());
+        bitmapProduct.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        String  base64ImageProduct = Base64.encodeToString(bytes,Base64.DEFAULT);
+        sendNewProductToServer(base64ImageProduct);
+
+    }
+    private void sendNewProductToServer(String image){
+        Uri.Builder dataToSend = new Uri.Builder()
+                .appendQueryParameter("image", image);
+        String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Product.php";
+
+        try {
+            JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
+            if( Msg != null ){
+                Log.d(TAG, "sendNewProductToServer: MSG");
+            }else{
+                Log.d(TAG, "sendNewProductToServer: false");
+            }
+        }catch (Exception e){
+            Log.e(TAG, "getDataFromServer: ",e);
+        }
+        Log.d(TAG, "sendNewProductToServer: true");
     }
     //********************************
     //ANIMATIONS

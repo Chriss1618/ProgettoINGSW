@@ -77,7 +77,6 @@ public class ActionsListCategory extends ActionsViewHandler{
                                 Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
                         );
                     }
-
                 }else{
                     Log.d(TAG, "sendNewCategoryToServer: false");
                     return false;
@@ -87,8 +86,6 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
             Log.d(TAG, "sendNewCategoryToServer: true");
             return true;
-
-
         }
     }
     private static class DeleteCategory_ActionHandler implements ActionHandler {
