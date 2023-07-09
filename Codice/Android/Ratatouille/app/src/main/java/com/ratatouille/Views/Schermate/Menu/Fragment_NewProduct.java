@@ -5,22 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -28,8 +17,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import com.jcraft.jsch.SftpException;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Animation.Manager_Animation;
@@ -39,10 +26,7 @@ import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -57,7 +41,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     LinearLayout        LinearLayout_Buttons;
     ImageView           ImageView_AddFromGallery;
     ImageView           ImageView_ProductImage;
-
+    CardView            CardView_AddNewProduct;
     //FUNCTIONAL
     private Manager manager;
     private ActivityResultLauncher<Intent> resultLauncher;
@@ -115,6 +99,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         LinearLayout_Buttons        = View_Fragment.findViewById(R.id.linear_layout_buttons);
         ImageView_AddFromGallery    = View_Fragment.findViewById(R.id.image_view_add_from_gallery);
         ImageView_ProductImage      = View_Fragment.findViewById(R.id.image_view_product);
+        CardView_AddNewProduct      = View_Fragment.findViewById(R.id.card_view_aggiungi);
     }
 
     @Override
@@ -147,6 +132,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
                     Uri imgUri = result.getData().getData();
                     ImageView_ProductImage.setImageURI(imgUri);
                     NewProduct.setUriImageProduct(imgUri);
+                    NewProduct.setID_category(Categoria.getID_categoria());
                     sendPhoto();
                 }
             }catch (Exception e) {
