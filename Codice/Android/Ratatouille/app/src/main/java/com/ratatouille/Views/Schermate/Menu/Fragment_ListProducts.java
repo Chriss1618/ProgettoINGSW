@@ -135,11 +135,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     }
 
     //ACTIONS *************************************************************************
-    private void SendAction(Action action){
-        manager.HandleAction(action);
-    }
-
-    public void onClickProduct(Product product){
+    private void onClickProduct(Product product){
         //Log.d(TAG, "PreparerData: Hai premuto l'item->"+product);
         toProductAnimations();
     }
@@ -159,6 +155,9 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     }
 
     //FUNCTIONAL
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
 
     //ANIMATIONS
     @Override

@@ -21,7 +21,6 @@ public class Product {
     public int getID_product() {
         return ID_product;
     }
-
     public void setID_product(int ID_product) {
         this.ID_product = ID_product;
     }
@@ -29,7 +28,6 @@ public class Product {
     public int getID_category() {
         return ID_category;
     }
-
     public void setID_category(int ID_category) {
         this.ID_category = ID_category;
     }
@@ -37,7 +35,6 @@ public class Product {
     public String getURLImageProduct() {
         return URLImageProduct;
     }
-
     public void setURLImageProduct(String URLImageProduct) {
         this.URLImageProduct = URLImageProduct;
     }
@@ -45,7 +42,6 @@ public class Product {
     public Uri getUriImageProduct() {
         return UriImageProduct;
     }
-
     public void setUriImageProduct(Uri uriImageProduct) {
         UriImageProduct = uriImageProduct;
     }
@@ -53,7 +49,6 @@ public class Product {
     public String getNameProduct() {
         return NameProduct;
     }
-
     public void setNameProduct(String nameProduct) {
         NameProduct = nameProduct;
     }
@@ -61,7 +56,6 @@ public class Product {
     public float getPriceProduct() {
         return PriceProduct;
     }
-
     public void setPriceProduct(float priceProduct) {
         PriceProduct = priceProduct;
     }
@@ -69,7 +63,6 @@ public class Product {
     public String getDescriptionProduct() {
         return DescriptionProduct;
     }
-
     public void setDescriptionProduct(String descriptionProduct) {
         DescriptionProduct = descriptionProduct;
     }
@@ -77,7 +70,6 @@ public class Product {
     public String getAllergeniProduct() {
         return AllergeniProduct;
     }
-
     public void setAllergeniProduct(String allergeniProduct) {
         AllergeniProduct = allergeniProduct;
     }
@@ -85,7 +77,6 @@ public class Product {
     public boolean isSendToKitchen() {
         return isSendToKitchen;
     }
-
     public void setSendToKitchen(boolean sendToKitchen) {
         isSendToKitchen = sendToKitchen;
     }

@@ -61,7 +61,8 @@ public class ActionsListCategory extends ActionsViewHandler{
 
 
         private boolean sendNewCategoryToServer(String newCategory){
-            Uri.Builder dataToSend = new Uri.Builder().appendQueryParameter("id_ristorante", "1")
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("id_ristorante", "1")
                     .appendQueryParameter("NameCategory",newCategory);
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/CategoriaMenu.php";
 

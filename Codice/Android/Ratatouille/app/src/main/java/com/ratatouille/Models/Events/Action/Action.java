@@ -10,6 +10,10 @@ public class Action {
     private final Object Data;
     private  FunctionCallBackAction functionCallBack = null;
     private  FunctionCallBackAction2 functionCallBack2 = null;
+
+
+
+
     public interface FunctionCallBackAction{
         void execute();
     }

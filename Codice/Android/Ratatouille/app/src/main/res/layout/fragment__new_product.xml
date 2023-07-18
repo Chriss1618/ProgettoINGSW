@@ -169,6 +169,17 @@
 
                                 android:textCursorDrawable="@color/MainColor"
                                 android:textSize="19sp" />
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/warning_NameProduct"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                                android:text="Campo non corretto !"
+                                android:layout_gravity="center_horizontal"
+                                android:textSize="15sp"
+                                android:textColor="@color/red"
+                                app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -243,7 +254,7 @@
                                     android:inputType="textEmailAddress"
                                     android:text=""
 
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/MainColor"
                                     android:textColorHint="@color/MainColor"
                                     android:textColorLink="@color/MainColor"
 
@@ -251,11 +262,21 @@
                                     android:textSize="19dp" />
 
                             </LinearLayout>
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/warning_PriceProduct"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                                android:text="Campo non corretto !"
+                                android:layout_gravity="center_horizontal"
+                                android:textSize="15sp"
+                                android:textColor="@color/red"
+                                app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
 
                         </LinearLayout>
 
                     </LinearLayout>
-
 
                     <TextView
                         android:layout_width="match_parent"
@@ -287,6 +308,17 @@
 
                         android:textColorLink="@color/MainColor"
                         android:textCursorDrawable="@color/MainColor" />
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/warning_DescrizioneProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                        android:text="Campo non corretto !"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="15sp"
+                        android:textColor="@color/red"
+                        app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -318,7 +350,6 @@
 
                         android:textColorLink="@color/MainColor"
                         android:textCursorDrawable="@color/MainColor" />
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -392,7 +423,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switch1"
+                        android:id="@+id/switch_sendToKitchen"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

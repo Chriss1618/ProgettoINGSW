@@ -5,11 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import com.ratatouille.Models.API.Rest.EndPointer;
+import com.ratatouille.Models.API.Rest.ServerCommunication;
+import com.ratatouille.Models.Entity.CategoriaMenu;
+import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -24,10 +32,11 @@ public class ActionsNewProduct extends ActionsViewHandler{
 
     public ActionsNewProduct(){
         actionHandlerMap = new HashMap<>();
-        actionHandlerMap.put(INDEX_ACTION_ADD_FROM_GALLERY, new OpenProductInfo_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_ADD_FROM_GALLERY, new OpenGallery_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_CREATE_PRODUCT, new CreateProduct_ActionHandler());
     }
 
-    private static class OpenProductInfo_ActionHandler implements ActionHandler{
+    private static class OpenGallery_ActionHandler implements ActionHandler{
 
         @Override
         public void handleAction(Action action) {
@@ -40,6 +49,19 @@ public class ActionsNewProduct extends ActionsViewHandler{
             }
 
         }
+
     }
+
+    private static class CreateProduct_ActionHandler implements ActionHandler{
+
+        @Override
+        public void handleAction(Action action) {
+            Product NewProduct = (Product) action.getData();
+
+
+
+        }
+    }
+
 
 }
