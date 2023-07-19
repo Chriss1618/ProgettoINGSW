@@ -63,4 +63,8 @@ dependencies {
 
     //net
     implementation 'com.jcraft:jsch:0.1.55'
+
+    //compact trycatch
+    implementation 'io.vavr:vavr:0.10.4'
+    //implementation 'org.jooq:jool:0.9.13'
 }

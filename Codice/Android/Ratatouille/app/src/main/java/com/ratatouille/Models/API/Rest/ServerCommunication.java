@@ -28,29 +28,25 @@ public class ServerCommunication {
         this.dataToSend = dataToSend;
         this.url = url;
 
-        Thread thread = new Thread(this::getDataFromServer);
-
-        thread.start();
-        while(thread.isAlive()) {}
+        startCommunication();
 
         return jsonArray;
     }
 
-    private void getDataFromServer(){
+    private void startCommunication(){
         try {
+
             conn = startConnectionWithServer();
-
-            sendDataToServer();
-
+            sendRequestToServer();
             JSONObject json_data = getResponseFromServer() ;
+            conn.disconnect();
 
             Log.d(TAG, "getDataFromServer: response Server ->"+json_data);
+            Log.d(TAG, "getDataFromServer: Status -> "+json_data.getString("status"));
+
             //Salvataggio messaggio ricevuto
             jsonArray = new JSONArray( json_data.getString("msg") );
-            if(json_data.getString("status").equals("0")){
-                return ;
-            }
-            conn.disconnect();
+
         } catch (Exception e) {
             Log.d(TAG, "getDataFromServer: Errore di Comunicazione con il BeckEnd");
             e.printStackTrace();
@@ -67,7 +63,7 @@ public class ServerCommunication {
         return conn;
     }
 
-    private void sendDataToServer() throws Exception{
+    private void sendRequestToServer() throws Exception{
         String data = dataToSend.build().getEncodedQuery();
         OutputStream os = conn.getOutputStream();
         BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, StandardCharsets.UTF_8));

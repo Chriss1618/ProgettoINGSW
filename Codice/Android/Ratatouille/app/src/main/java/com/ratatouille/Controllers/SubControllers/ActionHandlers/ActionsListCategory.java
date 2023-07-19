@@ -19,7 +19,8 @@ public class ActionsListCategory extends ActionsViewHandler{
     public final static int INDEX_ACTION_SHOW_ADD_CATEGORY      = 1;
     public final static int INDEX_ACTION_ADD_CATEGORY           = 2;
     public final static int INDEX_ACTION_REMOVE_CATEGORY        = 3;
-    public ActionsListCategory() {
+
+    public ActionsListCategory(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_OPEN_LIST_PRODUCTS,   new OpenListProducts_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_SHOW_ADD_CATEGORY,   new showAddNewCategory_ActionHandler());

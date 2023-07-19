@@ -4,13 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
+import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.R;
+import com.ratatouille.Views.Schermate.Login.Activity_Login;
+
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -21,6 +31,10 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
 
 public class Activity_ChooseRole extends AppCompatActivity {
     //SYSTEM
@@ -32,6 +46,10 @@ public class Activity_ChooseRole extends AppCompatActivity {
     Button  Button_Chef;
     Button  Button_Cameriere;
 
+    ImageView ImageView_Logo;
+    LinearLayout Background;
+    //DATA
+    int numGiri = 0;
     //FUNCTIONAL
 
     //OTHER...
@@ -56,12 +74,30 @@ public class Activity_ChooseRole extends AppCompatActivity {
         LinkLayout();
         SetDataOnLayout();
         SetActionsOfLayout();
+
+        new Thread(this::rotateAnimationLogo).start();
+
+        new Thread(() ->{
+            Try.run(() -> TimeUnit.SECONDS.sleep(3));
+            runOnUiThread(() -> {
+                ImageView_Logo.animate().alpha(0f).setDuration(300).start();
+                Background.setVisibility(View.VISIBLE);
+                Background.startAnimation(Manager_Animation.getCircleReveal());
+            });
+            Try.run(() -> TimeUnit.MILLISECONDS.sleep(300));
+            //startLogin();
+            startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE);
+        }).start();
+
     }
     private void LinkLayout() {
         Button_Amministratore   = findViewById(R.id.button_amministratore);
         Button_Supervisore      = findViewById(R.id.button_supervisore);
         Button_Chef             = findViewById(R.id.button_chef);
         Button_Cameriere        = findViewById(R.id.button_cameriere);
+
+        ImageView_Logo          = findViewById(R.id.image_view_logo);
+        Background              = findViewById(R.id.background);
     }
     private void SetDataOnLayout() {
 
@@ -71,9 +107,13 @@ public class Activity_ChooseRole extends AppCompatActivity {
         Button_Amministratore   .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE));
         Button_Supervisore      .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE));
         Button_Chef             .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CHEF));
-        Button_Cameriere        .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE));
+//        Button_Cameriere        .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE));
+        Button_Cameriere        .setOnClickListener(view -> startLogin());
     }
-
+    private void startLogin(){
+        Intent intent = new Intent(this, Activity_Login.class);
+        startActivity(intent);
+    }
     private void setToken(){
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (! task.isSuccessful() ) {
@@ -147,6 +187,7 @@ public class Activity_ChooseRole extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void getData(){
 
     }
@@ -158,4 +199,13 @@ public class Activity_ChooseRole extends AppCompatActivity {
     }
     //ANIMATIONS
 
+    private void rotateAnimationLogo()  {
+        rotation(820);
+        while(true) rotation( numGiri++ % 2 == 0 ? -420 : 420 );
+    }
+
+    private void rotation(int speed){
+        runOnUiThread(() -> ImageView_Logo.animate().rotation(speed).setDuration(10000).start());
+        Try.run(() -> Thread.sleep(5000) );
+    }
 }

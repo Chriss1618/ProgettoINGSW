@@ -166,11 +166,12 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     private void onClickAddNewProduct(){
         if(getAllInputs()){
             Log.d(TAG, "onClickAddNewProduct: All Inputs are OK");
+            NewProduct.setID_category(Categoria.getID_categoria());
             manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_NEW_PRODUCT);
             Action action = new Action(ActionsNewProduct.INDEX_ACTION_CREATE_PRODUCT,
                     NewProduct,
                     manager,
-                    (isValid)->ShowPopUp( (boolean)isValid ),
+                    (isInserted)->ShowPopUp( (boolean)isInserted ),
                     manager.getSourceInfo());
             sendAction(action);
 
@@ -183,8 +184,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
 
     //FUNCTIONAL *********************
-    private void ShowPopUp(boolean isSaved){
-
+    private void ShowPopUp(boolean isInserted){
+        Log.d(TAG, "ShowPopUp: Product isInserted->"+ isInserted);
     }
 
     private void sendAction(Action action){
@@ -200,7 +201,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
                     ImageView_ProductImage.setImageURI(imgUri);
 
                     NewProduct.setUriImageProduct(imgUri);
-                    NewProduct.setID_category(Categoria.getID_categoria());
+
 
                     sendPhoto();
                 }

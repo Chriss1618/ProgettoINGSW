@@ -30,6 +30,7 @@ public class ManagerActionFactory {
     }
 
     public void handleAction(Action action){
+
         try{
              Objects.requireNonNull(classMap.get(action.getSourceInfo().getIndex_TypeView()))
                     .getConstructor()

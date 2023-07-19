@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class ActionsViewHandler {
     Map<Integer, ActionHandler> actionHandlerMap = null;
+    protected Action action ;
 
     public void handleAction(Action action){
         ActionHandler handler = actionHandlerMap.get(action.getActionType());

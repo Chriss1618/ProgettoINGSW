@@ -1,13 +1,22 @@
 package com.ratatouille.Models.Entity;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Product {
     private int ID_product;
     private int ID_category;
 
     private String URLImageProduct;
-    private Uri UriImageProduct;
+    private String DataImageProduct;
+    private Uri UriImageProduct = null;
 
     private String NameProduct;
     private float PriceProduct;
@@ -45,6 +54,35 @@ public class Product {
     public void setUriImageProduct(Uri uriImageProduct) {
         UriImageProduct = uriImageProduct;
     }
+
+    public String getDataImageProduct() {
+        return DataImageProduct;
+    }
+    public String getDataFromUriProduct(Context context){
+        if( UriImageProduct == null ) return null;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Bitmap bitmapProduct = getBitmapFromUri(this.getUriImageProduct(),context);
+        if(bitmapProduct != null){
+            bitmapProduct.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            return Base64.encodeToString(byteArrayOutputStream.toByteArray() , Base64.DEFAULT);
+        }else return null;
+    }
+
+    private  Bitmap getBitmapFromUri(Uri uri, Context context) {
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public void setDataImageProduct(String dataImageProduct) {
+        DataImageProduct = dataImageProduct;
+    }
+
 
     public String getNameProduct() {
         return NameProduct;

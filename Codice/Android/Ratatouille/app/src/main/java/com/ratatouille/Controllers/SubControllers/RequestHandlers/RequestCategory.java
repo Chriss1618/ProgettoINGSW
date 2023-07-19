@@ -9,6 +9,7 @@ import com.ratatouille.Models.API.Rest.ServerCommunication;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class RequestCategory implements RequestHandler {
 
@@ -16,8 +17,7 @@ public class RequestCategory implements RequestHandler {
     private static final String TAG = "RequestCategory";
 
     //DATA
-    private ArrayList<CategoriaMenu> ListCategoryMenu;
-
+    protected ArrayList<CategoriaMenu> ListCategoryMenu;
 
     private void setCategories(JSONArray Msg) throws org.json.JSONException{
         if( Msg != null ){
@@ -32,23 +32,23 @@ public class RequestCategory implements RequestHandler {
             }
         }
     }
-
-    private ArrayList<CategoriaMenu> getCategoriesFromServer(){
+    private void getCategoriesFromServer(Request request){
         Uri.Builder dataToSend  = new Uri.Builder().appendQueryParameter("id_ristorante", "1");
         String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/CategoriaMenu.php";
-
         try {
             JSONArray Json_Categories = new ServerCommunication().getData( dataToSend, url);
             setCategories( Json_Categories );
+            TimeUnit.SECONDS.sleep(1);
+            request.callBack(ListCategoryMenu);
         }catch ( Exception e ){
             Log.e(TAG, "getDataFromServer: ",e);
         }
-        return ListCategoryMenu;
+
     }
+
 
     @Override
     public void handleRequest(Request request) {
-        getCategoriesFromServer();
-        request.callBack(ListCategoryMenu);
+        getCategoriesFromServer(request);
     }
 }

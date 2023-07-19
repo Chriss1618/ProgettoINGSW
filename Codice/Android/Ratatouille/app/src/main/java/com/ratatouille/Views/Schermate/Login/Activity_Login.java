@@ -103,8 +103,13 @@ public class Activity_Login extends AppCompatActivity {
     }
 
     public void RotateLogo(){
+
+        Image_View_Logo.animate().rotation(360).setDuration(2000).start();
         Image_View_Logo.animate().alpha(0f).setDuration(0).start();
-        Image_View_Logo.animate().rotation(180).setDuration(1000).alpha(1f).start();
+        Image_View_Logo.animate().alpha(1f).setDuration(500).start();
+        Image_View_Logo.startAnimation(Manager_Animation.getTranslationINfromUp(700));
+
+
     }
 
     //ACTIONS

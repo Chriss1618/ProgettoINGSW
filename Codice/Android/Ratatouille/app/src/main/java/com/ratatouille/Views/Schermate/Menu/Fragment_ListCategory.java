@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_Category;
 import com.ratatouille.Controllers.ControlMapper;
@@ -32,6 +33,7 @@ import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.R;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Fragment_ListCategory extends Fragment implements ViewLayout {
     //SYSTEM
@@ -47,7 +49,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     private ImageView       Image_View_DeleteCategory;
     private TextView        Text_View_Empty;
     private EditText        EditText_SearchCategory;
-
+    private ProgressBar     ProgressBar;
 
     //FUNCTIONAL
     private final Manager           manager;
@@ -68,14 +70,14 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RecycleEventListener    = new RecycleEventListener();
-
         ListCategoryMenu = new ArrayList<>();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View_fragment = inflater.inflate(R.layout.fragment__list_category, container, false);
-        PrepareData();
+
         PrepareLayout();
+        PrepareData();
 
         StartAnimations();
 
@@ -85,6 +87,8 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     //DATA *****************************************************************************
     @Override
     public void PrepareData(){
+        ProgressBar.setVisibility(View.VISIBLE);
+        Recycler_Categories.setVisibility(View.GONE);
         sendRequest();
     }
 
@@ -92,8 +96,19 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
         @SuppressWarnings("unchecked")
         Request request = new Request(manager.getSourceInfo(), null, ManagerRequestFactory.INDEX_REQUEST_CATEGORY,
-                (list)-> ListCategoryMenu = (ArrayList<CategoriaMenu>)list );
+                (list)->{
+                    requireActivity().runOnUiThread(() -> {
+                        ListCategoryMenu = (ArrayList<CategoriaMenu>)list;
+                        initCategoryRV();
+                        ProgressBar.setVisibility(View.GONE);
+                        Recycler_Categories.setVisibility(View.VISIBLE);
+                        StartAnimationCategories();
+                    });
+
+                });
         manager.HandleRequest(request);
+
+
     }
 
     //LAYOUT****************************************************************************
@@ -106,6 +121,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
+        ProgressBar                         = View_fragment.findViewById(R.id.progressbar);
         Text_View_TitleCategory             = View_fragment.findViewById(R.id.text_view_title_category);
         Image_View_AddCategory              = View_fragment.findViewById(R.id.ic_add_category);
         Image_View_DeleteCategory           = View_fragment.findViewById(R.id.ic_delete_category);
@@ -117,7 +133,6 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
     @Override
     public void SetDataOnLayout() {
-        initCategoryRV();
     }
     @Override
     public void SetActionsOfLayout() {
@@ -208,12 +223,14 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
                 break;
             }
         }
-
     }
 
     private void ShowDialogNewCategory(){
-        DialogNewCategory dialogNewCategory = new DialogNewCategory();
-        dialogNewCategory.showDialogNewCategory();
+        requireActivity().runOnUiThread(() -> {
+
+            DialogNewCategory dialogNewCategory = new DialogNewCategory();
+            dialogNewCategory.showDialogNewCategory();
+        });
     }
 
     private class DialogNewCategory{
@@ -344,12 +361,24 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     public void StartAnimations(){
         Text_View_TitleCategory.setText(R.string.Menu);
         Text_View_TitleCategory     .startAnimation(Manager_Animation.getTranslationINfromUp(600));
-        Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+
     }
     @Override
     public void EndAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         Recycler_Categories     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+    }
+
+    private void StartAnimationCategories(){
+        Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+    }
+
+    private void StartLoadingCategories(){
+
+    }
+
+    private void StopLoadingCategories(){
+
     }
 
 }

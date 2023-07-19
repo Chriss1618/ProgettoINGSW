@@ -22,7 +22,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class ActionsNewProduct extends ActionsViewHandler{
-
+    //SYSTEM
+    private static final String TAG = "ActionsNewProduct";
     //ACTIONS INDEX
     public final static int INDEX_ACTION_ADD_FROM_GALLERY       = 0;
     public final static int INDEX_ACTION_ADD_INGREDIENTI        = 1;
@@ -58,7 +59,43 @@ public class ActionsNewProduct extends ActionsViewHandler{
         public void handleAction(Action action) {
             Product NewProduct = (Product) action.getData();
 
+            Log.d(TAG, "handleAction: Prodotto Passato->"+ NewProduct.getNameProduct());
 
+            action.callBack(sendNewProductToServer(NewProduct,action.getManager().context));
+        }
+
+        private boolean sendNewProductToServer(Product newProduct,Context context){
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("id_ristorante", newProduct.getID_category()+"")
+                    .appendQueryParameter("NameProduct",newProduct.getNameProduct())
+                    .appendQueryParameter("ImageProduct",newProduct.getDataFromUriProduct(context))
+                    .appendQueryParameter("PrizeProduct",newProduct.getPriceProduct()+"")
+                    .appendQueryParameter("DescriptionProduct",newProduct.getDescriptionProduct())
+                    .appendQueryParameter("AllergeniProduct",newProduct.getAllergeniProduct())
+                    .appendQueryParameter("isSendToKitchen",newProduct.isSendToKitchen()+"");
+
+            String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Product.php";
+
+            try {
+                JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
+                if( Msg != null ){
+                    for(int i = 0 ; i<Msg.length(); i++){
+                        JSONObject Response_Json = new JSONObject(Msg.getString(i));
+                        Log.d(TAG, "sendNewProductToServer: End");
+//                        addedCategory = new CategoriaMenu(
+//                                Categoria_Json.getString("NomeCategoria"),
+//                                Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
+//                        );
+                    }
+                }else{
+                    Log.d(TAG, "sendNewProductToServer: false");
+                    return false;
+                }
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+            }
+            Log.d(TAG, "sendNewProductToServer: true");
+            return true;
 
         }
     }

@@ -3,6 +3,7 @@ package com.ratatouille.Controllers.SubControllers;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,9 @@ import com.ratatouille.Views.Schermate.Menu.MenuViewFactory;
 import com.ratatouille.Views.ViewFactory;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
 
 public class Manager implements SubController {
 
@@ -96,20 +100,18 @@ public class Manager implements SubController {
     }
 
     public void HandleAction(Action action){
-        ManagerAction.handleAction(action);
+        new Thread(() -> ManagerAction.handleAction(action) ).start();
     }
 
     public void HandleRequest(Request request){
-        ManagerRequest.handleRequest(request);
+        new Thread(() -> ManagerRequest.handleRequest(request) ).start();
     }
 
     @Override
     public void changeOnMain(int indexMain, Object msg) {
         //closeView();
-        final Handler handler = new Handler();
-        handler.postDelayed(()->
-                        showView(indexMain,msg),
-                300);
+        Try.run(() -> TimeUnit.MILLISECONDS.sleep(300));
+        showView(indexMain,msg);
     }
 
     @Override
