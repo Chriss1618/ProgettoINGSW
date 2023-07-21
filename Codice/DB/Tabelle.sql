@@ -14,6 +14,7 @@ CREATE TABLE Utente (
     Cognome VARCHAR(120) NOT NULL,
     Type_User VARCHAR(120) NOT NULL,
     Email VARCHAR(254) NOT NULL,
+    Password VARCHAR(254) NOT NULL,
     Token VARCHAR(254) NOT NULL,
     ID_Ristorante INTEGER NOT NULL,
 

@@ -18,6 +18,7 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
+import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
@@ -70,6 +71,7 @@ public class Activity_ChooseRole extends AppCompatActivity {
         getData();
         setToken();
     }
+
     private void PrepareLayout() {
         LinkLayout();
         SetDataOnLayout();
@@ -107,7 +109,7 @@ public class Activity_ChooseRole extends AppCompatActivity {
         Button_Amministratore   .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE));
         Button_Supervisore      .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE));
         Button_Chef             .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CHEF));
-//        Button_Cameriere        .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE));
+//      Button_Cameriere        .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE));
         Button_Cameriere        .setOnClickListener(view -> startLogin());
     }
     private void startLogin(){
@@ -128,9 +130,16 @@ public class Activity_ChooseRole extends AppCompatActivity {
             Uri.Builder dataToSend  = new Uri.Builder().appendQueryParameter("token", token);
             new ServerCommunication().getData(dataToSend,url);
         });
-
-
     }
+
+    private boolean AuthenticateUser(){
+        String TokenUser = (String) new LocalStorage(this).getData("TokenUser","String");
+        if( TokenUser == null) return false;
+        String url = EndPointer.StandardPath + EndPointer.
+        return true;
+    }
+
+
     //CONNECTION
     private void sendData(){
 //        Thread thread = new Thread(this::ComunicateBackEnd);
