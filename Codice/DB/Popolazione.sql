@@ -3,14 +3,14 @@ INSERT INTO `Ristorante`( `NameRistorante`, `AddressRistorante`, `Phone`, `Email
 VALUES ('Porzio','Via Medina 88','0818556787','porzio@porzio.it',1);
 
 /* Utente */
-INSERT INTO `Utente`( `Nome`, `Cognome`, `Type_User`, `Email`, `ID_Ristorante`) 
-VALUES ('Chris','Doarme','Amministratore','padrepio@gmail.com',1);
-INSERT INTO `Utente`( `Nome`, `Cognome`, `Type_User`,  `Email`, `ID_Ristorante`) 
-VALUES ('Piera','DiFusco','Supervisore','padrepio@gmail.com',1);
-INSERT INTO `Utente`( `Nome`, `Cognome`, `Type_User`,  `Email`, `ID_Ristorante`) 
-VALUES ('Daniele','Caiazo','Cameriere','padrepio@gmail.com',1);
-INSERT INTO `Utente`( `Nome`, `Cognome`, `Type_User`,  `Email`, `ID_Ristorante`) 
-VALUES ('Chiara','Sotira','Chef','padrepio@gmail.com',1);
+INSERT INTO `Utente`( `Nome`, `Cognome`, `Type_User`, `Email`,`Password`,`Token`, `ID_Ristorante`) 
+VALUES ('Chris','Doarme','Amministratore','padrepio@gmail.com','Password123','TOKEN_STRING',1);
+INSERT INTO `Utente`( `Nome`, `Cognome`, `Type_User`,  `Email`,`Password`,`Token`, `ID_Ristorante`) 
+VALUES ('Piera','DiFusco','Supervisore','padrepio@gmail.com','Password123','TOKEN_STRING',1);
+INSERT INTO `Utente`( `Nome`, `Cognome`, `Type_User`,  `Email`,`Password`,`Token`, `ID_Ristorante`) 
+VALUES ('Daniele','Caiazo','Cameriere','padrepio@gmail.com','Password123','TOKEN_STRING',1);
+INSERT INTO `Utente`( `Nome`, `Cognome`, `Type_User`,  `Email`,`Password`,`Token`, `ID_Ristorante`) 
+VALUES ('Chiara','Sotira','Chef','padrepio@gmail.com','Password123','TOKEN_STRING',1);
 
 /* Tavolo */
 INSERT INTO Tavolo(`Numero_tavolo`, `ID_Ristorante`) 
