@@ -65,6 +65,7 @@ public class ServerCommunication {
 
     private void sendRequestToServer() throws Exception{
         String data = dataToSend.build().getEncodedQuery();
+
         OutputStream os = conn.getOutputStream();
         BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, StandardCharsets.UTF_8));
         writer.write(data);

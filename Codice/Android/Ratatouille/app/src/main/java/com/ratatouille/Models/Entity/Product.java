@@ -67,6 +67,14 @@ public class Product {
             return Base64.encodeToString(byteArrayOutputStream.toByteArray() , Base64.DEFAULT);
         }else return null;
     }
+    public String getStringDataImage(Context context){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Bitmap bitmapProduct = getBitmapFromUri(this.UriImageProduct,context);
+        assert bitmapProduct != null;
+        bitmapProduct.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes,Base64.DEFAULT);
+    }
 
     private  Bitmap getBitmapFromUri(Uri uri, Context context) {
         try {

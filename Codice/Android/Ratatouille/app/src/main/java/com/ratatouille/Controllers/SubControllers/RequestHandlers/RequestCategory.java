@@ -17,7 +17,7 @@ public class RequestCategory implements RequestHandler {
     private static final String TAG = "RequestCategory";
 
     //DATA
-    protected ArrayList<CategoriaMenu> ListCategoryMenu = new ArrayList<>();
+    protected ArrayList<CategoriaMenu> ListCategoryMenu;
 
     private void setCategories(JSONObject BodyJSON) throws org.json.JSONException{
         JSONArray CategorieJSON = new JSONArray(BodyJSON.getString("DATA"));
@@ -36,6 +36,7 @@ public class RequestCategory implements RequestHandler {
         String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/CategoriaMenu.php";
         try {
             JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+            ListCategoryMenu = new ArrayList<>();
             if( BodyJSON != null ) setCategories( BodyJSON );
             TimeUnit.SECONDS.sleep(1);
             request.callBack(ListCategoryMenu);

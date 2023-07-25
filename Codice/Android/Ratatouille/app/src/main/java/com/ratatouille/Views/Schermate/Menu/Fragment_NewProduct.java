@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import org.json.JSONArray;
+import org.json.JSONObject;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.cardview.widget.CardView;
@@ -156,6 +158,9 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     }
 
     //ACTIONS ************************
+    private void sendAction(Action action){
+        manager.HandleAction(action);
+    }
 
     private void onClickAddFromGallery(){
         Log.d(TAG, "PrepareReceiveFromGallery: Foto Selezionata");
@@ -188,9 +193,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         Log.d(TAG, "ShowPopUp: Product isInserted->"+ isInserted);
     }
 
-    private void sendAction(Action action){
-        manager.HandleAction(action);
-    }
 
     private void PrepareReceiveFromGallery(){
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -201,9 +203,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
                     ImageView_ProductImage.setImageURI(imgUri);
 
                     NewProduct.setUriImageProduct(imgUri);
-
-
-                    sendPhoto();
                 }
             }catch (Exception e) {
                 Log.e(TAG, "setResultLauncher: No ImageSelected",e );
@@ -211,44 +210,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         });
     }
 
-    public Bitmap getBitmapFromUri(Uri uri) {
-        try {
-            InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            inputStream.close();
-            return bitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void sendPhoto(){
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        Bitmap bitmapProduct = getBitmapFromUri(NewProduct.getUriImageProduct());
-        bitmapProduct.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-        byte[] bytes = byteArrayOutputStream.toByteArray();
-        String  base64ImageProduct = Base64.encodeToString(bytes,Base64.DEFAULT);
-        sendNewProductToServer(base64ImageProduct);
-
-    }
-    private void sendNewProductToServer(String image){
-        Uri.Builder dataToSend = new Uri.Builder()
-                .appendQueryParameter("image", image);
-        String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Product.php";
-
-        try {
-            JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
-            if( Msg != null ){
-                Log.d(TAG, "sendNewProductToServer: MSG");
-            }else{
-                Log.d(TAG, "sendNewProductToServer: false");
-            }
-        }catch (Exception e){
-            Log.e(TAG, "getDataFromServer: ",e);
-        }
-        Log.d(TAG, "sendNewProductToServer: true");
-    }
 
     private boolean getAllInputs(){
         NewProduct.setNameProduct(EditText_NomeProdotto.getText().toString());

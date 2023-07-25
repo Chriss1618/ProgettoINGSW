@@ -216,13 +216,16 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
 
     private void deleteItemFromRecycle(Integer id_category){
-        for(int indexItem = 0; indexItem < ListCategoryMenu.size() ; indexItem++){
-            if(ListCategoryMenu.get(indexItem).getID_categoria() == id_category){
-                ListCategoryMenu.remove(indexItem);
-                adapter_category.removeItem(id_category);
-                break;
+        requireActivity().runOnUiThread(() -> {
+            for(int indexItem = 0; indexItem < ListCategoryMenu.size() ; indexItem++){
+                if(ListCategoryMenu.get(indexItem).getID_categoria() == id_category){
+                    ListCategoryMenu.remove(indexItem);
+                    adapter_category.removeItem(id_category);
+                    break;
+                }
             }
-        }
+        });
+
     }
 
     private void ShowDialogNewCategory(){
@@ -275,11 +278,13 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
         @SuppressLint("NotifyDataSetChanged")
         private void addCategoryView(CategoriaMenu newCategory){
-            ListCategoryMenu.add(newCategory);
-            adapter_category.notifyDataSetChanged();
-            adapter_category.addItem(newCategory);
-            checkEmptyRecycle();
-            showSuccessfullyAddedNewCategory();
+            requireActivity().runOnUiThread(() -> {
+                ListCategoryMenu.add(newCategory);
+                adapter_category.notifyDataSetChanged();
+                adapter_category.addItem(newCategory);
+                checkEmptyRecycle();
+                showSuccessfullyAddedNewCategory();
+            });
         }
 
         private void ShowNameCategoryNotValid(){

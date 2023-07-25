@@ -60,8 +60,29 @@ public class ActionsNewProduct extends ActionsViewHandler{
             Product NewProduct = (Product) action.getData();
 
             Log.d(TAG, "handleAction: Prodotto Passato->"+ NewProduct.getNameProduct());
+            String image = NewProduct.getStringDataImage(action.getManager().context);
+            sendNewProductToServer(image);
+            //action.callBack(sendNewProductToServer(NewProduct,action.getManager().context));
+        }
 
-            action.callBack(sendNewProductToServer(NewProduct,action.getManager().context));
+        private void sendNewProductToServer(String image){
+            Log.d(TAG, "sendNewProductToServer: image->\n" + image);
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("image", image);
+            String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Product.php";
+
+            try {
+                JSONObject Msg = new ServerCommunication().getData( dataToSend, url);
+                if( Msg != null ){
+                    Log.d(TAG, "sendNewProductToServer: true");
+                    Log.d(TAG, "sendNewProductToServer: MSG->"+Msg.toString(4));
+                }else{
+                    Log.d(TAG, "sendNewProductToServer: false");
+                }
+
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+            }
         }
 
         private boolean sendNewProductToServer(Product newProduct,Context context){
@@ -77,20 +98,20 @@ public class ActionsNewProduct extends ActionsViewHandler{
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Product.php";
 
             try {
-                JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
-                if( Msg != null ){
-                    for(int i = 0 ; i<Msg.length(); i++){
-                        JSONObject Response_Json = new JSONObject(Msg.getString(i));
-                        Log.d(TAG, "sendNewProductToServer: End");
-//                        addedCategory = new CategoriaMenu(
-//                                Categoria_Json.getString("NomeCategoria"),
-//                                Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
-//                        );
-                    }
-                }else{
-                    Log.d(TAG, "sendNewProductToServer: false");
-                    return false;
-                }
+    //                JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
+    //                if( Msg != null ){
+    //                    for(int i = 0 ; i<Msg.length(); i++){
+    //                        JSONObject Response_Json = new JSONObject(Msg.getString(i));
+    //                        Log.d(TAG, "sendNewProductToServer: End");
+    ////                        addedCategory = new CategoriaMenu(
+    ////                                Categoria_Json.getString("NomeCategoria"),
+    ////                                Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
+    ////                        );
+    //                    }
+    //                }else{
+    //                    Log.d(TAG, "sendNewProductToServer: false");
+    //                    return false;
+    //                }
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
             }

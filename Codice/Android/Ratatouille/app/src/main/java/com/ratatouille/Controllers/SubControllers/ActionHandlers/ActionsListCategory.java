@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashMap;
 
+import io.vavr.control.Try;
+
 public class ActionsListCategory extends ActionsViewHandler{
     private static final String TAG = "ActionsListCategory";
 
@@ -69,30 +71,29 @@ public class ActionsListCategory extends ActionsViewHandler{
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/CategoriaMenu.php";
 
             try {
-                JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
-                if( Msg != null ){
+                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+                if( BodyJSON != null && BodyJSON.getString("MSG").contains("1")){
 
-                    for(int i = 0 ; i<Msg.length(); i++){
-                        JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
-
-                        addedCategory = new CategoriaMenu(
-                                Categoria_Json.getString("NomeCategoria"),
-                                Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
-                        );
-                    }
+                    JSONObject Categoria_Json = new JSONObject(BodyJSON.getString("DATA"));
+                    addedCategory = new CategoriaMenu(
+                            Categoria_Json.getString("NomeCategoria"),
+                            Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
+                    );
+                    Log.d(TAG, "sendNewCategoryToServer: true");
+                    return true;
                 }else{
+
                     Log.d(TAG, "sendNewCategoryToServer: false");
                     return false;
                 }
+
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
+                return false;
             }
-            Log.d(TAG, "sendNewCategoryToServer: true");
-            return true;
         }
     }
     private static class DeleteCategory_ActionHandler implements ActionHandler {
-        private CategoriaMenu addedCategory;
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: DeleteCategoryActionHandler->");
@@ -113,18 +114,10 @@ public class ActionsListCategory extends ActionsViewHandler{
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/CategoriaMenu.php";
 
             try {
-                JSONArray Msg = new ServerCommunication().getData( dataToSend, url);
-                if( Msg != null ){
-
-//                    for(int i = 0 ; i<Msg.length(); i++){
-//                        JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
-//
-//                        addedCategory = new CategoriaMenu(
-//                                Categoria_Json.getString("NomeCategoria"),
-//                                Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
-//                        );
-//                    }
-
+                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+                if( BodyJSON != null ){
+                    String Msg = BodyJSON.getString("MSG");
+                    if(Msg.contains("Failed Deleting")) return false;
                 }else{
                     Log.d(TAG, "sendDeleteCategoryToServer: false");
                     return false;

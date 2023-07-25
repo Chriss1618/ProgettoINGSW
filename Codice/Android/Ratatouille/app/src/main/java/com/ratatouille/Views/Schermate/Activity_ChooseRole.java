@@ -150,6 +150,7 @@ public class Activity_ChooseRole extends AppCompatActivity {
                 .appendQueryParameter("EmailUser", EmailUser)
                 .appendQueryParameter("TokenUser",TokenUser);
         String url = EndPointer.StandardPath + EndPointer.AUTHENTICATION;
+
         try {
             JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
 
