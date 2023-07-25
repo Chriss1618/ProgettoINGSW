@@ -66,7 +66,6 @@ public class ActionsNewProduct extends ActionsViewHandler{
         }
 
         private void sendNewProductToServer(String image){
-            Log.d(TAG, "sendNewProductToServer: image->\n" + image);
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("image", image);
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Product.php";

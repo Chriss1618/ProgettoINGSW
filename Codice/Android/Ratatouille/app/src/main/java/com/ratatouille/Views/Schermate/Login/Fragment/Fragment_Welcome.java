@@ -18,13 +18,6 @@ import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
 public class Fragment_Welcome extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     //SYSTEM
     private static final String TAG = "Fragment_Welcome";
 
@@ -43,13 +36,12 @@ public class Fragment_Welcome extends Fragment {
 
 
     public Fragment_Welcome() {
+
     }
 
-    public static Fragment_Welcome newInstance(String param1, String param2) {
+    public static Fragment_Welcome newInstance() {
         Fragment_Welcome fragment = new Fragment_Welcome();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,10 +49,7 @@ public class Fragment_Welcome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -104,14 +93,14 @@ public class Fragment_Welcome extends Fragment {
 
     //ANIMATIONS
     private void animateIN(){
-        Button_Accedi        .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
-        Button_RegistraRistorante        .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
-        Text_View_Welcome   .startAnimation(Manager_Animation.getTranslationINfromUp(1000));
+        Button_Accedi               .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
+        Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
+        Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationINfromUp(1000));
     }
     private void animateOUT(){
-        Button_Accedi        .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
-        Button_RegistraRistorante        .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
-        Text_View_Welcome   .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
+        Button_Accedi               .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
+        Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
+        Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
 
         // If fillAfter is true, the transformation that this animation performed will persist when it is finished.
         Background.setVisibility(View.VISIBLE);
@@ -127,13 +116,10 @@ public class Fragment_Welcome extends Fragment {
 
     //FUNCTIONAL
     private void showLogin(){
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                waitAbout(500);
-                ((Activity_Login)getActivity()).setViewPager(1);
-            }
-        };
+        Thread thread = new Thread(() -> {
+            waitAbout(500);
+            ((Activity_Login)getActivity()).setViewPager(1);
+        });
         thread.start();
     }
 

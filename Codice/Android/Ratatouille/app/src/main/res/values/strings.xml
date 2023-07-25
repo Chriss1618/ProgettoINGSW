@@ -52,4 +52,19 @@
     <string name="nome_troppo_corto">Nome troppo corto !</string>
     <string name="registra_il_tuo_ristorante">Registra il tuo Ristorante</string>
     <string name="accedi">Accedi</string>
+    <string name="nuovo_prodotto">Nuovo Prodotto</string>
+    <string name="choose_photo">Choose photo</string>
+    <string name="empty_photo">empty photo</string>
+    <string name="campo_non_corretto">Campo non corretto !</string>
+    <string name="euro">€</string>
+    <string name="_0">0</string>
+    <string name="virgola">,</string>
+    <string name="_00">00</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="inserisci_la_descrizione_del_prodotto">Inserisci la descrizione del Prodotto</string>
+    <string name="allergeni">Allergeni</string>
+    <string name="inserisci_gli_allergeni">Inserisci gli Allergeni</string>
+    <string name="ingredienti">Ingredienti</string>
+    <string name="prodotto_da_passare_in_cucina">Prodotto da passare in cucina</string>
+    <string name="aggiungi">AGGIUNGI</string>
 </resources>

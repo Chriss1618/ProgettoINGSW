@@ -83,7 +83,8 @@
                 android:textColor="@color/Black"
                 android:focusable="true"
                 android:textColorLink="@color/MainColor"
-                android:textCursorDrawable="@color/MainColor"
+                android:textCursorDrawable="@drawable/custom_cursor"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlSymmetry" />
@@ -185,7 +186,9 @@
                 android:textColor="@color/SoftBlack"
 
                 android:textColorLink="@color/MainColor"
-                android:textCursorDrawable="@color/MainColor"/>
+                android:textCursorDrawable="@drawable/custom_cursor"
+
+                />
             <TextView
                 android:visibility="invisible"
                 android:id="@+id/text_view_warning"
