@@ -50,4 +50,6 @@
     <string name="nessuna_categoria_creata">Nessuna categoria creata</string>
     <string name="nome_categoria">Nome Categoria</string>
     <string name="nome_troppo_corto">Nome troppo corto !</string>
+    <string name="registra_il_tuo_ristorante">Registra il tuo Ristorante</string>
+    <string name="accedi">Accedi</string>
 </resources>

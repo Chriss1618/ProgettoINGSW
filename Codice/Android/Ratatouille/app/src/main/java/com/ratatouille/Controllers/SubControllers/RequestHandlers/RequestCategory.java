@@ -17,27 +17,26 @@ public class RequestCategory implements RequestHandler {
     private static final String TAG = "RequestCategory";
 
     //DATA
-    protected ArrayList<CategoriaMenu> ListCategoryMenu;
+    protected ArrayList<CategoriaMenu> ListCategoryMenu = new ArrayList<>();
 
-    private void setCategories(JSONArray Msg) throws org.json.JSONException{
-        if( Msg != null ){
-            ListCategoryMenu = new ArrayList<>();
-            for(int i = 0 ; i<Msg.length(); i++){
-                JSONObject Categoria_Json = new JSONObject(Msg.getString(i));
+    private void setCategories(JSONObject BodyJSON) throws org.json.JSONException{
+        JSONArray CategorieJSON = new JSONArray(BodyJSON.getString("DATA"));
+        //Log.d(TAG, "\nDATA_JSON ->"+CategorieJSON.toString(4));
 
-                ListCategoryMenu.add(new CategoriaMenu(
-                        Categoria_Json.getString("NomeCategoria"),
-                        Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
-                ));
-            }
+        for(int i = 0 ; i<CategorieJSON.length(); i++){
+            JSONObject categoriaJSON = new JSONObject(CategorieJSON.getString(i));
+            ListCategoryMenu.add(new CategoriaMenu(
+                    categoriaJSON.getString("NomeCategoria"),
+                    Integer.parseInt( categoriaJSON.getString("ID_CategoriaMenu") )
+            ));
         }
     }
     private void getCategoriesFromServer(Request request){
         Uri.Builder dataToSend  = new Uri.Builder().appendQueryParameter("id_ristorante", "1");
         String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/CategoriaMenu.php";
         try {
-            JSONArray Json_Categories = new ServerCommunication().getData( dataToSend, url);
-            setCategories( Json_Categories );
+            JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+            if( BodyJSON != null ) setCategories( BodyJSON );
             TimeUnit.SECONDS.sleep(1);
             request.callBack(ListCategoryMenu);
         }catch ( Exception e ){

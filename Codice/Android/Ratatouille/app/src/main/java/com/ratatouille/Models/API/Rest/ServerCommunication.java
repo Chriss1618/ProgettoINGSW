@@ -22,15 +22,15 @@ public class ServerCommunication {
 
     private Uri.Builder dataToSend ;
     private String url;
-    private JSONArray jsonArray = null;
+    private JSONObject jsonBODY = null;
 
-    public JSONArray getData(Uri.Builder dataToSend, String url){
+    public JSONObject getData(Uri.Builder dataToSend, String url){
         this.dataToSend = dataToSend;
         this.url = url;
 
         startCommunication();
 
-        return jsonArray;
+        return jsonBODY;
     }
 
     private void startCommunication(){
@@ -41,12 +41,12 @@ public class ServerCommunication {
             JSONObject json_data = getResponseFromServer() ;
             conn.disconnect();
 
-            Log.d(TAG, "getDataFromServer: response Server ->"+json_data);
-            Log.d(TAG, "getDataFromServer: Status -> "+json_data.getString("status"));
+            Log.d(TAG, "getDataFromServer: response Server ->\n"+json_data.toString(4));
+            Log.d(TAG, "getDataFromServer: Status -> "+json_data.getString("STATUS"));
 
             //Salvataggio messaggio ricevuto
-            jsonArray = new JSONArray( json_data.getString("msg") );
-
+            JSONArray jsonArray = new JSONArray(json_data.getString("BODY"));
+            jsonBODY = new JSONObject(jsonArray.getString(0));
         } catch (Exception e) {
             Log.d(TAG, "getDataFromServer: Errore di Comunicazione con il BeckEnd");
             e.printStackTrace();

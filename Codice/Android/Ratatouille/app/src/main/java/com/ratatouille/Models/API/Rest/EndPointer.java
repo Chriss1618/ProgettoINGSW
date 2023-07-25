@@ -9,4 +9,5 @@ public class EndPointer {
     public static final String UPDATE = "/Update";
     public static final String DELETE = "/Delete";
     public static final String SELECT = "/Select";
+    public static final String AUTHENTICATION = "/UserAuthentication.php";
 }

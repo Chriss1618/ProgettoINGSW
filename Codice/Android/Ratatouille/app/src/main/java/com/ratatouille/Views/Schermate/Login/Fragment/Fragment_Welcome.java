@@ -31,7 +31,8 @@ public class Fragment_Welcome extends Fragment {
     //LAYOUT
     View            Fragment_View;
     LinearLayout    Background;
-    Button          Button_Start;
+    Button          Button_Accedi;
+    Button          Button_RegistraRistorante;
     TextView        Text_View_Welcome;
 
     //FUNCTIONAL
@@ -74,7 +75,6 @@ public class Fragment_Welcome extends Fragment {
         return Fragment_View;
     }
 
-
     //LAYOUT
     private void PrepareData() {
 
@@ -86,25 +86,31 @@ public class Fragment_Welcome extends Fragment {
     }
 
     private void LinkLayout() {
-        Background          = Fragment_View.findViewById(R.id.background);
-        Button_Start        = Fragment_View.findViewById(R.id.button_start);
-        Text_View_Welcome   = Fragment_View.findViewById(R.id.text_view_welcome);
+        Background                  = Fragment_View.findViewById(R.id.background);
+        Button_Accedi               = Fragment_View.findViewById(R.id.button_start);
+        Text_View_Welcome           = Fragment_View.findViewById(R.id.text_view_welcome);
+        Button_RegistraRistorante   = Fragment_View.findViewById(R.id.button_new_amministratore);
+
     }
     private void SetDataOnLayout() {
 
 
     }
+
     private void SetActionsOfLayout() {
-        Button_Start.setOnClickListener(View ->actionNext());
+        Button_Accedi.setOnClickListener(View ->actionNext());
+        Button_RegistraRistorante.setOnClickListener(View ->actionNext());
     }
 
     //ANIMATIONS
     private void animateIN(){
-        Button_Start        .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
+        Button_Accedi        .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
+        Button_RegistraRistorante        .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
         Text_View_Welcome   .startAnimation(Manager_Animation.getTranslationINfromUp(1000));
     }
     private void animateOUT(){
-        Button_Start        .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
+        Button_Accedi        .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
+        Button_RegistraRistorante        .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
         Text_View_Welcome   .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
 
         // If fillAfter is true, the transformation that this animation performed will persist when it is finished.
@@ -118,7 +124,6 @@ public class Fragment_Welcome extends Fragment {
         animateOUT();
         showLogin();
     }
-
 
     //FUNCTIONAL
     private void showLogin(){

@@ -18,10 +18,12 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
+import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -51,6 +53,10 @@ public class Activity_ChooseRole extends AppCompatActivity {
     LinearLayout Background;
     //DATA
     int numGiri = 0;
+    private Utente utente;
+    String TokenUser;
+    String EmailUser;
+    int     IdRestaurantUser;
     //FUNCTIONAL
 
     //OTHER...
@@ -67,8 +73,6 @@ public class Activity_ChooseRole extends AppCompatActivity {
 
     //LAYOUT
     private void PrepareData() {
-        sendData();
-        getData();
         setToken();
     }
 
@@ -80,18 +84,13 @@ public class Activity_ChooseRole extends AppCompatActivity {
         new Thread(this::rotateAnimationLogo).start();
 
         new Thread(() ->{
-            Try.run(() -> TimeUnit.SECONDS.sleep(3));
-            runOnUiThread(() -> {
-                ImageView_Logo.animate().alpha(0f).setDuration(300).start();
-                Background.setVisibility(View.VISIBLE);
-                Background.startAnimation(Manager_Animation.getCircleReveal());
-            });
-            Try.run(() -> TimeUnit.MILLISECONDS.sleep(300));
-            //startLogin();
-            startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE);
+            Try.run(() -> TimeUnit.SECONDS.sleep(1));
+            if(AuthenticateUser()) startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE);
+            else startLogin();
         }).start();
 
     }
+
     private void LinkLayout() {
         Button_Amministratore   = findViewById(R.id.button_amministratore);
         Button_Supervisore      = findViewById(R.id.button_supervisore);
@@ -104,7 +103,6 @@ public class Activity_ChooseRole extends AppCompatActivity {
     private void SetDataOnLayout() {
 
     }
-
     private void SetActionsOfLayout() {
         Button_Amministratore   .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE));
         Button_Supervisore      .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE));
@@ -112,10 +110,16 @@ public class Activity_ChooseRole extends AppCompatActivity {
 //      Button_Cameriere        .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE));
         Button_Cameriere        .setOnClickListener(view -> startLogin());
     }
+
     private void startLogin(){
+        closeLoading();
+        Try.run(() -> TimeUnit.MILLISECONDS.sleep(400));
         Intent intent = new Intent(this, Activity_Login.class);
         startActivity(intent);
     }
+
+
+
     private void setToken(){
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (! task.isSuccessful() ) {
@@ -133,20 +137,49 @@ public class Activity_ChooseRole extends AppCompatActivity {
     }
 
     private boolean AuthenticateUser(){
-        String TokenUser = (String) new LocalStorage(this).getData("TokenUser","String");
-        if( TokenUser == null) return false;
-        String url = EndPointer.StandardPath + EndPointer.
+        TokenUser = (String) new LocalStorage(this).getData("TokenUser","String");
+        return true;
+//        if( TokenUser == null) return false;
+        //return AuthenticationUserWithServer();
+    }
+
+    private boolean AuthenticationUserWithServer(){
+        getUserData();
+        Uri.Builder dataToSend = new Uri.Builder()
+                .appendQueryParameter("id_ristorante", IdRestaurantUser+"")
+                .appendQueryParameter("EmailUser", EmailUser)
+                .appendQueryParameter("TokenUser",TokenUser);
+        String url = EndPointer.StandardPath + EndPointer.AUTHENTICATION;
+        try {
+            JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+
+            if( BodyJSON != null ){
+                String Response = BodyJSON.getString("MSG");
+
+            }else{
+                Log.d(TAG, "sendNewCategoryToServer: false");
+                return false;
+            }
+        }catch (Exception e){
+            Log.e(TAG, "getDataFromServer: ",e);
+        }
+        Log.d(TAG, "sendNewCategoryToServer: true");
         return true;
     }
 
 
     //CONNECTION
-    private void sendData(){
+    private void getUserData(){
 //        Thread thread = new Thread(this::ComunicateBackEnd);
 //
 //        thread.start();
 
-
+        EmailUser = (String) new LocalStorage(this).getData("EmailUser","String");
+        if(new LocalStorage(this).getData("IdRestaurantUser","Integer")!= null){
+            IdRestaurantUser = (int) new LocalStorage(this).getData("IdRestaurantUser","Integer");
+        }else{
+            IdRestaurantUser = -1;
+        }
 
     }
 
@@ -197,17 +230,25 @@ public class Activity_ChooseRole extends AppCompatActivity {
         }
     }
 
-    private void getData(){
 
-    }
 
     private void startApp(int typeUser){
+        closeLoading();
+        Try.run(() -> TimeUnit.MILLISECONDS.sleep(400));
         Intent intent = new Intent(this, Activity_Amministratore.class);
         intent.putExtra("typeUser", typeUser+"");
         startActivity(intent);
     }
     //ANIMATIONS
 
+    private void closeLoading(){
+        runOnUiThread(() -> {
+            ImageView_Logo.animate().alpha(0f).setDuration(300).start();
+            Background.setVisibility(View.VISIBLE);
+            Background.startAnimation(Manager_Animation.getCircleReveal());
+        });
+
+    }
     private void rotateAnimationLogo()  {
         rotation(820);
         while(true) rotation( numGiri++ % 2 == 0 ? -420 : 420 );

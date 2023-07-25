@@ -96,19 +96,8 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
         @SuppressWarnings("unchecked")
         Request request = new Request(manager.getSourceInfo(), null, ManagerRequestFactory.INDEX_REQUEST_CATEGORY,
-                (list)->{
-                    requireActivity().runOnUiThread(() -> {
-                        ListCategoryMenu = (ArrayList<CategoriaMenu>)list;
-                        initCategoryRV();
-                        ProgressBar.setVisibility(View.GONE);
-                        Recycler_Categories.setVisibility(View.VISIBLE);
-                        StartAnimationCategories();
-                    });
-
-                });
+                (list)-> setCategoriesOnLayout((ArrayList<CategoriaMenu>) list));
         manager.HandleRequest(request);
-
-
     }
 
     //LAYOUT****************************************************************************
@@ -169,15 +158,6 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
     }
 
-    private void checkEmptyRecycle(){
-        if(ListCategoryMenu.isEmpty()) {
-            Text_View_Empty.setVisibility(View.VISIBLE);
-            Recycler_Categories.setVisibility(View.GONE);
-        }else{
-            Text_View_Empty.setVisibility(View.GONE);
-            Recycler_Categories.setVisibility(View.VISIBLE);
-        }
-    }
 
     //ACTIONS *************************************************************************
     private void SendAction(Action action){
@@ -215,6 +195,26 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
 
     //FUNCTIONAL *********************************************************************
+    private void setCategoriesOnLayout(ArrayList<CategoriaMenu> list){
+        ListCategoryMenu = list;
+        requireActivity().runOnUiThread(() -> {
+            initCategoryRV();
+            ProgressBar.setVisibility(View.GONE);
+        });
+    }
+
+    private void checkEmptyRecycle(){
+        if(ListCategoryMenu.isEmpty()) {
+            Text_View_Empty.setVisibility(View.VISIBLE);
+            Recycler_Categories.setVisibility(View.GONE);
+            StartAnimationEmptyCategories();
+        }else{
+            Text_View_Empty.setVisibility(View.GONE);
+            Recycler_Categories.setVisibility(View.VISIBLE);
+            StartAnimationCategories();
+        }
+    }
+
     private void deleteItemFromRecycle(Integer id_category){
         for(int indexItem = 0; indexItem < ListCategoryMenu.size() ; indexItem++){
             if(ListCategoryMenu.get(indexItem).getID_categoria() == id_category){
@@ -372,6 +372,11 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     private void StartAnimationCategories(){
         Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
     }
+
+    private void StartAnimationEmptyCategories(){
+        Text_View_Empty         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+    }
+
 
     private void StartLoadingCategories(){
 
