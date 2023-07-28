@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ratatouille.Controllers.Controller_Login;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
@@ -30,10 +31,13 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     TextView        Text_View_Welcome;
 
     //FUNCTIONAL
-    private Controller_Login Manager_Login;
+    private Manager manager;
 
     //OTHER...
 
+    public Fragment_Welcome(Manager manager, int a) {
+        this.manager = manager;
+    }
 
 
     public Fragment_Welcome() {

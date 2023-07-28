@@ -87,7 +87,6 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
 
     }
 
-
     //LAYOUT FUNCTION
     private void constructController(){
         ManagerLogin = new Manager(

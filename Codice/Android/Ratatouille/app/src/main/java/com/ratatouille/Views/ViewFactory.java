@@ -7,6 +7,7 @@ import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Views.Schermate.Account.AccountViewFactory;
 import com.ratatouille.Views.Schermate.Inventario.InventarioViewFactory;
+import com.ratatouille.Views.Schermate.Login.Fragment.LoginViewFactory;
 import com.ratatouille.Views.Schermate.Menu.MenuViewFactory;
 import com.ratatouille.Views.Schermate.Ordini.OrdiniViewFactory;
 import com.ratatouille.Views.Schermate.OrdiniCameriere.OrdiniCameriereViewFactory;
@@ -22,6 +23,7 @@ public class ViewFactory {
 
     private static final Map<Integer, Class<? extends IViewFactory>> classMap = new HashMap<>();
     static {
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_LOGIN,         LoginViewFactory.class);
         classMap.put(ControlMapper.INDEX_TYPE_MANAGER_MENU,         MenuViewFactory.class);
         classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STATS,        StatsViewFactory.class);
         classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STAFF,        StaffViewFactory.class);

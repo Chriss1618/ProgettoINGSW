@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.Models.Interfaces.ViewLayout;
@@ -32,9 +34,13 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
     Button      Button_Save;
 
     //FUNCTIONAL
-    private Controller_Login Manager_Login;
+    private Manager manager;
 
-    //OTHER..
+    //OTHER...
+
+    public Fragment_ConfirmPassword(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     public Fragment_ConfirmPassword() {
     }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.ratatouille.Controllers.Controller_Login;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
@@ -22,10 +23,13 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     Button      Button_Login;
 
     //FUNCTIONAL
-    private Controller_Login Manager_Login;
+    private Manager manager;
 
     //OTHER...
 
+    public Fragment_Login(Manager manager, int a) {
+        this.manager = manager;
+    }
 
     public Fragment_Login() {
 
