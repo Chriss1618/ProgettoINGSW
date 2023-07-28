@@ -6,12 +6,17 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.Controller_Login;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Events.SourceInfo;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import java.util.ArrayList;
 
-public class Activity_Login extends AppCompatActivity {
+public class Activity_Login extends AppCompatActivity implements ViewLayout {
     //SYSTEM
     private static final String TAG = "MainActivity";
 
@@ -22,7 +27,8 @@ public class Activity_Login extends AppCompatActivity {
     ImageView       Image_View_Logo_2;
 
     //FUNCTIONAL
-    private Controller_Login Manager_Login;
+    //private Controller_Login Manager_Login;
+    private Manager ManagerLogin;
 
     //OTHER...
     
@@ -35,49 +41,63 @@ public class Activity_Login extends AppCompatActivity {
 
         PrepareLayout();
 
+        StartAnimations();
+
         Log.d(TAG, "onCreate: Hai creato la schermata");
     }
 
 
     //LAYOUT
-    private void PrepareData() {
+    @Override
+    public void PrepareData() {
 
     }
-    private void PrepareLayout() {
+    @Override
+    public void PrepareLayout() {
         LinkLayout();
         SetDataOnLayout();
         SetActionsOfLayout();
+        ManagerLogin.showMain();
     }
 
-    private void LinkLayout() {
+    @Override
+    public void LinkLayout() {
         Fragment_View       = findViewById(R.id.fragment_container_view_login);
         Image_View_Logo     = findViewById(R.id.image_view_logo);
         Image_View_Logo_1   = findViewById(R.id.image_view_logo_1);
         Image_View_Logo_2   = findViewById(R.id.image_view_logo_2);
     }
-    private void SetDataOnLayout() {
-        setManagerFragment();
+    @Override
+    public void SetDataOnLayout() {
+        constructController();
     }
-    private void SetActionsOfLayout() {
+
+    @Override
+    public void StartAnimations() {
+        RotateLogo();
+    }
+
+    @Override
+    public void EndAnimations() {
+
+    }
+
+    @Override
+    public void SetActionsOfLayout() {
 
     }
 
 
     //LAYOUT FUNCTION
-    private void setManagerFragment(){
-        ArrayList<View> Views = new ArrayList<>();
-        Views.add(Fragment_View);
-        Manager_Login = new Controller_Login(this,
+    private void constructController(){
+        ManagerLogin = new Manager(
+                new SourceInfo(ControlMapper.INDEX_TYPE_MANAGER_LOGIN,ControlMapper.INDEX_TYPE_MANAGER_LOGIN),
+                this,
+                Fragment_View,
                 getSupportFragmentManager(),
-                Views);
-        Manager_Login.showPage(0);
-        RotateLogo();
+                null
+        );
     }
-
-    public void setViewPager(int index){
-        Manager_Login.showPage(index);
-    }
-
 
     //ANIMATIONS
     public void MoveLogoFrom0to1(){

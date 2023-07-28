@@ -5,7 +5,7 @@ public class SourceInfo {
     int Index_TypeController;
     int Index_TypeView;
 
-    public SourceInfo(int Index_TypeManager, int Index_TypeController) {
+    public SourceInfo(int Index_TypeManager, Integer Index_TypeController) {
         this.Index_TypeManager = Index_TypeManager;
         this.Index_TypeController = Index_TypeController;
     }

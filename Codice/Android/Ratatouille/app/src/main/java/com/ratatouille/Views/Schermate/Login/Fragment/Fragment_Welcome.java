@@ -13,10 +13,11 @@ import android.widget.TextView;
 
 import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
-public class Fragment_Welcome extends Fragment {
+public class Fragment_Welcome extends Fragment implements ViewLayout {
 
     //SYSTEM
     private static final String TAG = "Fragment_Welcome";
@@ -65,28 +66,43 @@ public class Fragment_Welcome extends Fragment {
     }
 
     //LAYOUT
-    private void PrepareData() {
+    @Override
+    public void PrepareData() {
 
     }
-    private void PrepareLayout() {
+    @Override
+    public void PrepareLayout() {
         LinkLayout();
         SetDataOnLayout();
         SetActionsOfLayout();
     }
 
-    private void LinkLayout() {
+    @Override
+    public void LinkLayout() {
         Background                  = Fragment_View.findViewById(R.id.background);
         Button_Accedi               = Fragment_View.findViewById(R.id.button_start);
         Text_View_Welcome           = Fragment_View.findViewById(R.id.text_view_welcome);
         Button_RegistraRistorante   = Fragment_View.findViewById(R.id.button_new_amministratore);
 
     }
-    private void SetDataOnLayout() {
+    @Override
+    public void SetDataOnLayout() {
 
 
     }
 
-    private void SetActionsOfLayout() {
+    @Override
+    public void StartAnimations() {
+
+    }
+
+    @Override
+    public void EndAnimations() {
+
+    }
+
+    @Override
+    public void SetActionsOfLayout() {
         Button_Accedi.setOnClickListener(View ->actionNext());
         Button_RegistraRistorante.setOnClickListener(View ->actionNext());
     }
@@ -116,11 +132,11 @@ public class Fragment_Welcome extends Fragment {
 
     //FUNCTIONAL
     private void showLogin(){
-        Thread thread = new Thread(() -> {
-            waitAbout(500);
-            ((Activity_Login)getActivity()).setViewPager(1);
-        });
-        thread.start();
+//        Thread thread = new Thread(() -> {
+//            waitAbout(500);
+//            ((Activity_Login)getActivity()).setViewPager(1);
+//        });
+//        thread.start();
     }
 
     private void waitAbout(int time){

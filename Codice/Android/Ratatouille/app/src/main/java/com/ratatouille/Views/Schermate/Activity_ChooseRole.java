@@ -138,9 +138,9 @@ public class Activity_ChooseRole extends AppCompatActivity {
 
     private boolean AuthenticateUser(){
         TokenUser = (String) new LocalStorage(this).getData("TokenUser","String");
-        return true;
-//        if( TokenUser == null) return false;
-        //return AuthenticationUserWithServer();
+        //return true;
+        if( TokenUser == null) return false;
+        return AuthenticationUserWithServer();
     }
 
     private boolean AuthenticationUserWithServer(){

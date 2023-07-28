@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
-public class Fragment_Login extends Fragment {
+public class Fragment_Login extends Fragment implements ViewLayout {
 
     //SYSTEM
     private static final String TAG = "Fragment_Login";
@@ -53,24 +54,40 @@ public class Fragment_Login extends Fragment {
     }
 
     //LAYOUT
-    private void PrepareData() {
+    @Override
+    public void PrepareData() {
 
     }
 
-    private void PrepareLayout() {
+    @Override
+    public void PrepareLayout() {
         LinkLayout();
         SetDataOnLayout();
         SetActionsOfLayout();
     }
 
-    private void LinkLayout() {
+    @Override
+    public void LinkLayout() {
         Button_Login = Fragment_View.findViewById(R.id.button_login);
     }
-    private void SetDataOnLayout() {
+    @Override
+    public void SetDataOnLayout() {
 
 
     }
-    private void SetActionsOfLayout() {
+
+    @Override
+    public void StartAnimations() {
+
+    }
+
+    @Override
+    public void EndAnimations() {
+
+    }
+
+    @Override
+    public void SetActionsOfLayout() {
         Button_Login.setOnClickListener(View ->actionLogin());
     }
     //ANIMATIONS
@@ -91,11 +108,11 @@ public class Fragment_Login extends Fragment {
 
     //FUNCTIONAL
     private void showConfirmPassword(){
-        Thread thread = new Thread(() -> {
-            waitAbout(500);
-            ((Activity_Login)getActivity()).setViewPager(2);
-        });
-        thread.start();
+//        Thread thread = new Thread(() -> {
+//            waitAbout(500);
+//            ((Activity_Login)getActivity()).setViewPager(2);
+//        });
+//        thread.start();
     }
 
     private void waitAbout(int time){

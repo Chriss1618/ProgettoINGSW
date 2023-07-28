@@ -9,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Controllers.Controller_Login;
+import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Activity_ChooseRole;
 
-public class Fragment_ConfirmPassword extends Fragment {
+public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,23 +73,39 @@ public class Fragment_ConfirmPassword extends Fragment {
     }
 
     //LAYOUT
-    private void PrepareData() {
+    @Override
+    public void PrepareData() {
 
     }
-    private void PrepareLayout() {
+    @Override
+    public void PrepareLayout() {
         LinkLayout();
         SetDataOnLayout();
         SetActionsOfLayout();
     }
 
-    private void LinkLayout() {
+    @Override
+    public void LinkLayout() {
         Button_Save = Fragment_View.findViewById(R.id.button_save);
     }
-    private void SetDataOnLayout() {
+    @Override
+    public void SetDataOnLayout() {
 
 
     }
-    private void SetActionsOfLayout() {
+
+    @Override
+    public void StartAnimations() {
+
+    }
+
+    @Override
+    public void EndAnimations() {
+
+    }
+
+    @Override
+    public void SetActionsOfLayout() {
         Button_Save.setOnClickListener(View ->startApp());
     }
 
