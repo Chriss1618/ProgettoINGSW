@@ -64,7 +64,7 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
         PrepareData();
         PrepareLayout();
-        animateIN();
+        StartAnimations();
 
         return Fragment_View;
     }
@@ -98,17 +98,19 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     @Override
     public void StartAnimations() {
 
+        animateIN();
     }
 
     @Override
     public void EndAnimations() {
-
+        animateOUT();
     }
 
     @Override
     public void SetActionsOfLayout() {
-        Button_Accedi.setOnClickListener(View ->actionNext());
-        Button_RegistraRistorante.setOnClickListener(View ->actionNext());
+        Button_Accedi.setOnClickListener(View ->onClickLogin());
+
+        Button_RegistraRistorante.setOnClickListener(View ->onClickRegistra());
     }
 
     //ANIMATIONS
@@ -122,34 +124,25 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
         Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
         Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
 
-        // If fillAfter is true, the transformation that this animation performed will persist when it is finished.
         Background.setVisibility(View.VISIBLE);
         Background.startAnimation(Manager_Animation.getCircleReveal());
-        ((Activity_Login)getActivity()).MoveLogoFrom0to1();
     }
 
     //ACTIONS
     private void actionNext(){
+
         animateOUT();
-        showLogin();
+    }
+
+    private void onClickLogin(){
+
+    }
+
+    private void onClickRegistra(){
+
     }
 
     //FUNCTIONAL
-    private void showLogin(){
-//        Thread thread = new Thread(() -> {
-//            waitAbout(500);
-//            ((Activity_Login)getActivity()).setViewPager(1);
-//        });
-//        thread.start();
-    }
 
-    private void waitAbout(int time){
-        try {
-            synchronized (this) {
-                wait(time);
-            }
-        } catch (InterruptedException ignored){}
-
-    }
 
 }

@@ -27,11 +27,17 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     ImageView       Image_View_Logo_2;
 
     //FUNCTIONAL
-    //private Controller_Login Manager_Login;
     private Manager ManagerLogin;
 
     //OTHER...
-    
+    @Override
+    public void onBackPressed() {
+        if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
+            ManagerLogin.closeView();
+        }else{
+            super.onBackPressed();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +49,6 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
 
         StartAnimations();
 
-        Log.d(TAG, "onCreate: Hai creato la schermata");
     }
 
 
@@ -55,9 +60,8 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     @Override
     public void PrepareLayout() {
         LinkLayout();
-        SetDataOnLayout();
         SetActionsOfLayout();
-        ManagerLogin.showMain();
+        SetDataOnLayout();
     }
 
     @Override
@@ -70,6 +74,7 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     @Override
     public void SetDataOnLayout() {
         constructController();
+        ManagerLogin.showMain();
     }
 
     @Override
@@ -79,7 +84,14 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
 
     @Override
     public void EndAnimations() {
-
+        switch (ManagerLogin.onMain){
+            case ControlMapper.INDEX_LOGIN_WELCOME :
+                break;
+            case ControlMapper.INDEX_LOGIN_LOGIN:
+                break;
+            case ControlMapper.INDEX_LOGIN_CONFIRM:
+                break;
+        }
     }
 
     @Override
@@ -128,9 +140,7 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     }
 
     //ACTIONS
-    private void onButtonLogin(){
 
-    }
 
 
 

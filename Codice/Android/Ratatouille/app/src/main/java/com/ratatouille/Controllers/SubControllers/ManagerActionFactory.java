@@ -4,6 +4,7 @@ import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsViewHandler;
 import com.ratatouille.Models.Events.Action.Action;
@@ -17,6 +18,10 @@ public class ManagerActionFactory {
 
     private static final Map<Integer, Class<? extends ActionsViewHandler>> classMap = new HashMap<>();
     static {
+        //LOGIN
+        classMap.put(ControlMapper.INDEX_LOGIN_WELCOME,  ActionsLogin.class);
+        classMap.put(ControlMapper.INDEX_LOGIN_LOGIN,  ActionsLogin.class);
+        classMap.put(ControlMapper.INDEX_LOGIN_CONFIRM,  ActionsLogin.class);
         //MENU
         classMap.put(ControlMapper.INDEX_MENU_LIST_CATEGORY,  ActionsListCategory.class);
         classMap.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS,  ActionsListProducts.class);
@@ -30,7 +35,6 @@ public class ManagerActionFactory {
     }
 
     public void handleAction(Action action){
-
         try{
              Objects.requireNonNull(classMap.get(action.getSourceInfo().getIndex_TypeView()))
                     .getConstructor()
