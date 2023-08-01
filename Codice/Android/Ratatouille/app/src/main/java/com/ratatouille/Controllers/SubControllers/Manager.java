@@ -44,7 +44,7 @@ public class Manager implements SubController {
     protected final ManagerActionFactory    ManagerAction;
     protected final ManagerRequestFactory   ManagerRequest;
     public Integer    onMain;
-    public int    from;
+    public Integer    from;
 
     //DATA
     private Object data;
@@ -121,6 +121,7 @@ public class Manager implements SubController {
 
     @Override
     public void closeView() {
+
         from = onMain;
         Views.get(onMain).EndAnimations();
         final Handler handler = new Handler();
