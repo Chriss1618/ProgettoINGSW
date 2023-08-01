@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ratatouille"
         android:label="@string/app_name"
@@ -9,20 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ratatouille">
 
-        <activity android:name=".Schermate.Activity_ChooseRole"
+        <activity android:name=".Views.Schermate.Activity_ChooseRole"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Schermate.Activity_Cameriere" />
-        <activity android:name=".Schermate.Activity_Chef" />
-        <activity android:name=".Schermate.Activity_Supervisore" />
-        <activity android:name=".Schermate.Activity_Amministratore" />
-        <activity android:name=".Schermate.Login.Activity_Login" />
+        <activity android:name=".Views.Schermate.Activity_Amministratore" />
+        <activity android:name=".Views.Schermate.Login.Activity_Login" />
 
+        <service
+            android:name=".Models.API.Firebase.FCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
+
+
 
 </manifest>

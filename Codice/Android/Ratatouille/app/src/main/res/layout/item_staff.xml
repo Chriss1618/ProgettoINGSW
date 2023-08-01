@@ -127,5 +127,17 @@
 
 
     </androidx.cardview.widget.CardView>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/ic_delete_on_element"
+        android:background="@drawable/background_white"
+        android:elevation = "5dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:clickable="true"
+        android:contentDescription="@string/icon_delete"
+        android:src="@drawable/baseline_cancel_24"
+        app:layout_constraintEnd_toEndOf="@+id/card_view_element_staff"
+        app:layout_constraintTop_toTopOf="@+id/card_view_element_staff" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

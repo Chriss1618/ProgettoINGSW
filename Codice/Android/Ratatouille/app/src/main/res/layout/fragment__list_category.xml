@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Schermate.Menu.Fragment_ListCategory">
+    tools:context=".Views.Schermate.Menu.Fragment_ListCategory">
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -81,10 +80,11 @@
                 android:paddingStart="42dp"
                 android:textColorHint="@color/Gray"
                 android:text=""
-                android:textColor="@color/Gray"
-
+                android:textColor="@color/Black"
+                android:focusable="true"
                 android:textColorLink="@color/MainColor"
-                android:textCursorDrawable="@color/MainColor"
+                android:textCursorDrawable="@drawable/custom_cursor"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlSymmetry" />
@@ -100,12 +100,32 @@
                 app:layout_constraintTop_toTopOf="@+id/edit_text_name_category" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.recyclerview.widget.RecyclerView
+
             android:id="@+id/recycler_categories"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:visibility="gone"
+            android:layout_marginTop="64dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/text_view_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/sf_compact_rounded_regular_italic"
+            android:text="@string/nessuna_categoria_creata"
+            android:textColor="@color/Gray"
+            android:textSize="24sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -116,130 +136,177 @@
         android:visibility="gone"
         android:orientation="vertical" />
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/linear_layout_new_category"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:visibility="gone"
         android:background="@drawable/background_edit_text_stroke_white">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/sf_compact_rounded_bold"
-            android:layout_gravity="center_horizontal"
-            android:text="Crea Categoria"
-            android:textColor="@color/Black"
-            android:textSize="25sp"
-
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <EditText
-            android:id="@+id/edit_text_email"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="12dp"
-            android:autofillHints=""
-
-            android:background="@drawable/background_edit_text_stroke_white"
-            android:ems="10"
-            android:hint="Nome Categoria"
-            android:textSize="15dp"
-
-            android:inputType="textEmailAddress"
-            android:paddingStart="16dp"
-
-            android:text=""
-            android:textColor="@color/SoftBlack"
-
-            android:textColorLink="@color/MainColor"
-            android:textCursorDrawable="@color/MainColor"/>
         <LinearLayout
-            android:id="@+id/linear_layout_buttons"
+            android:visibility="visible"
+            android:id="@+id/linear_layout_insert_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="8dp">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_annulla"
+            android:orientation="vertical">
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                app:cardCornerRadius="20dp"
-                android:layout_margin="8dp"
-                app:cardUseCompatPadding="true">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:paddingEnd="24dp"
-                    android:paddingStart="24dp">
+                android:layout_height="wrap_content"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_compact_rounded_bold"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:layout_gravity="center_horizontal"
+                android:text="Crea Categoria"
+                android:textColor="@color/Black"
+                android:textSize="25sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:id="@+id/edit_text_nome_categoria"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="12dp"
+                android:autofillHints=""
+                android:maxLength="30"
+                android:background="@drawable/background_edit_text_stroke_white"
+                android:ems="10"
+                android:hint="@string/nome_categoria"
+                android:textSize="15dp"
+
+                android:inputType="text"
+                android:paddingStart="16dp"
+
+                android:text=""
+                android:textColor="@color/SoftBlack"
+
+                android:textColorLink="@color/MainColor"
+                android:textCursorDrawable="@drawable/custom_cursor"
+
+                />
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/text_view_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_warning_24"
+                android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="start"
+                android:text="@string/nome_troppo_corto"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:id="@+id/linear_layout_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="8dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_annulla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_margin="8dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
                         android:gravity="center"
-                        android:autoSizeMaxTextSize="25sp"
-                        android:autoSizeMinTextSize="9sp"
-                        android:autoSizeStepGranularity="1sp"
-                        android:autoSizeTextType="uniform"
+                        android:paddingEnd="24dp"
+                        android:paddingStart="24dp">
 
-                        android:text="ANNULLA"
-                        android:textColor="@color/MainColor"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_compact_rounded_bold"
+                            android:gravity="center"
+                            android:autoSizeMaxTextSize="25sp"
+                            android:autoSizeMinTextSize="9sp"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                            android:text="ANNULLA"
+                            android:textColor="@color/MainColor"/>
 
-            <androidx.cardview.widget.CardView
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                android:layout_margin="8dp"
-                android:id="@+id/card_view_aggiungi"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                app:cardCornerRadius="20dp"
-                app:cardUseCompatPadding="true"
+                <androidx.cardview.widget.CardView
 
-                android:background="@color/MainColor">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:paddingEnd="24dp"
-                    android:paddingStart="24dp"
+                    android:layout_margin="8dp"
+                    android:id="@+id/card_view_aggiungi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardUseCompatPadding="true"
+
                     android:background="@color/MainColor">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_compact_rounded_bold"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
                         android:gravity="center"
-                        android:autoSizeMaxTextSize="25sp"
-                        android:autoSizeMinTextSize="9sp"
-                        android:autoSizeStepGranularity="1sp"
-                        android:autoSizeTextType="uniform"
+                        android:paddingEnd="24dp"
+                        android:paddingStart="24dp"
+                        android:background="@color/MainColor">
 
-                        android:text="AGGIUNGI"
-                        android:maxLines="1"
-                        android:textColor="@color/white"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_compact_rounded_bold"
+                            android:gravity="center"
+                            android:autoSizeMaxTextSize="25sp"
+                            android:autoSizeMinTextSize="9sp"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                            android:text="AGGIUNGI"
+                            android:maxLines="1"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_layout_category_accepted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
 
+            android:layout_margin="30dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:layout_gravity="center_horizontal"
+                android:text="Categoria creata!"
+                android:textColor="@color/Black"
+                android:textSize="25sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:src="@drawable/baseline_check_circle_24"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

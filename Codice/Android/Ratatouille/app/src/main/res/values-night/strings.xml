@@ -36,4 +36,7 @@
     <string name="prodotti_presenti">PRODOTTI PRESENTI</string>
     <string name="inserisci_il_nome_prodotto">Inserisci il Nome Prodotto</string>
     <string name="prezzo_per_singola_unita">PREZZO PER SINGOLA UNITA\'</string>
+    <string name="nessuna_categoria_creata">Nessuna categoria creata</string>
+    <string name="nome_categoria">Nome Categoria</string>
+    <string name="nome_troppo_corto">Nome troppo corto !</string>
 </resources>

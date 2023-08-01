@@ -5,7 +5,7 @@
     <string name="email">EMAIL</string>
     <string name="inserisci_la_tua_email">Inserisci la tua Email</string>
     <string name="password">PASSWORD</string>
-    <string name="inserisci_la_tua_password">Inserisci la tua Password</string>
+    <string name="inserisci_la_password">Inserisci la Password</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="salva">SALVA</string>
@@ -47,4 +47,26 @@
     <string name="prodotti_presenti">PRODOTTI PRESENTI</string>
     <string name="inserisci_il_nome_prodotto">Inserisci il Nome Prodotto</string>
     <string name="prezzo_per_singola_unita">PREZZO PER SINGOLA UNITA\'</string>
+    <string name="nessuna_categoria_creata">Nessuna categoria creata</string>
+    <string name="nome_categoria">Nome Categoria</string>
+    <string name="nome_troppo_corto">Nome troppo corto !</string>
+    <string name="registra_il_tuo_ristorante">Registra il tuo Ristorante</string>
+    <string name="accedi">Accedi</string>
+    <string name="nuovo_prodotto">Nuovo Prodotto</string>
+    <string name="choose_photo">Choose photo</string>
+    <string name="empty_photo">empty photo</string>
+    <string name="campo_non_corretto">Campo non corretto !</string>
+    <string name="euro">€</string>
+    <string name="_0">0</string>
+    <string name="virgola">,</string>
+    <string name="_00">00</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="inserisci_la_descrizione_del_prodotto">Inserisci la descrizione del Prodotto</string>
+    <string name="allergeni">Allergeni</string>
+    <string name="inserisci_gli_allergeni">Inserisci gli Allergeni</string>
+    <string name="ingredienti">Ingredienti</string>
+    <string name="prodotto_da_passare_in_cucina">Prodotto da passare in cucina</string>
+    <string name="aggiungi">AGGIUNGI</string>
+    <string name="imagine_logo">Imagine Logo</string>
+    <string name="rotation_logo">Rotation Logo</string>
 </resources>

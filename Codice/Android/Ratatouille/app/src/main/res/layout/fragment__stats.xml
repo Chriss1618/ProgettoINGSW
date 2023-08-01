@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/SoftGray"
-    tools:context=".Schermate.Stats.Fragment_Stats">
+    tools:context=".Views.Schermate.Stats.Fragment_Stats">
 
     <LinearLayout
         android:layout_width="match_parent"

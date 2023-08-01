@@ -28,4 +28,8 @@
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_bottom_sheet</item>
     </style>
+
+    <style name="EditTextCursor">
+        <item name="android:textCursorDrawable">@drawable/custom_cursor</item>
+    </style>
 </resources>

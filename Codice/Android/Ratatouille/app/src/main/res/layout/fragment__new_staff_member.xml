@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/SoftGray"
-    tools:context=".Schermate.Staff.Fragment_NewStaffMember">
+    tools:context=".Views.Schermate.Staff.Fragment_NewStaffMember">
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -65,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardUseCompatPadding="true">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -77,6 +78,7 @@
                     android:paddingStart="8dp">
 
                     <ImageView
+                        android:id="@+id/image_view_table"
                         android:layout_width="19dp"
                         android:layout_height="19dp"
                         android:layout_gravity="start|center"
@@ -87,8 +89,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                     <TextView
+                        android:id="@+id/text_view_sala"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_compact_rounded"
@@ -124,6 +126,7 @@
                     android:paddingStart="8dp">
 
                     <ImageView
+                        android:id="@+id/image_view_supervisore"
                         android:layout_width="19dp"
                         android:layout_height="19dp"
                         android:layout_gravity="center"
@@ -134,8 +137,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                     <TextView
+                        android:id="@+id/text_view_supervisore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_compact_rounded"
@@ -170,6 +173,7 @@
                     android:paddingStart="8dp">
 
                     <ImageView
+                        android:id="@+id/image_view_chef"
                         android:layout_width="19dp"
                         android:layout_height="19dp"
                         android:layout_gravity="center"
@@ -182,6 +186,7 @@
 
 
                     <TextView
+                        android:id="@+id/text_view_chef"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_compact_rounded"
@@ -204,8 +209,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -227,17 +232,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
 
-                android:layout_marginTop="12dp"
                 android:autofillHints=""
 
                 android:background="@drawable/background_edit_text_stroke_white"
                 android:ems="10"
                 android:hint="@string/inserisci_la_tua_email"
                 android:textSize="15dp"
-
                 android:inputType="textEmailAddress"
                 android:paddingStart="16dp"
-
                 android:text=""
                 android:textColor="@color/SoftBlack"
 
@@ -249,7 +251,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/sf_compact_rounded_bold"
@@ -266,50 +267,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:gravity="center"
+                android:paddingBottom="4dp"
                 android:weightSum="5">
-
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="4"
-                    android:id="@+id/edit_text_password"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="50dp"
+                    app:passwordToggleEnabled="true"
+                    app:hintEnabled="false"
+                    android:gravity="center_vertical"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    android:inputType="textPassword">
+                    <EditText
+                        android:id="@+id/edit_text_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_edit_text_stroke_white"
+                        android:paddingBottom="10dp"
+                        android:hint="@string/inserisci_la_password"
+                        android:text=""
+                        android:textColor="@color/SoftBlack"
+                        android:textSize="13sp"
+                        android:textColorLink="@color/MainColor" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    android:autofillHints=""
-
-                    android:background="@drawable/background_edit_text_stroke_white"
-                    android:ems="10"
-                    android:hint="@string/inserisci_la_tua_password"
-
-                    android:inputType="textPassword"
-                    android:paddingStart="16dp"
-
-                    android:text=""
-                    android:textColor="@color/SoftBlack"
-                    android:textSize="15dp"
-                    android:textColorLink="@color/MainColor"
-                    android:textCursorDrawable="@color/MainColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
                 <androidx.cardview.widget.CardView
                     android:layout_weight="1"
                     android:id="@+id/card_view_element_random"
-                    android:layout_width="wrap_content"
-                    android:layout_height="65dp"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="8dp"
                     app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
+                    android:layout_marginBottom="2dp"
                     android:gravity="end"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:gravity="center"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:paddingEnd="2dp"
-                        android:paddingStart="8dp">
+                        android:paddingEnd="6dp"
+                        android:paddingStart="4dp">
 
                         <ImageView
                             android:layout_width="19dp"
@@ -322,15 +325,15 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/sf_compact_rounded"
 
                             android:autoSizeMaxTextSize="15sp"
-                            android:autoSizeMinTextSize="7sp"
-                            android:autoSizeStepGranularity="2sp"
+                            android:autoSizeMinTextSize="4sp"
+                            android:maxLines="2"
+                            android:autoSizeStepGranularity="1sp"
                             android:autoSizeTextType="uniform"
                             android:gravity="center"
                             android:text="Genera Passowrd"
@@ -340,7 +343,6 @@
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -379,12 +381,10 @@
 
                         android:text="ANNULLA"
                         android:textColor="@color/MainColor"/>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-
                 android:layout_margin="8dp"
                 android:id="@+id/card_view_aggiungi"
                 android:layout_width="wrap_content"
@@ -401,7 +401,6 @@
                     android:paddingEnd="36dp"
                     android:paddingStart="36dp"
                     android:background="@color/MainColor">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -415,11 +414,8 @@
                         android:text="AGGIUNGI"
                         android:maxLines="1"
                         android:textColor="@color/white"/>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </LinearLayout>
-
-
 </FrameLayout>

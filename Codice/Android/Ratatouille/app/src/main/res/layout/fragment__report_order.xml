@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
-    tools:context=".Schermate.OrdiniCameriere.Fragment_ReportOrder">
+    tools:context=".Views.Schermate.OrdiniCameriere.Fragment_ReportOrder">
 
 
     <LinearLayout

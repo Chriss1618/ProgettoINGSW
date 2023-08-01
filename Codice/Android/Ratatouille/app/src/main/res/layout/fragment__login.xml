@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Schermate.Login.Fragment.Fragment_Login">
+    tools:context=".Views.Schermate.Login.Fragment.Fragment_Login">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -106,7 +106,7 @@
 
             android:background="@drawable/background_edit_text_stroke"
             android:ems="10"
-            android:hint="@string/inserisci_la_tua_password"
+            android:hint="@string/inserisci_la_password"
 
             android:inputType="textPassword"
             android:paddingStart="16dp"
@@ -142,7 +142,18 @@
 
             android:textStyle="bold" />
 
-
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/image_view_logo"
+        android:visibility="visible"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@mipmap/ratatouille"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="-16dp"
+        android:rotation="180"
+        android:contentDescription="@string/rotation_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
