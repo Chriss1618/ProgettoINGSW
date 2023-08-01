@@ -29,33 +29,33 @@ public class ControlMapper {
     public static final int INDEX_LOGIN_CONFIRM            = 2;
 
     //MENU
-    public static final int INDEX_MENU_LIST_CATEGORY       = 3;
-    public static final int INDEX_MENU_LIST_PRODUCTS       = 4;
-    public static final int INDEX_MENU_INFO_PRODUCT        = 5;
-    public static final int INDEX_MENU_NEW_PRODUCT         = 6;
-    public static final int INDEX_MENU_EDIT_PRODUCT        = 7;
+    public static final int INDEX_MENU_LIST_CATEGORY       = 0;
+    public static final int INDEX_MENU_LIST_PRODUCTS       = 1;
+    public static final int INDEX_MENU_INFO_PRODUCT        = 2;
+    public static final int INDEX_MENU_NEW_PRODUCT         = 3;
+    public static final int INDEX_MENU_EDIT_PRODUCT        = 4;
 
     //STATS
-    public static final int INDEX_STATS_PRODUCTIVITY        = 8;
+    public static final int INDEX_STATS_PRODUCTIVITY        = 0;
 
     //ACCOUNT
-    public static final int INDEX_ACCOUNT_INFO              = 9;
-    public static final int INDEX_ACCOUNT_EDIT              = 10;
+    public static final int INDEX_ACCOUNT_INFO              = 0;
+    public static final int INDEX_ACCOUNT_EDIT              = 1;
 
     //STAFF
-    public static final int INDEX_STAFF_LIST                = 11;
-    public static final int INDEX_STAFF_NEW                 = 12;
+    public static final int INDEX_STAFF_LIST                = 0;
+    public static final int INDEX_STAFF_NEW                 = 1;
 
     //INVENTORY
-    public static final int INDEX_INVENTORY_LIST            = 13;
-    public static final int INDEX_INVENTORY_NEW             = 14;
-    public static final int INDEX_INVENTORY_INFO            = 15;
-    public static final int INDEX_INVENTORY_EDIT            = 16;
+    public static final int INDEX_INVENTORY_LIST            = 0;
+    public static final int INDEX_INVENTORY_NEW             = 1;
+    public static final int INDEX_INVENTORY_INFO            = 2;
+    public static final int INDEX_INVENTORY_EDIT            = 3;
 
     //ORDINI
-    public static final int INDEX_ORDINI_LIST               = 17;
-    public static final int INDEX_ORDINI_TABLE              = 18;
-    public static final int INDEX_ORDINI_HISTORY            = 19;
+    public static final int INDEX_ORDINI_LIST               = 0;
+    public static final int INDEX_ORDINI_TABLE              = 1;
+    public static final int INDEX_ORDINI_HISTORY            = 2;
 
     //ORDINI CAMERIERE
     public static final int INDEX_ORDINI_CAMERIERE_LIST_CAT            = 20;
@@ -66,7 +66,6 @@ public class ControlMapper {
     public static final int INDEX_ORDINI_CAMERIERE_INFO_REPORT_ORDER   = 25;
 
     //PAGINATION
-
     static int [] ADMINISTRATOR_INDEX = {
             INDEX_TYPE_MANAGER_STATS,
             INDEX_TYPE_MANAGER_STAFF,
@@ -137,24 +136,23 @@ public class ControlMapper {
             INDEX_ORDINI_CAMERIERE_INFO_REPORT_ORDER
     };
 
-
     public static final Map<Integer, int[]> classControllerToManager = new HashMap<>();
     static {
-        classControllerToManager.put(INDEX_TYPE_CONTROLLER_AMMINISTRATORE, ADMINISTRATOR_INDEX);
-        classControllerToManager.put(INDEX_TYPE_CONTROLLER_SUPERVISORE, SUPERVISORE_INDEX);
-        classControllerToManager.put(INDEX_TYPE_CONTROLLER_CHEF, CHEF_INDEX);
-        classControllerToManager.put(INDEX_TYPE_CONTROLLER_CAMERIERE, CAMERIERE_INDEX);
+        classControllerToManager.put(INDEX_TYPE_CONTROLLER_AMMINISTRATORE,  ADMINISTRATOR_INDEX);
+        classControllerToManager.put(INDEX_TYPE_CONTROLLER_SUPERVISORE,     SUPERVISORE_INDEX);
+        classControllerToManager.put(INDEX_TYPE_CONTROLLER_CHEF,            CHEF_INDEX);
+        classControllerToManager.put(INDEX_TYPE_CONTROLLER_CAMERIERE,       CAMERIERE_INDEX);
     }
 
     public static final Map<Integer, int[]> classManagerToView = new HashMap<>();
     static {
-        classManagerToView.put(INDEX_TYPE_MANAGER_LOGIN, LOGIN_INDEX);
-        classManagerToView.put(INDEX_TYPE_MANAGER_MENU, MENU_INDEX);
-        classManagerToView.put(INDEX_TYPE_MANAGER_STAFF, STAFF_INDEX);
-        classManagerToView.put(INDEX_TYPE_MANAGER_STATS, STATS_INDEX);
-        classManagerToView.put(INDEX_TYPE_MANAGER_ACCOUNT, ACCOUNT_INDEX);
-        classManagerToView.put(INDEX_TYPE_MANAGER_INVENTORY, INVENTORY_INDEX);
-        classManagerToView.put(INDEX_TYPE_MANAGER_ORDINI, ORDINI_INDEX);
+        classManagerToView.put(INDEX_TYPE_MANAGER_LOGIN,            LOGIN_INDEX);
+        classManagerToView.put(INDEX_TYPE_MANAGER_MENU,             MENU_INDEX);
+        classManagerToView.put(INDEX_TYPE_MANAGER_STAFF,            STAFF_INDEX);
+        classManagerToView.put(INDEX_TYPE_MANAGER_STATS,            STATS_INDEX);
+        classManagerToView.put(INDEX_TYPE_MANAGER_ACCOUNT,          ACCOUNT_INDEX);
+        classManagerToView.put(INDEX_TYPE_MANAGER_INVENTORY,        INVENTORY_INDEX);
+        classManagerToView.put(INDEX_TYPE_MANAGER_ORDINI,           ORDINI_INDEX);
         classManagerToView.put(INDEX_TYPE_MANAGER_ORDINI_CAMERIERE, ORDINI_CAMERIERE_INDEX);
     }
 }

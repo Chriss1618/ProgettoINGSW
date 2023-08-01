@@ -2,19 +2,13 @@ package com.ratatouille.Views.Schermate.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Events.SourceInfo;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
-import java.util.ArrayList;
 
 public class Activity_Login extends AppCompatActivity implements ViewLayout {
     //SYSTEM
@@ -22,9 +16,6 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
 
     //LAYOUT
     View            Fragment_View;
-    ImageView       Image_View_Logo;
-    ImageView       Image_View_Logo_1;
-    ImageView       Image_View_Logo_2;
 
     //FUNCTIONAL
     private Manager ManagerLogin;
@@ -67,9 +58,6 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     @Override
     public void LinkLayout() {
         Fragment_View       = findViewById(R.id.fragment_container_view_login);
-        Image_View_Logo     = findViewById(R.id.image_view_logo);
-        Image_View_Logo_1   = findViewById(R.id.image_view_logo_1);
-        Image_View_Logo_2   = findViewById(R.id.image_view_logo_2);
     }
     @Override
     public void SetDataOnLayout() {
@@ -79,7 +67,8 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
 
     @Override
     public void StartAnimations() {
-        RotateLogo();
+
+
     }
 
     @Override
@@ -111,33 +100,11 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     }
 
     //ANIMATIONS
-    public void MoveLogoFrom0to1(){
-        Image_View_Logo.animate().rotation(180).setDuration(500).start();
-        Image_View_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
 
-        final Handler handler = new Handler();
-        handler.postDelayed(()->{
-            Image_View_Logo.setVisibility(View.GONE);
-            Image_View_Logo_1.setVisibility(View.VISIBLE);
-        },500);
-    }
 
-    public void MoveLogoFrom1to2(){
-        Image_View_Logo_1.animate().rotation(180).setDuration(500).start();
-        Image_View_Logo_1.startAnimation(Manager_Animation.getTranslateLogoDown());
-        final Handler handler = new Handler();
-        handler.postDelayed(()->{
-            Image_View_Logo_1.setVisibility(View.GONE);
-            Image_View_Logo_2.setVisibility(View.VISIBLE);
-        },500);
-    }
 
-    public void RotateLogo(){
-        Image_View_Logo.animate().rotation(360).setDuration(2000).start();
-        Image_View_Logo.animate().alpha(0f).setDuration(0).start();
-        Image_View_Logo.animate().alpha(1f).setDuration(500).start();
-        Image_View_Logo.startAnimation(Manager_Animation.getTranslationINfromUp(700));
-    }
+
+
 
     //ACTIONS
 

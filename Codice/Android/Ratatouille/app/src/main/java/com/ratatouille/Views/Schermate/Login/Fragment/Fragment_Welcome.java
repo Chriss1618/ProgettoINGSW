@@ -8,15 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ratatouille.Controllers.Controller_Login;
+import com.ratatouille.Controllers.ControlMapper;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Login.Activity_Login;
+
+import io.vavr.control.Try;
+
 
 public class Fragment_Welcome extends Fragment implements ViewLayout {
 
@@ -25,6 +30,8 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
     //LAYOUT
     View            Fragment_View;
+
+    ImageView       ImageView_Logo;
     LinearLayout    Background;
     Button          Button_Accedi;
     Button          Button_RegistraRistorante;
@@ -83,6 +90,8 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
+
+        ImageView_Logo = Fragment_View.findViewById(R.id.image_view_logo);
         Background                  = Fragment_View.findViewById(R.id.background);
         Button_Accedi               = Fragment_View.findViewById(R.id.button_start);
         Text_View_Welcome           = Fragment_View.findViewById(R.id.text_view_welcome);
@@ -114,28 +123,63 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     }
 
     //ANIMATIONS
+    public void MoveLogoFrom0to1(){
+        ImageView_Logo.animate().rotation(180).setDuration(500).start();
+        ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
+    }
+
+    public void RotateLogo(){
+        ImageView_Logo.animate().rotation(360).setDuration(2000).start();
+        ImageView_Logo.animate().alpha(0f).setDuration(0).start();
+        ImageView_Logo.animate().alpha(1f).setDuration(500).start();
+        ImageView_Logo.startAnimation(Manager_Animation.getTranslationINfromUp(700));
+    }
     private void animateIN(){
         Button_Accedi               .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
         Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
         Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationINfromUp(1000));
+        MoveLogoFrom0to1();
+        RotateLogo();
     }
+
     private void animateOUT(){
-        Button_Accedi               .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
-        Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
-        Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
+        requireActivity().runOnUiThread(() -> {
 
-        Background.setVisibility(View.VISIBLE);
-        Background.startAnimation(Manager_Animation.getCircleReveal());
+            Button_Accedi               .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
+            Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
+            Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
+
+            MoveLogoFrom1to2();
+            Background.setVisibility(View.VISIBLE);
+            Background.startAnimation(Manager_Animation.getCircleReveal());
+            Try.run(() -> {
+                Button_Accedi.setVisibility(View.GONE);
+                Button_RegistraRistorante.setVisibility(View.GONE);
+            });
+        });
+
     }
 
+    public void MoveLogoFrom1to2(){
+        ImageView_Logo.animate().rotation(180).setDuration(1000).start();
+        ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
+
+    }
     //ACTIONS
+
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
+
     private void actionNext(){
 
         animateOUT();
     }
 
     private void onClickLogin(){
-
+        this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
+        Action action = new Action(ActionsLogin.INDEX_ACTION_NORMAL_LOGIN,"notAdmin",manager,this::animateOUT,manager.getSourceInfo());
+        SendAction(action);
     }
 
     private void onClickRegistra(){

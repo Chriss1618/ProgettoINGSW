@@ -22,15 +22,6 @@ public class MenuViewFactory implements IViewFactory {
         classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,   Fragment_EditProduct.class);
     }
 
-    public static final Map<Integer, Integer> previousIndexMapMenu;
-    static {
-        previousIndexMapMenu = new HashMap<>();
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS, ControlMapper.INDEX_MENU_LIST_CATEGORY);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_INFO_PRODUCT, ControlMapper.INDEX_MENU_LIST_PRODUCTS);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_NEW_PRODUCT, ControlMapper.INDEX_MENU_LIST_PRODUCTS);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT, ControlMapper.INDEX_MENU_INFO_PRODUCT);
-    }
-
     public ViewLayout createView(int typeView, Manager managerMenuFragments)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeView))

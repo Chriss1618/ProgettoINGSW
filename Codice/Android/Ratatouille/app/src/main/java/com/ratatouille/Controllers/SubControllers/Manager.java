@@ -15,9 +15,11 @@ import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Events.SourceInfo;
+import com.ratatouille.Views.Schermate.Login.Fragment.LoginViewFactory;
 import com.ratatouille.Views.Schermate.Menu.MenuViewFactory;
 import com.ratatouille.Views.ViewFactory;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -32,16 +34,16 @@ public class Manager implements SubController {
     private final SourceInfo sourceInfo;
 
     //LAYOUT
-    public final Context               context;
-    protected final ArrayList<ViewLayout> Views;
-    protected final View                  View;
+    public final Context                    context;
+    protected final ArrayList<ViewLayout>   Views;
+    protected final View                    View;
 
     //FUNCTIONAL
-    protected final BottomBarListener     bottomBarListener;
-    protected final FragmentManager       fragmentManager;
+    protected final BottomBarListener       bottomBarListener;
+    protected final FragmentManager         fragmentManager;
     protected final ManagerActionFactory    ManagerAction;
-    protected final ManagerRequestFactory  ManagerRequest;
-    public int    onMain;
+    protected final ManagerRequestFactory   ManagerRequest;
+    public Integer    onMain;
     public int    from;
 
     //DATA
@@ -60,6 +62,7 @@ public class Manager implements SubController {
         this.fragmentManager        = fragmentManager;
         this.bottomBarListener      = bottomBarListener;
 
+        Log.d(TAG, "Manager: TypeManager : -> "+ sourceInfo.getIndex_TypeManager());
         LIST_INDEX_VIEW = ControlMapper.classManagerToView.get(sourceInfo.getIndex_TypeManager());
 
         addViews();
@@ -95,6 +98,7 @@ public class Manager implements SubController {
 
     @Override
     public void showMain(){
+        Log.d(TAG, "Manager: TypeManager : -> "+ sourceInfo.getIndex_TypeManager());
         onMain = MAIN;
         showView(MAIN,null);
     }
@@ -105,6 +109,7 @@ public class Manager implements SubController {
 
     public void HandleRequest(Request request){
         new Thread(() -> ManagerRequest.handleRequest(request) ).start();
+
     }
 
     @Override
@@ -121,13 +126,19 @@ public class Manager implements SubController {
         final Handler handler = new Handler();
         handler.postDelayed(fragmentManager::popBackStack,300);
 
-        onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));
+        onMain =  Objects.requireNonNull(ViewFactory.PreviousIndexMapper.get(sourceInfo.getIndex_TypeManager())).get(sourceInfo.getIndex_TypeView());
     }
 
     public void showView(int indexFragment, Object msg){
         from = onMain;
         onMain = indexFragment;
         data = msg;
+        for (int indexView:LIST_INDEX_VIEW
+             ) {
+            Log.d(TAG, "showView: Index View ->"+indexView);
+        }
+
+        Log.d(TAG, "showView: To Show ->"+ LIST_INDEX_VIEW[indexFragment]);
         if( indexFragment == MAIN ) loadFragmentAsMain( LIST_INDEX_VIEW[indexFragment] );
         else loadFragmentAsNormal( LIST_INDEX_VIEW[indexFragment] );
     }
@@ -141,13 +152,13 @@ public class Manager implements SubController {
     }
 
     //ANIMATIONS
-    public void callEndAnimationOfFragment(){
-        from = onMain;
-        ViewLayout View = (ViewLayout)fragmentManager.findFragmentById(LIST_INDEX_VIEW[onMain]);
-        Objects.requireNonNull(View).EndAnimations();
-
-        onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));
-    }
+//    public void callEndAnimationOfFragment(){
+//        from = onMain;
+//        ViewLayout View = (ViewLayout)fragmentManager.findFragmentById(LIST_INDEX_VIEW[onMain]);
+//        Objects.requireNonNull(View).EndAnimations();
+//
+//        onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));
+//    }
 
 
 }

@@ -38,7 +38,7 @@ public class ServerCommunication {
 
             conn = startConnectionWithServer();
             sendRequestToServer();
-            JSONObject json_data = getResponseFromServer() ;
+            JSONObject json_data = getResponseFromServer();
             conn.disconnect();
 
             Log.d(TAG, "getDataFromServer: response Server ->\n"+json_data.toString(4));

@@ -28,9 +28,10 @@ public class Controller implements IController {
     public int typeController;
     static int[] LIST_INDEX_MANAGERS = {
     };
+
     private static final int            MAIN = 0;
     public int                          managerOnMain;
-    private FragmentManager       fragmentManager;
+    private FragmentManager             fragmentManager;
 
     private ArrayList<SubController> Managers;
 

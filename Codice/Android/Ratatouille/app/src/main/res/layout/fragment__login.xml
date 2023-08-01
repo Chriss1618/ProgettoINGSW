@@ -142,7 +142,18 @@
 
             android:textStyle="bold" />
 
-
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/image_view_logo"
+        android:visibility="visible"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@mipmap/ratatouille"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="-16dp"
+        android:rotation="180"
+        android:contentDescription="@string/rotation_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

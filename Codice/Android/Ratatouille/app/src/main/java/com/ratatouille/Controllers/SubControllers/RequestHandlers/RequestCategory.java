@@ -40,6 +40,7 @@ public class RequestCategory implements RequestHandler {
             if( BodyJSON != null ) setCategories( BodyJSON );
             TimeUnit.SECONDS.sleep(1);
             request.callBack(ListCategoryMenu);
+
         }catch ( Exception e ){
             Log.e(TAG, "getDataFromServer: ",e);
         }

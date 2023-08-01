@@ -8,6 +8,8 @@
     tools:context=".Views.Schermate.Login.Fragment.Fragment_Welcome"
     android:background="@color/MainColor">
 
+
+
     <LinearLayout
         android:id="@+id/background"
         android:layout_width="120dp"
@@ -84,5 +86,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
+    <ImageView
+        android:id="@+id/image_view_logo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@mipmap/ratatouille"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/imagine_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

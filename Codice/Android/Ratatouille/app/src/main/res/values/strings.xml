@@ -67,4 +67,6 @@
     <string name="ingredienti">Ingredienti</string>
     <string name="prodotto_da_passare_in_cucina">Prodotto da passare in cucina</string>
     <string name="aggiungi">AGGIUNGI</string>
+    <string name="imagine_logo">Imagine Logo</string>
+    <string name="rotation_logo">Rotation Logo</string>
 </resources>

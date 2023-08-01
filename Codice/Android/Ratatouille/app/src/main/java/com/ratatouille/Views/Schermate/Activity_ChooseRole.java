@@ -119,7 +119,6 @@ public class Activity_ChooseRole extends AppCompatActivity {
     }
 
 
-
     private void setToken(){
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (! task.isSuccessful() ) {
@@ -138,9 +137,9 @@ public class Activity_ChooseRole extends AppCompatActivity {
 
     private boolean AuthenticateUser(){
         TokenUser = (String) new LocalStorage(this).getData("TokenUser","String");
-        //return true;
-        if( TokenUser == null) return false;
-        return AuthenticationUserWithServer();
+        return true;
+//        if( TokenUser == null) return false;
+//        return AuthenticationUserWithServer();
     }
 
     private boolean AuthenticationUserWithServer(){
@@ -167,7 +166,6 @@ public class Activity_ChooseRole extends AppCompatActivity {
         Log.d(TAG, "sendNewCategoryToServer: true");
         return true;
     }
-
 
     //CONNECTION
     private void getUserData(){
@@ -231,11 +229,9 @@ public class Activity_ChooseRole extends AppCompatActivity {
         }
     }
 
-
-
     private void startApp(int typeUser){
         closeLoading();
-        Try.run(() -> TimeUnit.MILLISECONDS.sleep(400));
+
         Intent intent = new Intent(this, Activity_Amministratore.class);
         intent.putExtra("typeUser", typeUser+"");
         startActivity(intent);

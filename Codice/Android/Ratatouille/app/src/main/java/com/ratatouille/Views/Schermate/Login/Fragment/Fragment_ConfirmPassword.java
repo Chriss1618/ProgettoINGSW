@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Controllers.Controller_Login;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Activity_ChooseRole;
@@ -31,6 +31,8 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
 
     //LAYOUT
     View        Fragment_View;
+    LinearLayout LinearLayout_Confirm;
+
     Button      Button_Save;
 
     //FUNCTIONAL
@@ -93,7 +95,10 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
     @Override
     public void LinkLayout() {
         Button_Save = Fragment_View.findViewById(R.id.button_save);
+        LinearLayout_Confirm = Fragment_View.findViewById(R.id.linear_layout_confirm_password);
+
     }
+
     @Override
     public void SetDataOnLayout() {
 
@@ -117,7 +122,7 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
 
     //ANIMATIONS
     private void animateIN(){
-        Fragment_View.startAnimation( Manager_Animation.getTranslateAnimatioINfromRight(500));
+        LinearLayout_Confirm.startAnimation( Manager_Animation.getTranslateAnimatioINfromLeft(500));
     }
 
     //ACTIONS

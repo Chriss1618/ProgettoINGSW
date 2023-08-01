@@ -89,6 +89,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     public void PrepareData(){
         ProgressBar.setVisibility(View.VISIBLE);
         Recycler_Categories.setVisibility(View.GONE);
+
         sendRequest();
     }
 
