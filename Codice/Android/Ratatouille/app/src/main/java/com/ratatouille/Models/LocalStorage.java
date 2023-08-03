@@ -46,5 +46,8 @@ public class LocalStorage {
             }
         }else return null;
     }
-
+    public void DeleteAllData(){
+        Editor.clear();
+        Editor.apply();
+    }
 }

@@ -26,7 +26,7 @@ public class Controller implements IController {
 
     //FUNCTIONAL
     public int typeController;
-    static int[] LIST_INDEX_MANAGERS = {
+    static Integer[] LIST_INDEX_MANAGERS = {
     };
 
     private static final int            MAIN = 0;

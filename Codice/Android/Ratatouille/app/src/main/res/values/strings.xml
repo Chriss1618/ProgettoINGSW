@@ -69,4 +69,15 @@
     <string name="aggiungi">AGGIUNGI</string>
     <string name="imagine_logo">Imagine Logo</string>
     <string name="rotation_logo">Rotation Logo</string>
+    <string name="welcome">WELCOME</string>
+
+    <string name="welcome_admin">Da questo momento in poi potrai utilizzare Ratatuille23 per gestire al meglio la tua attività di ristorazione!</string>
+
+
+    <string name="tieni_traccia_dei_progressi_dei_tuoi_dipendenti">Tieni traccia dei progressi dei tuoi dipendenti</string>
+    <string name="chef_welcome">Da questo momento in poi potrai utilizzare Ratatouille23 per gestire al meglio la tua cucina!</string>
+    <string name="cameriere_welcome">Da questo momento in poi potrai utilizzare Ratatouille23 per gestire al meglio la tua sala!</string>
+    <string name="supervisore_welcome">Da questo momento in poi potrai utilizzare Ratatouille23 per gestire e supervisionare l\'attività di ristorazione!</string>
+    <string name="warning_password">La password deve essere lunga almeno 3 caratteri</string>
+    <string name="warning_email">Formato Email non corretto</string>
 </resources>

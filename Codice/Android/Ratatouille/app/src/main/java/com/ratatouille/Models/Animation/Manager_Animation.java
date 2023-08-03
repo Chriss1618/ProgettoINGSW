@@ -125,13 +125,14 @@ public class Manager_Animation {
                 TranslateAnimation.RELATIVE_TO_PARENT,0f,
                 TranslateAnimation.RELATIVE_TO_PARENT,-1f,
                 TranslateAnimation.RELATIVE_TO_PARENT,0f,
-                TranslateAnimation.RELATIVE_TO_PARENT,0.63f);
+                TranslateAnimation.RELATIVE_TO_PARENT,0.69f);
         TA.setDuration(500);
         TA.setInterpolator(new LinearInterpolator());
 
         set.addAnimation(TA);
         return set;
     }
+
     public static AnimationSet getTranslateLogoUp(){
         AnimationSet set = new AnimationSet(true);
 
@@ -139,7 +140,7 @@ public class Manager_Animation {
                 TranslateAnimation.RELATIVE_TO_PARENT,0f,
                 TranslateAnimation.RELATIVE_TO_PARENT,0.5f,
                 TranslateAnimation.RELATIVE_TO_PARENT,0f,
-                TranslateAnimation.RELATIVE_TO_PARENT,-0.33f);
+                TranslateAnimation.RELATIVE_TO_PARENT,-0.35f);
         TA.setDuration(500);
         TA.setInterpolator(new LinearInterpolator());
 

@@ -1,8 +1,6 @@
 package com.ratatouille.Models.Entity;
 
 public class Utente {
-    private static Utente instance;
-
     private int id_utente;
     private String Nome;
     private String Cognome;
@@ -12,14 +10,10 @@ public class Utente {
     private String Token;
     private int id_Restaurant;
 
-    private Utente(){
+    public Utente(){
 
     }
 
-    public static Utente getInstance(){
-        if(instance == null) instance = new Utente();
-        return instance;
-    }
 
     public int getId_utente() {
         return id_utente;

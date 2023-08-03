@@ -89,6 +89,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         TitleProducts.add("Carbonara");
 
         isDeleting = false;
+
+        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_PRODUCTS);
     }
 
     //LAYOUT

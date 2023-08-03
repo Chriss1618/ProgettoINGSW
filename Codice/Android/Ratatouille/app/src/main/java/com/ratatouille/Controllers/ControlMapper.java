@@ -29,33 +29,33 @@ public class ControlMapper {
     public static final int INDEX_LOGIN_CONFIRM            = 2;
 
     //MENU
-    public static final int INDEX_MENU_LIST_CATEGORY       = 0;
-    public static final int INDEX_MENU_LIST_PRODUCTS       = 1;
-    public static final int INDEX_MENU_INFO_PRODUCT        = 2;
-    public static final int INDEX_MENU_NEW_PRODUCT         = 3;
-    public static final int INDEX_MENU_EDIT_PRODUCT        = 4;
+    public static final int INDEX_MENU_LIST_CATEGORY       = 3;
+    public static final int INDEX_MENU_LIST_PRODUCTS       = 4;
+    public static final int INDEX_MENU_INFO_PRODUCT        = 5;
+    public static final int INDEX_MENU_NEW_PRODUCT         = 6;
+    public static final int INDEX_MENU_EDIT_PRODUCT        = 7;
 
     //STATS
-    public static final int INDEX_STATS_PRODUCTIVITY        = 0;
+    public static final int INDEX_STATS_PRODUCTIVITY        = 8;
 
     //ACCOUNT
-    public static final int INDEX_ACCOUNT_INFO              = 0;
-    public static final int INDEX_ACCOUNT_EDIT              = 1;
+    public static final int INDEX_ACCOUNT_INFO              = 9;
+    public static final int INDEX_ACCOUNT_EDIT              = 10;
 
     //STAFF
-    public static final int INDEX_STAFF_LIST                = 0;
-    public static final int INDEX_STAFF_NEW                 = 1;
+    public static final int INDEX_STAFF_LIST                = 11;
+    public static final int INDEX_STAFF_NEW                 = 12;
 
     //INVENTORY
-    public static final int INDEX_INVENTORY_LIST            = 0;
-    public static final int INDEX_INVENTORY_NEW             = 1;
-    public static final int INDEX_INVENTORY_INFO            = 2;
-    public static final int INDEX_INVENTORY_EDIT            = 3;
+    public static final int INDEX_INVENTORY_LIST            = 13;
+    public static final int INDEX_INVENTORY_NEW             = 14;
+    public static final int INDEX_INVENTORY_INFO            = 15;
+    public static final int INDEX_INVENTORY_EDIT            = 16;
 
     //ORDINI
-    public static final int INDEX_ORDINI_LIST               = 0;
-    public static final int INDEX_ORDINI_TABLE              = 1;
-    public static final int INDEX_ORDINI_HISTORY            = 2;
+    public static final int INDEX_ORDINI_LIST               = 17;
+    public static final int INDEX_ORDINI_TABLE              = 18;
+    public static final int INDEX_ORDINI_HISTORY            = 19;
 
     //ORDINI CAMERIERE
     public static final int INDEX_ORDINI_CAMERIERE_LIST_CAT            = 20;
@@ -66,35 +66,35 @@ public class ControlMapper {
     public static final int INDEX_ORDINI_CAMERIERE_INFO_REPORT_ORDER   = 25;
 
     //PAGINATION
-    static int [] ADMINISTRATOR_INDEX = {
+    static Integer [] ADMINISTRATOR_INDEX = {
             INDEX_TYPE_MANAGER_STATS,
             INDEX_TYPE_MANAGER_STAFF,
             INDEX_TYPE_MANAGER_MENU,
             INDEX_TYPE_MANAGER_ACCOUNT
     };
-    static int [] SUPERVISORE_INDEX = {
+    static Integer [] SUPERVISORE_INDEX = {
             INDEX_TYPE_MANAGER_INVENTORY,
             INDEX_TYPE_MANAGER_MENU,
             INDEX_TYPE_MANAGER_ACCOUNT
     };
-    static int [] CHEF_INDEX = {
+    static Integer [] CHEF_INDEX = {
             INDEX_TYPE_MANAGER_INVENTORY,
             INDEX_TYPE_MANAGER_ORDINI,
             INDEX_TYPE_MANAGER_MENU,
             INDEX_TYPE_MANAGER_ACCOUNT
     };
-    static int [] CAMERIERE_INDEX = {
+    static Integer [] CAMERIERE_INDEX = {
             INDEX_TYPE_MANAGER_ORDINI_CAMERIERE,
             INDEX_TYPE_MANAGER_ACCOUNT
     };
 
     //VIEW_PER_PAGINATION
-    static int [] LOGIN_INDEX = {
+    static Integer [] LOGIN_INDEX = {
             INDEX_LOGIN_WELCOME,
             INDEX_LOGIN_LOGIN,
             INDEX_LOGIN_CONFIRM
     };
-    static int [] MENU_INDEX = {
+    static Integer [] MENU_INDEX = {
             INDEX_MENU_LIST_CATEGORY,
             INDEX_MENU_LIST_PRODUCTS,
             INDEX_MENU_INFO_PRODUCT,
@@ -102,32 +102,32 @@ public class ControlMapper {
             INDEX_MENU_EDIT_PRODUCT
     };
 
-    static int [] STATS_INDEX = {
+    static Integer [] STATS_INDEX = {
             INDEX_STATS_PRODUCTIVITY
     };
 
-    static int [] STAFF_INDEX = {
+    static Integer [] STAFF_INDEX = {
             INDEX_STAFF_LIST,
             INDEX_STAFF_NEW
     };
 
-    static int [] ACCOUNT_INDEX = {
+    static Integer [] ACCOUNT_INDEX = {
             INDEX_ACCOUNT_INFO,
             INDEX_ACCOUNT_EDIT
     };
 
-    static int [] INVENTORY_INDEX = {
+    static Integer [] INVENTORY_INDEX = {
             INDEX_INVENTORY_LIST,
             INDEX_INVENTORY_NEW,
             INDEX_INVENTORY_INFO,
             INDEX_INVENTORY_EDIT
     };
-    static int [] ORDINI_INDEX = {
+    static Integer [] ORDINI_INDEX = {
             INDEX_ORDINI_LIST,
             INDEX_ORDINI_TABLE,
             INDEX_ORDINI_HISTORY
     };
-    static int [] ORDINI_CAMERIERE_INDEX = {
+    static Integer [] ORDINI_CAMERIERE_INDEX = {
             INDEX_ORDINI_CAMERIERE_LIST_CAT,
             INDEX_ORDINI_CAMERIERE_LIST_TABLE,
             INDEX_ORDINI_CAMERIERE_LIST_PRODUCT,
@@ -136,7 +136,7 @@ public class ControlMapper {
             INDEX_ORDINI_CAMERIERE_INFO_REPORT_ORDER
     };
 
-    public static final Map<Integer, int[]> classControllerToManager = new HashMap<>();
+    public static final Map<Integer, Integer[]> classControllerToManager = new HashMap<>();
     static {
         classControllerToManager.put(INDEX_TYPE_CONTROLLER_AMMINISTRATORE,  ADMINISTRATOR_INDEX);
         classControllerToManager.put(INDEX_TYPE_CONTROLLER_SUPERVISORE,     SUPERVISORE_INDEX);
@@ -144,7 +144,7 @@ public class ControlMapper {
         classControllerToManager.put(INDEX_TYPE_CONTROLLER_CAMERIERE,       CAMERIERE_INDEX);
     }
 
-    public static final Map<Integer, int[]> classManagerToView = new HashMap<>();
+    public static final Map<Integer, Integer[]> classManagerToView = new HashMap<>();
     static {
         classManagerToView.put(INDEX_TYPE_MANAGER_LOGIN,            LOGIN_INDEX);
         classManagerToView.put(INDEX_TYPE_MANAGER_MENU,             MENU_INDEX);

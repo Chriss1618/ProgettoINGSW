@@ -113,6 +113,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     @Override
     public void PrepareData() {
         NewProduct = new Product();
+        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_NEW_PRODUCT);
     }
 
     //LAYOUT

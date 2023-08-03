@@ -1,9 +1,7 @@
 package com.ratatouille.Controllers.SubControllers;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import androidx.fragment.app.Fragment;
@@ -15,11 +13,10 @@ import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Events.SourceInfo;
-import com.ratatouille.Views.Schermate.Login.Fragment.LoginViewFactory;
-import com.ratatouille.Views.Schermate.Menu.MenuViewFactory;
 import com.ratatouille.Views.ViewFactory;
+
+import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -29,8 +26,8 @@ public class Manager implements SubController {
 
     //SYSTEM
     private static final String TAG = "Manager_MenuFragments";
-    public int[] LIST_INDEX_VIEW;
-    public int MAIN = 0;
+    public Integer[] LIST_INDEX_VIEW;
+    public int MAIN;
     private final SourceInfo sourceInfo;
 
     //LAYOUT
@@ -43,8 +40,11 @@ public class Manager implements SubController {
     protected final FragmentManager         fragmentManager;
     protected final ManagerActionFactory    ManagerAction;
     protected final ManagerRequestFactory   ManagerRequest;
-    public Integer    onMain;
-    public Integer    from;
+    public Integer      onMain;
+    public Integer      from;
+    public Integer      positionList = 0;
+    public SecureRandom rand ;
+    public int lastRandom = -1;
 
     //DATA
     private Object data;
@@ -52,7 +52,7 @@ public class Manager implements SubController {
     public Manager(SourceInfo sourceInfo,Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Log.d(TAG, "Manager: Costruttore");
         Views = new ArrayList<>();
-
+        rand = new SecureRandom();
         this.sourceInfo = sourceInfo;
         this.ManagerAction = new ManagerActionFactory();
         this.ManagerRequest = new ManagerRequestFactory();
@@ -63,8 +63,8 @@ public class Manager implements SubController {
         this.bottomBarListener      = bottomBarListener;
 
         Log.d(TAG, "Manager: TypeManager : -> "+ sourceInfo.getIndex_TypeManager());
-        LIST_INDEX_VIEW = ControlMapper.classManagerToView.get(sourceInfo.getIndex_TypeManager());
-
+        LIST_INDEX_VIEW = Objects.requireNonNull(ControlMapper.classManagerToView.get(sourceInfo.getIndex_TypeManager()));
+        MAIN = LIST_INDEX_VIEW[0];
         addViews();
 
         Log.d(TAG, "Manager: FINE Costruttore");
@@ -82,15 +82,15 @@ public class Manager implements SubController {
     }
 
     //ShowPages
-    private void loadFragmentAsMain(int Tag){
+    private void loadFragmentAsMain(int indexView){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), (Fragment) Views.get(MAIN), String.valueOf(Tag))
+                .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(indexView))
                 .setReorderingAllowed(true)
                 .commit();
     }
-    private void loadFragmentAsNormal(int Tag){
+    private void loadFragmentAsNormal(int indexView){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), (Fragment) Views.get(onMain), String.valueOf(Tag))
+                .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(indexView))
                 .setReorderingAllowed(true)
                 .addToBackStack(null)
                 .commit();
@@ -114,34 +114,37 @@ public class Manager implements SubController {
 
     @Override
     public void changeOnMain(int indexMain, Object msg) {
-        //closeView();
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(300));
         showView(indexMain,msg);
+    }
+    private void showView(int indexFragment, Object msg){
+        from = onMain;
+        data = msg;
+
+        this.onMain = getIndexFragment( indexFragment );
+
+        if( onMain == MAIN ) loadFragmentAsMain( onMain );
+        else loadFragmentAsNormal( onMain);
+    }
+
+    private int getIndexFragment(int indexFragment){
+        for(int position = 0 ; position < LIST_INDEX_VIEW.length; position++){
+            if(indexFragment == LIST_INDEX_VIEW[position] ){
+                this.positionList = position;
+                return LIST_INDEX_VIEW[position];
+            }
+        }
+        return 0;
     }
 
     @Override
     public void closeView() {
-
         from = onMain;
-        Views.get(onMain).EndAnimations();
+        Views.get(positionList).EndAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(fragmentManager::popBackStack,300);
-
-        onMain =  Objects.requireNonNull(ViewFactory.PreviousIndexMapper.get(sourceInfo.getIndex_TypeManager())).get(sourceInfo.getIndex_TypeView());
-    }
-
-    public void showView(int indexFragment, Object msg){
-        from = onMain;
-        onMain = indexFragment;
-        data = msg;
-        for (int indexView:LIST_INDEX_VIEW
-             ) {
-            Log.d(TAG, "showView: Index View ->"+indexView);
-        }
-
-        Log.d(TAG, "showView: To Show ->"+ LIST_INDEX_VIEW[indexFragment]);
-        if( indexFragment == MAIN ) loadFragmentAsMain( LIST_INDEX_VIEW[indexFragment] );
-        else loadFragmentAsNormal( LIST_INDEX_VIEW[indexFragment] );
+        Log.d(TAG, "closeView: TypeManager->"+sourceInfo.getIndex_TypeManager());
+        onMain = Objects.requireNonNull(ViewFactory.PreviousIndexMapper.get(sourceInfo.getIndex_TypeManager())).get(sourceInfo.getIndex_TypeView());
     }
 
     //FUNCTIONAL

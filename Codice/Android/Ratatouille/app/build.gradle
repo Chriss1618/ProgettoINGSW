@@ -67,4 +67,7 @@ dependencies {
     //compact trycatch
     implementation 'io.vavr:vavr:0.10.4'
     //implementation 'org.jooq:jool:0.9.13'
+
+    //Animation Activity
+    implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
 }

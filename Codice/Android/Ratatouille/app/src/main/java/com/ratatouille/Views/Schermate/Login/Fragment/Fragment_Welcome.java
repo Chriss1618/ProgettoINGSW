@@ -79,7 +79,7 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     //LAYOUT
     @Override
     public void PrepareData() {
-
+        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
     }
     @Override
     public void PrepareLayout() {
@@ -103,10 +103,15 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
 
     }
+    @Override
+    public void SetActionsOfLayout() {
+        Button_Accedi.setOnClickListener(View ->onClickLogin());
+        Button_RegistraRistorante.setOnClickListener(View ->onClickRegistra());
+    }
 
+    //ANIMATIONS
     @Override
     public void StartAnimations() {
-
         animateIN();
     }
 
@@ -115,11 +120,22 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
         animateOUT();
     }
 
-    @Override
-    public void SetActionsOfLayout() {
-        Button_Accedi.setOnClickListener(View ->onClickLogin());
 
-        Button_RegistraRistorante.setOnClickListener(View ->onClickRegistra());
+    //ACTIONS
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
+
+    private void onClickLogin(){
+        this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
+        Action action = new Action(ActionsLogin.INDEX_ACTION_NORMAL_LOGIN,"notAdmin",manager,this::animateOUT,manager.getSourceInfo());
+        SendAction(action);
+    }
+
+    private void onClickRegistra(){
+        this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
+        Action action = new Action(ActionsLogin.INDEX_ACTION_REGISTER_ADMIN,"admin",manager,this::animateOUT,manager.getSourceInfo());
+        SendAction(action);
     }
 
     //ANIMATIONS
@@ -165,26 +181,7 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
         ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
 
     }
-    //ACTIONS
 
-    private void SendAction(Action action){
-        manager.HandleAction(action);
-    }
-
-    private void actionNext(){
-
-        animateOUT();
-    }
-
-    private void onClickLogin(){
-        this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
-        Action action = new Action(ActionsLogin.INDEX_ACTION_NORMAL_LOGIN,"notAdmin",manager,this::animateOUT,manager.getSourceInfo());
-        SendAction(action);
-    }
-
-    private void onClickRegistra(){
-
-    }
 
     //FUNCTIONAL
 

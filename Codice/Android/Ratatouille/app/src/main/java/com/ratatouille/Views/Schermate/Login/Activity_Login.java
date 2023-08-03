@@ -10,6 +10,8 @@ import com.ratatouille.Models.Events.SourceInfo;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class Activity_Login extends AppCompatActivity implements ViewLayout {
     //SYSTEM
     private static final String TAG = "MainActivity";
@@ -21,12 +23,15 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     private Manager ManagerLogin;
 
     //OTHER...
+
     @Override
     public void onBackPressed() {
-        if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
-            ManagerLogin.closeView();
-        }else{
-            super.onBackPressed();
+        if(ManagerLogin.onMain != ControlMapper.INDEX_LOGIN_CONFIRM){
+            if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
+                ManagerLogin.closeView();
+            }else{
+                super.onBackPressed();
+            }
         }
     }
     @Override

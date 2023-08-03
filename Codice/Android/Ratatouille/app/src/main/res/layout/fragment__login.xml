@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="230dp"
+            android:layout_width="210dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_login" />
 
@@ -65,7 +65,7 @@
             android:layout_marginTop="12dp"
             android:autofillHints=""
 
-            android:background="@drawable/background_edit_text_stroke"
+            android:background="@drawable/background_edit_text_stroke_white"
             android:ems="10"
             android:hint="@string/inserisci_la_tua_email"
 
@@ -76,9 +76,22 @@
             android:textColor="@color/SoftBlack"
 
             android:textColorLink="@color/MainColor"
-            android:textCursorDrawable="@color/MainColor"
+            android:textCursorDrawable="@drawable/custom_cursor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/warning_Email"
+
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_compact_rounded_regular_italic"
+            android:text="@string/warning_email"
+            android:layout_gravity="start"
+            android:textSize="15sp"
+            android:textColor="@color/red"
+            app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,7 +117,7 @@
             android:layout_marginTop="12dp"
             android:autofillHints=""
 
-            android:background="@drawable/background_edit_text_stroke"
+            android:background="@drawable/background_edit_text_stroke_white"
             android:ems="10"
             android:hint="@string/inserisci_la_password"
 
@@ -115,45 +128,155 @@
             android:textColor="@color/SoftBlack"
 
             android:textColorLink="@color/MainColor"
-            android:textCursorDrawable="@color/MainColor"
+            android:textCursorDrawable="@drawable/custom_cursor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/warning_password"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_compact_rounded_regular_italic"
+            android:text="@string/warning_password"
+            android:layout_gravity="start"
+            android:textSize="15sp"
+            android:textColor="@color/red"
+            app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
+
+
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/image_view_logo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:contentDescription="@string/rotation_logo"
+        android:rotation="180"
+        android:src="@mipmap/ratatouille"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_login" >
 
         <android.widget.Button
             android:id="@+id/button_login"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:layout_gravity="end"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="16dp"
-
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
             android:background="@drawable/background_button_main"
-
             android:drawableEnd="@drawable/ic_arrow_forward"
             android:fontFamily="@font/sf_compact_rounded"
             android:paddingStart="36dp"
             android:paddingTop="16dp"
             android:paddingEnd="32dp"
-
             android:paddingBottom="13dp"
             android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            android:textStyle="bold" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/darkRL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark"
+        android:visibility="gone"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
+    <LinearLayout
+        android:id="@+id/linear_layout_new_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/background_edit_text_stroke_white"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_category_accepted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:visibility="visible">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_baseline_warning_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:text="Credenziali Errate"
+                android:textColor="@color/Black"
+                android:textSize="25sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_annulla"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="8dp"
+                app:cardUseCompatPadding="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingEnd="24dp"
+                    android:paddingStart="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_compact_rounded_bold"
+                        android:gravity="center"
+                        android:autoSizeMaxTextSize="25sp"
+                        android:autoSizeMinTextSize="9sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+
+                        android:text="OK"
+                        android:textColor="@color/MainColor"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/image_view_logo"
-        android:visibility="visible"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:src="@mipmap/ratatouille"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="-16dp"
-        android:rotation="180"
-        android:contentDescription="@string/rotation_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

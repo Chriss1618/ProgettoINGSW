@@ -1,6 +1,8 @@
 package com.ratatouille.Views.Schermate;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,17 +40,13 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
+import maes.tech.intentanim.CustomIntent;
 
 public class Activity_ChooseRole extends AppCompatActivity {
     //SYSTEM
     private static final String TAG = "Activity_ChooseRole";
 
     //LAYOUT
-    Button  Button_Amministratore;
-    Button  Button_Supervisore;
-    Button  Button_Chef;
-    Button  Button_Cameriere;
-
     ImageView ImageView_Logo;
     LinearLayout Background;
     //DATA
@@ -62,10 +60,16 @@ public class Activity_ChooseRole extends AppCompatActivity {
     //OTHER...
 
     @Override
+    public void finish() {
+        super.finish();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_role);
-
+        //new LocalStorage(this).DeleteAllData();
         PrepareData();
 
         PrepareLayout();
@@ -84,7 +88,7 @@ public class Activity_ChooseRole extends AppCompatActivity {
         new Thread(this::rotateAnimationLogo).start();
 
         new Thread(() ->{
-            Try.run(() -> TimeUnit.SECONDS.sleep(1));
+            Try.run(() -> TimeUnit.SECONDS.sleep(2));
             if(AuthenticateUser()) startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE);
             else startLogin();
         }).start();
@@ -92,10 +96,6 @@ public class Activity_ChooseRole extends AppCompatActivity {
     }
 
     private void LinkLayout() {
-        Button_Amministratore   = findViewById(R.id.button_amministratore);
-        Button_Supervisore      = findViewById(R.id.button_supervisore);
-        Button_Chef             = findViewById(R.id.button_chef);
-        Button_Cameriere        = findViewById(R.id.button_cameriere);
 
         ImageView_Logo          = findViewById(R.id.image_view_logo);
         Background              = findViewById(R.id.background);
@@ -104,11 +104,7 @@ public class Activity_ChooseRole extends AppCompatActivity {
 
     }
     private void SetActionsOfLayout() {
-        Button_Amministratore   .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE));
-        Button_Supervisore      .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE));
-        Button_Chef             .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CHEF));
-//      Button_Cameriere        .setOnClickListener(view -> startApp(ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE));
-        Button_Cameriere        .setOnClickListener(view -> startLogin());
+
     }
 
     private void startLogin(){
@@ -136,10 +132,11 @@ public class Activity_ChooseRole extends AppCompatActivity {
     }
 
     private boolean AuthenticateUser(){
-        TokenUser = (String) new LocalStorage(this).getData("TokenUser","String");
+        TokenUser = (String) new LocalStorage(this).getData("Token","String");
+//        return true;
+        if( TokenUser == null) return false;
         return true;
-//        if( TokenUser == null) return false;
-//        return AuthenticationUserWithServer();
+        //return AuthenticationUserWithServer();
     }
 
     private boolean AuthenticationUserWithServer(){
