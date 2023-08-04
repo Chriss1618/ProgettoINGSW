@@ -25,14 +25,13 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     Button              Button_EditAccount;
 
     //FUNCTIONAL
-    //Manager_AccountFragments manager_accountFragments;
-    private Manager manager;
+    private final Manager manager;
 
     //DATA
 
     //OTHER...
 
-    public Fragment_AccountInfo(Manager manager, int a) {
+    public Fragment_AccountInfo(Manager manager) {
         this.manager = manager;
     }
 

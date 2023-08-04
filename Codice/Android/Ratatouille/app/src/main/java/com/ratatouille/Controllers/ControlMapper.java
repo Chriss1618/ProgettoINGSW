@@ -6,6 +6,12 @@ import java.util.Map;
 public class ControlMapper {
 
     //LIST
+    //TYPE USERS
+    public static final String INDEX_TYPE_USER_AMMINISTRATORE   = "Amministratore";
+    public static final String INDEX_TYPE_USER_SUPERVISORE      = "Supervisore";
+    public static final String INDEX_TYPE_USER_CHEF             = "Chef";
+    public static final String INDEX_TYPE_USER_CAMERIERE        = "Cameriere";
+
     // Controllers
     public static final int INDEX_TYPE_CONTROLLER_AMMINISTRATORE   = 0;
     public static final int INDEX_TYPE_CONTROLLER_SUPERVISORE      = 1;

@@ -19,21 +19,18 @@ public class Controller implements IController {
 
     private static final String TAG = "Controller_Amministratore";
     //SYSTEM
-    public final static int AMMINISTRATORE_INDEX_STATS     = 0;
-    public final static int AMMINISTRATORE_INDEX_STAFF     = 1;
-    public final static int AMMINISTRATORE_INDEX_MENU      = 2;
-    public final static int AMMINISTRATORE_INDEX_ACCOUNT   = 3;
 
     //FUNCTIONAL
     public int typeController;
     static Integer[] LIST_INDEX_MANAGERS = {
+
     };
 
     private static final int            MAIN = 0;
     public int                          managerOnMain;
-    private FragmentManager             fragmentManager;
+    private final FragmentManager       fragmentManager;
 
-    private ArrayList<SubController> Managers;
+    private final ArrayList<SubController> Managers;
 
     //LAYOUT
     private Context             context;
@@ -65,9 +62,6 @@ public class Controller implements IController {
         Log.d(TAG, "FINE NEW V Controller: costruttore Controller ");
     }
 
-    public Controller() {
-
-    }
     public int getNumberManagers(){
         return LIST_INDEX_MANAGERS.length;
     }
@@ -80,11 +74,8 @@ public class Controller implements IController {
     @Override
     public void changeOnMain(int indexMain) {
         closeView();
-
         final Handler handler = new Handler();
-        handler.postDelayed(()->{
-            showOnMain(indexMain);
-        },300);
+        handler.postDelayed(()-> showOnMain(indexMain),300);
     }
 
     private void showOnMain(int indexMain){

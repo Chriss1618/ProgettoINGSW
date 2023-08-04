@@ -16,27 +16,25 @@ public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {
     private static final String TAG = "Fragment_EditAccountInf";
 
     //LAYOUT
-    android.view.View View_Fragment;
+    android.view.View   View_Fragment;
     ConstraintLayout    ConstraintLayout_ImageAccount;
     LinearLayout        LinearLayout_InfoAccount;
     LinearLayout        LinearLayout_Buttons;
 
     //FUNCTIONAL
-    private Manager manager;
+    private final Manager manager;
 
     //DATA
 
     //OTHER...
 
-    public Fragment_EditAccountInfo(Manager manager, int a) {
+    public Fragment_EditAccountInfo(Manager manager) {
         this.manager = manager;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override

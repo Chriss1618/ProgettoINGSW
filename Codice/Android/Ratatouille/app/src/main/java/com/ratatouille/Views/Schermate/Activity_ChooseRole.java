@@ -2,16 +2,11 @@ package com.ratatouille.Views.Schermate;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Models.API.Rest.EndPointer;
-import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.LocalStorage;
@@ -25,12 +20,11 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     private static final String TAG = "Activity_ChooseRole";
 
     //LAYOUT
-    ImageView ImageView_Logo;
-    LinearLayout Background;
+    private ImageView ImageView_Logo;
+    private LinearLayout Background;
 
     //DATA
-    int numGiri = 0;
-    String TokenUser;
+    private int numGiri = 0;
 
     //FUNCTIONAL
 
@@ -40,25 +34,25 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_role);
-        //new LocalStorage(this).DeleteAllData();
+
         PrepareData();
 
         PrepareLayout();
 
         StartAnimations();
-
     }
 
-    //LAYOUT
+    //DATA
     @Override
     public void PrepareData() {
         new Thread(() ->{
             Try.run(() -> TimeUnit.SECONDS.sleep(2));
-            if(AuthenticateUser()) startApp(ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE);
+            if(AuthenticateUser()) startApp();
             else startLogin();
         }).start();
     }
 
+    //LAYOUT
     @Override
     public void PrepareLayout() {
         LinkLayout();
@@ -75,7 +69,6 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     @Override
     public void SetDataOnLayout() {
     }
-
     @Override
     public void SetActionsOfLayout() {
 
@@ -90,15 +83,13 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     }
 
     private boolean AuthenticateUser(){
-        TokenUser = (String) new LocalStorage(this).getData("Token","String");
-        return TokenUser != null;
+        return (String) new LocalStorage(this).getData("Token","String") != null;
     }
 
-    private void startApp(int typeUser){
+    private void startApp(){
+        Log.d(TAG, " -> User Logged in! <- ");
         closeLoading();
-
         Intent intent = new Intent(this, Activity_Amministratore.class);
-        intent.putExtra("typeUser", typeUser+"");
         startActivity(intent);
     }
 
@@ -107,7 +98,6 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     public void StartAnimations() {
         new Thread(this::rotateAnimationLogo).start();
     }
-
     @Override
     public void EndAnimations() {
 
@@ -125,7 +115,6 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
         rotation(820);
         while(true) rotation( numGiri++ % 2 == 0 ? -420 : 420 );
     }
-
     private void rotation(int speed){
         runOnUiThread(() -> ImageView_Logo.animate().rotation(speed).setDuration(10000).start());
         Try.run(() -> Thread.sleep(5000) );

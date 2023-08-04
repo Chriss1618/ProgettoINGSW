@@ -1,32 +1,20 @@
 package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.util.Log;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.LocalStorage;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
 import io.vavr.control.Try;
 
 public class ActionsLogin extends ActionsViewHandler{
@@ -40,10 +28,10 @@ public class ActionsLogin extends ActionsViewHandler{
 
     public ActionsLogin(){
         actionHandlerMap = new HashMap<>();
-        actionHandlerMap.put(INDEX_ACTION_START_REGISTER_ADMIN, new StartRegisterAdmin_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_START_LOGIN, new StartLogin_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_LOGIN, new Login_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_LOGIN_ADMIN, new LoginAdmin_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_START_REGISTER_ADMIN,     new StartRegisterAdmin_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_START_LOGIN,              new StartLogin_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_LOGIN,                    new Login_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_LOGIN_ADMIN,              new LoginAdmin_ActionHandler());
     }
     private static class StartRegisterAdmin_ActionHandler implements ActionHandler{
         @Override
@@ -74,7 +62,6 @@ public class ActionsLogin extends ActionsViewHandler{
         @Override
         public void handleAction(Action action) {
             Context context = action.getManager().context;
-            Log.d(TAG, "handleAction: RegistraADMIN");
             if(getUserFromServer(action)){
                 new LocalStorage(context).putData("ID_Utente",((Utente) action.getData()).getId_utente());
                 new LocalStorage(context).putData("ID_Ristorante",((Utente) action.getData()).getId_Restaurant());
@@ -115,8 +102,9 @@ public class ActionsLogin extends ActionsViewHandler{
                     Log.d(TAG, "getUserFromServer: true");
                     return true;
                 }else{
-                    String messaggeError = BodyJSON.getString("MSG").replace("0 ","");
-                    action.getManager().setData(messaggeError);
+                    assert BodyJSON != null;
+                    String messageError = BodyJSON.getString("MSG").replace("0 ","");
+                    action.getManager().setData(messageError);
                     Log.d(TAG, "getUserFromServer: false");
                     return false;
                 }
@@ -131,13 +119,8 @@ public class ActionsLogin extends ActionsViewHandler{
     }
 
     private static class LoginAdmin_ActionHandler implements ActionHandler{
-
         @Override
         public void handleAction(Action action) {
-
-            Log.d(TAG, "handleAction: RegistraADMIN");
-
-
             String token = "WAITING";
             ((Utente)action.getData()).setToken(token);
             getFCMToken(action);
@@ -174,6 +157,8 @@ public class ActionsLogin extends ActionsViewHandler{
                     if (task.isSuccessful()) {
                         String token = task.getResult();
                         ((Utente) action.getData()).setToken(token);
+                        ((Utente) action.getData()).setNome("Amministratore");
+                        ((Utente) action.getData()).setCognome("");
                     } else {
                         Log.w(TAG, "Fetching FCM registration token failed", task.getException());
                     }
@@ -187,9 +172,7 @@ public class ActionsLogin extends ActionsViewHandler{
         }
 
         private boolean stetUserToServer(Action action){
-            Utente user = (Utente)action.getData();
-            user.setNome("Amministratore");
-            user.setCognome("");
+            Utente user = ((Utente) action.getData());
             Log.d(TAG, "stetUserToServer: Email->"+user.getEmail());
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("Nome", user.getNome())
@@ -205,19 +188,17 @@ public class ActionsLogin extends ActionsViewHandler{
                 if( BodyJSON != null && BodyJSON.getString("MSG").contains("1")){
                     JSONObject DATA_Json = new JSONObject(BodyJSON.getString("DATA"));
                     Log.d(TAG, "setUserToServer: DATA_JSON->"+DATA_Json.toString(4));
-//                    JSONObject utente_Json = new JSONObject(DATA_Json.getString(0));
-//
-//                    user.setId_utente(Integer.parseInt( utente_Json.getString("ID_Utente") ));
-//                    user.setId_Restaurant(Integer.parseInt( utente_Json.getString("ID_Ristorante") ));
-//                    user.setNome(utente_Json.getString("Nome"));
-//                    user.setCognome(utente_Json.getString("Cognome"));
-//                    user.setToken(utente_Json.getString("Token"));
-//                    user.setType_user(utente_Json.getString("Type_User"));
-                    Log.d(TAG, "setUserToServer: true");
+                    user.setId_utente(Integer.parseInt( DATA_Json.getString("Id_Utente") ));
+                    user.setId_Restaurant(Integer.parseInt( DATA_Json.getString("Id_Ristorante") ));
+                    user.setNome(DATA_Json.getString("Nome"));
+                    user.setCognome(DATA_Json.getString("Cognome"));
+                    user.setToken(DATA_Json.getString("Token"));
+                    user.setType_user(DATA_Json.getString("Type_User"));
                     return true;
                 }else{
-                    String messaggeError = BodyJSON.getString("MSG").replace("0 ","");
-                    action.getManager().setData(messaggeError);
+                    assert BodyJSON != null;
+                    String messageError = BodyJSON.getString("MSG").replace("0 ","");
+                    action.getManager().setData(messageError);
                     Log.d(TAG, "setUserToServer: false");
                     return false;
                 }

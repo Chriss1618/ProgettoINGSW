@@ -29,8 +29,8 @@ public class AccountViewFactory implements IViewFactory {
     public ViewLayout createView(int typeView, Manager managerMenuFragments)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeView))
-                    .getConstructor(Manager.class,int.class)
-                    .newInstance(managerMenuFragments,2);
+                    .getConstructor(Manager.class)
+                    .newInstance(managerMenuFragments);
         }catch (InvocationTargetException | NoSuchMethodException e ) { //No public constructor con Signature specificata per il tipo di View
 
             Log.e(TAG, "createView: ",e );
