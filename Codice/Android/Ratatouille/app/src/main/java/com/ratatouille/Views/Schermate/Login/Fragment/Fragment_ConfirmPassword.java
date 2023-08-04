@@ -58,26 +58,14 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
     Button      Button_Save;
 
     //FUNCTIONAL
-    private Manager manager;
+    private final Manager manager;
 
     //DATA
     private String Rule;
     //OTHER...
 
-    public Fragment_ConfirmPassword(Manager manager, int a) {
+    public Fragment_ConfirmPassword(Manager manager) {
         this.manager = manager;
-    }
-
-    public Fragment_ConfirmPassword() {
-    }
-
-    public static Fragment_ConfirmPassword newInstance(String param1, String param2) {
-        Fragment_ConfirmPassword fragment = new Fragment_ConfirmPassword();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override

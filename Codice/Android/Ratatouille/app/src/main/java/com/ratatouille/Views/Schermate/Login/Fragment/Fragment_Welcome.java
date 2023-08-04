@@ -24,38 +24,24 @@ import io.vavr.control.Try;
 
 
 public class Fragment_Welcome extends Fragment implements ViewLayout {
-
     //SYSTEM
     private static final String TAG = "Fragment_Welcome";
 
     //LAYOUT
-    View            Fragment_View;
-
-    ImageView       ImageView_Logo;
-    LinearLayout    Background;
-    Button          Button_Accedi;
-    Button          Button_RegistraRistorante;
-    TextView        Text_View_Welcome;
+    private View            Fragment_View;
+    private ImageView       ImageView_Logo;
+    private LinearLayout    Background;
+    private Button          Button_Accedi;
+    private Button          Button_RegistraRistorante;
+    private TextView        Text_View_Welcome;
 
     //FUNCTIONAL
-    private Manager manager;
+    private final Manager manager;
 
     //OTHER...
 
-    public Fragment_Welcome(Manager manager, int a) {
+    public Fragment_Welcome(Manager manager) {
         this.manager = manager;
-    }
-
-
-    public Fragment_Welcome() {
-
-    }
-
-    public static Fragment_Welcome newInstance() {
-        Fragment_Welcome fragment = new Fragment_Welcome();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -79,7 +65,7 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     //LAYOUT
     @Override
     public void PrepareData() {
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
+        //manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
     }
     @Override
     public void PrepareLayout() {
@@ -90,8 +76,7 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
-
-        ImageView_Logo = Fragment_View.findViewById(R.id.image_view_logo);
+        ImageView_Logo              = Fragment_View.findViewById(R.id.image_view_logo);
         Background                  = Fragment_View.findViewById(R.id.background);
         Button_Accedi               = Fragment_View.findViewById(R.id.button_start);
         Text_View_Welcome           = Fragment_View.findViewById(R.id.text_view_welcome);
@@ -100,26 +85,13 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     }
     @Override
     public void SetDataOnLayout() {
-
-
     }
+
     @Override
     public void SetActionsOfLayout() {
         Button_Accedi.setOnClickListener(View ->onClickLogin());
         Button_RegistraRistorante.setOnClickListener(View ->onClickRegistra());
     }
-
-    //ANIMATIONS
-    @Override
-    public void StartAnimations() {
-        animateIN();
-    }
-
-    @Override
-    public void EndAnimations() {
-        animateOUT();
-    }
-
 
     //ACTIONS
     private void SendAction(Action action){
@@ -138,10 +110,17 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
         SendAction(action);
     }
 
+    //FUNCTIONAL
+
     //ANIMATIONS
-    public void MoveLogoFrom0to1(){
-        ImageView_Logo.animate().rotation(180).setDuration(500).start();
-        ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
+    @Override
+    public void StartAnimations() {
+        animateIN();
+    }
+
+    @Override
+    public void EndAnimations() {
+        animateOUT();
     }
 
     public void RotateLogo(){
@@ -157,10 +136,8 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
         MoveLogoFrom0to1();
         RotateLogo();
     }
-
     private void animateOUT(){
         requireActivity().runOnUiThread(() -> {
-
             Button_Accedi               .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
             Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
             Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
@@ -176,14 +153,13 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
     }
 
+    public void MoveLogoFrom0to1(){
+        ImageView_Logo.animate().rotation(180).setDuration(500).start();
+        ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
+    }
     public void MoveLogoFrom1to2(){
         ImageView_Logo.animate().rotation(180).setDuration(1000).start();
         ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
-
     }
-
-
-    //FUNCTIONAL
-
 
 }

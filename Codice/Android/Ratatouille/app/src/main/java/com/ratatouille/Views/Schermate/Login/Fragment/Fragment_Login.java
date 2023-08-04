@@ -1,16 +1,9 @@
 package com.ratatouille.Views.Schermate.Login.Fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,60 +13,46 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Menu.Fragment_ListCategory;
 
 public class Fragment_Login extends Fragment implements ViewLayout {
-
     //SYSTEM
     private static final String TAG = "Fragment_Login";
 
     //LAYOUT
-    View            Fragment_View;
-    Button          Button_Login;
-    EditText        EditTex_Email;
-    EditText        EditTex_Password;
+    private View            Fragment_View;
+    private LinearLayout    LinearLayout_BackGroundError;
+    private LinearLayout    LinearLayout_Error;
+    private LinearLayout    LinearLayout_Login;
 
-    TextView        TextView_MsgLogin;
-    TextView        TextView_warningEmail;
-    TextView        TextView_warningPassword;
-
-    LinearLayout    LinearLayout_BackGroundError;
-    LinearLayout    LinearLayout_Error;
-    LinearLayout    LinearLayout_Login;
-    ImageView       ImageView_Logo;
-
+    private Button          Button_Login;
+    private EditText        EditTex_Email;
+    private EditText        EditTex_Password;
+    private TextView        TextView_MsgLogin;
+    private TextView        TextView_warningEmail;
+    private TextView        TextView_warningPassword;
+    private ImageView       ImageView_Logo;
 
     //FUNCTIONAL
-    private Manager manager;
-    private boolean isRegistratingAdmin = false;
+    private final Manager manager;
+    private boolean isRegisteringAdmin = false;
+
     //DATA
     private Utente Utente;
-    private String Email;
-    private String Password;
-    private String Rule;
 
     //OTHER...
 
-    public Fragment_Login(Manager manager, int a) {
+    public Fragment_Login(Manager manager) {
         this.manager = manager;
     }
-
-    public Fragment_Login() {
-
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,9 +80,8 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     //LAYOUT
     @Override
     public void PrepareData() {
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
         if(new LocalStorage(manager.context).getData("TypeUser","String").equals("Amministratore")) {
-            isRegistratingAdmin = true;
+            isRegisteringAdmin = true;
             Utente.setType_user("Amministratore");
         }
     }
@@ -133,19 +111,15 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     public void SetDataOnLayout() {
         EditTex_Email.setText("");
         EditTex_Password.setText("");
-        if(isRegistratingAdmin){
+        if(isRegisteringAdmin){
             TextView_MsgLogin.setText(R.string.mesg_login_admin);
         }
     }
-
-
 
     @Override
     public void SetActionsOfLayout() {
         Button_Login.setOnClickListener(View ->onClickLogin());
     }
-
-
 
     //ACTIONS
     private void SendAction(Action action){
@@ -154,7 +128,7 @@ public class Fragment_Login extends Fragment implements ViewLayout {
 
     private void onClickLogin(){
         if(getAllInputs()){
-            if(isRegistratingAdmin){
+            if(isRegisteringAdmin){
                 this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
                 Action action = new Action(ActionsLogin.INDEX_ACTION_LOGIN_ADMIN,Utente,manager,(flag)->getResultLogin((boolean)flag),manager.getSourceInfo());
                 SendAction(action);
@@ -171,21 +145,14 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     private void getResultLogin(boolean Authenticated){
         if(Authenticated) EndAnimations();
         else ShowDialogErrorLogin();
-
     }
     private boolean getAllInputs(){
         Utente.setEmail(EditTex_Email.getText().toString());
         Utente.setPassword(EditTex_Password.getText().toString());
-        Rule = (String) new LocalStorage(manager.context).getData("Rule","String");
-        if(Rule == null){
-            Rule = "ToDefine";
+        String rule = (String) new LocalStorage(manager.context).getData("Rule", "String");
+        if(rule == null){
+            rule = "ToDefine";
         }
-        Log.d(TAG, "getAllInputs: New User ------------------------");
-        Log.d(TAG, "getAllInputs: Email ->"+ Email);
-        Log.d(TAG, "getAllInputs: Password ->"+ Password);
-        Log.d(TAG, "getAllInputs: Rule ->"+ Rule);
-        Log.d(TAG, "getAllInputs: --------------------------------------");
-//        return true;
         return checkProduct();
     }
     private boolean checkProduct(){
@@ -234,15 +201,12 @@ public class Fragment_Login extends Fragment implements ViewLayout {
             LinearLayout_BackGroundError  .startAnimation(Manager_Animation.getFadeIn(500));
             hideKeyboardFrom();
         }
-
-
         private void dismissDialogError(){
             LinearLayout_Error.setVisibility(View.GONE);
             LinearLayout_BackGroundError.setVisibility(View.GONE);
             LinearLayout_Error.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
             LinearLayout_BackGroundError.startAnimation(Manager_Animation.getFadeOut(500));
         }
-
     }
     public void hideKeyboardFrom() {
         InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -267,7 +231,6 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     private void animateIN(){
         LinearLayout_Login.startAnimation( Manager_Animation.getTranslateAnimatioINfromLeft(500));
     }
-
 
     public void MoveLogoFrom1to2(){
         ImageView_Logo.animate().rotation(360).setDuration(1000).start();

@@ -23,14 +23,14 @@ public class ViewFactory {
 
     private static final Map<Integer, Class<? extends IViewFactory>> classMap = new HashMap<>();
     static {
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_LOGIN,         LoginViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_MENU,         MenuViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STATS,        StatsViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STAFF,        StaffViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ACCOUNT,      AccountViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_INVENTORY,    InventarioViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI,       OrdiniViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI_CAMERIERE,  OrdiniCameriereViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_LOGIN,            LoginViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_MENU,             MenuViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STATS,            StatsViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STAFF,            StaffViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ACCOUNT,          AccountViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_INVENTORY,        InventarioViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI,           OrdiniViewFactory.class);
+        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI_CAMERIERE, OrdiniCameriereViewFactory.class);
     }
 
     public static final Map<Integer, Integer> previousIndexMapLogin;
@@ -39,6 +39,7 @@ public class ViewFactory {
         previousIndexMapLogin.put(ControlMapper.INDEX_LOGIN_LOGIN, ControlMapper.INDEX_LOGIN_WELCOME);
         previousIndexMapLogin.put(ControlMapper.INDEX_LOGIN_CONFIRM, ControlMapper.INDEX_LOGIN_LOGIN);
     }
+
     public static final Map<Integer, Integer> previousIndexMapInventory;
     static {
         previousIndexMapInventory = new HashMap<>();
@@ -46,6 +47,7 @@ public class ViewFactory {
         previousIndexMapInventory.put(ControlMapper.INDEX_INVENTORY_INFO, ControlMapper.INDEX_INVENTORY_LIST);
         previousIndexMapInventory.put(ControlMapper.INDEX_INVENTORY_EDIT, ControlMapper.INDEX_INVENTORY_INFO);
     }
+
     public static final Map<Integer, Integer> previousIndexMapMenu;
     static {
         previousIndexMapMenu = new HashMap<>();
@@ -62,7 +64,6 @@ public class ViewFactory {
         PreviousIndexMapper.put(ControlMapper.INDEX_TYPE_MANAGER_MENU,         previousIndexMapMenu);
         PreviousIndexMapper.put(ControlMapper.INDEX_TYPE_MANAGER_STATS,        previousIndexMapInventory);
     }
-
 
 
     public ViewLayout createView(int typeManager,int typeView, Manager manager)throws IllegalAccessException, InstantiationException{

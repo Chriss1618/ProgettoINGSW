@@ -89,8 +89,11 @@ public class Manager implements SubController {
                 .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(indexView))
                 .setReorderingAllowed(true)
                 .commit();
+
+        getSourceInfo().setIndex_TypeView(indexView);
     }
     private void loadFragmentAsNormal(int indexView){
+        getSourceInfo().setIndex_TypeView(indexView);
         fragmentManager.beginTransaction()
                 .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(indexView))
                 .setReorderingAllowed(true)
@@ -156,15 +159,5 @@ public class Manager implements SubController {
     public void showBottomBar(){
         bottomBarListener.showBottomBar();
     }
-
-    //ANIMATIONS
-//    public void callEndAnimationOfFragment(){
-//        from = onMain;
-//        ViewLayout View = (ViewLayout)fragmentManager.findFragmentById(LIST_INDEX_VIEW[onMain]);
-//        Objects.requireNonNull(View).EndAnimations();
-//
-//        onMain =  Objects.requireNonNull(MenuViewFactory.previousIndexMapMenu.getOrDefault(onMain,-1));
-//    }
-
 
 }
