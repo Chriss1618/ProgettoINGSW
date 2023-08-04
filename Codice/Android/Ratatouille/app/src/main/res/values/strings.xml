@@ -80,4 +80,6 @@
     <string name="supervisore_welcome">Da questo momento in poi potrai utilizzare Ratatouille23 per gestire e supervisionare l\'attività di ristorazione!</string>
     <string name="warning_password">La password deve essere lunga almeno 3 caratteri</string>
     <string name="warning_email">Formato Email non corretto</string>
+    <string name="inizia">INIZIA</string>
+    <string name="mesg_login_admin">Registrati per poter iniziare a gestire il tuo Ristorante!</string>
 </resources>

@@ -74,7 +74,9 @@ public class Manager implements SubController {
         return sourceInfo;
     }
     public Object getData(){ return data;}
-
+    public void setData(Object data){
+        this.data = data;
+    }
     private void addViews(){
         for (int indexView : LIST_INDEX_VIEW)
             try{ Views.add( new ViewFactory().createView(sourceInfo.getIndex_TypeManager(),indexView,this)); }

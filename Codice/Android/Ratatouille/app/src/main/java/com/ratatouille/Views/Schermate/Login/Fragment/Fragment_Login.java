@@ -45,6 +45,7 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     EditText        EditTex_Email;
     EditText        EditTex_Password;
 
+    TextView        TextView_MsgLogin;
     TextView        TextView_warningEmail;
     TextView        TextView_warningPassword;
 
@@ -87,7 +88,6 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         Fragment_View = inflater.inflate(R.layout.fragment__login, container, false);
 
         PrepareData();
@@ -102,7 +102,10 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     @Override
     public void PrepareData() {
         manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
-        if(new LocalStorage(manager.context).getData("TypeUser","String") != null) isRegistratingAdmin = true;
+        if(new LocalStorage(manager.context).getData("TypeUser","String").equals("Amministratore")) {
+            isRegistratingAdmin = true;
+            Utente.setType_user("Amministratore");
+        }
     }
 
     @Override
@@ -114,22 +117,25 @@ public class Fragment_Login extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
-        LinearLayout_Login          = Fragment_View.findViewById(R.id.linear_layout_login);
-        LinearLayout_Error    = Fragment_View.findViewById(R.id.linear_layout_new_category);
+        LinearLayout_Login              = Fragment_View.findViewById(R.id.linear_layout_login);
+        LinearLayout_Error              = Fragment_View.findViewById(R.id.linear_layout_error_login);
 
-        LinearLayout_BackGroundError  = Fragment_View.findViewById(R.id.darkRL);
+        LinearLayout_BackGroundError        = Fragment_View.findViewById(R.id.darkRL);
         EditTex_Email                       = Fragment_View.findViewById(R.id.edit_text_email);
         EditTex_Password                    = Fragment_View.findViewById(R.id.edit_text_password);
         TextView_warningEmail               = Fragment_View.findViewById(R.id.warning_Email);
         TextView_warningPassword            = Fragment_View.findViewById(R.id.warning_password);
-
+        TextView_MsgLogin                   = Fragment_View.findViewById(R.id.text_view_login_msg);
         Button_Login        = Fragment_View.findViewById(R.id.button_login);
         ImageView_Logo      = Fragment_View.findViewById(R.id.image_view_logo);
     }
     @Override
     public void SetDataOnLayout() {
-
-
+        EditTex_Email.setText("");
+        EditTex_Password.setText("");
+        if(isRegistratingAdmin){
+            TextView_MsgLogin.setText(R.string.mesg_login_admin);
+        }
     }
 
 
@@ -217,13 +223,13 @@ public class Fragment_Login extends Fragment implements ViewLayout {
 
         private void showDialogError(){
             CardView_Cancel             = LinearLayout_Error.findViewById(R.id.card_view_annulla);
-            TextView_Warning            = LinearLayout_Error.findViewById(R.id.text_view_warning);
+            TextView_Warning            = LinearLayout_Error.findViewById(R.id.textview_msg_error);
 
             CardView_Cancel .setOnClickListener(view -> dismissDialogError());
 
             LinearLayout_Error            .setVisibility(View.VISIBLE);
             LinearLayout_BackGroundError  .setVisibility(View.VISIBLE);
-
+            TextView_Warning.setText((String)manager.getData());
             LinearLayout_Error            .startAnimation(Manager_Animation.getTranslationINfromUp(500));
             LinearLayout_BackGroundError  .startAnimation(Manager_Animation.getFadeIn(500));
             hideKeyboardFrom();
@@ -242,6 +248,7 @@ public class Fragment_Login extends Fragment implements ViewLayout {
         InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.requireView().getWindowToken(), 0);
     }
+
     //ANIMATIONS
     @Override
     public void StartAnimations() {

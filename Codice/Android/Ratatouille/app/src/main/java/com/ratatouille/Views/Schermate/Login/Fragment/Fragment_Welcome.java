@@ -128,13 +128,13 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
     private void onClickLogin(){
         this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
-        Action action = new Action(ActionsLogin.INDEX_ACTION_NORMAL_LOGIN,"notAdmin",manager,this::animateOUT,manager.getSourceInfo());
+        Action action = new Action(ActionsLogin.INDEX_ACTION_START_LOGIN,"notAdmin",manager,this::animateOUT,manager.getSourceInfo());
         SendAction(action);
     }
 
     private void onClickRegistra(){
         this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
-        Action action = new Action(ActionsLogin.INDEX_ACTION_REGISTER_ADMIN,"admin",manager,this::animateOUT,manager.getSourceInfo());
+        Action action = new Action(ActionsLogin.INDEX_ACTION_START_REGISTER_ADMIN,"admin",manager,this::animateOUT,manager.getSourceInfo());
         SendAction(action);
     }
 
