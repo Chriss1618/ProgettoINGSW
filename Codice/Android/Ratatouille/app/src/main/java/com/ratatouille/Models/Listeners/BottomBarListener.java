@@ -1,6 +1,7 @@
 package com.ratatouille.Models.Listeners;
 
 public class BottomBarListener {
+    public boolean visible = true;
     //INTERFACE
     public interface ShowBottomBarListener {
         void showBottomBar();
@@ -52,11 +53,13 @@ public class BottomBarListener {
     public void showBottomBar(){
         if(showBottomBarListener != null ){
             showBottomBarListener.showBottomBar();
+            visible = true;
         }
     }
     public void hideBottomBar(){
         if(hideBottomBarListener != null ){
             hideBottomBarListener.hideBottomBar();
+            visible = false;
         }
     }
     public void enableBottomBar(){

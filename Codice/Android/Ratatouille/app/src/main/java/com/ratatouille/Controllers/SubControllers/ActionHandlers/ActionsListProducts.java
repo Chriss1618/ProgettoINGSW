@@ -17,7 +17,7 @@ public class ActionsListProducts extends ActionsViewHandler {
 
     public ActionsListProducts() {
         actionHandlerMap = new HashMap<>();
-        actionHandlerMap.put(INDEX_ACTION_OPEN_PRODUCT, new OpenProductInfo_ActionHandler()  );
+        actionHandlerMap.put(INDEX_ACTION_OPEN_PRODUCT,     new OpenProductInfo_ActionHandler()  );
         actionHandlerMap.put(INDEX_ACTION_OPEN_NEW_PRODUCT, new OpenNewProduct_ActionHandler()  );
     }
 
@@ -35,6 +35,7 @@ public class ActionsListProducts extends ActionsViewHandler {
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: GetCategorieActionHandler->");
             action.callBack();
+            action.getManager().hideBottomBar();
             action.getManager().changeOnMain(ControlMapper.INDEX_MENU_NEW_PRODUCT, action.getData());
         }
     }

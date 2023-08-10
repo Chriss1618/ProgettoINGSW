@@ -163,6 +163,9 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations(){
+        if(!manager.bottomBarListener.visible){
+            manager.showBottomBar();
+        }
         if(manager.IndexFrom > manager.IndexOnMain){
             Log.d(TAG, "StartAnimations: Da product");
             fromProductAnimations();

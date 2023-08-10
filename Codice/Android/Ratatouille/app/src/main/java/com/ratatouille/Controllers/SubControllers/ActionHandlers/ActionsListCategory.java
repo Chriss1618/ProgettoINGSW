@@ -26,9 +26,9 @@ public class ActionsListCategory extends ActionsViewHandler{
     public ActionsListCategory(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_OPEN_LIST_PRODUCTS,   new OpenListProducts_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_SHOW_ADD_CATEGORY,   new showAddNewCategory_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_ADD_CATEGORY,   new AddNewCategory_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_REMOVE_CATEGORY,   new DeleteCategory_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_SHOW_ADD_CATEGORY,    new showAddNewCategory_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_ADD_CATEGORY,         new AddNewCategory_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_REMOVE_CATEGORY,      new DeleteCategory_ActionHandler());
     }
 
     //ACTIONS HANDLED **************************************************************

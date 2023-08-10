@@ -18,6 +18,10 @@ import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
+
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class Activity_Amministratore extends AppCompatActivity implements ViewLayout {
@@ -159,14 +163,18 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     }
 
     public void hideBottomBar(){
-        Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationOUTtoDownS(500));
-        final Handler handler = new Handler();
-        handler.postDelayed(()-> Bottom_Bar_Amministratore.setVisibility(View.GONE),500);
+        runOnUiThread(() -> {
+            Handler handler = new Handler();
+            handler.postDelayed( () ->Bottom_Bar_Amministratore.setVisibility(View.GONE), 300);
+            Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationOUTtoDownS(500));
+
+        });
     }
     public void showBottomBar(){
-        Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationINfromDown(300));
-        final Handler handler = new Handler();
-        handler.postDelayed(()-> Bottom_Bar_Amministratore.setVisibility(View.VISIBLE),300);
+        runOnUiThread(() -> {
+            Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationINfromDownSlower(500));
+            Bottom_Bar_Amministratore.setVisibility(View.VISIBLE);
+        });
     }
 
 

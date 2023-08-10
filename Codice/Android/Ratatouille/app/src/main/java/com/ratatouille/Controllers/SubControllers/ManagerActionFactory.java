@@ -39,13 +39,13 @@ public class ManagerActionFactory {
 
     public void handleAction(Action action){
         try{
-             Objects.requireNonNull(classMap.get(action.getSourceInfo().getIndex_TypeView()))
+             Objects.requireNonNull( classMap.get(action.getSourceInfo().getIndex_TypeView()) )
                     .getConstructor()
-                    .newInstance().handleAction(action);
-        }catch (InvocationTargetException | NoSuchMethodException e ) { //No public constructor con Signature specificata per il tipo di View
+                    .newInstance().handleAction( action );
+        }catch (InvocationTargetException | NoSuchMethodException e ) {
             Log.e(TAG, "createView: ",e );
             throw new IllegalArgumentException("Invalid View type. \n"+e);
-        } catch (IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {//No public constructor con Signature specificata per il tipo di View
             Log.e(TAG, "handleAction: ", e);
             throw new RuntimeException("Constructor Not Found : \n"+e);
         }

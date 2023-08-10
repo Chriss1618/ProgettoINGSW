@@ -1,12 +1,10 @@
 package com.ratatouille.Views.Schermate.Stats;
 
 import android.util.Log;
-
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.Interfaces.IViewFactory;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,18 +18,12 @@ public class StatsViewFactory implements IViewFactory {
         classMap.put(ControlMapper.INDEX_STATS_PRODUCTIVITY,  Fragment_Stats.class);
     }
 
-    public static final Map<Integer, Integer> previousIndexMapMenu;
-    static {
-        previousIndexMapMenu = new HashMap<>();
-    }
-
-    public ViewLayout createView( int typeView, Manager managerMenuFragments)throws IllegalAccessException, InstantiationException{
+    public ViewLayout createView( int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeView))
                     .getConstructor(Manager.class,int.class)
-                    .newInstance(managerMenuFragments,2);
+                    .newInstance(manager,2);
         }catch (InvocationTargetException | NoSuchMethodException e ) { //No public constructor con Signature specificata per il tipo di View
-
             Log.e(TAG, "createView: ",e );
             throw new IllegalArgumentException("Invalid View type. \n"+e);
         }

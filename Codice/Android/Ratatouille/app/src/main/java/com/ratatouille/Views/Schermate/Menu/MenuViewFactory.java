@@ -22,11 +22,11 @@ public class MenuViewFactory implements IViewFactory {
         classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,   Fragment_EditProduct.class);
     }
 
-    public ViewLayout createView(int typeView, Manager managerMenuFragments)throws IllegalAccessException, InstantiationException{
+    public ViewLayout createView(int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeView))
                     .getConstructor(Manager.class,int.class)
-                    .newInstance(managerMenuFragments,2);
+                    .newInstance(manager,2);
         }catch (InvocationTargetException | NoSuchMethodException e ) { //No public constructor con Signature specificata per il tipo di View
 
             Log.e(TAG, "createView: ",e );

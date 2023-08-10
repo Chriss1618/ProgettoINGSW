@@ -254,12 +254,12 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     public void StartAnimations() {
         LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
         CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
-        LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationINfromDown(500));
+        LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationINfromDownSlower(500));
     }
     @Override
     public void EndAnimations() {
-        LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
-        CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(500));
-        LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationOUTtoDown(500));
+        LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationOUTtoDownS(300));
     }
 }

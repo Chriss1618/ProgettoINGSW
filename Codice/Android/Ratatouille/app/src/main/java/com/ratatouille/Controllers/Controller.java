@@ -43,7 +43,6 @@ public class Controller implements IController {
         this.fragmentManager    = fragmentManager;
         this.bottomBarListener  = bottomBarListener;
         this.typeController     = typeController;
-        Log.d(TAG, "NEW V Controller: costruttore Controller ");
 
         Managers = new ArrayList<>();
         LIST_INDEX_MANAGERS = ControlMapper.classControllerToManager.get(typeController);
@@ -59,7 +58,6 @@ public class Controller implements IController {
             );
         }
 
-        Log.d(TAG, "FINE NEW V Controller: costruttore Controller ");
     }
 
     public int getNumberManagers(){

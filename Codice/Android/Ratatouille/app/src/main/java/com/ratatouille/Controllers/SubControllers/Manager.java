@@ -17,19 +17,17 @@ import com.ratatouille.Views.ViewFactory;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
 import io.vavr.control.Try;
 
 public class Manager implements SubController {
     //SYSTEM
     private static final String TAG = "Manager_MenuFragments";
 
-
     //LAYOUT
     public final Context                    context;
+    public final BottomBarListener          bottomBarListener;
     protected final ArrayList<ViewLayout>   ViewsFragments;
     protected final View                    ViewContainer;
-    protected final BottomBarListener       bottomBarListener;
 
     //FUNCTIONAL
     protected final SourceInfo              sourceInfo;
@@ -37,7 +35,7 @@ public class Manager implements SubController {
     protected final ManagerActionFactory    ManagerAction;
     protected final ManagerRequestFactory   ManagerRequest;
 
-    public Integer[] LIST_INDEX_VIEW;
+    public Integer[] LIST_INDEX_VIEW ;
     public final int MAIN_VIEW_INDEX;
 
     public Integer      IndexOnMain;
@@ -47,22 +45,25 @@ public class Manager implements SubController {
     private Object data;
 
     public Manager(SourceInfo sourceInfo,Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
-        Log.d(TAG, "Manager: Costruttore");
-        ViewsFragments = new ArrayList<>();
-        this.sourceInfo = sourceInfo;
-        this.ManagerAction = new ManagerActionFactory();
-        this.ManagerRequest = new ManagerRequestFactory();
+        this.ViewsFragments     = new ArrayList<>();
+        this.ManagerAction      = new ManagerActionFactory();
+        this.ManagerRequest     = new ManagerRequestFactory();
 
         this.context                = context;
         this.ViewContainer          = view;
+        this.sourceInfo             = sourceInfo;
         this.fragmentManager        = fragmentManager;
         this.bottomBarListener      = bottomBarListener;
 
-        LIST_INDEX_VIEW = Objects.requireNonNull(ControlMapper.classManagerToView.get(sourceInfo.getIndex_TypeManager()));
-        MAIN_VIEW_INDEX = LIST_INDEX_VIEW[0];
-        addViews();
+        LIST_INDEX_VIEW = ControlMapper.classManagerToView.get( sourceInfo.getIndex_TypeManager() );
+        MAIN_VIEW_INDEX = Objects.requireNonNull( LIST_INDEX_VIEW )[0];
 
-        Log.d(TAG, "Manager: FINE Costruttore");
+        addViews();
+    }
+    private void addViews(){
+        for (int indexView : LIST_INDEX_VIEW)
+            try{ ViewsFragments.add( new ViewFactory().createView(sourceInfo.getIndex_TypeManager(),indexView,this)); }
+            catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
     }
 
     public SourceInfo getSourceInfo() {
@@ -71,11 +72,6 @@ public class Manager implements SubController {
     public Object getData(){ return data;}
     public void setData(Object data){
         this.data = data;
-    }
-    private void addViews(){
-        for (int indexView : LIST_INDEX_VIEW)
-            try{ ViewsFragments.add( new ViewFactory().createView(sourceInfo.getIndex_TypeManager(),indexView,this)); }
-            catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
     }
 
     //ShowPages
@@ -139,7 +135,6 @@ public class Manager implements SubController {
     public void closeView() {
         int temp = IndexFrom;
         IndexFrom = IndexOnMain;
-
         ViewsFragments.get( getPositionView(IndexOnMain) ).EndAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(fragmentManager::popBackStack,300);
