@@ -4,15 +4,12 @@ import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Events.SourceInfo;
 
 public class Action {
-    private final SourceInfo SourceInfo;
-    private final Manager Manager;
+    private  SourceInfo SourceInfo;
+    private  Manager Manager;
     private final Integer actionType;
     private final Object Data;
     private  FunctionCallBackAction functionCallBack = null;
     private  FunctionCallBackAction2 functionCallBack2 = null;
-
-
-
 
     public interface FunctionCallBackAction{
         void execute();
@@ -20,7 +17,21 @@ public class Action {
     public interface FunctionCallBackAction2{
         void execute(Object data);
     }
+    public Action(Integer actionType, Object data) {
+        this.actionType = actionType;
+        this.Data = data;
+    }
 
+    public Action(Integer actionType, Object data,FunctionCallBackAction functionCallBack) {
+        this.actionType = actionType;
+        this.Data = data;
+        this.functionCallBack = functionCallBack;
+    }
+    public Action(Integer actionType, Object data,FunctionCallBackAction2 functionCallBack) {
+        this.actionType = actionType;
+        this.Data = data;
+        this.functionCallBack2 = functionCallBack;
+    }
     public Action(Integer actionType, Object data, Manager manager, SourceInfo SourceInfo) {
         this.Manager = manager;
         this.actionType = actionType;
@@ -42,6 +53,13 @@ public class Action {
         this.Data = data;
         this.functionCallBack2 = functionCallBack;
         this.SourceInfo = SourceInfo;
+    }
+
+    public void setSourceInfo(com.ratatouille.Models.Events.SourceInfo sourceInfo) {
+        SourceInfo = sourceInfo;
+    }
+    public void setManager(com.ratatouille.Controllers.SubControllers.Manager manager) {
+        Manager = manager;
     }
 
     public Integer getActionType() {

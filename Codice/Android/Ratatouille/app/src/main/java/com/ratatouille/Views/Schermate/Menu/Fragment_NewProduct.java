@@ -173,12 +173,9 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         if(getAllInputs()){
             Log.d(TAG, "onClickAddNewProduct: All Inputs are OK");
             NewProduct.setID_category(Categoria.getID_categoria());
-            manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_NEW_PRODUCT);
             Action action = new Action(ActionsNewProduct.INDEX_ACTION_CREATE_PRODUCT,
                     NewProduct,
-                    manager,
-                    (isInserted)->ShowPopUp( (boolean)isInserted ),
-                    manager.getSourceInfo());
+                    (isInserted)->ShowPopUp( (boolean)isInserted ));
             sendAction(action);
 
         }

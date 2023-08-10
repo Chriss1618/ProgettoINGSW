@@ -2,6 +2,7 @@ package com.ratatouille.Controllers.SubControllers;
 
 import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsAccountInfo;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
@@ -19,14 +20,16 @@ public class ManagerActionFactory {
     private static final Map<Integer, Class<? extends ActionsViewHandler>> classMap = new HashMap<>();
     static {
         //LOGIN
-        classMap.put(ControlMapper.INDEX_LOGIN_WELCOME,  ActionsLogin.class);
-        classMap.put(ControlMapper.INDEX_LOGIN_LOGIN,  ActionsLogin.class);
-        classMap.put(ControlMapper.INDEX_LOGIN_CONFIRM,  ActionsLogin.class);
+        classMap.put(ControlMapper.INDEX_LOGIN_WELCOME,     ActionsLogin.class);
+        classMap.put(ControlMapper.INDEX_LOGIN_LOGIN,       ActionsLogin.class);
+        classMap.put(ControlMapper.INDEX_LOGIN_CONFIRM,     ActionsLogin.class);
         //MENU
-        classMap.put(ControlMapper.INDEX_MENU_LIST_CATEGORY,  ActionsListCategory.class);
-        classMap.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS,  ActionsListProducts.class);
-        classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,  ActionsNewProduct.class);
-//        classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,  MenuViewFactory.class);
+        classMap.put(ControlMapper.INDEX_MENU_LIST_CATEGORY,    ActionsListCategory.class);
+        classMap.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS,    ActionsListProducts.class);
+        classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,      ActionsNewProduct.class);
+
+        //ACCOUNT
+        classMap.put(ControlMapper.INDEX_ACCOUNT_INFO,          ActionsAccountInfo.class);
 //        classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,  MenuViewFactory.class);
 
         //STATS

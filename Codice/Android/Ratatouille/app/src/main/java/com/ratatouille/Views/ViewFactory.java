@@ -33,39 +33,6 @@ public class ViewFactory {
         classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI_CAMERIERE, OrdiniCameriereViewFactory.class);
     }
 
-    public static final Map<Integer, Integer> previousIndexMapLogin;
-    static {
-        previousIndexMapLogin = new HashMap<>();
-        previousIndexMapLogin.put(ControlMapper.INDEX_LOGIN_LOGIN, ControlMapper.INDEX_LOGIN_WELCOME);
-        previousIndexMapLogin.put(ControlMapper.INDEX_LOGIN_CONFIRM, ControlMapper.INDEX_LOGIN_LOGIN);
-    }
-
-    public static final Map<Integer, Integer> previousIndexMapInventory;
-    static {
-        previousIndexMapInventory = new HashMap<>();
-        previousIndexMapInventory.put(ControlMapper.INDEX_INVENTORY_NEW, ControlMapper.INDEX_INVENTORY_LIST);
-        previousIndexMapInventory.put(ControlMapper.INDEX_INVENTORY_INFO, ControlMapper.INDEX_INVENTORY_LIST);
-        previousIndexMapInventory.put(ControlMapper.INDEX_INVENTORY_EDIT, ControlMapper.INDEX_INVENTORY_INFO);
-    }
-
-    public static final Map<Integer, Integer> previousIndexMapMenu;
-    static {
-        previousIndexMapMenu = new HashMap<>();
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS, ControlMapper.INDEX_MENU_LIST_CATEGORY);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_INFO_PRODUCT, ControlMapper.INDEX_MENU_LIST_PRODUCTS);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_NEW_PRODUCT, ControlMapper.INDEX_MENU_LIST_PRODUCTS);
-        previousIndexMapMenu.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT, ControlMapper.INDEX_MENU_INFO_PRODUCT);
-    }
-
-    public static final Map<Integer, Map<Integer, Integer>> PreviousIndexMapper ;
-    static {
-        PreviousIndexMapper = new HashMap<>();
-        PreviousIndexMapper.put(ControlMapper.INDEX_TYPE_MANAGER_LOGIN,         previousIndexMapLogin);
-        PreviousIndexMapper.put(ControlMapper.INDEX_TYPE_MANAGER_MENU,         previousIndexMapMenu);
-        PreviousIndexMapper.put(ControlMapper.INDEX_TYPE_MANAGER_STATS,        previousIndexMapInventory);
-    }
-
-
     public ViewLayout createView(int typeManager,int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeManager))

@@ -104,7 +104,7 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
         Recycler_Products.setLayoutManager(mLayoutManager);
         Recycler_Products.setNestedScrollingEnabled(false);
         boolean isFromLeft = true;
-        if(manager.from > manager.onMain) isFromLeft = false;
+        if(manager.IndexFrom > manager.IndexOnMain) isFromLeft = false;
 
         Adapter_ProductWaiter adapter_product_waiter = new Adapter_ProductWaiter(TitleProducts, RecycleEventListener,isFromLeft,false);
         Recycler_Products.setAdapter(adapter_product_waiter);
@@ -133,7 +133,7 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
     //ANIMATIONS
     @Override
     public void StartAnimations(){
-        if(manager.from > manager.onMain){
+        if(manager.IndexFrom > manager.IndexOnMain){
             Log.d(TAG, "StartAnimations: Da product");
             fromProductAnimations();
         }else{

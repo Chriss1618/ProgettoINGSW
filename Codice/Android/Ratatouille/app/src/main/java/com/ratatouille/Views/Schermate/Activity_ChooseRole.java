@@ -3,6 +3,7 @@ package com.ratatouille.Views.Schermate;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,6 +46,7 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     //DATA
     @Override
     public void PrepareData() {
+
         new Thread(() ->{
             Try.run(() -> TimeUnit.SECONDS.sleep(2));
             if(AuthenticateUser()) startApp();
@@ -80,6 +82,7 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(400));
         Intent intent = new Intent(this, Activity_Login.class);
         startActivity(intent);
+        finish();
     }
 
     private boolean AuthenticateUser(){
@@ -91,6 +94,7 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
         closeLoading();
         Intent intent = new Intent(this, Activity_Amministratore.class);
         startActivity(intent);
+        finish();
     }
 
     //ANIMATIONS
@@ -112,11 +116,22 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
 
     }
     private void rotateAnimationLogo()  {
-        rotation(820);
-        while(true) rotation( numGiri++ % 2 == 0 ? -420 : 420 );
+        rotation(420);
     }
     private void rotation(int speed){
-        runOnUiThread(() -> ImageView_Logo.animate().rotation(speed).setDuration(10000).start());
-        Try.run(() -> Thread.sleep(5000) );
+//        runOnUiThread(() -> ImageView_Logo.animate().rotation(speed).setDuration(5000)
+//                .withEndAction( () -> rotation((numGiri++ % 2 == 0) ? -420 : 420) ).start()
+//        );
+        runOnUiThread(() -> ImageView_Logo.animate()
+                .rotationBy(speed) // Use rotationBy instead of setting absolute rotation value
+                .setDuration(5000)
+                .withEndAction(() -> {
+                    // This will be executed when the animation ends
+                    int nextSpeed = (numGiri++ % 2 == 0) ? -420 : 420;
+                    rotation(nextSpeed);
+                })
+                .start()
+        );
+
     }
 }

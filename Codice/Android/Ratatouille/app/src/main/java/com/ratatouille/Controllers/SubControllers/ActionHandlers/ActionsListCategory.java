@@ -14,6 +14,7 @@ import java.util.HashMap;
 import io.vavr.control.Try;
 
 public class ActionsListCategory extends ActionsViewHandler{
+    //SYSTEM
     private static final String TAG = "ActionsListCategory";
 
     //FUNCTIONAL

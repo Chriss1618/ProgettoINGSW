@@ -130,7 +130,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         Recycler_Products.setLayoutManager(mLayoutManager);
         Recycler_Products.setNestedScrollingEnabled(false);
-        boolean isFromLeft = manager.from <= manager.onMain;
+        boolean isFromLeft = manager.IndexFrom <= manager.IndexOnMain;
 
         adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,isFromLeft);
         Recycler_Products.setAdapter(adapter_product);
@@ -142,8 +142,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         toProductAnimations();
     }
     private void onClickAddProduct(){
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_PRODUCTS);
-        Action action = new Action(ActionsListProducts.INDEX_ACTION_OPEN_NEW_PRODUCT,Categoria,manager,this::toProductAnimations,manager.getSourceInfo());
+        Action action = new Action(ActionsListProducts.INDEX_ACTION_OPEN_NEW_PRODUCT,Categoria,this::toProductAnimations);
         SendAction(action);
     }
     private void onClickDeleteMember(){
@@ -164,7 +163,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations(){
-        if(manager.from > manager.onMain){
+        if(manager.IndexFrom > manager.IndexOnMain){
             Log.d(TAG, "StartAnimations: Da product");
             fromProductAnimations();
         }else{

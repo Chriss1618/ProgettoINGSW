@@ -26,7 +26,7 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
 
     @Override
     public void onBackPressed() {
-        if(ManagerLogin.onMain != ControlMapper.INDEX_LOGIN_CONFIRM){
+        if(ManagerLogin.IndexOnMain != ControlMapper.INDEX_LOGIN_CONFIRM){
             if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
                 ManagerLogin.closeView();
             }else{
@@ -78,14 +78,7 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
 
     @Override
     public void EndAnimations() {
-        switch (ManagerLogin.onMain){
-            case ControlMapper.INDEX_LOGIN_WELCOME :
-                break;
-            case ControlMapper.INDEX_LOGIN_LOGIN:
-                break;
-            case ControlMapper.INDEX_LOGIN_CONFIRM:
-                break;
-        }
+
     }
 
     @Override

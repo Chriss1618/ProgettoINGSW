@@ -166,14 +166,12 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
 
     private void onClickCategory(CategoriaMenu Category){
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
-        Action action = new Action(ActionsListCategory.INDEX_ACTION_OPEN_LIST_PRODUCTS, Category,manager,this::EndAnimations,manager.getSourceInfo());
+        Action action = new Action(ActionsListCategory.INDEX_ACTION_OPEN_LIST_PRODUCTS, Category,this::EndAnimations);
         SendAction(action);
     }
 
     private void onClickAddCategory(){
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
-        Action action = new Action(ActionsListCategory.INDEX_ACTION_SHOW_ADD_CATEGORY, null, manager, this::ShowDialogNewCategory, manager.getSourceInfo());
+        Action action = new Action(ActionsListCategory.INDEX_ACTION_SHOW_ADD_CATEGORY, null, this::ShowDialogNewCategory);
         SendAction(action);
     }
 
@@ -188,10 +186,8 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
 
     private void onClickDeleteCategory(String categoryToDelete,int id_categoryToDelete){
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
-        Action action = new Action(ActionsListCategory.INDEX_ACTION_REMOVE_CATEGORY, id_categoryToDelete,manager,
-                (id_categoria)-> deleteItemFromRecycle( (Integer)id_categoria ),
-                manager.getSourceInfo());
+        Action action = new Action(ActionsListCategory.INDEX_ACTION_REMOVE_CATEGORY, id_categoryToDelete,
+                (id_categoria)-> deleteItemFromRecycle( (Integer)id_categoria ));
         SendAction(action);
     }
 
@@ -272,7 +268,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
                 ShowNameCategoryNotValid();
             }else{
                 manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
-                Action action = new Action(ActionsListCategory.INDEX_ACTION_ADD_CATEGORY,newCategory,manager,(category)->addCategoryView( (CategoriaMenu)category ), manager.getSourceInfo());
+                Action action = new Action(ActionsListCategory.INDEX_ACTION_ADD_CATEGORY,newCategory,(category)->addCategoryView( (CategoriaMenu)category ));
                 SendAction(action);
             }
         }

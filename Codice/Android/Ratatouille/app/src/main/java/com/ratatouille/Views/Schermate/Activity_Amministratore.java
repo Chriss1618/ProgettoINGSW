@@ -3,12 +3,16 @@ package com.ratatouille.Views.Schermate;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.Controller;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
@@ -30,6 +34,13 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     private int typeController;
 
     //OTHER
+
+    @Override
+    public void finish() {
+        controller = null;
+        Log.d(TAG, "finish: Closing Activity Amministratore");
+        super.finish();
+    }
 
     @Override
     public void onBackPressed() {

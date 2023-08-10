@@ -14,20 +14,16 @@ import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Events.SourceInfo;
 import com.ratatouille.Views.ViewFactory;
-
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
-import io.vavr.control.Try;
 
 public class Manager implements SubController {
 
     //SYSTEM
     private static final String TAG = "Manager_MenuFragments";
     public Integer[] LIST_INDEX_VIEW;
-    public int MAIN;
+
+    public final int MAIN_VIEW_INDEX;
     private final SourceInfo sourceInfo;
 
     //LAYOUT
@@ -40,11 +36,9 @@ public class Manager implements SubController {
     protected final FragmentManager         fragmentManager;
     protected final ManagerActionFactory    ManagerAction;
     protected final ManagerRequestFactory   ManagerRequest;
-    public Integer      onMain;
-    public Integer      from;
-    public Integer      positionList = 0;
-    public SecureRandom rand ;
-    public int lastRandom = -1;
+
+    public Integer      IndexOnMain;
+    public Integer      IndexFrom = 0;
 
     //DATA
     private Object data;
@@ -52,7 +46,6 @@ public class Manager implements SubController {
     public Manager(SourceInfo sourceInfo,Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Log.d(TAG, "Manager: Costruttore");
         Views = new ArrayList<>();
-        rand = new SecureRandom();
         this.sourceInfo = sourceInfo;
         this.ManagerAction = new ManagerActionFactory();
         this.ManagerRequest = new ManagerRequestFactory();
@@ -62,9 +55,8 @@ public class Manager implements SubController {
         this.fragmentManager        = fragmentManager;
         this.bottomBarListener      = bottomBarListener;
 
-        Log.d(TAG, "Manager: TypeManager : -> "+ sourceInfo.getIndex_TypeManager());
         LIST_INDEX_VIEW = Objects.requireNonNull(ControlMapper.classManagerToView.get(sourceInfo.getIndex_TypeManager()));
-        MAIN = LIST_INDEX_VIEW[0];
+        MAIN_VIEW_INDEX = LIST_INDEX_VIEW[0];
         addViews();
 
         Log.d(TAG, "Manager: FINE Costruttore");
@@ -84,18 +76,16 @@ public class Manager implements SubController {
     }
 
     //ShowPages
-    private void loadFragmentAsMain(int indexView){
+    private void loadFragmentAsMain(int positionList){
+        getSourceInfo().setIndex_TypeView(IndexOnMain);
         fragmentManager.beginTransaction()
-                .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(indexView))
+                .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(IndexOnMain))
                 .setReorderingAllowed(true)
                 .commit();
-
-        getSourceInfo().setIndex_TypeView(indexView);
     }
-    private void loadFragmentAsNormal(int indexView){
-        getSourceInfo().setIndex_TypeView(indexView);
+    private void loadFragmentAsNormal(int positionList){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(indexView))
+                .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(IndexOnMain))
                 .setReorderingAllowed(true)
                 .addToBackStack(null)
                 .commit();
@@ -103,15 +93,15 @@ public class Manager implements SubController {
 
     @Override
     public void showMain(){
-        Log.d(TAG, "Manager: TypeManager : -> "+ sourceInfo.getIndex_TypeManager());
-        onMain = MAIN;
-        showView(MAIN,null);
+        IndexOnMain = MAIN_VIEW_INDEX;
+        showView(MAIN_VIEW_INDEX,null);
     }
 
     public void HandleAction(Action action){
+        action.setManager(this);
+        action.setSourceInfo(getSourceInfo());
         new Thread(() -> ManagerAction.handleAction(action) ).start();
     }
-
     public void HandleRequest(Request request){
         new Thread(() -> ManagerRequest.handleRequest(request) ).start();
 
@@ -119,24 +109,24 @@ public class Manager implements SubController {
 
     @Override
     public void changeOnMain(int indexMain, Object msg) {
-        Try.run(() -> TimeUnit.MILLISECONDS.sleep(300));
-        showView(indexMain,msg);
+        final Handler handler = new Handler();
+        handler.postDelayed(()->showView(indexMain,msg),300);
     }
+
     private void showView(int indexFragment, Object msg){
-        from = onMain;
+        IndexFrom = IndexOnMain;
         data = msg;
+        int position =  getPositionView( indexFragment );
 
-        this.onMain = getIndexFragment( indexFragment );
-
-        if( onMain == MAIN ) loadFragmentAsMain( onMain );
-        else loadFragmentAsNormal( onMain);
+        if( IndexOnMain == MAIN_VIEW_INDEX ) loadFragmentAsMain( position );
+        else loadFragmentAsNormal( position );
     }
 
-    private int getIndexFragment(int indexFragment){
+    private int getPositionView(int indexFragment){
         for(int position = 0 ; position < LIST_INDEX_VIEW.length; position++){
             if(indexFragment == LIST_INDEX_VIEW[position] ){
-                this.positionList = position;
-                return LIST_INDEX_VIEW[position];
+                IndexOnMain = LIST_INDEX_VIEW[position];
+                return position;
             }
         }
         return 0;
@@ -144,12 +134,13 @@ public class Manager implements SubController {
 
     @Override
     public void closeView() {
-        from = onMain;
-        Views.get(positionList).EndAnimations();
+        int temp = IndexFrom;
+        IndexFrom = IndexOnMain;
+
+        Views.get( getPositionView(IndexOnMain) ).EndAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(fragmentManager::popBackStack,300);
-        Log.d(TAG, "closeView: TypeManager->"+sourceInfo.getIndex_TypeManager());
-        onMain = Objects.requireNonNull(ViewFactory.PreviousIndexMapper.get(sourceInfo.getIndex_TypeManager())).get(sourceInfo.getIndex_TypeView());
+        IndexOnMain = temp;
     }
 
     //FUNCTIONAL

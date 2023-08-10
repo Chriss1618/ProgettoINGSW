@@ -36,12 +36,10 @@ public class ActionsLogin extends ActionsViewHandler{
     private static class StartRegisterAdmin_ActionHandler implements ActionHandler{
         @Override
         public void handleAction(Action action) {
-            Context context = action.getManager().context;
-            Log.d(TAG, "handleAction: RegistraADMIN");
             action.callBack();
             Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));//Attesa animazinoe Rotazione LOGO
             action.getManager().changeOnMain(ControlMapper.INDEX_LOGIN_LOGIN,"");
-            new LocalStorage(context).putData("TypeUser","Amministratore");
+            new LocalStorage(action.getManager().context).putData("TypeUser","Amministratore");
         }
     }
 

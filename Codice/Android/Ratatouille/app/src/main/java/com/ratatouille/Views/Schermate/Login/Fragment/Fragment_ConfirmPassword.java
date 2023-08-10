@@ -111,15 +111,6 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
         TextView_WelcomeText        = Fragment_View.findViewById(R.id.text_view_user_welcome);
         Background                  = Fragment_View.findViewById(R.id.background);
 
-        String[] myArray = {"Supervisore", "Amministratore", "Chef", "Cameriere"};
-
-        int upperbound = myArray.length;
-        int randomIndex;
-        do{
-            randomIndex = manager.rand.nextInt(upperbound);
-        }while( randomIndex == manager.lastRandom);
-        manager.lastRandom = randomIndex;
-        //Rule = myArray[randomIndex];
         Log.d(TAG, "LinkLayout: Rule ->"+Rule);
 
         switch (Rule){

@@ -80,10 +80,8 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     //LAYOUT
     @Override
     public void PrepareData() {
-        if(new LocalStorage(manager.context).getData("TypeUser","String").equals("Amministratore")) {
-            isRegisteringAdmin = true;
-            Utente.setType_user("Amministratore");
-        }
+        isRegisteringAdmin = new LocalStorage(manager.context).getData("TypeUser","String").equals("Amministratore");
+        Utente.setType_user((isRegisteringAdmin)?"Amministratore":"");
     }
 
     @Override
@@ -128,16 +126,17 @@ public class Fragment_Login extends Fragment implements ViewLayout {
 
     private void onClickLogin(){
         if(getAllInputs()){
+            Action action;
             if(isRegisteringAdmin){
-                this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
-                Action action = new Action(ActionsLogin.INDEX_ACTION_LOGIN_ADMIN,Utente,manager,(flag)->getResultLogin((boolean)flag),manager.getSourceInfo());
-                SendAction(action);
+                //this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
+                action = new Action(ActionsLogin.INDEX_ACTION_LOGIN_ADMIN, Utente, manager, (flag) -> getResultLogin((boolean) flag), manager.getSourceInfo());
             }else{
 
-                this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
-                Action action = new Action(ActionsLogin.INDEX_ACTION_LOGIN,Utente,manager,(flag)->getResultLogin((boolean)flag),manager.getSourceInfo());
-                SendAction(action);
+                //this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
+                action = new Action(ActionsLogin.INDEX_ACTION_LOGIN, Utente, manager, (flag) -> getResultLogin((boolean) flag), manager.getSourceInfo());
             }
+            SendAction(action);
+
         }
     }
 

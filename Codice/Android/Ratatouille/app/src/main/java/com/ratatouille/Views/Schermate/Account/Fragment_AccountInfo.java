@@ -7,10 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsAccountInfo;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 
 public class Fragment_AccountInfo extends Fragment implements ViewLayout {
@@ -23,7 +29,7 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     LinearLayout        LinearLayout_InfoAccount;
 
     Button              Button_EditAccount;
-
+    ImageView           ImageView_Logout;
     //FUNCTIONAL
     private final Manager manager;
 
@@ -39,6 +45,7 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+
         }
     }
 
@@ -46,6 +53,7 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
                                           Bundle savedInstanceState) {
         View_Fragment = inflater.inflate(R.layout.fragment__account_info, container, false);
+        //new LocalStorage(manager.context).DeleteAllData();
         PrepareData();
         PrepareLayout();
 
@@ -72,10 +80,12 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
         LinearLayout_InfoAccount        = View_Fragment.findViewById(R.id.linear_layout_info_account);
 
         Button_EditAccount              = View_Fragment.findViewById(R.id.button_edit_account);
+        ImageView_Logout                = View_Fragment.findViewById(R.id.ic_logout);
     }
     @Override
     public void SetActionsOfLayout() {
         Button_EditAccount.setOnClickListener(view -> onClickEditAccount());
+        ImageView_Logout.setOnClickListener(view -> onClickLogOut());
     }
     @Override
     public void SetDataOnLayout() {
@@ -83,17 +93,24 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     }
 
     //ACTIONS
-    private void onClickEditAccount(){
-        toEditAccountAnimation();
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
 
+    private void onClickEditAccount(){
+        Action action = new Action(ActionsAccountInfo.INDEX_ACTION_OPEN_EDIT_ACCOUNT,null,this::EndAnimations);
+        SendAction(action);
+    }
+    private void onClickLogOut(){
+        Action action = new Action(ActionsAccountInfo.INDEX_ACTION_LOGOUT,null,this::EndAnimations);
+        SendAction(action);
     }
     //FUNCTIONAL
-    private void sendActionToManager(int index,String msg){
-    }
+
     //ANIMATIONS
     @Override
     public void StartAnimations() {
-        if(manager.from > manager.onMain){
+        if(manager.IndexFrom > manager.IndexOnMain){
             LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(500));
         }else{
             LinearLayout_TitleProduct       .startAnimation(Manager_Animation.getTranslationINfromUp(500));
@@ -103,6 +120,7 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     }
     @Override
     public void EndAnimations() {
+
         LinearLayout_TitleProduct           .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         LinearLayout_InfoAccount            .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
         Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));

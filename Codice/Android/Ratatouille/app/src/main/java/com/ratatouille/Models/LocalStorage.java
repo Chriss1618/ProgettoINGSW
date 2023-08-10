@@ -49,5 +49,6 @@ public class LocalStorage {
     public void DeleteAllData(){
         Editor.clear();
         Editor.apply();
+        Editor.commit();
     }
 }
