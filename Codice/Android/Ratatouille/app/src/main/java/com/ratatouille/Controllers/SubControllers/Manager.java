@@ -21,40 +21,40 @@ import java.util.concurrent.TimeUnit;
 import io.vavr.control.Try;
 
 public class Manager implements SubController {
-
     //SYSTEM
     private static final String TAG = "Manager_MenuFragments";
-    public Integer[] LIST_INDEX_VIEW;
 
-    public final int MAIN_VIEW_INDEX;
-    private final SourceInfo sourceInfo;
 
     //LAYOUT
     public final Context                    context;
-    protected final ArrayList<ViewLayout>   Views;
-    protected final View                    View;
+    protected final ArrayList<ViewLayout>   ViewsFragments;
+    protected final View                    ViewContainer;
+    protected final BottomBarListener       bottomBarListener;
 
     //FUNCTIONAL
-    protected final BottomBarListener       bottomBarListener;
+    protected final SourceInfo              sourceInfo;
     protected final FragmentManager         fragmentManager;
     protected final ManagerActionFactory    ManagerAction;
     protected final ManagerRequestFactory   ManagerRequest;
 
+    public Integer[] LIST_INDEX_VIEW;
+    public final int MAIN_VIEW_INDEX;
+
     public Integer      IndexOnMain;
-    public Integer      IndexFrom = 0;
+    public Integer      IndexFrom;
 
     //DATA
     private Object data;
 
     public Manager(SourceInfo sourceInfo,Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         Log.d(TAG, "Manager: Costruttore");
-        Views = new ArrayList<>();
+        ViewsFragments = new ArrayList<>();
         this.sourceInfo = sourceInfo;
         this.ManagerAction = new ManagerActionFactory();
         this.ManagerRequest = new ManagerRequestFactory();
 
         this.context                = context;
-        this.View                   = view;
+        this.ViewContainer          = view;
         this.fragmentManager        = fragmentManager;
         this.bottomBarListener      = bottomBarListener;
 
@@ -74,7 +74,7 @@ public class Manager implements SubController {
     }
     private void addViews(){
         for (int indexView : LIST_INDEX_VIEW)
-            try{ Views.add( new ViewFactory().createView(sourceInfo.getIndex_TypeManager(),indexView,this)); }
+            try{ ViewsFragments.add( new ViewFactory().createView(sourceInfo.getIndex_TypeManager(),indexView,this)); }
             catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
     }
 
@@ -82,13 +82,13 @@ public class Manager implements SubController {
     private void loadFragmentAsMain(int positionList){
         getSourceInfo().setIndex_TypeView(IndexOnMain);
         fragmentManager.beginTransaction()
-                .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(IndexOnMain))
+                .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(positionList), String.valueOf(IndexOnMain))
                 .setReorderingAllowed(true)
                 .commit();
     }
     private void loadFragmentAsNormal(int positionList){
         fragmentManager.beginTransaction()
-                .replace(View.getId(), (Fragment) Views.get(positionList), String.valueOf(IndexOnMain))
+                .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(positionList), String.valueOf(IndexOnMain))
                 .setReorderingAllowed(true)
                 .addToBackStack(null)
                 .commit();
@@ -140,7 +140,7 @@ public class Manager implements SubController {
         int temp = IndexFrom;
         IndexFrom = IndexOnMain;
 
-        Views.get( getPositionView(IndexOnMain) ).EndAnimations();
+        ViewsFragments.get( getPositionView(IndexOnMain) ).EndAnimations();
         final Handler handler = new Handler();
         handler.postDelayed(fragmentManager::popBackStack,300);
         IndexOnMain = temp;
