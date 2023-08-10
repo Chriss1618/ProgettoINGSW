@@ -16,6 +16,9 @@ import com.ratatouille.Models.Events.SourceInfo;
 import com.ratatouille.Views.ViewFactory;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
 
 public class Manager implements SubController {
 
@@ -109,8 +112,8 @@ public class Manager implements SubController {
 
     @Override
     public void changeOnMain(int indexMain, Object msg) {
-        final Handler handler = new Handler();
-        handler.postDelayed(()->showView(indexMain,msg),300);
+        Try.run(() -> TimeUnit.MILLISECONDS.sleep(300));
+        showView(indexMain,msg);
     }
 
     private void showView(int indexFragment, Object msg){
