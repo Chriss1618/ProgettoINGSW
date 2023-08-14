@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_ProductInventory;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListInventory;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
@@ -34,9 +37,10 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private final RecycleEventListener          RecycleEventListener;
-    private Manager manager;
+    private Manager                             manager;
     private Adapter_ProductInventory            adapter_product;
     private boolean                             isDeleting;
+
     //DATA
     private ArrayList<String>   TitleProducts_Exist;
     private ArrayList<String>   TitleProducts_Missing;
@@ -128,12 +132,19 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     }
 
     //ACTIONS
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
+
     private void onClickProduct(Object product) {
         EndAnimations();
+
     }
     private void onClickNewProduct(){
-        EndAnimations();
+        Action action = new Action(ActionsListInventory.INDEX_ACTION_ADD_INGREDIENT, "",this::EndAnimations);
+        SendAction(action);
     }
+
     private void onClickDeleteProduct(){
         if(isDeleting){
             adapter_product.hideDeleteIcon();
@@ -150,6 +161,9 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations() {
+        if(!manager.bottomBarListener.visible){
+            manager.showBottomBar();
+        }
         TextView_TitleInventory     .startAnimation(Manager_Animation.getTranslationINfromUp(600));
         TextView_TitleExist         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
         TextView_TitleMissing       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));

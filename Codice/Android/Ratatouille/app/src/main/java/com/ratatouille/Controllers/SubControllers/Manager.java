@@ -83,6 +83,7 @@ public class Manager implements SubController {
                 .commit();
     }
     private void loadFragmentAsNormal(int positionList){
+        getSourceInfo().setIndex_TypeView(IndexOnMain);
         fragmentManager.beginTransaction()
                 .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(positionList), String.valueOf(IndexOnMain))
                 .setReorderingAllowed(true)
@@ -102,8 +103,9 @@ public class Manager implements SubController {
         new Thread(() -> ManagerAction.handleAction(action) ).start();
     }
     public void HandleRequest(Request request){
+        request.setManager(this);
+        request.setSourceInfo(getSourceInfo());
         new Thread(() -> ManagerRequest.handleRequest(request) ).start();
-
     }
 
     @Override
@@ -139,6 +141,7 @@ public class Manager implements SubController {
         final Handler handler = new Handler();
         handler.postDelayed(fragmentManager::popBackStack,300);
         IndexOnMain = temp;
+        getSourceInfo().setIndex_TypeView(IndexOnMain);
     }
 
     //FUNCTIONAL

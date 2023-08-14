@@ -42,7 +42,6 @@ public class ActionsListCategory extends ActionsViewHandler{
             action.getManager().changeOnMain(ControlMapper.INDEX_MENU_LIST_PRODUCTS,categoria);
         }
     }
-
     private static class showAddNewCategory_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {

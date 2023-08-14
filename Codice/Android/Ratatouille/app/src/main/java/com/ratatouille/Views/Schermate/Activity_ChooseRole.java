@@ -45,7 +45,6 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     //DATA
     @Override
     public void PrepareData() {
-
         new Thread(() ->{
             Try.run(() -> TimeUnit.SECONDS.sleep(2));
             if(AuthenticateUser()) startApp();

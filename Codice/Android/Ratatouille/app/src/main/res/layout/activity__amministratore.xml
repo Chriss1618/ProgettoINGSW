@@ -6,30 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".Views.Schermate.Activity_Amministratore"
     android:id="@+id/constraint_layout_amministratore">
+
     <LinearLayout
         android:id="@+id/linear_layout_container_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
 
-        app:layout_constraintBottom_toTopOf="@+id/bottom_bar_amm"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="64dp">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_view_amministratore"
+            android:name="com.ratatouille.Views.Schermate.BlankFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.ratatouille.Views.Schermate.BlankFragment"
-            tools:layout="@layout/fragment_blank"/>
+            tools:layout="@layout/fragment_blank" />
     </LinearLayout>
 
     <nl.joery.animatedbottombar.AnimatedBottomBar
         android:visibility="gone"
         android:id="@+id/bottom_bar_amm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:background="#FFF"
         app:abb_indicatorAppearance="round"
         app:abb_indicatorHeight="4dp"

@@ -38,7 +38,7 @@ public class RequestCategory implements RequestHandler {
             JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
             ListCategoryMenu = new ArrayList<>();
             if( BodyJSON != null ) setCategories( BodyJSON );
-            TimeUnit.SECONDS.sleep(1);
+            //TimeUnit.SECONDS.sleep(1);
             request.callBack(ListCategoryMenu);
 
         }catch ( Exception e ){

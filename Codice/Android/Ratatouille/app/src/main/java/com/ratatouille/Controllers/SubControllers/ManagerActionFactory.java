@@ -4,6 +4,7 @@ import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsAccountInfo;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListInventory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
@@ -34,6 +35,9 @@ public class ManagerActionFactory {
 
         //STATS
 //        classMap.put(ControlMapper.INDEX_STATS_PRODUCTIVITY,  MenuViewFactory.class);
+        //INVENTORY
+        classMap.put(ControlMapper.INDEX_INVENTORY_LIST,          ActionsListInventory.class);
+
 
     }
 

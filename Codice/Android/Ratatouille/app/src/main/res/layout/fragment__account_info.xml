@@ -235,7 +235,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="32dp"
-                android:layout_marginBottom="64dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/background_button_main"
                 android:fontFamily="@font/sf_compact_rounded"
                 android:paddingStart="36dp"
