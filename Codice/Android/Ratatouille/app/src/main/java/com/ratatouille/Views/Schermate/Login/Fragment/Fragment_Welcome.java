@@ -20,6 +20,8 @@ import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 
+import java.util.concurrent.TimeUnit;
+
 import io.vavr.control.Try;
 
 
@@ -99,14 +101,12 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     }
 
     private void onClickLogin(){
-        //this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
-        Action action = new Action(ActionsLogin.INDEX_ACTION_START_LOGIN,"notAdmin",this::animateOUT);
+        Action action = new Action(ActionsLogin.INDEX_ACTION_START_LOGIN,"notAdmin");
         SendAction(action);
     }
 
     private void onClickRegistra(){
-        //this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_WELCOME);
-        Action action = new Action(ActionsLogin.INDEX_ACTION_START_REGISTER_ADMIN,"admin",this::animateOUT);
+        Action action = new Action(ActionsLogin.INDEX_ACTION_START_REGISTER_ADMIN,"admin");
         SendAction(action);
     }
 
@@ -121,6 +121,7 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     @Override
     public void EndAnimations() {
         animateOUT();
+        Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));
     }
 
     public void RotateLogo(){
@@ -149,6 +150,7 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
                 Button_Accedi.setVisibility(View.GONE);
                 Button_RegistraRistorante.setVisibility(View.GONE);
             });
+             //Attesa animazinoe Rotazione LOGO
         });
 
     }

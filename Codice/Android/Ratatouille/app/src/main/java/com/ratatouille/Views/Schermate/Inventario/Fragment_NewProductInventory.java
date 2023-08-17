@@ -76,6 +76,7 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
         CardView_Product        = View_Fragment.findViewById(R.id.card_view_element_product);
         LinearLayout_Buttons    = View_Fragment.findViewById(R.id.linear_layout_buttons);
     }
+
     @Override
     public void SetDataOnLayout() {
 

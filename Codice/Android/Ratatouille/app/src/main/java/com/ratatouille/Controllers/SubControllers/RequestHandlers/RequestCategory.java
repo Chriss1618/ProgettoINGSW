@@ -47,7 +47,6 @@ public class RequestCategory implements RequestHandler {
 
     }
 
-
     @Override
     public void handleRequest(Request request) {
         getCategoriesFromServer(request);

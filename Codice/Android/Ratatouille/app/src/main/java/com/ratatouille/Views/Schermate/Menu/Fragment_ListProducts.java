@@ -56,7 +56,6 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         this.Category_Name = "Nessuna Categoria";
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +122,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         RecycleEventListener    .setOnClickItemAdapterListener((item)-> onClickProduct( (Product)item ) );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
-        ImageView_Back          .setOnClickListener(            view -> manager.closeView());
+        ImageView_Back          .setOnClickListener(            view -> manager.goBack());
     }
 
     private void initListProductsRV( ){
@@ -141,8 +140,9 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         //Log.d(TAG, "PreparerData: Hai premuto l'item->"+product);
         toProductAnimations();
     }
+
     private void onClickAddProduct(){
-        Action action = new Action(ActionsListProducts.INDEX_ACTION_OPEN_NEW_PRODUCT,Categoria,this::toProductAnimations);
+        Action action = new Action(ActionsListProducts.INDEX_ACTION_OPEN_NEW_PRODUCT,Categoria);
         SendAction(action);
     }
     private void onClickDeleteMember(){
@@ -177,25 +177,28 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
     @Override
     public void EndAnimations(){
-        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
-        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        if(manager.IndexOnMain > manager.IndexFrom) toProductAnimations();
+        else toMenuAnimations();
     }
+
     public void fromMenuAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationINfromDown(300));
         //Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
-    }
-
-    public void toMenuAnimations(){
-
-    }
-
-    public void toProductAnimations(){
-        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
-        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }
     public void fromProductAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationINfromUp(300));
         Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
 
     }
+
+    public void toMenuAnimations(){
+        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
+        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+    }
+
+    public void toProductAnimations(){
+        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+    }
+
 }

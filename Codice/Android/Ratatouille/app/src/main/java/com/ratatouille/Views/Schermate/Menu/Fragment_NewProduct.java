@@ -151,7 +151,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     public void SetActionsOfLayout() {
             ImageView_AddFromGallery        .setOnClickListener(view -> onClickAddFromGallery());
             CardView_AddNewProduct          .setOnClickListener(view -> onClickAddNewProduct());
-            CardView_Cancel                 .setOnClickListener(view -> manager.closeView());
+            CardView_Cancel                 .setOnClickListener(view -> manager.goBack());
     }
     @Override
     public void SetDataOnLayout() {

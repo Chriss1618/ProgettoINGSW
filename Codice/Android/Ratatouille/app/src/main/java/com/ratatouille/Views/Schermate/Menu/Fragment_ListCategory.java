@@ -159,14 +159,13 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
     }
 
-
     //ACTIONS *************************************************************************
     private void SendAction(Action action){
         manager.HandleAction(action);
     }
 
     private void onClickCategory(CategoriaMenu Category){
-        Action action = new Action(ActionsListCategory.INDEX_ACTION_OPEN_LIST_PRODUCTS, Category,this::EndAnimations);
+        Action action = new Action(ActionsListCategory.INDEX_ACTION_OPEN_LIST_PRODUCTS, Category);
         SendAction(action);
     }
 
@@ -267,7 +266,6 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
             if(newCategory.equals("") || newCategory.length() < 4){
                 ShowNameCategoryNotValid();
             }else{
-                manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
                 Action action = new Action(ActionsListCategory.INDEX_ACTION_ADD_CATEGORY,newCategory,(category)->addCategoryView( (CategoriaMenu)category ));
                 SendAction(action);
             }

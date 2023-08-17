@@ -21,15 +21,12 @@ public class Controller implements IController {
     //SYSTEM
 
     //FUNCTIONAL
-    public int typeController;
-    static Integer[] LIST_INDEX_MANAGERS = {
+    public int          typeController;
+    static Integer[]    LIST_INDEX_MANAGERS = {};
 
-    };
-
-    private static final int            MAIN = 0;
+    private static final int            MAIN_MANAGER = 0;
     public int                          managerOnMain;
-    private final FragmentManager       fragmentManager;
-
+    private final FragmentManager           fragmentManager;
     private final ArrayList<SubController> Managers;
 
     //LAYOUT
@@ -38,14 +35,16 @@ public class Controller implements IController {
     private BottomBarListener   bottomBarListener;
 
     public Controller(Context context, View view, FragmentManager fragmentManager,BottomBarListener bottomBarListener , int typeController) {
+        Managers = new ArrayList<>();
+
         this.context            = context;
         this.View               = view;
         this.fragmentManager    = fragmentManager;
         this.bottomBarListener  = bottomBarListener;
         this.typeController     = typeController;
 
-        Managers = new ArrayList<>();
         LIST_INDEX_MANAGERS = ControlMapper.classControllerToManager.get(typeController);
+
         assert LIST_INDEX_MANAGERS != null;
         for (int indexManager : LIST_INDEX_MANAGERS ) {
             Managers.add(new Manager(
@@ -57,7 +56,6 @@ public class Controller implements IController {
                     )
             );
         }
-
     }
 
     public int getNumberManagers(){
@@ -66,7 +64,7 @@ public class Controller implements IController {
     //Show Pages
     @Override
     public void showMain(){
-        showOnMain(MAIN);
+        showOnMain(MAIN_MANAGER);
     }
 
     @Override
@@ -78,13 +76,19 @@ public class Controller implements IController {
 
     private void showOnMain(int indexMain){
         clearBackStackPackage();
-        Log.d(TAG, "showOnMain: index->"+indexMain);
+        Log.d(TAG, "showManagerOnMain: index->"+indexMain);
         managerOnMain = indexMain;
         Managers.get(managerOnMain).showMain();
     }
+
     @Override
     public void closeView(){
-        Managers.get(managerOnMain).closeView();
+        Managers.get(managerOnMain).goBack();
+    }
+
+    @Override
+    public void goBack() {
+        Managers.get(managerOnMain).goBack();
     }
 
     private void clearBackStackPackage(){

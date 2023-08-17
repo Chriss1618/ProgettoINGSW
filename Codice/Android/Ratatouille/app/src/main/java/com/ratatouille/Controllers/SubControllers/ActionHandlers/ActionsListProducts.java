@@ -34,7 +34,6 @@ public class ActionsListProducts extends ActionsViewHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: GetCategorieActionHandler->");
-            action.callBack();
             action.getManager().hideBottomBar();
             action.getManager().changeOnMain(ControlMapper.INDEX_MENU_NEW_PRODUCT, action.getData());
         }

@@ -23,21 +23,18 @@ public class ActionsLogin extends ActionsViewHandler{
     public final static int INDEX_ACTION_START_REGISTER_ADMIN   = 0;
     public final static int INDEX_ACTION_START_LOGIN            = 1;
     public final static int INDEX_ACTION_LOGIN                  = 2;
-    public final static int INDEX_ACTION_CONFIRM_LOGIN          = 3;
-    public final static int INDEX_ACTION_LOGIN_ADMIN            = 4;
+    public final static int INDEX_ACTION_REGISTER_ADMIN            = 3;
 
     public ActionsLogin(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_START_REGISTER_ADMIN,     new StartRegisterAdmin_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_START_LOGIN,              new StartLogin_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_LOGIN,                    new Login_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_LOGIN_ADMIN,              new LoginAdmin_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_REGISTER_ADMIN,              new RegisterAdmin_ActionHandler());
     }
     private static class StartRegisterAdmin_ActionHandler implements ActionHandler{
         @Override
         public void handleAction(Action action) {
-            action.callBack();
-            Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));//Attesa animazinoe Rotazione LOGO
             action.getManager().changeOnMain(ControlMapper.INDEX_LOGIN_LOGIN,"");
             new LocalStorage(action.getManager().context).putData("TypeUser","Amministratore");
         }
@@ -48,9 +45,6 @@ public class ActionsLogin extends ActionsViewHandler{
         public void handleAction(Action action) {
             Context context = action.getManager().context;
             Log.d(TAG, "handleAction: NormalLogin");
-
-            action.callBack();
-            Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));//Attesa animazinoe Rotazione LOGO
             action.getManager().changeOnMain(ControlMapper.INDEX_LOGIN_LOGIN,"");
             new LocalStorage(context).putData("TypeUser","");
         }
@@ -112,11 +106,9 @@ public class ActionsLogin extends ActionsViewHandler{
                 return false;
             }
         }
-
-
     }
 
-    private static class LoginAdmin_ActionHandler implements ActionHandler{
+    private static class RegisterAdmin_ActionHandler implements ActionHandler{
         @Override
         public void handleAction(Action action) {
             String token = "WAITING";

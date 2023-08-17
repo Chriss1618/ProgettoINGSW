@@ -28,7 +28,7 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     public void onBackPressed() {
         if(ManagerLogin.IndexOnMain != ControlMapper.INDEX_LOGIN_CONFIRM){
             if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
-                ManagerLogin.closeView();
+                ManagerLogin.goBack();
             }else{
                 super.onBackPressed();
             }

@@ -23,6 +23,10 @@ import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
+
 public class Fragment_Login extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_Login";
@@ -126,42 +130,29 @@ public class Fragment_Login extends Fragment implements ViewLayout {
 
     private void onClickLogin(){
         if(getAllInputs()){
-            Action action;
-            if(isRegisteringAdmin){
-                //this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
-                action = new Action(ActionsLogin.INDEX_ACTION_LOGIN_ADMIN, Utente, manager, (flag) -> getResultLogin((boolean) flag), manager.getSourceInfo());
-            }else{
-
-                //this.manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_LOGIN);
-                action = new Action(ActionsLogin.INDEX_ACTION_LOGIN, Utente, manager, (flag) -> getResultLogin((boolean) flag), manager.getSourceInfo());
-            }
+            Action action = new Action(isRegisteringAdmin ? ActionsLogin.INDEX_ACTION_REGISTER_ADMIN : ActionsLogin.INDEX_ACTION_LOGIN, Utente, manager, (flag) -> getResultLogin((boolean) flag), manager.getSourceInfo());
             SendAction(action);
-
         }
     }
 
     //FUNCTIONAL
     private void getResultLogin(boolean Authenticated){
-        if(Authenticated) EndAnimations();
-        else ShowDialogErrorLogin();
+        if(!Authenticated) ShowDialogErrorLogin();
     }
     private boolean getAllInputs(){
         Utente.setEmail(EditTex_Email.getText().toString());
         Utente.setPassword(EditTex_Password.getText().toString());
-        String rule = (String) new LocalStorage(manager.context).getData("Rule", "String");
-        if(rule == null){
-            rule = "ToDefine";
-        }
-        return checkProduct();
+
+        return checkInputs();
     }
-    private boolean checkProduct(){
+    private boolean checkInputs(){
         boolean isOk;
 
         isOk = showWarning(TextView_warningEmail,
-                ( Utente.getEmail().length() >  3 ) );
+                 Utente.getEmail().length() >  3  );
 
         isOk &= showWarning(TextView_warningPassword,
-                ( Utente.getPassword().length() > 3 ) );
+                 Utente.getPassword().length() > 3 );
 
         return isOk;
     }
@@ -220,13 +211,17 @@ public class Fragment_Login extends Fragment implements ViewLayout {
 
     @Override
     public void EndAnimations() {
+        animateOUT();
+        Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));
+    }
+
+    private void animateOUT(){
         requireActivity().runOnUiThread(() -> {
             LinearLayout_Login.startAnimation( Manager_Animation.getTranslateAnimatioOUTtoRight(500));
             Button_Login.startAnimation( Manager_Animation.getTranslateAnimatioOUTtoRight(500));
             MoveLogoFrom1to2();
         });
     }
-
     private void animateIN(){
         LinearLayout_Login.startAnimation( Manager_Animation.getTranslateAnimatioINfromLeft(500));
     }

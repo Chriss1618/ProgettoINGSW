@@ -19,7 +19,6 @@ public class ControlMapper {
     public static final int INDEX_TYPE_CONTROLLER_CAMERIERE        = 3;
 
     //Managers
-    public final static int INDEX_TYPE_MANAGER_LOGIN            = 7;
     public final static int INDEX_TYPE_MANAGER_STATS            = 0;
     public final static int INDEX_TYPE_MANAGER_STAFF            = 1;
     public final static int INDEX_TYPE_MANAGER_MENU             = 2;
@@ -27,6 +26,7 @@ public class ControlMapper {
     public final static int INDEX_TYPE_MANAGER_INVENTORY        = 4;
     public final static int INDEX_TYPE_MANAGER_ORDINI           = 5;
     public final static int INDEX_TYPE_MANAGER_ORDINI_CAMERIERE = 6;
+    public final static int INDEX_TYPE_MANAGER_LOGIN            = 7;
 
     // Views
     //LOGIN

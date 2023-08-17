@@ -1,5 +1,6 @@
 package com.ratatouille.Views.Schermate;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.Controller;
 import com.ratatouille.Controllers.SubControllers.Manager;
@@ -29,29 +32,24 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     private static final String TAG = "Activity_Amministratore";
 
     //LAYOUT
-    AnimatedBottomBar Bottom_Bar_Amministratore;
-
+    private AnimatedBottomBar   Bottom_Bar_Amministratore;
+    private LinearLayout        LinearLayout_Fragment;
     //FUNCTIONAL
     private String typeUser;
     private final BottomBarListener     bottomBarListener = new BottomBarListener();
-    private Controller controller;
+    private Controller                  controller;
     private int typeController;
 
     //OTHER
 
     @Override
-    public void finish() {
-        controller = null;
-        Log.d(TAG, "finish: Closing Activity Amministratore");
-        super.finish();
-    }
-
-    @Override
     public void onBackPressed() {
-        if ( getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
-            controller.closeView();
+        Log.d(TAG, "onBackPressed: stack size = " + getSupportFragmentManager().getBackStackEntryCount() );
+        if ( getSupportFragmentManager().getBackStackEntryCount() > 1 ) {
+            controller.goBack();
         }else{
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -103,6 +101,8 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
                 break;
         }
         Bottom_Bar_Amministratore.setVisibility(View.VISIBLE);
+
+        LinearLayout_Fragment = findViewById(R.id.linear_layout_container_fragment);
     }
     @Override
     public void SetActionsOfLayout() {
@@ -138,7 +138,7 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
 
     }
 
-     private void tabSelected(int indexTab){
+    private void tabSelected(int indexTab){
         disableBottomBar();
         controller.changeOnMain(indexTab);
         new Handler().postDelayed(this::enableBottomBar,600);
@@ -146,12 +146,14 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
 
     //FUNCTIONAL
     private void constructController() {
-        controller = new Controller(this,
+        controller = new Controller(
+                this,
                 findViewById(R.id.fragment_container_view_amministratore),
                 getSupportFragmentManager(),
-                bottomBarListener, typeController);
+                bottomBarListener,
+                typeController
+        );
     }
-
 
     private void disableBottomBar(){
         for(int i = 0; i < controller.getNumberManagers(); i++)
@@ -166,18 +168,27 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     public void hideBottomBar(){
         runOnUiThread(() -> {
             Handler handler = new Handler();
-            handler.postDelayed( () ->Bottom_Bar_Amministratore.setVisibility(View.GONE), 300);
+            handler.postDelayed( () ->Bottom_Bar_Amministratore.setVisibility(View.GONE), 500);
             Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationOUTtoDownS(500));
 
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            layoutParams.setMargins(0, 0, 0, 0);
+            LinearLayout_Fragment.setLayoutParams(layoutParams);
         });
     }
     public void showBottomBar(){
         runOnUiThread(() -> {
             Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationINfromDownSlower(500));
             Bottom_Bar_Amministratore.setVisibility(View.VISIBLE);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            layoutParams.setMargins(0, 0, 0, 64);
+            LinearLayout_Fragment.setLayoutParams(layoutParams);
+
         });
     }
-
 
     //ANIMATIONS
     @Override

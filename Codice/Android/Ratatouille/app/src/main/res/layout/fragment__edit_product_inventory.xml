@@ -139,22 +139,23 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
 
+                                android:theme="@style/EditTextCursor"
                                 android:layout_marginTop="4dp"
-                                android:autofillHints=""
 
                                 android:background="@drawable/background_edit_text_stroke_white"
-                                android:ems="10"
+
                                 android:fontFamily="@font/sf_compact_rounded_bold"
                                 android:gravity="center"
-                                android:hint="@string/inserisci_il_nome_prodotto"
+                                android:hint="Nome Ingrediente"
                                 android:inputType="text"
                                 android:text=""
                                 android:textColor="@color/Black"
-                                android:textColorHint="@color/Black"
+                                android:textColorHint="@color/DarkGray"
                                 android:textColorLink="@color/MainColor"
 
-                                android:textCursorDrawable="@color/MainColor"
-                                android:textSize="19sp" />
+                                android:textCursorDrawable="@drawable/custom_cursor"
+                                android:textSize="19sp"
+                                android:autofillHints="" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -197,15 +198,15 @@
                                     android:ems="10"
                                     android:fontFamily="@font/sf_compact_rounded_bold"
                                     android:gravity="center"
-                                    android:hint="0"
-                                    android:inputType="textEmailAddress"
+                                    android:hint="@string/_0"
+                                    android:inputType="number"
 
                                     android:text=""
                                     android:textColor="@color/MainColor"
                                     android:textColorHint="@color/MainColor"
                                     android:textColorLink="@color/MainColor"
 
-                                    android:textCursorDrawable="@color/MainColor"
+                                    android:textCursorDrawable="@drawable/custom_cursor"
                                     android:textSize="19sp" />
 
                                 <TextView
@@ -233,8 +234,8 @@
                                     android:ems="10"
                                     android:fontFamily="@font/sf_compact_rounded_bold"
                                     android:gravity="center"
-                                    android:hint="00"
-                                    android:inputType="textEmailAddress"
+                                    android:hint="@string/_00"
+                                    android:inputType="number"
                                     android:text=""
 
                                     android:textColor="@color/Black"
@@ -286,7 +287,7 @@
                                         android:textColorHint="@color/MainColor"
                                         android:textColorLink="@color/MainColor"
 
-                                        android:textCursorDrawable="@color/MainColor"
+                                        android:textCursorDrawable="@drawable/custom_cursor"
                                         android:textSize="19sp" />
                                 </LinearLayout>
 
@@ -518,7 +519,7 @@
                                 android:textColorHint="@color/MainColor"
                                 android:textColorLink="@color/MainColor"
 
-                                android:textCursorDrawable="@color/MainColor"
+                                android:textCursorDrawable="@drawable/custom_cursor"
                                 android:textSize="19sp" />
                         </LinearLayout>
                     </LinearLayout>

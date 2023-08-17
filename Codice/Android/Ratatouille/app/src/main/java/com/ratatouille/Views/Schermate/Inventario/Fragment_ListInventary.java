@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,7 +33,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     private TextView        TextView_TitleMissing;
     private RecyclerView    Recycler_Products_Exist;
     private RecyclerView    Recycler_Products_Missing;
-    private ImageView       ImageView_AddProduct;
+    private ImageView       ImageView_AddIngredient;
     private ImageView       ImageView_DeleteProduct;
 
     //FUNCTIONAL
@@ -100,14 +101,14 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         TextView_TitleMissing       = View_Fragment.findViewById(R.id.text_view_missing);
         Recycler_Products_Exist     = View_Fragment.findViewById(R.id.recycler_products_exist);
         Recycler_Products_Missing   = View_Fragment.findViewById(R.id.recycler_products_finished);
-        ImageView_AddProduct        = View_Fragment.findViewById(R.id.ic_add_product);
         ImageView_DeleteProduct     = View_Fragment.findViewById(R.id.ic_delete_product);
+        ImageView_AddIngredient     = View_Fragment.findViewById(R.id.ic_add_ingrediente);
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener    .setOnClickItemAdapterListener  (this::onClickProduct);
-        ImageView_AddProduct    .setOnClickListener             (view -> onClickNewProduct());
-        ImageView_DeleteProduct.setOnClickListener              (view -> onClickDeleteProduct());
+        RecycleEventListener    .setOnClickItemAdapterListener   (this::onClickProduct);
+        ImageView_DeleteProduct .setOnClickListener              (view -> onClickDeleteProduct());
+        ImageView_AddIngredient .setOnClickListener              (view -> onCLickAddNewIngredient());
     }
     @Override
     public void SetDataOnLayout() {
@@ -140,10 +141,6 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         EndAnimations();
 
     }
-    private void onClickNewProduct(){
-        Action action = new Action(ActionsListInventory.INDEX_ACTION_ADD_INGREDIENT, "",this::EndAnimations);
-        SendAction(action);
-    }
 
     private void onClickDeleteProduct(){
         if(isDeleting){
@@ -155,8 +152,12 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         }
     }
 
+    private void onCLickAddNewIngredient(){
+        Log.d(TAG, "onCLickAddNewIngredient -> PREMUTO");
+        Action action = new Action(ActionsListInventory.INDEX_ACTION_SHOW_NEW_INGREDIENT, null );
+        SendAction(action);
+    }
     //FUNCTIONAL
-
 
     //ANIMATIONS
     @Override

@@ -28,7 +28,6 @@ public class ManagerActionFactory {
         classMap.put(ControlMapper.INDEX_MENU_LIST_CATEGORY,    ActionsListCategory.class);
         classMap.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS,    ActionsListProducts.class);
         classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,      ActionsNewProduct.class);
-
         //ACCOUNT
         classMap.put(ControlMapper.INDEX_ACCOUNT_INFO,          ActionsAccountInfo.class);
 //        classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,  MenuViewFactory.class);
@@ -36,8 +35,7 @@ public class ManagerActionFactory {
         //STATS
 //        classMap.put(ControlMapper.INDEX_STATS_PRODUCTIVITY,  MenuViewFactory.class);
         //INVENTORY
-        classMap.put(ControlMapper.INDEX_INVENTORY_LIST,          ActionsListInventory.class);
-
+        classMap.put(ControlMapper.INDEX_INVENTORY_LIST, ActionsListInventory.class);
 
     }
 

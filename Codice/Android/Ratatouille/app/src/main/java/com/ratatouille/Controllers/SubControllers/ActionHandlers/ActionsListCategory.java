@@ -36,16 +36,16 @@ public class ActionsListCategory extends ActionsViewHandler{
         @Override
         public void handleAction(Action action) {
             CategoriaMenu categoria = (CategoriaMenu) action.getData();
-
             Log.d(TAG, "handleAction: GetCategorieActionHandler->"+ categoria.getNomeCategoria());
-            action.callBack();
+
             action.getManager().changeOnMain(ControlMapper.INDEX_MENU_LIST_PRODUCTS,categoria);
         }
     }
     private static class showAddNewCategory_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
-            Log.d(TAG, "handleAction: AddNewCategoryActionHandler->");
+            Log.d(TAG, "handleAction: OpenPopUpNewCategoryActionHandler->");
+            //Qualsiasi altra cosa
             action.callBack();
         }
     }
@@ -62,8 +62,6 @@ public class ActionsListCategory extends ActionsViewHandler{
                 Log.d(TAG, "handleAction: Categoria Non Aggiunto");
             }
         }
-
-
         private boolean sendNewCategoryToServer(String newCategory){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("id_ristorante", "1")
