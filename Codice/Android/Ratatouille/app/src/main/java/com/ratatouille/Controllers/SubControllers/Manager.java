@@ -1,6 +1,7 @@
 package com.ratatouille.Controllers.SubControllers;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import androidx.fragment.app.Fragment;
@@ -76,8 +77,11 @@ public class Manager implements SubController {
     //ShowPages
     @Override
     public void showMain(){
-        IndexOnMain = IndexFrom = MAIN_VIEW_INDEX;
+        IndexOnMain  = MAIN_VIEW_INDEX;
+        IndexFrom = MAIN_VIEW_INDEX;
         loadFragment( getPositionView( IndexOnMain ) );
+
+        getSourceInfo().setIndex_TypeView(IndexOnMain);
     }
     @Override
     public void changeOnMain(int indexMain, Object msg) {
@@ -95,16 +99,19 @@ public class Manager implements SubController {
         ViewsFragments.get( getPositionView(IndexFrom) ).EndAnimations();
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(300));
     }
+
     @Override
     public void goBack(){
         IndexFrom = IndexOnMain;
+
+        ViewsFragments.get( getPositionView(IndexFrom) ).EndAnimations();
+
         if(fragmentManager.getBackStackEntryCount() > 1){
             IndexOnMain = Integer.parseInt(Objects.requireNonNull(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2).getName()));
             getSourceInfo().setIndex_TypeView(IndexOnMain);
         }
 
-        closeView();
-        fragmentManager.popBackStack();
+        new Handler().postDelayed( fragmentManager::popBackStack,300);
     }
 
     private void loadFragment(int positionList){
