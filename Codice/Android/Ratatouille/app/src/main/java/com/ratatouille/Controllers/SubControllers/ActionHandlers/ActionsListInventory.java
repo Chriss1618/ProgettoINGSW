@@ -1,9 +1,7 @@
 package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 
 import android.util.Log;
-
 import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Events.Action.Action;
 
 import java.util.HashMap;

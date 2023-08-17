@@ -1,30 +1,20 @@
 package com.ratatouille.Views.Schermate;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.Controller;
-import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
-
-import java.util.concurrent.TimeUnit;
-
-import io.vavr.control.Try;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class Activity_Amministratore extends AppCompatActivity implements ViewLayout {
@@ -53,14 +43,12 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__amministratore);
 
         PrepareData();
-
         PrepareLayout();
 
     }
@@ -137,34 +125,11 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
         });
 
     }
-
     private void tabSelected(int indexTab){
         disableBottomBar();
         controller.changeOnMain(indexTab);
         new Handler().postDelayed(this::enableBottomBar,600);
     }
-
-    //FUNCTIONAL
-    private void constructController() {
-        controller = new Controller(
-                this,
-                findViewById(R.id.fragment_container_view_amministratore),
-                getSupportFragmentManager(),
-                bottomBarListener,
-                typeController
-        );
-    }
-
-    private void disableBottomBar(){
-        for(int i = 0; i < controller.getNumberManagers(); i++)
-            Bottom_Bar_Amministratore.setTabEnabledAt(i,false);
-    }
-
-    private void enableBottomBar(){
-        for(int i = 0; i < controller.getNumberManagers(); i++)
-            Bottom_Bar_Amministratore.setTabEnabledAt(i,true);
-    }
-
     public void hideBottomBar(){
         runOnUiThread(() -> {
             Handler handler = new Handler();
@@ -188,6 +153,25 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
             LinearLayout_Fragment.setLayoutParams(layoutParams);
 
         });
+    }
+    private void disableBottomBar(){
+        for(int i = 0; i < controller.getNumberManagers(); i++)
+            Bottom_Bar_Amministratore.setTabEnabledAt(i,false);
+    }
+    private void enableBottomBar(){
+        for(int i = 0; i < controller.getNumberManagers(); i++)
+            Bottom_Bar_Amministratore.setTabEnabledAt(i,true);
+    }
+
+    //FUNCTIONAL
+    private void constructController() {
+        controller = new Controller(
+                this,
+                findViewById(R.id.fragment_container_view_amministratore),
+                getSupportFragmentManager(),
+                bottomBarListener,
+                typeController
+        );
     }
 
     //ANIMATIONS

@@ -1,8 +1,6 @@
 package com.ratatouille.Controllers.SubControllers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import androidx.fragment.app.Fragment;
@@ -61,7 +59,6 @@ public class Manager implements SubController {
 
         addViews();
     }
-
     private void addViews(){
         for (int indexView : LIST_INDEX_VIEW)
             try{ ViewsFragments.add( new ViewFactory().createView(sourceInfo.getIndex_TypeManager(),indexView,this)); }
@@ -77,32 +74,11 @@ public class Manager implements SubController {
     }
 
     //ShowPages
-    private void loadFragment(int positionList){
-        fragmentManager.beginTransaction()
-                .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(positionList), String.valueOf(IndexOnMain))
-                .setReorderingAllowed(true)
-                .addToBackStack(String.valueOf(IndexOnMain))
-                .commit();
-    }
-
     @Override
     public void showMain(){
         IndexOnMain = IndexFrom = MAIN_VIEW_INDEX;
         loadFragment( getPositionView( IndexOnMain ) );
     }
-
-    public void HandleAction(Action action){
-        action.setManager(this);
-        action.setSourceInfo(getSourceInfo());
-        new Thread(() -> ManagerAction.handleAction(action) ).start();
-    }
-
-    public void HandleRequest(Request request){
-        request.setManager(this);
-        request.setSourceInfo(getSourceInfo());
-        new Thread(() -> ManagerRequest.handleRequest(request) ).start();
-    }
-
     @Override
     public void changeOnMain(int indexMain, Object msg) {
         data = msg;
@@ -114,13 +90,6 @@ public class Manager implements SubController {
 
         getSourceInfo().setIndex_TypeView(IndexOnMain);
     }
-
-    private int getPositionView(int indexFragment){
-        for(int position = 0 ; position < LIST_INDEX_VIEW.length; position++)
-            if(indexFragment == LIST_INDEX_VIEW[position] )  return position;
-        return 0;
-    }
-
     @Override
     public void closeView() {
         ViewsFragments.get( getPositionView(IndexFrom) ).EndAnimations();
@@ -138,6 +107,29 @@ public class Manager implements SubController {
         fragmentManager.popBackStack();
     }
 
+    private void loadFragment(int positionList){
+        fragmentManager.beginTransaction()
+                .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(positionList), String.valueOf(IndexOnMain))
+                .setReorderingAllowed(true)
+                .addToBackStack(String.valueOf(IndexOnMain))
+                .commit();
+    }
+    private int getPositionView(int indexFragment){
+        for(int position = 0 ; position < LIST_INDEX_VIEW.length; position++)
+            if(indexFragment == LIST_INDEX_VIEW[position] )  return position;
+        return 0;
+    }
+
+    public void HandleAction(Action action){
+        action.setManager(this);
+        action.setSourceInfo(getSourceInfo());
+        new Thread(() -> ManagerAction.handleAction(action) ).start();
+    }
+    public void HandleRequest(Request request){
+        request.setManager(this);
+        request.setSourceInfo(getSourceInfo());
+        new Thread(() -> ManagerRequest.handleRequest(request) ).start();
+    }
     //FUNCTIONAL
     public void hideBottomBar(){
         bottomBarListener.hideBottomBar();

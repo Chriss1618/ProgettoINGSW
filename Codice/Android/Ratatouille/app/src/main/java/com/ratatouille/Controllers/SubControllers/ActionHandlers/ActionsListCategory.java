@@ -7,11 +7,8 @@ import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashMap;
-
-import io.vavr.control.Try;
 
 public class ActionsListCategory extends ActionsViewHandler{
     //SYSTEM
@@ -45,7 +42,6 @@ public class ActionsListCategory extends ActionsViewHandler{
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: OpenPopUpNewCategoryActionHandler->");
-            //Qualsiasi altra cosa
             action.callBack();
         }
     }

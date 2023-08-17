@@ -4,21 +4,18 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-
 import androidx.fragment.app.FragmentManager;
-
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Interfaces.IController;
 import com.ratatouille.Models.Interfaces.SubController;
 import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Events.SourceInfo;
-
 import java.util.ArrayList;
 
 public class Controller implements IController {
 
-    private static final String TAG = "Controller_Amministratore";
     //SYSTEM
+    private static final String TAG = "Controller_Amministratore";
 
     //FUNCTIONAL
     public int          typeController;
