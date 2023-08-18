@@ -82,10 +82,11 @@ CREATE TABLE Ingrediente (
 	ID_Ristorante INTEGER NOT NULL,
     NameIngrediente VARCHAR(120) NOT NULL,
     Misura FLOAT(5,2) NOT NULL DEFAULT 0.00,
+    PhotoURL VARCHAR(300),
     UnitaMisura VARCHAR(2),
     PRIMARY KEY (ID_Ingrediente),
     CONSTRAINT FK_RistoranteIngrediente FOREIGN KEY (ID_Ristorante) REFERENCES Ristorante(ID_Ristorante) ON DELETE CASCADE,
-    CONSTRAINT CHK_UnitaMisura CHECK (UnitaMisura IN ('kg','gr','mg','L','cl','ml'))
+    CONSTRAINT CHK_UnitaMisura CHECK (UnitaMisura IN ('Kg','gr','mg','L','cl','ml'))
 );
 
 CREATE TABLE Ricettario (

@@ -83,4 +83,9 @@
     <string name="inizia">INIZIA</string>
     <string name="mesg_login_admin">Registrati per poter iniziare a gestire il tuo Ristorante!</string>
     <string name="kg">Kg</string>
+    <string name="quantit_nell_inventario">QUANTITÁ NELL\'INVENTARIO</string>
+    <string name="nome_ingrediente">Nome Ingrediente</string>
+    <string name="aggiungi_ingrediente">Aggiungi Ingrediente</string>
+    <string name="grandezza">GRANDEZZA</string>
+    <string name="unita_misura">UNITA MISURA</string>
 </resources>
