@@ -38,8 +38,9 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private final RecycleEventListener          RecycleEventListener;
-    private Manager                             manager;
-    private Adapter_ProductInventory            adapter_product;
+    private final Manager                       manager;
+    private Adapter_ProductInventory            adapter_product_missing;
+    private Adapter_ProductInventory            adapter_product_exist;
     private boolean                             isDeleting;
 
     //DATA
@@ -120,16 +121,16 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         Recycler_Products_Exist.setLayoutManager(mLayoutManager);
         Recycler_Products_Exist.setNestedScrollingEnabled(false);
-        Adapter_ProductInventory adapter_product = new Adapter_ProductInventory(TitleProducts_Exist, RecycleEventListener);
-        Recycler_Products_Exist.setAdapter(adapter_product);
+        adapter_product_exist = new Adapter_ProductInventory(TitleProducts_Exist, RecycleEventListener);
+        Recycler_Products_Exist.setAdapter(adapter_product_exist);
     }
 
     private void initListProductsMissingRV( ){
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         Recycler_Products_Missing.setLayoutManager(mLayoutManager);
         Recycler_Products_Missing.setNestedScrollingEnabled(false);
-        adapter_product = new Adapter_ProductInventory(TitleProducts_Missing, RecycleEventListener);
-        Recycler_Products_Missing.setAdapter(adapter_product);
+        adapter_product_missing = new Adapter_ProductInventory(TitleProducts_Missing, RecycleEventListener);
+        Recycler_Products_Missing.setAdapter(adapter_product_missing);
     }
 
     //ACTIONS
@@ -143,10 +144,12 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     private void onClickDeleteProduct(){
         if(isDeleting){
-            adapter_product.hideDeleteIcon();
+            adapter_product_missing.hideDeleteIcon();
+            adapter_product_exist.hideDeleteIcon();
             isDeleting = false;
         }else{
-            adapter_product.showDeleteIcon();
+            adapter_product_missing.showDeleteIcon();
+            adapter_product_exist.showDeleteIcon();
             isDeleting = true;
         }
     }

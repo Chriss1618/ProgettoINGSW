@@ -91,8 +91,7 @@ public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_Produ
         RecycleEventListener.onClickItem(TitleProducts.get(position));
     }
     private void clickDeleteProduct(int position){
-        Log.d(TAG, "clickDeleteCategory: "+this.Holders.get(position).Text_View_Title_Product.getText().toString());
-
+        //Log.d(TAG, "clickDeleteCategory: "+this.Holders.get(position).Text_View_Title_Product.getText().toString());
     }
 
     //ANIMATIONS

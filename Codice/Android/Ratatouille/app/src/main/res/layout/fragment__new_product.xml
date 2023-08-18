@@ -239,7 +239,7 @@
                                 android:hint="@string/_00"
                                 android:inputType="number"
                                 android:text=""
-
+                                android:maxLength="2"
                                 android:textColor="@color/MainColor"
                                 android:textColorHint="@color/MainColor"
                                 android:textColorLink="@color/MainColor"
