@@ -2,6 +2,7 @@ package com.ratatouille.Controllers.SubControllers;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import androidx.fragment.app.Fragment;
@@ -110,8 +111,8 @@ public class Manager implements SubController {
             IndexOnMain = Integer.parseInt(Objects.requireNonNull(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2).getName()));
             getSourceInfo().setIndex_TypeView(IndexOnMain);
         }
-
-        new Handler().postDelayed( fragmentManager::popBackStack,300);
+        
+        new Handler(Looper.getMainLooper()).postDelayed( fragmentManager::popBackStack,300);
     }
 
     private void loadFragment(int positionList){

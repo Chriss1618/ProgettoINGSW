@@ -77,7 +77,7 @@ public class ActionsNewIngredient extends ActionsViewHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> CANCEL NEW INGREDIENT");
-
+            action.getManager().goBack();
         }
     }
 }
