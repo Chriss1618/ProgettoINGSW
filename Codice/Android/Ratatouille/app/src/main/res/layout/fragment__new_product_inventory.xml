@@ -148,6 +148,18 @@
                                 android:textSize="19sp"
                                 android:autofillHints="" />
                             <TextView
+                                android:visibility="gone"
+                                android:id="@+id/warning_NameIngredient"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                                android:text="@string/campo_non_corretto"
+                                android:layout_gravity="center_horizontal"
+                                android:textSize="15sp"
+                                android:textColor="@color/red"
+                                app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
+
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
@@ -192,7 +204,6 @@
                                     android:hint="@string/_0"
                                     android:inputType="number"
 
-                                    android:text=""
                                     android:textColor="@color/MainColor"
                                     android:textColorHint="@color/MainColor"
                                     android:textColorLink="@color/MainColor"
@@ -227,7 +238,6 @@
                                     android:gravity="center"
                                     android:hint="@string/_00"
                                     android:inputType="number"
-                                    android:text=""
                                     android:maxLength="2"
                                     android:textColor="@color/MainColor"
                                     android:textColorHint="@color/MainColor"
@@ -418,6 +428,18 @@
                                 </LinearLayout>
 
                             </LinearLayout>
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/warning_Misura"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                                android:text="@string/campo_non_corretto"
+                                android:layout_gravity="center_horizontal"
+                                android:textSize="15sp"
+                                android:textColor="@color/red"
+                                app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -539,6 +561,124 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/darkRL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linear_layout_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/background_edit_text_stroke_white"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+            <LinearLayout
+                android:id="@+id/linear_layout_dialog_error"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_baseline_warning_24" />
+
+                <TextView
+                    android:id="@+id/textview_msg_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="Errore, riprova."
+                    android:textColor="@color/Black"
+                    android:textSize="25sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_dialog_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_margin="8dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingEnd="24dp"
+                        android:paddingStart="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_compact_rounded_bold"
+                            android:gravity="center"
+                            android:autoSizeMaxTextSize="25sp"
+                            android:autoSizeMinTextSize="9sp"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+
+                            android:text="OK"
+                            android:textColor="@color/MainColor"/>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linear_layout_dialog_accepted"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+
+                android:layout_margin="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/ingrediente_creato"
+                    android:textColor="@color/Black"
+                    android:textSize="25sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:src="@drawable/baseline_check_circle_24"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+            </LinearLayout>
+
+    </LinearLayout>
+
 
 
 </FrameLayout>

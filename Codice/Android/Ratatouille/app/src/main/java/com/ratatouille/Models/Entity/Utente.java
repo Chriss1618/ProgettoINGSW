@@ -8,7 +8,7 @@ public class Utente {
     private String Email;
     private String Password;
     private String Token;
-    private int id_Restaurant;
+    private Integer id_Restaurant;
 
     public Utente(){
 
@@ -64,7 +64,7 @@ public class Utente {
         Token = token;
     }
 
-    public int getId_Restaurant() {
+    public Integer getId_Restaurant() {
         return id_Restaurant;
     }
     public void setId_Restaurant(int id_Restaurant) {

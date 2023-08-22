@@ -23,7 +23,7 @@ public class Ingredient {
     private String URLImageIngredient;
     private String DataImageIngredient;
     private Uri UriImageIngredient = null;
-
+    private boolean hasPhoto = false;
     public Ingredient() {
     }
 
@@ -97,6 +97,14 @@ public class Ingredient {
 
     public void setDataImageIngredient(String dataImageIngredient) {
         DataImageIngredient = dataImageIngredient;
+    }
+
+    public boolean isHasPhoto() {
+        return hasPhoto;
+    }
+
+    public void setHasPhoto(boolean hasPhoto) {
+        this.hasPhoto = hasPhoto;
     }
 
     public Uri getUriImageIngredient() {

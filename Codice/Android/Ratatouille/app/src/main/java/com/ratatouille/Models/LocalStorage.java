@@ -2,8 +2,12 @@ package com.ratatouille.Models;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class LocalStorage {
+    //SYSTEM
+    private static final String TAG = "LocalStorage";
+
 
     Context context;
     SharedPreferences.Editor Editor;
@@ -37,6 +41,7 @@ public class LocalStorage {
 
     public Object getData(String key,String type){
         if(Pref.contains(key)){
+
             switch (type){
                 case "String":  return Pref.getString   (key, null);
                 case "Integer": return Pref.getInt      (key, 999);

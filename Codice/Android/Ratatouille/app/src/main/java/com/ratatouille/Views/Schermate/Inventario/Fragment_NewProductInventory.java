@@ -1,7 +1,7 @@
 package com.ratatouille.Views.Schermate.Inventario;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,16 +13,26 @@ import androidx.fragment.app.Fragment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewIngredient;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ingredient;
+import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
+
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
 
 public class Fragment_NewProductInventory extends Fragment implements ViewLayout {
     //SYSTEM
@@ -32,6 +42,8 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     android.view.View View_Fragment;
     CardView        CardView_Product;
     LinearLayout    LinearLayout_Buttons;
+    LinearLayout    LinearLayout_Dialog;
+    LinearLayout    LinearLayout_DarkL;
 
     TextView        TextView_Title;
     EditText        EditText_NameIngredient;
@@ -47,10 +59,17 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     TextView        TextView_Cl;
     TextView        TextView_Ml;
 
+    TextView        TextView_WarningName;
+    TextView        TextView_WarningPrice;
+    TextView        TextView_WarningGrandezza;
+
     TextView   TextView_MeasureSelected = null;
 
     ImageView ImageView_ChangePhoto;
     ImageView ImageView_IngredientImage;
+
+    CardView CardView_Salva;
+    CardView CardView_Cancel;
 
     //FUNCTIONAL
     private Manager manager;
@@ -102,6 +121,9 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
 
     @Override
     public void LinkLayout() {
+        LinearLayout_Dialog     = View_Fragment.findViewById(R.id.linear_layout_dialog);
+        LinearLayout_DarkL      = View_Fragment.findViewById(R.id.darkRL);
+
         TextView_Title          = View_Fragment.findViewById(R.id.text_view_title_product);
         CardView_Product        = View_Fragment.findViewById(R.id.card_view_element_product);
         LinearLayout_Buttons    = View_Fragment.findViewById(R.id.linear_layout_buttons);
@@ -119,8 +141,15 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
         TextView_Cl     = View_Fragment.findViewById(R.id.text_view_cl);
         TextView_Ml     = View_Fragment.findViewById(R.id.text_view_ml);
 
+        TextView_WarningName        = View_Fragment.findViewById(R.id.warning_NameIngredient);
+        TextView_WarningGrandezza   = View_Fragment.findViewById(R.id.warning_Misura);
+
         ImageView_ChangePhoto = View_Fragment.findViewById(R.id.image_view_chose_photo);
         ImageView_IngredientImage = View_Fragment.findViewById(R.id.image_view_Ingredient);
+
+        CardView_Salva = View_Fragment.findViewById(R.id.card_view_salva);
+        CardView_Cancel = View_Fragment.findViewById(R.id.card_view_annulla);
+
     }
 
     @Override
@@ -132,7 +161,10 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
         TextView_Cl .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
         TextView_Ml .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
 
-        ImageView_ChangePhoto .setOnClickListener( view -> onClickChoosePhoto());
+        ImageView_ChangePhoto   .setOnClickListener( view -> onClickChoosePhoto());
+        CardView_Salva          .setOnClickListener( view -> onClickSalva());
+        CardView_Cancel         .setOnClickListener( view -> onClickCancel());
+
     }
 
     @Override
@@ -141,6 +173,9 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     }
 
     //ACTION
+    private void sendAction(Action action){
+        manager.HandleAction(action);
+    }
     private void onMeasureSelected(TextView selected){
         SaveSelected(selected);
         setSelected();
@@ -151,9 +186,49 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
         resultLauncher.launch(intent);
     }
 
+    private void onClickSalva(){
+        if(getAllInputs()){
+            Action action = new Action(ActionsNewIngredient.INDEX_ACTION_CREATE_INGREDIENT,Ingredient,(isOk)->showDialog( (boolean)isOk) );
+            sendAction(action);
+        }
+    }
 
+    private void onClickCancel(){
+
+        Action action = new Action(ActionsNewIngredient.INDEX_ACTION_CANCEL,Ingredient);
+        sendAction(action);
+
+    }
 
     //FUNCTIONAL
+    private boolean getAllInputs(){
+        Ingredient.setID_Ristorante( (Integer) new LocalStorage(manager.context).getData("ID_Ristorante","Integer"));
+        Ingredient.setNameIngredient(EditText_NameIngredient.getText().toString());
+        String price = EditText_Euro.getText().toString() + "." +  EditText_Cents.getText().toString();
+        if(price.equals(".")) price = "0";
+        Ingredient.setPriceIngredient(Float.parseFloat(price));
+        if(TextView_MeasureSelected != null) Ingredient.setMeasureType(TextView_MeasureSelected.getText().toString());
+        if(EditText_Size.getText().toString().equals("")) Ingredient.setSizeIngredient(0);
+        else Ingredient.setSizeIngredient(Integer.parseInt(EditText_Size.getText().toString()));
+        return checkIngredient();
+    }
+    private boolean checkIngredient(){
+        boolean isOk;
+        isOk = showWarning(TextView_WarningName,
+                ( Ingredient.getNameIngredient().length() >  3 ) );
+
+        isOk &= showWarning(TextView_WarningGrandezza,
+                ( TextView_MeasureSelected != null && Ingredient.getSizeIngredient() > 0) );
+
+
+        return isOk;
+    }
+    private boolean showWarning(View warning, boolean isValid){
+        if(isValid) warning.setVisibility(View.GONE);
+        else warning.setVisibility(View.VISIBLE);
+        return isValid;
+    }
+
     private void PrepareReceiveFromGallery(){
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             try {
@@ -163,6 +238,7 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
                     ImageView_IngredientImage.setImageURI(imgUri);
 
                     Ingredient.setUriImageIngredient(imgUri);
+                    Ingredient.setHasPhoto(true);
                 }
             }catch (Exception e) {
                 Log.e(TAG, "setResultLauncher: No ImageSelected",e );
@@ -187,6 +263,66 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
             else TextView_Cl.setBackgroundResource(R.drawable.background_mesure_center);
             if(TextView_MeasureSelected.getText().toString().equals("ml")) TextView_Ml.setBackgroundResource(R.drawable.background_mesure_right_selected);
             else TextView_Ml.setBackgroundResource(R.drawable.background_mesure_right);
+    }
+
+    private void showDialog(boolean isOk){
+        requireActivity().runOnUiThread(() -> {
+            if(isOk) new DialogMessage().showDialogSuccess();
+            else new DialogMessage().showDialogError();
+        });
+
+    }
+
+    private class DialogMessage{
+        LinearLayout LinearLayout_Error;
+        LinearLayout LinearLayout_Success;
+
+        CardView CardView_Dialog_Cancel;
+
+        public DialogMessage() {
+            LinearLayout_Error      = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_error);
+            LinearLayout_Success    = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_accepted);
+
+            LinearLayout_Dialog     .setVisibility(View.VISIBLE);
+            LinearLayout_Error      .setVisibility(View.GONE);
+            LinearLayout_Success    .setVisibility(View.GONE);
+        }
+
+        private void showDialogError(){
+            CardView_Dialog_Cancel             = LinearLayout_Error.findViewById(R.id.card_view_dialog_confirm);
+
+            CardView_Cancel .setOnClickListener(view -> dismissDialogError());
+
+            LinearLayout_Error              .setVisibility(View.VISIBLE);
+            LinearLayout_DarkL              .setVisibility(View.VISIBLE);
+
+            LinearLayout_Error              .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_DarkL              .startAnimation(Manager_Animation.getFadeIn(500));
+            hideKeyboardFrom();
+        }
+        private void dismissDialogError(){
+            LinearLayout_Error.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+            LinearLayout_DarkL.startAnimation(Manager_Animation.getFadeOut(500));
+
+            Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
+
+            LinearLayout_Error  .setVisibility(View.GONE);
+            LinearLayout_Dialog .setVisibility(View.GONE);
+            LinearLayout_DarkL  .setVisibility(View.GONE);
+        }
+        private void showDialogSuccess(){
+            LinearLayout_Success            .setVisibility(View.VISIBLE);
+            LinearLayout_DarkL              .setVisibility(View.VISIBLE);
+
+            LinearLayout_Success                .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_DarkL                  .startAnimation(Manager_Animation.getFadeIn(500));
+            hideKeyboardFrom();
+        }
+
+    }
+    public void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.requireView().getWindowToken(), 0);
     }
 
     //ANIMATIONS

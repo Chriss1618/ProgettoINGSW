@@ -51,18 +51,19 @@ public class ActionsLogin extends ActionsViewHandler{
     }
 
     private static class Login_ActionHandler implements ActionHandler{
+        Utente user;
         @Override
         public void handleAction(Action action) {
             Context context = action.getManager().context;
             if(getUserFromServer(action)){
-                new LocalStorage(context).putData("ID_Utente",((Utente) action.getData()).getId_utente());
-                new LocalStorage(context).putData("ID_Ristorante",((Utente) action.getData()).getId_Restaurant());
-                new LocalStorage(context).putData("Nome",((Utente) action.getData()).getNome());
-                new LocalStorage(context).putData("Cognome",((Utente) action.getData()).getCognome());
-                new LocalStorage(context).putData("Token",((Utente) action.getData()).getToken());
-                new LocalStorage(context).putData("TypeUser",((Utente) action.getData()).getType_user());
-                new LocalStorage(context).putData("Email",((Utente) action.getData()).getEmail());
-                new LocalStorage(context).putData("Password",((Utente) action.getData()).getPassword());
+                new LocalStorage(context).putData("ID_Utente", user.getId_utente());
+                new LocalStorage(context).putData("ID_Ristorante", user.getId_Restaurant());
+                new LocalStorage(context).putData("Nome",user.getNome());
+                new LocalStorage(context).putData("Cognome",user.getCognome());
+                new LocalStorage(context).putData("Token",user.getToken());
+                new LocalStorage(context).putData("TypeUser",user.getType_user());
+                new LocalStorage(context).putData("Email",user.getEmail());
+                new LocalStorage(context).putData("Password",user.getPassword());
                 action.callBack(true);
                 Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));//Attesa animazinoe Rotazione LOGO
                 action.getManager().changeOnMain(ControlMapper.INDEX_LOGIN_CONFIRM,"");
@@ -72,7 +73,7 @@ public class ActionsLogin extends ActionsViewHandler{
             }
         }
         private boolean getUserFromServer(Action action){
-            Utente user = (Utente)action.getData();
+            user = (Utente)action.getData();
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("Email", user.getEmail())
                     .appendQueryParameter("Password",user.getPassword());

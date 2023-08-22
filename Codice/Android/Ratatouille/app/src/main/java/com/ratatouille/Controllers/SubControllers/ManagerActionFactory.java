@@ -7,6 +7,7 @@ import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCate
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListInventory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewIngredient;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsViewHandler;
 import com.ratatouille.Models.Events.Action.Action;
@@ -36,6 +37,7 @@ public class ManagerActionFactory {
 //        classMap.put(ControlMapper.INDEX_STATS_PRODUCTIVITY,  MenuViewFactory.class);
         //INVENTORY
         classMap.put(ControlMapper.INDEX_INVENTORY_LIST, ActionsListInventory.class);
+        classMap.put(ControlMapper.INDEX_INVENTORY_NEW, ActionsNewIngredient.class);
 
     }
 

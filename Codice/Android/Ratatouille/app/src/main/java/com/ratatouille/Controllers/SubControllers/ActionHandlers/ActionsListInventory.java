@@ -35,8 +35,6 @@ public class ActionsListInventory extends ActionsViewHandler{
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> SHOW DELETE INGREDIENT");
-
-
         }
     }
 

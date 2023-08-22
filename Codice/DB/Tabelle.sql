@@ -84,6 +84,7 @@ CREATE TABLE Ingrediente (
     Misura FLOAT(5,2) NOT NULL DEFAULT 0.00,
     PhotoURL VARCHAR(300),
     UnitaMisura VARCHAR(2),
+    Quantita INTEGER,
     PRIMARY KEY (ID_Ingrediente),
     CONSTRAINT FK_RistoranteIngrediente FOREIGN KEY (ID_Ristorante) REFERENCES Ristorante(ID_Ristorante) ON DELETE CASCADE,
     CONSTRAINT CHK_UnitaMisura CHECK (UnitaMisura IN ('Kg','gr','mg','L','cl','ml'))
