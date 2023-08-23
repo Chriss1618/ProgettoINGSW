@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditIngredient;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ingredient;
+import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
@@ -24,6 +26,7 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     //LAYOUT
     private android.view.View View_Fragment;
     private ImageView       ImageView_EditProduct;
+    private ImageView       ImageView_Back;
 
     private ImageView       ImageView_Ingredient;
     private TextView        TextView_Ingredient;
@@ -83,6 +86,7 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     @Override
     public void LinkLayout() {
         ImageView_EditProduct   = View_Fragment.findViewById(R.id.ic_edit_product);
+        ImageView_Back          = View_Fragment.findViewById(R.id.ic_back);
         CardView_Product        = View_Fragment.findViewById(R.id.card_view_element_product);
 
         ImageView_Ingredient        = View_Fragment.findViewById(R.id.image_view_image_ingredient);
@@ -92,9 +96,11 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
         TextView_Price              = View_Fragment.findViewById(R.id.text_view_price_ingredient);
         TextView_QtaInInventario    = View_Fragment.findViewById(R.id.text_view_qta_ingredient);
     }
+
     @Override
     public void SetActionsOfLayout() {
         ImageView_EditProduct.setOnClickListener(view -> onClickEditProduct());
+        ImageView_Back.setOnClickListener(view -> manager.goBack());
     }
     @Override
     public void SetDataOnLayout() {
@@ -109,8 +115,12 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     }
 
     //ACTIONS
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
     private void onClickEditProduct(){
-        EndAnimations();
+        Action action = new Action(ActionsInfoEditIngredient.INDEX_ACTION_EDIT_INGREDIENT,Ingredient);
+        SendAction(action);
     }
 
     //FUNCTIONAL

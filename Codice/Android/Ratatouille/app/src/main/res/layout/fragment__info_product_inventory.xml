@@ -25,18 +25,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:orientation="horizontal"
-                android:gravity="start"
+                android:gravity="start|center_vertical"
                 android:layout_marginStart="16dp">
+                <ImageView
+                    android:id="@+id/ic_back"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/icon_add"
+                    android:src="@drawable/ic_back" />
+
                 <TextView
-                    android:visibility="gone"
-                    android:id="@id/text_view_title_product"
+                    android:id="@+id/text_view_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
                     android:fontFamily="@font/sf_compact_rounded_bold"
-                    android:text="@string/Menu"
+                    android:text="@string/indietro"
                     android:textColor="@color/SoftBlack"
-                    android:textSize="30sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout

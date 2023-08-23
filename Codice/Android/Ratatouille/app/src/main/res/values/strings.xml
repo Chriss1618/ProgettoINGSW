@@ -90,4 +90,5 @@
     <string name="unita_misura">UNITA MISURA</string>
     <string name="ingrediente_creato">Ingrediente creato!</string>
     <string name="nessun_prodotto">Nessun Prodotto</string>
+    <string name="indietro">Indietro</string>
 </resources>

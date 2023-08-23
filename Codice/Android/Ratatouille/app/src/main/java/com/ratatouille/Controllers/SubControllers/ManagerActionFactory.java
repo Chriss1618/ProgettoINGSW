@@ -3,6 +3,7 @@ package com.ratatouille.Controllers.SubControllers;
 import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsAccountInfo;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditIngredient;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListInventory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
@@ -38,6 +39,8 @@ public class ManagerActionFactory {
         //INVENTORY
         classMap.put(ControlMapper.INDEX_INVENTORY_LIST, ActionsListInventory.class);
         classMap.put(ControlMapper.INDEX_INVENTORY_NEW, ActionsNewIngredient.class);
+        classMap.put(ControlMapper.INDEX_INVENTORY_INFO, ActionsInfoEditIngredient.class);
+        classMap.put(ControlMapper.INDEX_INVENTORY_EDIT, ActionsInfoEditIngredient.class);
 
     }
 
