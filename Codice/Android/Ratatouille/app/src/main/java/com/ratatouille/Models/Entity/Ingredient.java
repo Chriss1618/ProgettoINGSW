@@ -15,10 +15,11 @@ public class Ingredient {
     private int ID_Ristorante;
 
     private String NameIngredient;
-    private float PriceIngredient;
+    private String PriceIngredient;
     private int SizeIngredient;
     private String MeasureType;
     private int QtaIngredient;
+    private String Description;
 
     private String URLImageIngredient;
     private String DataImageIngredient;
@@ -30,6 +31,8 @@ public class Ingredient {
     public Ingredient(int ID_Ingredient,
                       int ID_Ristorante,
                       String nameIngredient,
+                      String Description,
+                      String Prezzo,
                       int sizeIngredient,
                       String measureType,
                       int qtaIngredient,
@@ -37,6 +40,8 @@ public class Ingredient {
         this.ID_Ingredient = ID_Ingredient;
         this.ID_Ristorante = ID_Ristorante;
         NameIngredient = nameIngredient;
+        this.Description = Description;
+        this.PriceIngredient = Prezzo;
         SizeIngredient = sizeIngredient;
         MeasureType = measureType;
         QtaIngredient = qtaIngredient;
@@ -46,7 +51,6 @@ public class Ingredient {
     public int getID_Ingredient() {
         return ID_Ingredient;
     }
-
     public void setID_Ingredient(int ID_Ingredient) {
         this.ID_Ingredient = ID_Ingredient;
     }
@@ -54,7 +58,6 @@ public class Ingredient {
     public int getID_Ristorante() {
         return ID_Ristorante;
     }
-
     public void setID_Ristorante(int ID_Ristorante) {
         this.ID_Ristorante = ID_Ristorante;
     }
@@ -62,23 +65,20 @@ public class Ingredient {
     public String getNameIngredient() {
         return NameIngredient;
     }
-
     public void setNameIngredient(String nameIngredient) {
         NameIngredient = nameIngredient;
     }
 
-    public float getPriceIngredient() {
+    public String getPriceIngredient() {
         return PriceIngredient;
     }
-
-    public void setPriceIngredient(float priceIngredient) {
+    public void setPriceIngredient(String priceIngredient) {
         PriceIngredient = priceIngredient;
     }
 
     public int getSizeIngredient() {
         return SizeIngredient;
     }
-
     public void setSizeIngredient(int sizeIngredient) {
         SizeIngredient = sizeIngredient;
     }
@@ -86,7 +86,6 @@ public class Ingredient {
     public String getMeasureType() {
         return MeasureType;
     }
-
     public void setMeasureType(String measureType) {
         MeasureType = measureType;
     }
@@ -94,7 +93,6 @@ public class Ingredient {
     public int getQtaIngredient() {
         return QtaIngredient;
     }
-
     public void setQtaIngredient(int qtaIngredient) {
         QtaIngredient = qtaIngredient;
     }
@@ -102,7 +100,6 @@ public class Ingredient {
     public String getURLImageIngredient() {
         return URLImageIngredient;
     }
-
     public void setURLImageIngredient(String URLImageIngredient) {
         this.URLImageIngredient = URLImageIngredient;
     }
@@ -110,7 +107,6 @@ public class Ingredient {
     public String getDataImageIngredient() {
         return DataImageIngredient;
     }
-
     public void setDataImageIngredient(String dataImageIngredient) {
         DataImageIngredient = dataImageIngredient;
     }
@@ -129,6 +125,14 @@ public class Ingredient {
 
     public void setUriImageIngredient(Uri uriImageIngredient) {
         UriImageIngredient = uriImageIngredient;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
     }
 
     //FUNCTIONAL

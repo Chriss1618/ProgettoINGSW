@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/SoftGray"
     tools:context=".Views.Schermate.Inventario.Fragment_InfoProductInventory">
 
 
@@ -73,15 +74,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraint_layout_image_account"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp">
+                        android:layout_height="wrap_content">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/card_view_image_account"
@@ -95,10 +95,10 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
                             <ImageView
-                                android:id="@+id/image_view_account"
+                                android:id="@+id/image_view_image_ingredient"
                                 android:layout_gravity="center"
-                                android:layout_width="150dp"
-                                android:layout_height="150dp"
+                                android:layout_width="170dp"
+                                android:layout_height="170dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +114,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/text_view_name_product"
+                    android:id="@+id/text_view_name_ingredient"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -126,7 +126,7 @@
                     android:textColor="@color/Black"
                     android:textSize="23sp" />
                 <TextView
-                    android:id="@+id/text_view_product_description"
+                    android:id="@+id/text_view_description_ingredient"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_marginTop="8dp"
@@ -154,6 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/SoftGray"
                         app:cardUseCompatPadding="true">
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -180,7 +181,7 @@
                                 android:textColor="@color/DarkGray"/>
 
                             <TextView
-                                android:id="@+id/text_view_product_mesure"
+                                android:id="@+id/text_view_measure_ingredient"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/sf_compact_rounded_heavy"
@@ -204,6 +205,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/SoftGray"
                         app:cardUseCompatPadding="true">
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -230,7 +232,7 @@
                                 android:textColor="@color/DarkGray"/>
 
                             <TextView
-                                android:id="@+id/text_view_price_product"
+                                android:id="@+id/text_view_price_ingredient"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
@@ -254,6 +256,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="20dp"
+                        android:backgroundTint="@color/SoftGray"
                         app:cardUseCompatPadding="true">
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -280,7 +283,7 @@
                                 android:textColor="@color/DarkGray"/>
 
                             <TextView
-                                android:id="@+id/text_view_qta"
+                                android:id="@+id/text_view_qta_ingredient"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/sf_compact_rounded_heavy"

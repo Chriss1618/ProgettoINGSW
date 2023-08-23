@@ -41,20 +41,24 @@ public class RequestIngredients implements RequestHandler{
 
     private void setIngredients(JSONObject BodyJSON) throws JSONException {
         Log.d(TAG, "setIngredients: DATA->\n"+BodyJSON.toString(4));
-        JSONArray CategorieJSON = new JSONArray(BodyJSON.getString("DATA"));
-        //Log.d(TAG, "\nDATA_JSON ->"+CategorieJSON.toString(4));
+        if(!BodyJSON.getString("MSG_STATUS").contains("0 Nessun Ingredient")){
+            JSONArray CategorieJSON = new JSONArray(BodyJSON.getString("DATA"));
 
-        for(int i = 0 ; i<CategorieJSON.length(); i++){
-            JSONObject categoriaJSON = new JSONObject(CategorieJSON.getString(i));
-            ListIngredient.add(new Ingredient(
-                    Integer.parseInt( categoriaJSON.getString("ID_Ingrediente") ),
-                    Integer.parseInt( categoriaJSON.getString("ID_Ristorante") ),
-                    categoriaJSON.getString("NameIngrediente"),
-                    Integer.parseInt( categoriaJSON.getString("Misura").replace(".00","") ),
-                    categoriaJSON.getString("UnitaMisura"),
-                    Integer.parseInt( categoriaJSON.getString("Quantita") ),
-                    categoriaJSON.getString("PhotoURL")
-            ));
+            for(int i = 0 ; i<CategorieJSON.length(); i++){
+                JSONObject categoriaJSON = new JSONObject(CategorieJSON.getString(i));
+                ListIngredient.add(new Ingredient(
+                        Integer.parseInt( categoriaJSON.getString("ID_Ingrediente") ),
+                        Integer.parseInt( categoriaJSON.getString("ID_Ristorante") ),
+                        categoriaJSON.getString("NameIngrediente"),
+                        categoriaJSON.getString("Description"),
+                        categoriaJSON.getString("Price"),
+                        Integer.parseInt( categoriaJSON.getString("Misura").replace(".00","") ),
+                        categoriaJSON.getString("UnitaMisura"),
+                        Integer.parseInt( categoriaJSON.getString("Quantita") ),
+                        categoriaJSON.getString("PhotoURL")
+                ));
+            }
         }
+
     }
 }

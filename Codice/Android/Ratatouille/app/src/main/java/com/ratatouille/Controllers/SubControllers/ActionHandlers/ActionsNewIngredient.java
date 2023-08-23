@@ -47,8 +47,10 @@ public class ActionsNewIngredient extends ActionsViewHandler {
             Ingredient ingredient = (Ingredient) action.getData();
 
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("NameIngredient", ingredient.getNameIngredient())
                     .appendQueryParameter("id_ristorante", ingredient.getID_Ristorante()+"")
+                    .appendQueryParameter("NameIngredient", ingredient.getNameIngredient())
+                    .appendQueryParameter("Description", ingredient.getDescription())
+                    .appendQueryParameter("Prezzo", ingredient.getPriceIngredient())
                     .appendQueryParameter("Misura", ingredient.getSizeIngredient()+"")
                     .appendQueryParameter("PhotoDATA", ingredient.isHasPhoto()? ingredient.getDataFromUriProduct(action.getManager().context): "NoPhoto")
                     .appendQueryParameter("UnitaMisura", ingredient.getMeasureType())

@@ -81,6 +81,8 @@ CREATE TABLE Ingrediente (
 	ID_Ingrediente INTEGER AUTO_INCREMENT,
 	ID_Ristorante INTEGER NOT NULL,
     NameIngrediente VARCHAR(120) NOT NULL,
+    Description VARCHAR(500),
+    Price VARCHAR(7),
     Misura FLOAT(5,2) NOT NULL DEFAULT 0.00,
     PhotoURL VARCHAR(300),
     UnitaMisura VARCHAR(2),

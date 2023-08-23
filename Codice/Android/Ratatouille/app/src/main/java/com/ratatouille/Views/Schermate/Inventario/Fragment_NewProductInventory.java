@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.internal.EdgeToEdgeUtils;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewIngredient;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
@@ -49,6 +50,7 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     EditText        EditText_NameIngredient;
     EditText        EditText_Euro;
     EditText        EditText_Cents;
+    EditText        EditText_Description;
     EditText        EditText_Size;
     EditText        EditText_NumberInInventory;
 
@@ -131,6 +133,7 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
         EditText_NameIngredient         = View_Fragment.findViewById(R.id.edit_text_new_nome_inventory);
         EditText_Euro                   = View_Fragment.findViewById(R.id.edit_text_new_euro);
         EditText_Cents                  = View_Fragment.findViewById(R.id.edit_text_new_centesimi);
+        EditText_Description            = View_Fragment.findViewById(R.id.edit_text_descrizione);
         EditText_Size                   = View_Fragment.findViewById(R.id.edit_text_new_grandezza);
         EditText_NumberInInventory      = View_Fragment.findViewById(R.id.edit_text_new_qta);
 
@@ -204,12 +207,18 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     private boolean getAllInputs(){
         Ingredient.setID_Ristorante( (Integer) new LocalStorage(manager.context).getData("ID_Ristorante","Integer"));
         Ingredient.setNameIngredient(EditText_NameIngredient.getText().toString());
+        Ingredient.setDescription(EditText_Description.getText().toString());
         String price = EditText_Euro.getText().toString() + "." +  EditText_Cents.getText().toString();
         if(price.equals(".")) price = "0";
-        Ingredient.setPriceIngredient(Float.parseFloat(price));
+        Ingredient.setPriceIngredient(price);
         if(TextView_MeasureSelected != null) Ingredient.setMeasureType(TextView_MeasureSelected.getText().toString());
+
         if(EditText_Size.getText().toString().equals("")) Ingredient.setSizeIngredient(0);
         else Ingredient.setSizeIngredient(Integer.parseInt(EditText_Size.getText().toString()));
+
+        if(EditText_NumberInInventory.getText().toString().equals("")) Ingredient.setQtaIngredient(0);
+        else Ingredient.setQtaIngredient(Integer.parseInt(EditText_NumberInInventory.getText().toString()));
+
         return checkIngredient();
     }
     private boolean checkIngredient(){

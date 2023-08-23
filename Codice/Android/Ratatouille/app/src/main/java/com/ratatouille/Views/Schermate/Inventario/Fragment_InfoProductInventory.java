@@ -7,10 +7,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.ratatouille.Controllers.SubControllers.Manager;
+import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
+import com.squareup.picasso.Picasso;
 
 
 public class Fragment_InfoProductInventory extends Fragment implements ViewLayout {
@@ -19,12 +24,20 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     //LAYOUT
     private android.view.View View_Fragment;
     private ImageView       ImageView_EditProduct;
+
+    private ImageView       ImageView_Ingredient;
+    private TextView        TextView_Ingredient;
+    private TextView        TextView_Description;
+    private TextView        TextView_Misura;
+    private TextView        TextView_Price;
+    private TextView        TextView_QtaInInventario;
+
     private CardView        CardView_Product;
 
     //FUNCTIONAL
     private Manager manager;
     //DATA
-
+    private Ingredient Ingredient;
     //OTHER..
 
     public Fragment_InfoProductInventory(Manager manager, int a) {
@@ -54,7 +67,7 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     //DATA
     @Override
     public void PrepareData() {
-
+        Ingredient = (Ingredient) manager.getData();
     }
 
     //LAYOUT
@@ -71,6 +84,13 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     public void LinkLayout() {
         ImageView_EditProduct   = View_Fragment.findViewById(R.id.ic_edit_product);
         CardView_Product        = View_Fragment.findViewById(R.id.card_view_element_product);
+
+        ImageView_Ingredient        = View_Fragment.findViewById(R.id.image_view_image_ingredient);
+        TextView_Ingredient         = View_Fragment.findViewById(R.id.text_view_name_ingredient);
+        TextView_Description        = View_Fragment.findViewById(R.id.text_view_description_ingredient);
+        TextView_Misura             = View_Fragment.findViewById(R.id.text_view_measure_ingredient);
+        TextView_Price              = View_Fragment.findViewById(R.id.text_view_price_ingredient);
+        TextView_QtaInInventario    = View_Fragment.findViewById(R.id.text_view_qta_ingredient);
     }
     @Override
     public void SetActionsOfLayout() {
@@ -78,7 +98,14 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     }
     @Override
     public void SetDataOnLayout() {
-
+        Picasso.get()
+                .load(EndPointer.StandardPath+"/Images/Ingredient/"+ Ingredient.getURLImageIngredient())
+                .into(ImageView_Ingredient);
+        TextView_Ingredient     .setText(Ingredient.getNameIngredient());
+        TextView_Description    .setText(Ingredient.getDescription());
+        TextView_Misura         .setText(Ingredient.getSizeIngredient() + " " + Ingredient.getMeasureType());
+        TextView_Price          .setText(Ingredient.getPriceIngredient()+"€");
+        TextView_QtaInInventario.setText(Ingredient.getQtaIngredient()+"");
     }
 
     //ACTIONS
