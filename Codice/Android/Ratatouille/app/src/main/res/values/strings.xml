@@ -42,7 +42,7 @@
     <string name="informazioni_attivit">Informazioni Attività</string>
     <string name="annulla">ANNULLA</string>
     <string name="inventario">Inventario</string>
-    <string name="cerca_prodotto_in_dispensa">Cerca Prodotto in dispensa</string>
+    <string name="cerca_prodotto_in_dispensa">Cerca Prodotto in Inventario</string>
     <string name="prodotti_mancanti">PRODOTTI MANCANTI</string>
     <string name="prodotti_presenti">PRODOTTI PRESENTI</string>
     <string name="inserisci_il_nome_prodotto">Inserisci il Nome Prodotto</string>
@@ -89,4 +89,5 @@
     <string name="grandezza">GRANDEZZA</string>
     <string name="unita_misura">UNITA MISURA</string>
     <string name="ingrediente_creato">Ingrediente creato!</string>
+    <string name="nessun_prodotto">Nessun Prodotto</string>
 </resources>

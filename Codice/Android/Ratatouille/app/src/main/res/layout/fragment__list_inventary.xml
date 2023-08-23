@@ -59,7 +59,6 @@
                     android:clickable="true"
                     android:src="@drawable/ic_trash_category"
                     android:contentDescription="@string/icon_delete"/>
-
             </LinearLayout>
         </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,7 +67,7 @@
             android:padding="16dp">
 
             <EditText
-                android:id="@+id/edit_text_name_category"
+                android:id="@+id/edit_text_search_ingredient"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
 
@@ -96,8 +95,8 @@
                 android:clickable="true"
                 android:contentDescription="@string/icon_add"
                 android:src="@drawable/ic_search"
-                app:layout_constraintStart_toStartOf="@+id/edit_text_name_category"
-                app:layout_constraintTop_toTopOf="@+id/edit_text_name_category" />
+                app:layout_constraintStart_toStartOf="@+id/edit_text_search_ingredient"
+                app:layout_constraintTop_toTopOf="@+id/edit_text_search_ingredient" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -138,7 +137,23 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="1dp"
                         />
-
+                    <ProgressBar
+                        android:id="@+id/progressbar_existing"
+                        android:visibility="gone"
+                        android:layout_marginTop="64dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/text_view_empty_existing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                        android:text="@string/nessun_prodotto"
+                        android:textColor="@color/Gray"
+                        android:textSize="24sp" />
                     <TextView
                         android:id="@+id/text_view_missing"
                         android:layout_width="wrap_content"
@@ -153,6 +168,23 @@
                         android:id="@+id/recycler_products_finished"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
+                    <ProgressBar
+                        android:id="@+id/progressbarMissing"
+                        android:visibility="gone"
+                        android:layout_marginTop="64dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/text_view_empty_missing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                        android:text="@string/nessun_prodotto"
+                        android:textColor="@color/Gray"
+                        android:textSize="24sp" />
 
                 </LinearLayout>
 

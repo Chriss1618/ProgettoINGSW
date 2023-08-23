@@ -27,6 +27,22 @@ public class Ingredient {
     public Ingredient() {
     }
 
+    public Ingredient(int ID_Ingredient,
+                      int ID_Ristorante,
+                      String nameIngredient,
+                      int sizeIngredient,
+                      String measureType,
+                      int qtaIngredient,
+                      String URLImageIngredient) {
+        this.ID_Ingredient = ID_Ingredient;
+        this.ID_Ristorante = ID_Ristorante;
+        NameIngredient = nameIngredient;
+        SizeIngredient = sizeIngredient;
+        MeasureType = measureType;
+        QtaIngredient = qtaIngredient;
+        this.URLImageIngredient = URLImageIngredient;
+    }
+
     public int getID_Ingredient() {
         return ID_Ingredient;
     }

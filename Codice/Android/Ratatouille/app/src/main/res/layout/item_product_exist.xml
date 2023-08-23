@@ -19,18 +19,43 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="6">
-
-            <ImageView
-                android:id="@+id/image_view_product"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout_image_account"
                 android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:padding="10dp"
-                android:background="@drawable/background_circle_main_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+
+                    android:layout_marginStart="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:elevation="12dp"
+                    app:cardCornerRadius="80dp"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/image_view_product"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:layout_gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:contentDescription="@string/Descrizione_IMAGEVIEW_imagine_profile" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -42,7 +67,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/linearLayout"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/image_view_product"
+                app:layout_constraintStart_toEndOf="@+id/constraint_layout_image_account"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView

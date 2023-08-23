@@ -19,6 +19,10 @@ public class RequestCategory implements RequestHandler {
     //DATA
     protected ArrayList<CategoriaMenu> ListCategoryMenu;
 
+    @Override
+    public void handleRequest(Request request) {
+        getCategoriesFromServer(request);
+    }
     private void setCategories(JSONObject BodyJSON) throws org.json.JSONException{
         JSONArray CategorieJSON = new JSONArray(BodyJSON.getString("DATA"));
         //Log.d(TAG, "\nDATA_JSON ->"+CategorieJSON.toString(4));
@@ -47,8 +51,4 @@ public class RequestCategory implements RequestHandler {
 
     }
 
-    @Override
-    public void handleRequest(Request request) {
-        getCategoriesFromServer(request);
-    }
 }

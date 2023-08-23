@@ -7,6 +7,8 @@ import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
+import com.ratatouille.Models.LocalStorage;
+
 import org.json.JSONObject;
 import java.util.HashMap;
 
@@ -88,11 +90,12 @@ public class ActionsListCategory extends ActionsViewHandler{
         }
     }
     private static class DeleteCategory_ActionHandler implements ActionHandler {
+        int id_category;
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: DeleteCategoryActionHandler->");
-            int id_category = (int)action.getData();
-            if(sendDeleteCategoryToServer(id_category)){
+            id_category = ((CategoriaMenu) action.getData()).getID_categoria();
+            if(sendDeleteCategoryToServer(action)){
                 action.callBack(id_category);
                 Log.d(TAG, "handleAction: Cancelled Categoria");
             }else{
@@ -100,10 +103,10 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
         }
 
-        private boolean sendDeleteCategoryToServer(int id_category){
-            Log.d(TAG, "sendDeleteCategoryToServer: idCategory = "+id_category);
+        private boolean sendDeleteCategoryToServer(Action action){
+            int id_restaurant = (int) new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer");
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("id_ristorante", "1")
+                    .appendQueryParameter("id_ristorante", id_restaurant+"")
                     .appendQueryParameter("id_category",id_category+"");
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/CategoriaMenu.php";
 
@@ -121,8 +124,6 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
             Log.d(TAG, "sendDeleteCategoryToServer: true");
             return true;
-
-
         }
     }
 }

@@ -89,12 +89,10 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     public void PrepareData(){
         ProgressBar.setVisibility(View.VISIBLE);
         Recycler_Categories.setVisibility(View.GONE);
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
         sendRequest();
     }
 
     private void sendRequest(){
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_CATEGORY);
         @SuppressWarnings("unchecked")
         Request request = new Request(manager.getSourceInfo(), null, ManagerRequestFactory.INDEX_REQUEST_CATEGORY,
                 (list)-> setCategoriesOnLayout((ArrayList<CategoriaMenu>) list));
@@ -128,6 +126,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     public void SetActionsOfLayout() {
         RecycleEventListener        .setOnClickItemAdapterListener( (item)-> onClickCategory( (CategoriaMenu)item ) );
         RecycleEventListener        .setOnClickItemOptionAdapterListener( this::onClickDeleteCategory );
+
         Image_View_AddCategory      .setOnClickListener(view -> onClickAddCategory());
         Image_View_DeleteCategory   .setOnClickListener(view -> onClickDeleteCategories());
         EditText_SearchCategory     .addTextChangedListener(new TextWatcher() {
@@ -185,7 +184,11 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
 
     private void onClickDeleteCategory(String categoryToDelete,int id_categoryToDelete){
-        Action action = new Action(ActionsListCategory.INDEX_ACTION_REMOVE_CATEGORY, id_categoryToDelete,
+        CategoriaMenu CategoryToDelete = null;
+        for (CategoriaMenu category: ListCategoryMenu) {
+            if(  category.getID_categoria() == id_categoryToDelete)  CategoryToDelete = category;
+        }
+        Action action = new Action(ActionsListCategory.INDEX_ACTION_REMOVE_CATEGORY, CategoryToDelete,
                 (id_categoria)-> deleteItemFromRecycle( (Integer)id_categoria ));
         SendAction(action);
     }

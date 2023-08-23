@@ -111,7 +111,7 @@ public class Manager implements SubController {
             IndexOnMain = Integer.parseInt(Objects.requireNonNull(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2).getName()));
             getSourceInfo().setIndex_TypeView(IndexOnMain);
         }
-        
+
         new Handler(Looper.getMainLooper()).postDelayed( fragmentManager::popBackStack,300);
     }
 
