@@ -197,7 +197,8 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     }
 
     private void onClickProduct(Object product) {
-        EndAnimations();
+        Action action = new Action(ActionsListInventory.INDEX_ACTION_SELECT_INGREDIENT,product);
+        SendAction(action);
     }
 
     private void onClickDeleteIngredients(){

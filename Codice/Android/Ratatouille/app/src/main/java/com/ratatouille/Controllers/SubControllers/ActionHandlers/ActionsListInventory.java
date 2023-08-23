@@ -20,13 +20,14 @@ public class ActionsListInventory extends ActionsViewHandler{
     public final static int INDEX_ACTION_SHOW_NEW_INGREDIENT    = 0;
     public final static int INDEX_ACTION_DELETE_INGREDIENT      = 1;
     public final static int INDEX_ACTION_SHOW_REMOVE_INGREDIENT = 2;
-    public final static int INDEX_ACTION_SELECT_INGREDIENT      = 2;
+    public final static int INDEX_ACTION_SELECT_INGREDIENT      = 3;
 
     public ActionsListInventory(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_SHOW_NEW_INGREDIENT,      new ShowNewIngredient_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_SHOW_REMOVE_INGREDIENT,   new ShowDeleteIngredient_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_DELETE_INGREDIENT,        new DeleteIngredient_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_SELECT_INGREDIENT,        new SelectedIngredient_ActionHandler());
     }
 
     private static class ShowNewIngredient_ActionHandler implements ActionHandler {
@@ -82,8 +83,14 @@ public class ActionsListInventory extends ActionsViewHandler{
             Log.d(TAG, "sendDeleteIngredientToServer: true");
             return true;
         }
-
-
     }
 
+    private static class SelectedIngredient_ActionHandler implements ActionHandler {
+        @Override
+        public void handleAction(Action action) {
+            Log.d(TAG, "handleAction -> SELECTED INGREDIENT");
+            Ingredient ingredient = (Ingredient) action.getData();
+            action.getManager().changeOnMain(ControlMapper.INDEX_INVENTORY_INFO,ingredient);
+        }
+    }
 }
