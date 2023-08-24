@@ -6,11 +6,13 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class Ingredient {
+public class Ingredient implements Cloneable{
     private int ID_Ingredient;
     private int ID_Ristorante;
 
@@ -25,9 +27,20 @@ public class Ingredient {
     private String DataImageIngredient;
     private Uri UriImageIngredient = null;
     private boolean hasPhoto = false;
+
     public Ingredient() {
     }
-
+    public Ingredient(Ingredient newIngredient) {
+        this.ID_Ingredient = newIngredient.ID_Ingredient;
+        this.ID_Ristorante = newIngredient.ID_Ristorante;
+        NameIngredient = newIngredient.NameIngredient;
+        this.Description = newIngredient.Description;
+        this.PriceIngredient = newIngredient.PriceIngredient;
+        SizeIngredient = newIngredient.SizeIngredient;
+        MeasureType = newIngredient.MeasureType;
+        QtaIngredient = newIngredient.QtaIngredient;
+        this.URLImageIngredient = newIngredient.URLImageIngredient;
+    }
     public Ingredient(int ID_Ingredient,
                       int ID_Ristorante,
                       String nameIngredient,
@@ -164,5 +177,15 @@ public class Ingredient {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @NonNull
+    @Override
+    public Ingredient clone() {
+        try {
+            return (Ingredient) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

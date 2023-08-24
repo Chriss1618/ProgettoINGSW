@@ -116,7 +116,6 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
         StartAnimations();
     }
-
     @Override
     public void LinkLayout() {
         EditText_SearchInventory    = View_Fragment.findViewById(R.id.edit_text_search_ingredient);

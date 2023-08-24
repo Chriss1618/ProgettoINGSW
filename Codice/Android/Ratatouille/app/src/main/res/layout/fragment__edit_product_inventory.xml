@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/SoftGray"
     tools:context=".Views.Schermate.Inventario.Fragment_EditProductInventory">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
+            android:gravity="start"
             android:padding="8dp"
             android:layout_marginTop="16dp">
             <LinearLayout
@@ -32,19 +34,9 @@
                     android:layout_height="wrap_content"
 
                     android:fontFamily="@font/sf_compact_rounded_bold"
-                    android:text="Modifica Prodotto"
+                    android:text="@string/modifica_ingrediente"
                     android:textColor="@color/SoftBlack"
                     android:textSize="30sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="end"
-                android:layout_marginEnd="16dp">
-
-
             </LinearLayout>
         </LinearLayout>
 
@@ -112,9 +104,9 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
-                                    android:id="@+id/image_view_account"
-                                    android:layout_width="150dp"
-                                    android:layout_height="150dp"
+                                    android:id="@+id/image_view_Ingredient"
+                                    android:layout_width="180dp"
+                                    android:layout_height="180dp"
                                     android:layout_gravity="center"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +127,7 @@
                             android:paddingTop="8dp">
 
                             <EditText
-                                android:id="@+id/edit_text_nome_prodotto"
+                                android:id="@+id/edit_text_new_nome_inventory"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
 
@@ -146,7 +138,7 @@
 
                                 android:fontFamily="@font/sf_compact_rounded_bold"
                                 android:gravity="center"
-                                android:hint="Nome Ingrediente"
+                                android:hint="@string/nome_ingrediente"
                                 android:inputType="text"
                                 android:text=""
                                 android:textColor="@color/Black"
@@ -156,6 +148,18 @@
                                 android:textCursorDrawable="@drawable/custom_cursor"
                                 android:textSize="19sp"
                                 android:autofillHints="" />
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/warning_NameIngredient"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                                android:text="@string/campo_non_corretto"
+                                android:layout_gravity="center_horizontal"
+                                android:textSize="15sp"
+                                android:textColor="@color/red"
+                                app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -183,12 +187,12 @@
                                     android:includeFontPadding="false"
                                     android:maxLength="20"
                                     android:maxLines="1"
-                                    android:text="€"
+                                    android:text="@string/euro"
                                     android:textColor="@color/MainColor"
                                     android:textSize="23sp" />
 
                                 <EditText
-                                    android:id="@+id/edit_text_euro"
+                                    android:id="@+id/edit_text_new_euro"
                                     android:layout_width="90dp"
                                     android:layout_height="50dp"
 
@@ -201,7 +205,6 @@
                                     android:hint="@string/_0"
                                     android:inputType="number"
 
-                                    android:text=""
                                     android:textColor="@color/MainColor"
                                     android:textColorHint="@color/MainColor"
                                     android:textColorLink="@color/MainColor"
@@ -220,12 +223,12 @@
                                     android:includeFontPadding="false"
                                     android:maxLength="20"
                                     android:maxLines="1"
-                                    android:text=","
+                                    android:text="@string/virgola"
                                     android:textColor="@color/MainColor"
                                     android:textSize="23sp" />
 
                                 <EditText
-                                    android:id="@+id/edit_text_centesimi"
+                                    android:id="@+id/edit_text_new_centesimi"
                                     android:layout_width="90dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
@@ -236,17 +239,46 @@
                                     android:gravity="center"
                                     android:hint="@string/_00"
                                     android:inputType="number"
-                                    android:text=""
                                     android:maxLength="2"
-                                    android:textColor="@color/Black"
+                                    android:textColor="@color/MainColor"
                                     android:textColorHint="@color/MainColor"
                                     android:textColorLink="@color/MainColor"
 
-                                    android:textCursorDrawable="@color/MainColor"
-                                    android:textSize="19dp" />
+                                    android:textCursorDrawable="@drawable/custom_cursor"
+                                    android:textSize="19sp" />
 
                             </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_heavy"
+                                android:text="@string/descrizione"
+                                android:gravity="start"
+                                android:textSize="20sp"
+                                android:textColor="@color/Black"/>
+                            <EditText
+                                android:id="@+id/edit_text_descrizione"
+                                android:layout_width="match_parent"
+                                android:layout_height="90dp"
 
+                                android:layout_marginTop="4dp"
+                                android:autofillHints=""
+                                android:fontFamily="@font/sf_compact_rounded"
+                                android:background="@drawable/background_edit_text_stroke_white"
+                                android:ems="10"
+                                android:hint="@string/inserisci_la_descrizione_del_prodotto"
+                                android:textSize="16sp"
+                                android:textColorHint="@color/DarkGray"
+                                android:inputType="textEmailAddress"
+                                android:padding="8dp"
+                                android:maxLength="500"
+                                android:gravity="top|start"
+                                android:text=""
+                                android:textColor="@color/Black"
+
+                                android:textColorLink="@color/MainColor"
+                                android:textCursorDrawable="@drawable/custom_cursor"
+                                />
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -265,11 +297,12 @@
                                         android:layout_marginBottom="16dp"
                                         android:gravity="center"
                                         android:fontFamily="@font/sf_compact_rounded_bold"
-                                        android:text="GRANDEZZA"
+                                        android:text="@string/grandezza"
                                         android:textColor="@color/DarkGray"
                                         android:textSize="13sp" />
+
                                     <EditText
-                                        android:id="@+id/edit_text_grandezza"
+                                        android:id="@+id/edit_text_new_grandezza"
                                         android:layout_width="90dp"
                                         android:layout_height="50dp"
 
@@ -279,8 +312,8 @@
                                         android:ems="10"
                                         android:fontFamily="@font/sf_compact_rounded_bold"
                                         android:gravity="center"
-                                        android:hint="0"
-                                        android:inputType="textEmailAddress"
+                                        android:hint="@string/_0"
+                                        android:inputType="number"
 
                                         android:text=""
                                         android:textColor="@color/MainColor"
@@ -290,11 +323,8 @@
                                         android:textCursorDrawable="@drawable/custom_cursor"
                                         android:textSize="19sp" />
                                 </LinearLayout>
-
-
-
                                 <LinearLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:gravity="center_horizontal">
@@ -305,29 +335,19 @@
                                         android:layout_marginBottom="8dp"
                                         android:gravity="center"
                                         android:fontFamily="@font/sf_compact_rounded_bold"
-                                        android:text="UNITA MISURA"
+                                        android:text="@string/unita_misura"
                                         android:textColor="@color/DarkGray"
                                         android:textSize="13sp" />
 
                                     <LinearLayout
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:gravity="end"
+                                        android:gravity="center"
                                         android:orientation="vertical">
                                         <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:orientation="horizontal">
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-
-                                                android:gravity="center"
-                                                android:layout_gravity="center"
-                                                android:fontFamily="@font/sf_compact_rounded_bold"
-                                                android:text="KILO"
-                                                android:textColor="@color/DarkGray"
-                                                android:textSize="13sp" />
                                             <TextView
                                                 android:id="@+id/text_view_kg"
                                                 android:layout_width="50dp"
@@ -338,7 +358,7 @@
                                                 android:layout_marginStart="8dp"
                                                 android:fontFamily="@font/sf_compact_rounded_bold"
                                                 android:gravity="center"
-                                                android:text="Kg"
+                                                android:text="@string/kg"
 
                                                 android:textColor="@color/Black"
                                                 android:textColorHint="@color/MainColor"
@@ -384,16 +404,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:orientation="horizontal">
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-
-                                                android:gravity="center"
-                                                android:layout_gravity="center"
-                                                android:fontFamily="@font/sf_compact_rounded_bold"
-                                                android:text="LITRO"
-                                                android:textColor="@color/DarkGray"
-                                                android:textSize="13sp" />
                                             <TextView
                                                 android:id="@+id/text_view_l"
                                                 android:layout_width="50dp"
@@ -448,87 +458,64 @@
                                     </LinearLayout>
                                 </LinearLayout>
 
-
-
                             </LinearLayout>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sf_compact_rounded_heavy"
-                            android:text="Descrizione"
-                            android:gravity="start"
-                            android:textSize="20sp"
-                            android:textColor="@color/Black"/>
-                        <EditText
-                            android:id="@+id/edit_text_descrizione"
-                            android:layout_width="match_parent"
-                            android:layout_height="90dp"
-
-                            android:layout_marginTop="4dp"
-                            android:autofillHints=""
-                            android:fontFamily="@font/sf_compact_rounded"
-                            android:background="@drawable/background_edit_text_stroke_white"
-                            android:ems="10"
-                            android:hint="Inserisci la descrizione del Prodotto"
-                            android:textSize="16sp"
-                            android:textColorHint="@color/Black"
-                            android:inputType="textEmailAddress"
-                            android:padding="8dp"
-                            android:maxLength="500"
-                            android:gravity="top|start"
-                            android:text=""
-                            android:textColor="@color/Black"
-
-                            android:textColorLink="@color/MainColor"
-                            android:textCursorDrawable="@color/MainColor" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="start"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="16dp">
                             <TextView
+                                android:visibility="gone"
+                                android:id="@+id/warning_Misura"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:fontFamily="@font/sf_compact_rounded_bold"
-                                android:text="QUANTITA' IN DISPENSA"
-                                android:textColor="@color/DarkGray"
-                                android:textSize="13sp" />
-                            <EditText
-                                android:id="@+id/edit_text_qta"
-                                android:layout_width="90dp"
-                                android:layout_height="50dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_gravity="center_vertical"
-                                android:autofillHints=""
-                                android:background="@drawable/background_edit_text_stroke_white"
-                                android:ems="10"
-                                android:fontFamily="@font/sf_compact_rounded_bold"
-                                android:gravity="center"
-                                android:hint="0"
-                                android:inputType="textEmailAddress"
+                                android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                                android:text="@string/campo_non_corretto"
+                                android:layout_gravity="center_horizontal"
+                                android:textSize="15sp"
+                                android:textColor="@color/red"
+                                app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
 
-                                android:text=""
-                                android:textColor="@color/MainColor"
-                                android:textColorHint="@color/MainColor"
-                                android:textColorLink="@color/MainColor"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="16dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/sf_compact_rounded_bold"
+                                    android:text="@string/quantit_nell_inventario"
+                                    android:textColor="@color/DarkGray"
+                                    android:textSize="13sp" />
+                                <EditText
+                                    android:id="@+id/edit_text_new_qta"
+                                    android:layout_width="90dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:autofillHints=""
+                                    android:background="@drawable/background_edit_text_stroke_white"
+                                    android:ems="10"
+                                    android:fontFamily="@font/sf_compact_rounded_bold"
+                                    android:gravity="center"
+                                    android:hint="@string/_0"
+                                    android:inputType="number"
 
-                                android:textCursorDrawable="@drawable/custom_cursor"
-                                android:textSize="19sp" />
+                                    android:text=""
+                                    android:textColor="@color/MainColor"
+                                    android:textColorHint="@color/MainColor"
+                                    android:textColorLink="@color/MainColor"
+
+                                    android:textCursorDrawable="@drawable/custom_cursor"
+                                    android:textSize="19sp" />
+                            </LinearLayout>
                         </LinearLayout>
+
                     </LinearLayout>
 
 
                 </LinearLayout>
             </ScrollView>
         </androidx.cardview.widget.CardView>
-
 
     </LinearLayout>
     <LinearLayout
@@ -565,7 +552,7 @@
                     android:autoSizeStepGranularity="1sp"
                     android:autoSizeTextType="uniform"
 
-                    android:text="ANNULLA"
+                    android:text="@string/annulla"
                     android:textColor="@color/MainColor"/>
 
             </LinearLayout>
@@ -598,13 +585,129 @@
                     android:autoSizeMinTextSize="9sp"
                     android:autoSizeStepGranularity="1sp"
                     android:autoSizeTextType="uniform"
-
-                    android:text="SALVA"
+                    android:text="@string/salva"
                     android:maxLines="1"
                     android:textColor="@color/white"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/darkRL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/dark"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linear_layout_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/background_edit_text_stroke_white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_dialog_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_baseline_warning_24" />
+
+            <TextView
+                android:id="@+id/textview_msg_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:text="Errore, riprova."
+                android:textColor="@color/Black"
+                android:textSize="25sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_dialog_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/MainColor"
+                app:cardUseCompatPadding="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingEnd="24dp"
+                    android:paddingStart="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_compact_rounded_bold"
+                        android:gravity="center"
+                        android:autoSizeMaxTextSize="25sp"
+                        android:autoSizeMinTextSize="9sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+
+                        android:text="OK"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_layout_dialog_accepted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:layout_margin="30dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/ingrediente_aggiornato"
+                android:textColor="@color/Black"
+                android:textSize="25sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:src="@drawable/baseline_check_circle_24"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 

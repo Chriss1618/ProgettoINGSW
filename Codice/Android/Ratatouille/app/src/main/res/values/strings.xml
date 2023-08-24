@@ -91,4 +91,7 @@
     <string name="ingrediente_creato">Ingrediente creato!</string>
     <string name="nessun_prodotto">Nessun Prodotto</string>
     <string name="indietro">Indietro</string>
+    <string name="modifica_prodotto">Modifica Prodotto</string>
+    <string name="ingrediente_aggiornato">Ingrediente Aggiornato</string>
+    <string name="modifica_ingrediente">Modifica Ingrediente</string>
 </resources>

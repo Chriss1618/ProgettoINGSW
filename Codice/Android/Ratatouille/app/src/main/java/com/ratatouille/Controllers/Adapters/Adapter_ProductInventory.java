@@ -27,9 +27,9 @@ public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_Produ
     private static final String TAG = "Adapter_ProductExist";
 
     //LAYOUT
-    private final RecycleEventListener RecycleEventListener;
+    private final RecycleEventListener  RecycleEventListener;
     private ArrayList<ViewHolder>       Holders;
-    private boolean isShowingDeleting;
+    private boolean                     isShowingDeleting;
 
     //DATA
     ArrayList<Ingredient> Ingredients;
@@ -40,7 +40,7 @@ public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_Produ
         this.IngredientsFiltered    = new ArrayList<>(Ingredients);
 
         this.Holders                = new ArrayList<>();
-        this.RecycleEventListener = recycleEventListener;
+        this.RecycleEventListener   = recycleEventListener;
 
         this.isShowingDeleting = isShowingDeleting;
     }
@@ -85,18 +85,17 @@ public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_Produ
 
     //LAYOUT
     private void initializeLayout( final int position,@NonNull ViewHolder holder){
-        holder.Text_View_Title_Product.setText(Ingredients.get(position).getNameIngredient());
-        holder.Text_View_Qta_Product.setText(Ingredients.get(position).getQtaIngredient()+"" );
-        holder.Text_View_Measure_Product.setText(Ingredients.get(position).getSizeIngredient()+" "+ Ingredients.get(position).getMeasureType());
+        holder.Text_View_Title_Product      .setText( Ingredients.get(position).getNameIngredient() );
+        holder.Text_View_Qta_Product        .setText( Ingredients.get(position).getQtaIngredient() +"" );
+        holder.Text_View_Measure_Product    .setText( Ingredients.get(position).getSizeIngredient() +" "+ Ingredients.get(position).getMeasureType());
         Picasso.get()
                 .load(EndPointer.StandardPath+"/Images/Ingredient/"+ Ingredients.get(position).getURLImageIngredient())
                 .into(holder.Image_View_Product);
-
         if(isShowingDeleting) showDeleteIcon();
     }
 
     private void setActions( final int position,@NonNull ViewHolder holder){
-        holder.Card_View_Element_Product.setOnClickListener(view ->onClickItem(position) );
+        holder.Card_View_Element_Product.setOnClickListener(view -> onClickItem(position) );
         holder.Image_View_delete_element.setOnClickListener(view -> clickDeleteProduct(position));
     }
 
@@ -121,7 +120,7 @@ public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_Produ
                 }
             }
         }
-        notifyDataSetChanged();
+
     }
 
     public void removeItem(int id_cat) {

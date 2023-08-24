@@ -72,6 +72,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         RecycleEventListener    = new RecycleEventListener();
         ListCategoryMenu = new ArrayList<>();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View_fragment = inflater.inflate(R.layout.fragment__list_category, container, false);
@@ -121,7 +122,9 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     }
     @Override
     public void SetDataOnLayout() {
+
     }
+
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener        .setOnClickItemAdapterListener( (item)-> onClickCategory( (CategoriaMenu)item ) );
@@ -129,22 +132,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
         Image_View_AddCategory      .setOnClickListener(view -> onClickAddCategory());
         Image_View_DeleteCategory   .setOnClickListener(view -> onClickDeleteCategories());
-        EditText_SearchCategory     .addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                adapter_category.filterList(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        EditText_SearchCategory     .addTextChangedListener( onChangeSearchCategory() );
     }
 
     private void initCategoryRV(){
@@ -181,6 +169,25 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
             adapter_category.showDeleteIcon();
             isDeleting = true;
         }
+    }
+
+    private TextWatcher onChangeSearchCategory(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter_category.filterList(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
     }
 
     private void onClickDeleteCategory(String categoryToDelete,int id_categoryToDelete){

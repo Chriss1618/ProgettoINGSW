@@ -300,17 +300,17 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
         private void showDialogError(){
             CardView_Dialog_Cancel             = LinearLayout_Error.findViewById(R.id.card_view_dialog_confirm);
 
-            CardView_Cancel .setOnClickListener(view -> dismissDialogError());
+            CardView_Dialog_Cancel .setOnClickListener(view -> dismissDialogError());
 
             LinearLayout_Error              .setVisibility(View.VISIBLE);
             LinearLayout_DarkL              .setVisibility(View.VISIBLE);
 
-            LinearLayout_Error              .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_Dialog              .startAnimation(Manager_Animation.getTranslationINfromUp(500));
             LinearLayout_DarkL              .startAnimation(Manager_Animation.getFadeIn(500));
             hideKeyboardFrom();
         }
         private void dismissDialogError(){
-            LinearLayout_Error.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+            LinearLayout_Dialog.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
             LinearLayout_DarkL.startAnimation(Manager_Animation.getFadeOut(500));
 
             Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
@@ -323,7 +323,7 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
             LinearLayout_Success            .setVisibility(View.VISIBLE);
             LinearLayout_DarkL              .setVisibility(View.VISIBLE);
 
-            LinearLayout_Success                .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_Dialog                .startAnimation(Manager_Animation.getTranslationINfromUp(500));
             LinearLayout_DarkL                  .startAnimation(Manager_Animation.getFadeIn(500));
             hideKeyboardFrom();
         }

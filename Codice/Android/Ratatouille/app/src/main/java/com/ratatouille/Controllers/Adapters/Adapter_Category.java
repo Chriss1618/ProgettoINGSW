@@ -156,9 +156,7 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
         }
     }
 
-
     //ANIMATIONS
-
     public void showDeleteIcon(){
         showDeleting = true;
         for (ViewHolder holder:Holders) {
@@ -177,6 +175,5 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
                     200);
         }
     }
-
 
 }

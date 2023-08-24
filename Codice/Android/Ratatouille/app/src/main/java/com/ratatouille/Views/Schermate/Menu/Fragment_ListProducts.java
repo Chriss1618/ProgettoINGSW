@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ratatouille.Controllers.Adapters.Adapter_Product;
+import com.ratatouille.Controllers.Adapters.ProductTouchHelper;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
 import com.ratatouille.Models.Animation.Manager_Animation;
@@ -132,6 +134,12 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         boolean isFromLeft = manager.IndexFrom <= manager.IndexOnMain;
 
         adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,isFromLeft);
+
+        ItemTouchHelper.Callback callback = new ProductTouchHelper(adapter_product);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        adapter_product.setTouchHelper(itemTouchHelper);
+        itemTouchHelper.attachToRecyclerView(Recycler_Products);
+
         Recycler_Products.setAdapter(adapter_product);
     }
 
