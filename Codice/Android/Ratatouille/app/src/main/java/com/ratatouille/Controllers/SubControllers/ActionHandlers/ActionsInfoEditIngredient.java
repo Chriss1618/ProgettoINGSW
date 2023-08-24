@@ -24,6 +24,7 @@ public class ActionsInfoEditIngredient extends ActionsViewHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> CANCEL NEW INGREDIENT");
+            action.getManager().hideBottomBar();
             action.getManager().changeOnMain(ControlMapper.INDEX_INVENTORY_EDIT,action.getData());
         }
     }

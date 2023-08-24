@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditIngredient;
@@ -25,6 +26,7 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
 
     //LAYOUT
     private android.view.View View_Fragment;
+    private LinearLayout    LinearLayout_GoBack;
     private ImageView       ImageView_EditProduct;
     private ImageView       ImageView_Back;
 
@@ -85,6 +87,7 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
 
     @Override
     public void LinkLayout() {
+        LinearLayout_GoBack   = View_Fragment.findViewById(R.id.linearlayout_go_back);
         ImageView_EditProduct   = View_Fragment.findViewById(R.id.ic_edit_product);
         ImageView_Back          = View_Fragment.findViewById(R.id.ic_back);
         CardView_Product        = View_Fragment.findViewById(R.id.card_view_element_product);
@@ -129,12 +132,31 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     //ANIMATIONS
     @Override
     public void StartAnimations() {
-        ImageView_EditProduct   .startAnimation(Manager_Animation.getTranslationINfromUp(600));
-        CardView_Product        .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));
+        if(!manager.bottomBarListener.visible){
+            manager.showBottomBar();
+        }
+        if(manager.IndexFrom > manager.IndexOnMain){
+            LinearLayout_GoBack     .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+            ImageView_EditProduct   .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+            CardView_Product        .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+        }else{
+            LinearLayout_GoBack     .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+            ImageView_EditProduct   .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+            CardView_Product        .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));
+        }
     }
+
     @Override
     public void EndAnimations() {
-        ImageView_EditProduct   .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
-        CardView_Product        .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        if(manager.IndexOnMain > manager.IndexFrom){
+            LinearLayout_GoBack     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(600));
+            ImageView_EditProduct   .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+            CardView_Product        .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+        }else{
+            LinearLayout_GoBack     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(600));
+            ImageView_EditProduct   .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+            CardView_Product        .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        }
+
     }
 }

@@ -169,6 +169,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         if(TitleProducts_Exist.size() == 0 ){
             TextView_EmptyExisting.setVisibility(View.VISIBLE);
             adapter_product_exist = null;
+            TextView_EmptyExisting         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
         }else{
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
             Recycler_Products_Exist.setLayoutManager(mLayoutManager);
@@ -182,6 +183,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         if(TitleProducts_Missing.size() == 0 ){
             TextView_EmptyMissing.setVisibility(View.VISIBLE);
             adapter_product_missing = null;
+            TextView_EmptyMissing         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
         }else{
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
             Recycler_Products_Missing.setLayoutManager(mLayoutManager);
@@ -297,5 +299,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         TextView_TitleMissing       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
         Recycler_Products_Exist     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
         Recycler_Products_Missing   .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        TextView_EmptyMissing.startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        TextView_EmptyExisting.startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }
 }
