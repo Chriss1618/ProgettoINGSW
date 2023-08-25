@@ -41,6 +41,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
                     <ImageView
+                        android:backgroundTint="@color/white"
                         android:id="@+id/image_view_product"
                         android:elevation = "2dp"
                         android:layout_width="110dp"
@@ -49,7 +50,6 @@
                         android:src="@drawable/exemple_product"/>
 
                 </LinearLayout>
-
 
             </androidx.cardview.widget.CardView>
             <LinearLayout
@@ -62,16 +62,13 @@
                     android:id="@+id/text_view_title_product"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autoSizeMaxTextSize="25sp"
-                    android:autoSizeMinTextSize="20sp"
-                    android:autoSizeStepGranularity="1sp"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/sf_compact_rounded_bold"
                     android:maxLength="30"
+                    android:textSize="20dp"
                     android:maxLines="1"
-                    android:text="Pizza Mascarpone"
-                    android:gravity="top"
-
+                    android:singleLine="true"
+                    android:text="Pizza Mascarponeeee"
                     android:textColor="@color/Black"
                     />
 
@@ -94,10 +91,52 @@
             </LinearLayout>
 
         </LinearLayout>
-
-
     </androidx.cardview.widget.CardView>
 
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linear_layout_order_item"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/card_view_element_product"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_order_item2"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@drawable/background_button_main"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_view_order_item"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_gravity="center"
+                android:background="@drawable/background_button_main"
+                android:clickable="true"
+                android:contentDescription="@string/icon_add"
+                android:focusable="true"
+
+                android:padding="4dp"
+                android:src="@drawable/baseline_expand_24" />
+        </LinearLayout>
+    </LinearLayout>
     <ImageView
         android:visibility="gone"
         android:id="@+id/ic_delete_on_element"

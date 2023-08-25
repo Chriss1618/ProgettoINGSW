@@ -16,7 +16,7 @@ public class ProductTouchHelper extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isLongPressDragEnabled() {
-        return true;
+        return false;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ProductTouchHelper extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isItemViewSwipeEnabled() {
-        return true;
+        return false;
     }
 
     @Override
@@ -51,6 +51,7 @@ public class ProductTouchHelper extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-        adapter.onItemSwap(viewHolder.getAbsoluteAdapterPosition());
+        //adapter.onItemSwap(viewHolder.getAbsoluteAdapterPosition());
+
     }
 }

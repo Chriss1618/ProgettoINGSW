@@ -101,7 +101,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         Recycler_Products.setLayoutManager(mLayoutManager);
         Recycler_Products.setNestedScrollingEnabled(false);
-        Adapter_Product adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,false);
+        Adapter_Product adapter_product = new Adapter_Product(getContext(),TitleProducts, RecycleEventListener,false);
         Recycler_Products.setAdapter(adapter_product);
     }
     //ACTIONS

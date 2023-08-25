@@ -31,17 +31,11 @@ public class Adapter_Category extends RecyclerView.Adapter<Adapter_Category.View
 
     //FUNCTIONAL
     private final RecycleEventListener      RecycleEventListener;
-    private Observer observer = new Observer() {
-        @Override
-        public void update(Observable observable, Object o) {
-
-        }
-    };
+    private boolean showDeleting;
 
     //DATA
     private ArrayList<CategoriaMenu>    TitleCategories;
     private ArrayList<CategoriaMenu>    CategorieFiltrate;
-    private boolean showDeleting;
     private boolean SearchMode = false;
     //OTHER...
 

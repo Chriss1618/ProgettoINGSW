@@ -290,6 +290,28 @@ public class Manager_Animation {
         return set;
     }
 
+    public static AnimationSet getFadeInZoomUp(int milliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        Animation zoomIn = new ScaleAnimation(0.0f,1.1f,0.0f,1.1f);
+
+        zoomIn.setDuration(milliseconds);
+
+        set.addAnimation(zoomIn);
+        set.addAnimation(getFadeIn(milliseconds));
+        return set;
+    }
+
+    public static AnimationSet getFadeInZoomBackNormal(int milliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        Animation zoomIn = new ScaleAnimation(1.1f,1.0f,1.1f,1.0f);
+
+        zoomIn.setDuration(milliseconds);
+        set.addAnimation(zoomIn);
+        return set;
+    }
+
     public static AnimationSet getFadeOutZoom(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 

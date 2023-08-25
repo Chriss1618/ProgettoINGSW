@@ -39,6 +39,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private TextView        Text_View_TitleCategory;
     private RecyclerView    Recycler_Products;
     private ImageView       ImageView_AddProduct;
+    private ImageView       ImageView_Order;
     private ImageView       ImageView_deleteProduct;
     private ImageView       ImageView_Back;
     //FUNCTIONAL
@@ -46,6 +47,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private final Manager                   manager;
     private Adapter_Product                 adapter_product;
     private boolean                         isDeleting;
+    private boolean                         isOrdering;
     //DATA
     private ArrayList<String>   TitleProducts;
     private CategoriaMenu       Categoria;
@@ -84,12 +86,21 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     @Override
     public void PrepareData(){
         TitleProducts = new ArrayList<>();
+        TitleProducts.add("Pizza Tonno ");
+        TitleProducts.add("Pizza Margherita");
+        TitleProducts.add("Panino al Salame");
+        TitleProducts.add("Carbonara");
+        TitleProducts.add("Pizza Tonno");
+        TitleProducts.add("Pizza Margherita");
+        TitleProducts.add("Panino al Salame");
+        TitleProducts.add("Carbonara");
         TitleProducts.add("Pizza Tonno");
         TitleProducts.add("Pizza Margherita");
         TitleProducts.add("Panino al Salame");
         TitleProducts.add("Carbonara");
 
         isDeleting = false;
+        isOrdering = false;
 
         manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_PRODUCTS);
     }
@@ -109,6 +120,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         Text_View_TitleCategory     = View_fragment.findViewById(R.id.text_view_title_category);
         Recycler_Products           = View_fragment.findViewById(R.id.recycler_products);
         ImageView_AddProduct        = View_fragment.findViewById(R.id.ic_add_product);
+        ImageView_Order             = View_fragment.findViewById(R.id.ic_order);
         ImageView_deleteProduct     = View_fragment.findViewById(R.id.ic_delete_product);
         ImageView_Back              = View_fragment.findViewById(R.id.ic_back);
     }
@@ -123,6 +135,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     public void SetActionsOfLayout() {
         RecycleEventListener    .setOnClickItemAdapterListener((item)-> onClickProduct( (Product)item ) );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
+        ImageView_Order         .setOnClickListener(            view -> onOrderClick());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
         ImageView_Back          .setOnClickListener(            view -> manager.goBack());
     }
@@ -133,12 +146,14 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         Recycler_Products.setNestedScrollingEnabled(false);
         boolean isFromLeft = manager.IndexFrom <= manager.IndexOnMain;
 
-        adapter_product = new Adapter_Product(TitleProducts, RecycleEventListener,isFromLeft);
+        adapter_product = new Adapter_Product(getContext(),TitleProducts, RecycleEventListener,isFromLeft);
 
         ItemTouchHelper.Callback callback = new ProductTouchHelper(adapter_product);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         adapter_product.setTouchHelper(itemTouchHelper);
         itemTouchHelper.attachToRecyclerView(Recycler_Products);
+        Recycler_Products.setHasFixedSize(true); // Optional, if your item sizes are fixed
+        Recycler_Products.setItemViewCacheSize(TitleProducts.size()); // Set the cache size to the number of items
 
         Recycler_Products.setAdapter(adapter_product);
     }
@@ -163,6 +178,15 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         }
     }
 
+    private void onOrderClick(){
+        if(isOrdering){
+            adapter_product.hideMoveIcon();
+            isOrdering = false;
+        }else{
+            adapter_product.showMoveIcon();
+            isOrdering = true;
+        }
+    }
     //FUNCTIONAL
     private void SendAction(Action action){
         manager.HandleAction(action);
