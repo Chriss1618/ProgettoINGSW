@@ -370,21 +370,23 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     @Override
     public void StartAnimations(){
         Text_View_TitleCategory.setText(R.string.Menu);
-        Text_View_TitleCategory     .startAnimation(Manager_Animation.getTranslationINfromUp(600));
+        Text_View_TitleCategory     .startAnimation(Manager_Animation.getTranslationINfromUp(300));
+        EditText_SearchCategory     .startAnimation( Manager_Animation.getFadeIn(300));
 
     }
     @Override
     public void EndAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         Recycler_Categories     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+        EditText_SearchCategory .startAnimation( Manager_Animation.getFadeOut(300));
     }
 
     private void StartAnimationCategories(){
-        Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+        Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
     }
 
     private void StartAnimationEmptyCategories(){
-        Text_View_Empty         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+        Text_View_Empty         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
     }
 
 

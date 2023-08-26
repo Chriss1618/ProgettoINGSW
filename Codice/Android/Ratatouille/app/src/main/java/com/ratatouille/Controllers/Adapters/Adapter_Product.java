@@ -163,14 +163,12 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
         if (isFromLeft) {
             this.Holder.Card_View_Element_Product.setVisibility(View.GONE);
-            StartAnimations(this.Holder.Card_View_Element_Product,position);
+            StartAnimations(this.Holder,position);
         }
         if (isDeleting) {
             this.Holder.Image_View_delete_element.setVisibility(View.VISIBLE);
         }
-        if (isOrdering) {
-            this.Holder.LinearLayout_moveItem.setVisibility(View.VISIBLE);
-        }
+
     }
 
     @Override
@@ -209,12 +207,17 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     }
 
     //ANIMATIONS
-    private void StartAnimations(CardView cardView,int position){
-
+    private void StartAnimations(ViewHolder holder,int position){
         final Handler handler = new Handler();
         handler.postDelayed(()->{
-            cardView.setVisibility(View.VISIBLE);
-            cardView .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(400));
+            holder.Card_View_Element_Product    .setVisibility(View.VISIBLE);
+            holder.Card_View_Element_Product    .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(400));
+            if (isOrdering) {
+                new Handler(Looper.getMainLooper()).postDelayed(()->{
+                    this.Holder.LinearLayout_moveItem.setVisibility(View.VISIBLE);
+                    ShowMoveOne(holder);
+                },2000) ;
+            }
         }, (position + 1 ) * 100L);
 
     }
@@ -242,20 +245,20 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         isOrdering = true;
         for (ViewHolder holder:Holders) {
             holder.LinearLayout_moveItem.setVisibility(View.VISIBLE);
-            holder.LinearLayout_moveItem.startAnimation(Manager_Animation.getFadeInZoomUp(200));
-            new Handler(Looper.getMainLooper()).postDelayed( ()->holder.LinearLayout_moveItem.startAnimation(Manager_Animation.getFadeInZoomBackNormal(200)),200);
-
-            int marginInDp = 64;
-            float density = context.getResources().getDisplayMetrics().density;
-            int marginInPixels = (int) (marginInDp * density);
-
-// Create layout parameters and set margins
-            LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(0, 0, marginInPixels, 0);
-
-// Apply layout parameters to the TextView
-            holder.Text_View_Title_Product.setLayoutParams(layoutParams);
+            ShowMoveOne(holder);
         }
+    }
+
+    private void ShowMoveOne(ViewHolder holder){
+        holder.LinearLayout_moveItem.startAnimation(Manager_Animation.getFadeInZoomUp(200));
+        new Handler(Looper.getMainLooper()).postDelayed( ()->holder.LinearLayout_moveItem.startAnimation(Manager_Animation.getFadeInZoomBackNormal(200)),200);
+
+        int marginInDp = 64;
+        float density = context.getResources().getDisplayMetrics().density;
+        int marginInPixels = (int) (marginInDp * density);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, marginInPixels, 0);
+        holder.Text_View_Title_Product.setLayoutParams(layoutParams);
     }
 
     public void hideMoveIcon(){
@@ -263,13 +266,9 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         for (ViewHolder holder:Holders) {
             holder.LinearLayout_moveItem.startAnimation(Manager_Animation.getFadeOutZoom(200));
             final Handler handler = new Handler();
-            handler.postDelayed(()->holder.LinearLayout_moveItem.setVisibility(View.GONE), 200);
-
-// Create layout parameters and set margins
+            handler.postDelayed(()->holder.LinearLayout_moveItem.setVisibility(View.INVISIBLE), 200);
             LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, 0, 0, 0);
-
-// Apply layout parameters to the TextView
             holder.Text_View_Title_Product.setLayoutParams(layoutParams);
         }
     }

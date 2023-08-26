@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/SoftGray"
     tools:context=".Views.Schermate.Menu.Fragment_ListProducts">
 
     <LinearLayout
@@ -52,16 +53,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="end"
+                android:gravity="center_vertical|end"
                 android:layout_marginEnd="16dp">
-                <ImageView
-                    android:id="@+id/ic_order"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:clickable="true"
-                    android:src="@drawable/ic_order"
-                    android:contentDescription="@string/icon_add" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/ic_order"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:clickable="true"
+                        android:src="@drawable/ic_order"
+                        android:contentDescription="@string/icon_add"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/ic_back_order"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:clickable="true"
+                        android:contentDescription="@string/icon_add"
+                        android:rotation="45"
+                        android:src="@drawable/baseline_horizontal_rule_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <ImageView
                     android:id="@+id/ic_add_product"
                     android:layout_width="24dp"
@@ -85,10 +111,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:background="@drawable/background_search_category"
+            android:layout_margin="16dp">
 
             <EditText
-                android:id="@+id/edit_text_name_category"
+                android:id="@+id/edit_text_search_product"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
 
@@ -99,12 +126,12 @@
                 android:hint="@string/cerca_prodotto_in_menu"
                 android:inputType="text"
                 android:paddingStart="42dp"
-                android:textColorHint="@color/Gray"
+                android:textColorHint="@color/DarkGray"
                 android:text=""
-                android:textColor="@color/Gray"
+                android:textColor="@color/Black"
 
                 android:textColorLink="@color/MainColor"
-                android:textCursorDrawable="@color/MainColor"
+                android:textCursorDrawable="@drawable/custom_cursor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlSymmetry" />
@@ -116,10 +143,11 @@
                 android:clickable="true"
                 android:contentDescription="@string/icon_add"
                 android:src="@drawable/ic_search"
-                app:layout_constraintStart_toStartOf="@+id/edit_text_name_category"
-                app:layout_constraintTop_toTopOf="@+id/edit_text_name_category" />
+                app:layout_constraintStart_toStartOf="@+id/edit_text_search_product"
+                app:layout_constraintTop_toTopOf="@+id/edit_text_search_product" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_products"
             android:paddingStart="16dp"

@@ -94,4 +94,8 @@
     <string name="modifica_prodotto">Modifica Prodotto</string>
     <string name="ingrediente_aggiornato">Ingrediente Aggiornato</string>
     <string name="modifica_ingrediente">Modifica Ingrediente</string>
+    <string name="cerca_categoria">Cerca Categoria</string>
+    <string name="crea_categoria">Crea Categoria</string>
+    <string name="categoria_creata">Categoria creata!</string>
+    <string name="categoria_inserita">Categoria Inserita</string>
 </resources>

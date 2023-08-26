@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,8 +43,12 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private RecyclerView    Recycler_Products;
     private ImageView       ImageView_AddProduct;
     private ImageView       ImageView_Order;
+    private ImageView       ImageView_BackOrder;
     private ImageView       ImageView_deleteProduct;
     private ImageView       ImageView_Back;
+    private EditText        EditText_SearchProduct;
+
+
     //FUNCTIONAL
     private RecycleEventListener            RecycleEventListener;
     private final Manager                   manager;
@@ -121,8 +128,10 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         Recycler_Products           = View_fragment.findViewById(R.id.recycler_products);
         ImageView_AddProduct        = View_fragment.findViewById(R.id.ic_add_product);
         ImageView_Order             = View_fragment.findViewById(R.id.ic_order);
+        ImageView_BackOrder         = View_fragment.findViewById(R.id.ic_back_order);
         ImageView_deleteProduct     = View_fragment.findViewById(R.id.ic_delete_product);
         ImageView_Back              = View_fragment.findViewById(R.id.ic_back);
+        EditText_SearchProduct      = View_fragment.findViewById(R.id.edit_text_search_product);
     }
 
     @Override
@@ -136,6 +145,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         RecycleEventListener    .setOnClickItemAdapterListener((item)-> onClickProduct( (Product)item ) );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
         ImageView_Order         .setOnClickListener(            view -> onOrderClick());
+        ImageView_BackOrder     .setOnClickListener(            view -> onOrderClick());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
         ImageView_Back          .setOnClickListener(            view -> manager.goBack());
     }
@@ -181,9 +191,13 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private void onOrderClick(){
         if(isOrdering){
             adapter_product.hideMoveIcon();
+            ImageView_BackOrder.startAnimation(Manager_Animation.getFadeOut(300));
+            new Handler(Looper.getMainLooper()).postDelayed(()->ImageView_BackOrder.setVisibility(View.INVISIBLE),300);
             isOrdering = false;
         }else{
             adapter_product.showMoveIcon();
+            ImageView_BackOrder.setVisibility(View.VISIBLE);
+            ImageView_BackOrder.startAnimation(Manager_Animation.getFadeIn(300));
             isOrdering = true;
         }
     }
@@ -198,6 +212,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         if(!manager.bottomBarListener.visible){
             manager.showBottomBar();
         }
+
         if(manager.IndexFrom > manager.IndexOnMain){
             Log.d(TAG, "StartAnimations: Da product");
             fromProductAnimations();
@@ -205,32 +220,44 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
             Log.d(TAG, "StartAnimations: Da Menu");
             fromMenuAnimations();
         }
+        ImageView_Back          .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500) );
+        EditText_SearchProduct  .startAnimation( Manager_Animation.getFadeIn(300));
     }
 
     @Override
     public void EndAnimations(){
         if(manager.IndexOnMain > manager.IndexFrom) toProductAnimations();
         else toMenuAnimations();
+        ImageView_Back              .startAnimation( Manager_Animation.getTranslateAnimatioOUT(300) );
+        EditText_SearchProduct      .startAnimation( Manager_Animation.getFadeOut(300));
+
     }
 
     public void fromMenuAnimations(){
-        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationINfromDown(300));
-        //Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
+        Text_View_TitleCategory .startAnimation( Manager_Animation.getTranslationINfromDown(500) );
+        ImageView_Order         .startAnimation( Manager_Animation.getTranslationINfromDown(500) );
     }
     public void fromProductAnimations(){
-        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationINfromUp(300));
-        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
-
+        Text_View_TitleCategory .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
+        Recycler_Products       .startAnimation( Manager_Animation.getTranslateAnimatioINfromLeft(300) );
+        ImageView_deleteProduct .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
+        ImageView_AddProduct    .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
+        ImageView_Order         .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
     }
 
     public void toMenuAnimations(){
-        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
-        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        Text_View_TitleCategory .startAnimation( Manager_Animation.getTranslationOUTtoDown(300) );
+        Recycler_Products       .startAnimation( Manager_Animation.getTranslateAnimatioOUTtoRight(300) );
+        ImageView_Order         .startAnimation( Manager_Animation.getTranslationOUTtoDown(300) );
+
     }
 
     public void toProductAnimations(){
-        Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
-        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+        Text_View_TitleCategory .startAnimation( Manager_Animation.getTranslationOUTtoUp(300) );
+        Recycler_Products       .startAnimation( Manager_Animation.getTranslateAnimatioOUT(300) );
+        ImageView_deleteProduct .startAnimation( Manager_Animation.getTranslationOUTtoUp(300) );
+        ImageView_AddProduct    .startAnimation( Manager_Animation.getTranslationOUTtoUp(300) );
+        ImageView_Order         .startAnimation( Manager_Animation.getTranslationOUTtoUp(300) );
     }
 
 }

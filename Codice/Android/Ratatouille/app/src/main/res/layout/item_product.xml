@@ -8,7 +8,7 @@
         android:id="@+id/card_view_element_product"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="16dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

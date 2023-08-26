@@ -102,7 +102,7 @@
                         android:maxLength="20"
                         android:maxLines="1"
                         android:text="Misura"
-                        android:textColor="@color/Gray" />
+                        android:textColor="@color/DarkGray" />
                     <TextView
                         android:id="@+id/text_view_product_mesure"
                         android:layout_width="wrap_content"

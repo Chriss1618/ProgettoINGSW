@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/SoftGray"
     tools:context=".Views.Schermate.Menu.Fragment_ListCategory">
 
     <LinearLayout
@@ -64,7 +65,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:background="@drawable/background_search_category"
+            android:layout_margin="16dp">
 
             <EditText
                 android:id="@+id/edit_text_name_category"
@@ -75,10 +77,10 @@
 
                 android:background="@drawable/background_search_category"
                 android:ems="10"
-                android:hint="@string/cerca_prodotto_in_menu"
+                android:hint="@string/cerca_categoria"
                 android:inputType="text"
                 android:paddingStart="42dp"
-                android:textColorHint="@color/Gray"
+                android:textColorHint="@color/DarkGray"
                 android:text=""
                 android:textColor="@color/Black"
                 android:focusable="true"
@@ -161,7 +163,7 @@
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/sf_compact_rounded_bold"
                 android:layout_gravity="center_horizontal"
-                android:text="Crea Categoria"
+                android:text="@string/crea_categoria"
                 android:textColor="@color/Black"
                 android:textSize="25sp"
 
@@ -180,7 +182,7 @@
                 android:background="@drawable/background_edit_text_stroke_white"
                 android:ems="10"
                 android:hint="@string/nome_categoria"
-                android:textSize="15dp"
+                android:textSize="15sp"
 
                 android:inputType="text"
                 android:paddingStart="16dp"
@@ -197,7 +199,7 @@
                 android:id="@+id/text_view_warning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_baseline_warning_24"
+                android:drawableStart="@drawable/ic_baseline_warning_24"
                 android:fontFamily="@font/sf_compact_rounded_regular_italic"
                 android:layout_marginStart="16dp"
                 android:layout_gravity="start"
@@ -240,7 +242,7 @@
                             android:autoSizeStepGranularity="1sp"
                             android:autoSizeTextType="uniform"
 
-                            android:text="ANNULLA"
+                            android:text="@string/annulla"
                             android:textColor="@color/MainColor"/>
 
                     </LinearLayout>
@@ -275,7 +277,7 @@
                             android:autoSizeStepGranularity="1sp"
                             android:autoSizeTextType="uniform"
 
-                            android:text="AGGIUNGI"
+                            android:text="@string/aggiungi"
                             android:maxLines="1"
                             android:textColor="@color/white"/>
 
@@ -298,7 +300,7 @@
 
                 android:fontFamily="@font/sf_compact_rounded_bold"
                 android:layout_gravity="center_horizontal"
-                android:text="Categoria creata!"
+                android:text="@string/categoria_creata"
                 android:textColor="@color/Black"
                 android:textSize="25sp"
 
@@ -308,7 +310,8 @@
             <ImageView
                 android:src="@drawable/baseline_check_circle_24"
                 android:layout_width="100dp"
-                android:layout_height="100dp"/>
+                android:layout_height="100dp"
+                android:contentDescription="@string/categoria_inserita" />
         </LinearLayout>
     </LinearLayout>
 

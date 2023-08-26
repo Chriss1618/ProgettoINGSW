@@ -281,7 +281,7 @@ public class Manager_Animation {
     public static AnimationSet getFadeInZoom(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
-        Animation zoomIn = new ScaleAnimation(0.0f,1.0f,0.0f,1.0f);
+        Animation zoomIn = new ScaleAnimation(0.0f,1.0f,0.0f,1.0f,100f,100f);
 
         zoomIn.setDuration(milliseconds);
 
@@ -293,7 +293,7 @@ public class Manager_Animation {
     public static AnimationSet getFadeInZoomUp(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
-        Animation zoomIn = new ScaleAnimation(0.0f,1.1f,0.0f,1.1f);
+        Animation zoomIn = new ScaleAnimation(0.0f,1.1f,0.0f,1.1f,100f,100f);
 
         zoomIn.setDuration(milliseconds);
 
@@ -305,7 +305,7 @@ public class Manager_Animation {
     public static AnimationSet getFadeInZoomBackNormal(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
-        Animation zoomIn = new ScaleAnimation(1.1f,1.0f,1.1f,1.0f);
+        Animation zoomIn = new ScaleAnimation(1.1f,1.0f,1.1f,1.0f,100f,100f);
 
         zoomIn.setDuration(milliseconds);
         set.addAnimation(zoomIn);
@@ -315,7 +315,7 @@ public class Manager_Animation {
     public static AnimationSet getFadeOutZoom(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 
-        Animation zoomOut = new ScaleAnimation(1.0f,0.0f,1.0f,0.0f);
+        Animation zoomOut = new ScaleAnimation(1.0f,0.0f,1.0f,0.0f,100f,100f);
 
         zoomOut.setDuration(milliseconds);
 
