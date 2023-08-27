@@ -6,6 +6,7 @@ import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.Ingredient;
+import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 
 import org.json.JSONObject;
@@ -21,6 +22,7 @@ public class ActionsListInventory extends ActionsViewHandler{
     public final static int INDEX_ACTION_DELETE_INGREDIENT      = 1;
     public final static int INDEX_ACTION_SHOW_REMOVE_INGREDIENT = 2;
     public final static int INDEX_ACTION_SELECT_INGREDIENT      = 3;
+    public final static int INDEX_ACTION_ADD_TO_PRODUCT         = 4;
 
     public ActionsListInventory(){
         actionHandlerMap = new HashMap<>();
@@ -28,6 +30,7 @@ public class ActionsListInventory extends ActionsViewHandler{
         actionHandlerMap.put(INDEX_ACTION_SHOW_REMOVE_INGREDIENT,   new ShowDeleteIngredient_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_DELETE_INGREDIENT,        new DeleteIngredient_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_SELECT_INGREDIENT,        new SelectedIngredient_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_ADD_TO_PRODUCT,           new AddToProduct_ActionHandler());
     }
 
     private static class ShowNewIngredient_ActionHandler implements ActionHandler {
@@ -91,6 +94,16 @@ public class ActionsListInventory extends ActionsViewHandler{
             Log.d(TAG, "handleAction -> SELECTED INGREDIENT");
             Ingredient ingredient = (Ingredient) action.getData();
             action.getManager().changeOnMain(ControlMapper.INDEX_INVENTORY_INFO,ingredient);
+        }
+    }
+
+    private static class AddToProduct_ActionHandler implements ActionHandler {
+        @Override
+        public void handleAction(Action action) {
+            Log.d(TAG, "handleAction -> SHOW NEW INGREDIENT");
+            Ricettario ricettario = (Ricettario) action.getData();
+            action.getManager().setData(ricettario);
+            action.getManager().goBack();
         }
     }
 }

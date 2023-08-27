@@ -33,6 +33,7 @@ import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Product;
+import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
@@ -42,6 +43,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //SYSTEM
@@ -76,6 +78,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //DATA
     private CategoriaMenu Categoria;
     private Product       NewProduct;
+    private ArrayList<Ricettario>   Ricette;
+    private Ricettario              Ricettario;
     //OTHER...
 
     public Fragment_NewProduct(Manager manager_MenuFragments,int a) {
@@ -88,6 +92,15 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         if(manager.getData() != null){
             Categoria = (CategoriaMenu) manager.getData();
             PrepareReceiveFromGallery();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if( manager.getData().getClass().getSimpleName().equals("Ricettario")){
+            Ricettario = (Ricettario) manager.getData();
+            Ricette.add(Ricettario);
         }
     }
 

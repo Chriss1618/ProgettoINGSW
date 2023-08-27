@@ -28,14 +28,17 @@ import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCate
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListInventory;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
+import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Ingredient;
+import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -62,7 +65,6 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     private LinearLayout LinearLayout_DarkL;
     private LinearLayout LinearLayout_Dialog;
 
-
     //FUNCTIONAL
     private final RecycleEventListener          RecycleEventListener;
     private final Manager                       manager;
@@ -72,7 +74,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     //DATA
     private ArrayList<Ingredient>   TitleProducts_Exist;
     private ArrayList<Ingredient>   TitleProducts_Missing;
-
+    private Ingredient              IngredientSelected;
     //OTHER...
 
     public Fragment_ListInventary(Manager manager, int a) {
@@ -217,6 +219,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     private void onClickProduct(Object product) {
         if(manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.INDEX_TYPE_MANAGER_MENU){
+            IngredientSelected = (Ingredient) product;
             new DialogNewIngredient().showDialogNewIngredient();
         }else{
             Action action = new Action(ActionsListInventory.INDEX_ACTION_SELECT_INGREDIENT,product);
@@ -332,6 +335,11 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
             EditText_GrandezzaIngredient    = LinearLayout_Dialog.findViewById(R.id.edit_text_new_grandezza);
             TextView_WarningGrandezza       = LinearLayout_Dialog.findViewById(R.id.warning_Misura);
 
+            Picasso.get()
+                    .load(EndPointer.StandardPath + EndPointer.IMAGES_INGREDIENT + IngredientSelected.getURLImageIngredient())
+                    .into(ImageView_Ingredient);
+            TextView_IngredientName.setText(IngredientSelected.getNameIngredient());
+
             TextView_Kg     = LinearLayout_Dialog.findViewById(R.id.text_view_kg);
             TextView_g      = LinearLayout_Dialog.findViewById(R.id.text_view_gr);
             TextView_Mg     = LinearLayout_Dialog.findViewById(R.id.text_view_mr);
@@ -349,6 +357,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
             TextView_Cl .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
             TextView_Ml .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
 
+            TextView_WarningGrandezza.setVisibility(View.GONE);
             LinearLayout_Dialog     .setVisibility(View.VISIBLE);
             LinearLayout_DarkL      .setVisibility(View.VISIBLE);
 
@@ -381,6 +390,14 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
             hideKeyboardFrom();
             if(EditText_GrandezzaIngredient.getText().toString().equals("")){
                 showGrandezzaNotValid();
+
+                Ricettario ricettario = new Ricettario();
+                ricettario.setIngredient(IngredientSelected);
+                ricettario.setGrandezzaInProduct(Integer.parseInt(EditText_GrandezzaIngredient.getText().toString()));
+                ricettario.setTypeMeasure(TextView_MeasureSelected.getText().toString());
+
+                Action action = new Action(ActionsListInventory.INDEX_ACTION_ADD_TO_PRODUCT,ricettario);
+                SendAction(action);
             }else{
                 hideGrandezzaNotValid();
             }
