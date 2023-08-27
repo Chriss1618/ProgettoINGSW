@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.CategoriaMenu;
@@ -34,7 +35,8 @@ public class ActionsNewProduct extends ActionsViewHandler{
     public ActionsNewProduct(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_ADD_FROM_GALLERY, new OpenGallery_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_CREATE_PRODUCT, new CreateProduct_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_CREATE_PRODUCT,   new CreateProduct_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_ADD_INGREDIENTI,  new AddIngredient_ActionHandler());
     }
 
     private static class OpenGallery_ActionHandler implements ActionHandler{
@@ -119,6 +121,14 @@ public class ActionsNewProduct extends ActionsViewHandler{
 
         }
     }
+    private static class AddIngredient_ActionHandler implements ActionHandler{
 
+        @Override
+        public void handleAction(Action action) {
+            Log.d(TAG, "handleAction -> Choose Ingredient");
+            action.getManager().useTemporaryNewView(ControlMapper.INDEX_INVENTORY_LIST,ControlMapper.INDEX_TYPE_MANAGER_INVENTORY);
+        }
+
+    }
 
 }

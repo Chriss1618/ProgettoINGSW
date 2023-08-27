@@ -64,6 +64,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     EditText            EditText_DescriptionProduct;
     EditText            EditText_Allergeni;
     SwitchMaterial      Switch_SendToKitchen;
+    ImageView           ImageView_AddNewIngredient;
     //warnings
     TextView            TextView_warningNomeProdotto;
     TextView            TextView_warningPriceProduct;
@@ -139,6 +140,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         EditText_DescriptionProduct = View_Fragment.findViewById(R.id.edit_text_descrizione);
         EditText_Allergeni          = View_Fragment.findViewById(R.id.edit_text_allergeni);
         Switch_SendToKitchen        = View_Fragment.findViewById(R.id.switch_sendToKitchen);
+        ImageView_AddNewIngredient  = View_Fragment.findViewById(R.id.ic_add_ingrediente);
 
         TextView_warningNomeProdotto        = View_Fragment.findViewById(R.id.warning_NameProduct);
         TextView_warningPriceProduct        = View_Fragment.findViewById(R.id.warning_PriceProduct);
@@ -150,7 +152,9 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     public void SetActionsOfLayout() {
             ImageView_AddFromGallery        .setOnClickListener(view -> onClickAddFromGallery());
             CardView_AddNewProduct          .setOnClickListener(view -> onClickAddNewProduct());
+            ImageView_AddNewIngredient      .setOnClickListener(view -> onClickAddNewIngredient());
             CardView_Cancel                 .setOnClickListener(view -> manager.goBack());
+
     }
     @Override
     public void SetDataOnLayout() {
@@ -181,6 +185,10 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
     }
 
+    private void onClickAddNewIngredient(){
+        Action action = new Action(ActionsNewProduct.INDEX_ACTION_ADD_INGREDIENTI,null);
+        sendAction(action);
+    }
 
     //*******************************
 
@@ -251,6 +259,9 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations() {
+        if(manager.bottomBarListener.visible){
+            manager.hideBottomBar();
+        }
         SetDataOnLayout();
         LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
         CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));

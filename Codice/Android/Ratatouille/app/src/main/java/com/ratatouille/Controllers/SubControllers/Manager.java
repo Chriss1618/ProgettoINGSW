@@ -115,6 +115,19 @@ public class Manager implements SubController {
         new Handler(Looper.getMainLooper()).postDelayed( fragmentManager::popBackStack,300);
     }
 
+    public void useTemporaryNewView(int indexView,int typeManager){
+        try{
+            ViewLayout view = new ViewFactory().createView(typeManager,indexView,this);
+            fragmentManager.beginTransaction()
+                    .replace(ViewContainer.getId(), (Fragment) view, String.valueOf(indexView))
+                    .setReorderingAllowed(true)
+                    .addToBackStack(String.valueOf(indexView))
+                    .commit();
+        }
+        catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
+
+    }
+
     private void loadFragment(int positionList){
         fragmentManager.beginTransaction()
                 .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(positionList), String.valueOf(IndexOnMain))

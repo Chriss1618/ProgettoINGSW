@@ -1,26 +1,35 @@
 package com.ratatouille.Views.Schermate.Inventario;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_ProductInventory;
+import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListInventory;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
@@ -49,6 +58,10 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     private ProgressBar     ProgressBar_Missing;
     private TextView        TextView_EmptyExisting;
     private TextView        TextView_EmptyMissing;
+    //dialogLayout
+    private LinearLayout LinearLayout_DarkL;
+    private LinearLayout LinearLayout_Dialog;
+
 
     //FUNCTIONAL
     private final RecycleEventListener          RecycleEventListener;
@@ -56,7 +69,6 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     private Adapter_ProductInventory            adapter_product_missing;
     private Adapter_ProductInventory            adapter_product_exist;
     private boolean                             isDeleting;
-
     //DATA
     private ArrayList<Ingredient>   TitleProducts_Exist;
     private ArrayList<Ingredient>   TitleProducts_Missing;
@@ -116,6 +128,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
         StartAnimations();
     }
+
     @Override
     public void LinkLayout() {
         EditText_SearchInventory    = View_Fragment.findViewById(R.id.edit_text_search_ingredient);
@@ -131,7 +144,12 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         Recycler_Products_Missing   = View_Fragment.findViewById(R.id.recycler_products_finished);
         ImageView_DeleteProduct     = View_Fragment.findViewById(R.id.ic_delete_product);
         ImageView_AddIngredient     = View_Fragment.findViewById(R.id.ic_add_ingrediente);
+
+        //Dialog
+        LinearLayout_DarkL      = View_Fragment.findViewById(R.id.darkRL);
+        LinearLayout_Dialog     = View_Fragment.findViewById(R.id.linear_layout_add_ingredient_dialog);
     }
+
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener    .setOnClickItemAdapterListener   (this::onClickProduct);
@@ -198,8 +216,12 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     }
 
     private void onClickProduct(Object product) {
-        Action action = new Action(ActionsListInventory.INDEX_ACTION_SELECT_INGREDIENT,product);
-        SendAction(action);
+        if(manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.INDEX_TYPE_MANAGER_MENU){
+            new DialogNewIngredient().showDialogNewIngredient();
+        }else{
+            Action action = new Action(ActionsListInventory.INDEX_ACTION_SELECT_INGREDIENT,product);
+            SendAction(action);
+        }
     }
 
     private void onClickDeleteIngredients(){
@@ -237,8 +259,10 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     private void onCLickAddNewIngredient(){
         Log.d(TAG, "onCLickAddNewIngredient -> PREMUTO");
-        Action action = new Action(ActionsListInventory.INDEX_ACTION_SHOW_NEW_INGREDIENT, null );
-        SendAction(action);
+//        Action action = new Action(ActionsListInventory.INDEX_ACTION_SHOW_NEW_INGREDIENT, null );
+//        SendAction(action);
+//
+        new DialogNewIngredient().showDialogNewIngredient();
     }
     //FUNCTIONAL
     private void setIngredientsOnLayout(ArrayList<Ingredient> ListIngredient){
@@ -277,6 +301,115 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
             }
         });
 
+    }
+
+    private class DialogNewIngredient{
+        ImageView   ImageView_Ingredient;
+        TextView    TextView_IngredientName;
+        EditText    EditText_GrandezzaIngredient;
+        TextView    TextView_WarningGrandezza;
+        TextView    TextView_Kg;
+        TextView    TextView_g;
+        TextView    TextView_Mg;
+        TextView    TextView_L;
+        TextView    TextView_Cl;
+        TextView    TextView_Ml;
+        TextView    TextView_MeasureSelected = null;
+
+        CardView    CardView_Cancel;
+        CardView    CardView_Add;
+
+        public DialogNewIngredient() {
+
+        }
+
+        private void showDialogNewIngredient(){
+            Log.d(TAG, "showDialogNewIngredient: Started");
+            CardView_Cancel                 = LinearLayout_Dialog.findViewById(R.id.card_view_annulla);
+            CardView_Add                    = LinearLayout_Dialog.findViewById(R.id.card_view_aggiungi);
+            ImageView_Ingredient            = LinearLayout_Dialog.findViewById(R.id.image_view_Ingredient);
+            TextView_IngredientName         = LinearLayout_Dialog.findViewById(R.id.text_view_name_product);
+            EditText_GrandezzaIngredient    = LinearLayout_Dialog.findViewById(R.id.edit_text_new_grandezza);
+            TextView_WarningGrandezza       = LinearLayout_Dialog.findViewById(R.id.warning_Misura);
+
+            TextView_Kg     = LinearLayout_Dialog.findViewById(R.id.text_view_kg);
+            TextView_g      = LinearLayout_Dialog.findViewById(R.id.text_view_gr);
+            TextView_Mg     = LinearLayout_Dialog.findViewById(R.id.text_view_mr);
+            TextView_L      = LinearLayout_Dialog.findViewById(R.id.text_view_l);
+            TextView_Cl     = LinearLayout_Dialog.findViewById(R.id.text_view_cl);
+            TextView_Ml     = LinearLayout_Dialog.findViewById(R.id.text_view_ml);
+
+            CardView_Cancel .setOnClickListener(view -> dismissDialogAddIngredient());
+            CardView_Add    .setOnClickListener(view -> addIngredient());
+
+            TextView_Kg .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
+            TextView_g  .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
+            TextView_Mg .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
+            TextView_L  .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
+            TextView_Cl .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
+            TextView_Ml .setOnClickListener( view -> onMeasureSelected( (TextView)view ) );
+
+            LinearLayout_Dialog     .setVisibility(View.VISIBLE);
+            LinearLayout_DarkL      .setVisibility(View.VISIBLE);
+
+            LinearLayout_Dialog     .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_DarkL      .startAnimation(Manager_Animation.getFadeIn(500));
+
+            EditText_GrandezzaIngredient.setText("");
+        }
+        private void onMeasureSelected(TextView selected){
+            TextView_MeasureSelected = selected;
+            setSelected();
+        }
+
+        private void setSelected(){
+            if(TextView_MeasureSelected.getText().toString().equals("Kg")) TextView_Kg.setBackgroundResource(R.drawable.background_mesure_left_selected);
+            else TextView_Kg.setBackgroundResource(R.drawable.background_mesure_left);
+            if(TextView_MeasureSelected.getText().toString().equals("gr")) TextView_g.setBackgroundResource(R.drawable.background_mesure_center_selected);
+            else TextView_g.setBackgroundResource(R.drawable.background_mesure_center);
+            if(TextView_MeasureSelected.getText().toString().equals("mg"))  TextView_Mg.setBackgroundResource(R.drawable.background_mesure_right_selected);
+            else TextView_Mg.setBackgroundResource(R.drawable.background_mesure_right);
+
+            if(TextView_MeasureSelected.getText().toString().equals("L"))  TextView_L.setBackgroundResource(R.drawable.background_mesure_left_selected);
+            else TextView_L.setBackgroundResource(R.drawable.background_mesure_left);
+            if(TextView_MeasureSelected.getText().toString().equals("cl")) TextView_Cl.setBackgroundResource(R.drawable.background_mesure_center_selected);
+            else TextView_Cl.setBackgroundResource(R.drawable.background_mesure_center);
+            if(TextView_MeasureSelected.getText().toString().equals("ml")) TextView_Ml.setBackgroundResource(R.drawable.background_mesure_right_selected);
+            else TextView_Ml.setBackgroundResource(R.drawable.background_mesure_right);
+        }
+        private void addIngredient(){
+            hideKeyboardFrom();
+            if(EditText_GrandezzaIngredient.getText().toString().equals("")){
+                showGrandezzaNotValid();
+            }else{
+                hideGrandezzaNotValid();
+            }
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        private void addCategoryView(CategoriaMenu newCategory){
+            requireActivity().runOnUiThread(() -> {
+
+            });
+        }
+        private void showGrandezzaNotValid(){
+            TextView_WarningGrandezza.setVisibility(View.VISIBLE);
+        }
+        private void hideGrandezzaNotValid(){
+            TextView_WarningGrandezza.setVisibility(View.GONE);
+        }
+
+        private void dismissDialogAddIngredient(){
+            LinearLayout_Dialog.setVisibility(View.GONE);
+            LinearLayout_DarkL.setVisibility(View.GONE);
+            LinearLayout_Dialog.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+            LinearLayout_DarkL.startAnimation(Manager_Animation.getFadeOut(500));
+        }
+
+    }
+    public void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.requireView().getWindowToken(), 0);
     }
     //ANIMATIONS
     @Override
