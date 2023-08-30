@@ -222,7 +222,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         if(manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.INDEX_TYPE_MANAGER_MENU){
             IngredientSelected = (Ingredient) product;
             new DialogNewIngredient().showDialogNewIngredient();
-        }else{
+        } else {
             Action action = new Action(ActionsListInventory.INDEX_ACTION_SELECT_INGREDIENT,product);
             SendAction(action);
         }
@@ -388,7 +388,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         }
         private void addIngredient(){
             hideKeyboardFrom();
-            if(EditText_GrandezzaIngredient.getText().toString().equals("")){
+            if(EditText_GrandezzaIngredient.getText().toString().equals("") || TextView_MeasureSelected == null){
                 showGrandezzaNotValid();
             }else{
                 hideGrandezzaNotValid();
@@ -436,14 +436,23 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations() {
-        if(!manager.bottomBarListener.visible){
-            manager.showBottomBar();
+        if( manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.INDEX_TYPE_MANAGER_MENU){
+            ImageView_AddIngredient     .setVisibility(View.GONE);
+            ImageView_DeleteProduct     .setVisibility(View.GONE);
+        }else{
+            if(!manager.bottomBarListener.visible){
+                manager.showBottomBar();
+            }
+            ImageView_AddIngredient     .startAnimation(Manager_Animation.getTranslationINfromUp(300));
+            ImageView_DeleteProduct     .startAnimation(Manager_Animation.getTranslationINfromUp(300));
         }
-        TextView_TitleInventory     .startAnimation(Manager_Animation.getTranslationINfromUp(600));
-        TextView_TitleExist         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
-        TextView_TitleMissing       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));
-        Recycler_Products_Exist     .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
-        Recycler_Products_Missing   .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(600));
+
+
+        TextView_TitleInventory     .startAnimation(Manager_Animation.getTranslationINfromUp(300));
+        TextView_TitleExist         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
+        TextView_TitleMissing       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
+        Recycler_Products_Exist     .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
+        Recycler_Products_Missing   .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
     }
 
     @Override

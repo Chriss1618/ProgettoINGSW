@@ -2,6 +2,12 @@ package com.ratatouille.Views.Schermate;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+import android.view.ViewGroup;
+import android.widget.LinearLayout.LayoutParams;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -136,8 +142,7 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
             handler.postDelayed( () ->Bottom_Bar_Amministratore.setVisibility(View.GONE), 500);
             Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationOUTtoDownS(500));
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             layoutParams.setMargins(0, 0, 0, 0);
             LinearLayout_Fragment.setLayoutParams(layoutParams);
         });
@@ -147,13 +152,18 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
             Bottom_Bar_Amministratore.startAnimation(Manager_Animation.getTranslationINfromDownSlower(500));
             Bottom_Bar_Amministratore.setVisibility(View.VISIBLE);
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            layoutParams.setMargins(0, 0, 0, 64);
+            // Set the top margin for the LinearLayout
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) LinearLayout_Fragment.getLayoutParams();
+            layoutParams.bottomMargin = 64 * 3;
             LinearLayout_Fragment.setLayoutParams(layoutParams);
-
         });
     }
+    public static int convertPixelsToDp(float px, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return (int) (px / metrics.densityDpi);
+    }
+
     private void disableBottomBar(){
         for(int i = 0; i < controller.getNumberManagers(); i++)
             Bottom_Bar_Amministratore.setTabEnabledAt(i,false);
