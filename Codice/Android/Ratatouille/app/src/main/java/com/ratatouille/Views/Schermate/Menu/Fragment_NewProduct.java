@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.ratatouille.Controllers.Adapters.Adapter_IngredientProduct;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
@@ -65,6 +66,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //FUNCTIONAL
     private final Manager manager;
     private ActivityResultLauncher<Intent> resultLauncher;
+    private Adapter_IngredientProduct adapterIngredientProduct;
     //DATA
     private CategoriaMenu Categoria;
     private Product       NewProduct;
@@ -186,7 +188,12 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     }
 
     public void initRecycleView(){
+        adapterIngredientProduct = new Adapter_IngredientProduct(NewProduct.getRicette(),getContext());
 
+        RecycleView_IngredientProduct.setLayoutManager( new GridLayoutManager(getActivity(), 1));
+        RecycleView_IngredientProduct.setNestedScrollingEnabled(false);
+
+        RecycleView_IngredientProduct.setAdapter(adapterIngredientProduct);
     }
 
     //ACTIONS ************************

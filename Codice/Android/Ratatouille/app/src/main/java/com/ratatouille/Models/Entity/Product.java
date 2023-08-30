@@ -25,6 +25,7 @@ public class Product {
     private String AllergeniProduct;
     private boolean isSendToKitchen;
     private ArrayList<Ricettario> Ricette;
+
     public Product() {
         Ricette = new ArrayList<>();
         isSendToKitchen = false;
