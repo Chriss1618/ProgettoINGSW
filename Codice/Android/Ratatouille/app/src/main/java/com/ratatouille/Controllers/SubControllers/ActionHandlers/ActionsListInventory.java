@@ -101,9 +101,7 @@ public class ActionsListInventory extends ActionsViewHandler{
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> SHOW NEW INGREDIENT");
-            Ricettario ricettario = (Ricettario) action.getData();
-            action.getManager().setData(ricettario);
-            action.getManager().goBack();
+
         }
     }
 }

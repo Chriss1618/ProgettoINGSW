@@ -1,19 +1,17 @@
 package com.ratatouille.Views.Schermate.Menu;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,15 +19,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Models.API.Rest.EndPointer;
-import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Product;
@@ -40,17 +34,12 @@ import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-
 public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_NewProduct";
 
     //LAYOUT
-    android.view.View View_Fragment;
+    android.view.View   View_Fragment;
     LinearLayout        LinearLayout_TitleProduct;
     CardView            CardView_ProductData;
     LinearLayout        LinearLayout_Buttons;
@@ -67,6 +56,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     EditText            EditText_Allergeni;
     SwitchMaterial      Switch_SendToKitchen;
     ImageView           ImageView_AddNewIngredient;
+    RecyclerView        RecycleView_IngredientProduct;
     //warnings
     TextView            TextView_warningNomeProdotto;
     TextView            TextView_warningPriceProduct;
@@ -78,8 +68,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //DATA
     private CategoriaMenu Categoria;
     private Product       NewProduct;
-    private ArrayList<Ricettario>   Ricette;
-    private Ricettario              Ricettario;
     //OTHER...
 
     public Fragment_NewProduct(Manager manager_MenuFragments,int a) {
@@ -98,11 +86,21 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     @Override
     public void onResume() {
         super.onResume();
-        if( manager.getData().getClass().getSimpleName().equals("Ricettario")){
-            Ricettario = (Ricettario) manager.getData();
-            Ricette.add(Ricettario);
+        if( manager.getData().getClass().getSimpleName().equals("Product")){
+            Log.d(TAG, "onResume: Ricetta Ricevuta");
+            NewProduct = (Product) manager.getData();
+            Log.d(TAG, "onResume: Nome Prodotto ->"+ NewProduct.getNameProduct());
+            Log.d(TAG, "onResume: Price Prodotto ->"+ NewProduct.getPriceProduct());
+            Log.d(TAG, "onResume: Euro Prodotto ->"+ NewProduct.getEuro());
+            Log.d(TAG, "onResume: CEnts Prodotto ->"+ NewProduct.getCents());
+            for (Ricettario ricettario: NewProduct.getRicette()) {
+                Log.d(TAG, "onResume: Nome Ricetta ->"+ricettario.getIngredient().getNameIngredient());
+            }
+            initRecycleView();
+            SetDataOnLayout();
         }
     }
+
 
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,7 +124,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     @Override
     public void PrepareData() {
         NewProduct = new Product();
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_NEW_PRODUCT);
+
     }
 
     //LAYOUT
@@ -134,7 +132,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     public void PrepareLayout() {
         LinkLayout();
         SetActionsOfLayout();
-        SetDataOnLayout();
     }
 
     @Override
@@ -154,11 +151,11 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         EditText_Allergeni          = View_Fragment.findViewById(R.id.edit_text_allergeni);
         Switch_SendToKitchen        = View_Fragment.findViewById(R.id.switch_sendToKitchen);
         ImageView_AddNewIngredient  = View_Fragment.findViewById(R.id.ic_add_ingrediente);
+        RecycleView_IngredientProduct  = View_Fragment.findViewById(R.id.recycle_view_ingredienti);
 
         TextView_warningNomeProdotto        = View_Fragment.findViewById(R.id.warning_NameProduct);
         TextView_warningPriceProduct        = View_Fragment.findViewById(R.id.warning_PriceProduct);
         TextView_warningDescriptionProduct  = View_Fragment.findViewById(R.id.warning_DescrizioneProduct);
-
     }
 
     @Override
@@ -171,6 +168,23 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     }
     @Override
     public void SetDataOnLayout() {
+        Picasso.get()
+                .load(NewProduct.getUriImageProduct())
+                .into(ImageView_ProductImage);
+
+        EditText_NomeProdotto       .setText(NewProduct.getNameProduct());
+
+        if(NewProduct.getPriceProduct() != 0.0f){
+            EditText_PriceProduct       .setText(NewProduct.getEuro());
+            EditText_CentsPriceProduct  .setText(NewProduct.getCents());
+        }
+
+        EditText_DescriptionProduct .setText(NewProduct.getDescriptionProduct());
+        EditText_Allergeni          .setText(NewProduct.getAllergeniProduct());
+        Switch_SendToKitchen        .setChecked(NewProduct.isSendToKitchen());
+    }
+
+    public void initRecycleView(){
 
     }
 
@@ -199,7 +213,21 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     }
 
     private void onClickAddNewIngredient(){
-        Action action = new Action(ActionsNewProduct.INDEX_ACTION_ADD_INGREDIENTI,null);
+        NewProduct.setNameProduct(EditText_NomeProdotto.getText().toString());
+        String price = EditText_PriceProduct.getText().toString() + "." +  EditText_CentsPriceProduct.getText().toString();
+        if(price.equals(".")) price = "0";
+        NewProduct.setPriceProduct(Float.parseFloat(price));
+        NewProduct.setDescriptionProduct(EditText_DescriptionProduct.getText().toString() );
+        NewProduct.setAllergeniProduct(EditText_Allergeni.getText().toString() );
+        NewProduct.setSendToKitchen(Switch_SendToKitchen.isChecked());
+        Log.d(TAG, "getAllInputs: New Prodotto ------------------------");
+        Log.d(TAG, "getAllInputs: Nome Prodotto->"+ NewProduct.getNameProduct());
+        Log.d(TAG, "getAllInputs: Price Prodotto->"+ NewProduct.getPriceProduct());
+        Log.d(TAG, "getAllInputs: Description Prodotto->"+ NewProduct.getDescriptionProduct());
+        Log.d(TAG, "getAllInputs: Allergeni Prodotto->"+ NewProduct.getAllergeniProduct());
+        Log.d(TAG, "getAllInputs: SendToKitchen Prodotto->"+ NewProduct.isSendToKitchen());
+        Log.d(TAG, "getAllInputs: --------------------------------------");
+        Action action = new Action(ActionsNewProduct.INDEX_ACTION_ADD_INGREDIENTI,NewProduct);
         sendAction(action);
     }
 
@@ -275,7 +303,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         if(manager.bottomBarListener.visible){
             manager.hideBottomBar();
         }
-        SetDataOnLayout();
         LinearLayout_TitleProduct   .startAnimation(Manager_Animation.getTranslationINfromUp(500));
         CardView_ProductData        .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
         LinearLayout_Buttons        .startAnimation(Manager_Animation.getTranslationINfromDownSlower(500));

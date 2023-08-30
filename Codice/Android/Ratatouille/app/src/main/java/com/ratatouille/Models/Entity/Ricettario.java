@@ -1,39 +1,43 @@
 package com.ratatouille.Models.Entity;
 
+import java.util.ArrayList;
+
 public class Ricettario {
-    private int         GrandezzaInProduct;
-    private String      TypeMeasure;
-    private Ingredient  Ingredient;
-    private Product     Product;
+
+    private Integer          GrandezzaInProduct;
+    private String           TypeMeasure;
+    private Ingredient       Ingredient;
 
     public Ricettario() {
     }
 
-    public int getGrandezzaInProduct() {
+    public Ricettario(Integer grandezzaInProduct, String typeMeasure, com.ratatouille.Models.Entity.Ingredient ingredient) {
+        GrandezzaInProduct = grandezzaInProduct;
+        TypeMeasure = typeMeasure;
+        Ingredient = ingredient;
+    }
+
+    public Integer getGrandezzaInProduct() {
         return GrandezzaInProduct;
     }
-    public void setGrandezzaInProduct(int grandezzaInProduct) {
+
+    public void setGrandezzaInProduct(Integer grandezzaInProduct) {
         GrandezzaInProduct = grandezzaInProduct;
     }
 
     public String getTypeMeasure() {
         return TypeMeasure;
     }
+
     public void setTypeMeasure(String typeMeasure) {
         TypeMeasure = typeMeasure;
     }
 
-    public Ingredient getIngredient() {
+    public com.ratatouille.Models.Entity.Ingredient getIngredient() {
         return Ingredient;
     }
+
     public void setIngredient(com.ratatouille.Models.Entity.Ingredient ingredient) {
         Ingredient = ingredient;
-    }
-
-    public Product getProduct() {
-        return Product;
-    }
-    public void setProduct(com.ratatouille.Models.Entity.Product product) {
-        Product = product;
     }
 }

@@ -126,6 +126,7 @@ public class ActionsNewProduct extends ActionsViewHandler{
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> Choose Ingredient");
+            action.getManager().setData(action.getData());
             action.getManager().useTemporaryNewView(ControlMapper.INDEX_INVENTORY_LIST,ControlMapper.INDEX_TYPE_MANAGER_INVENTORY);
         }
 

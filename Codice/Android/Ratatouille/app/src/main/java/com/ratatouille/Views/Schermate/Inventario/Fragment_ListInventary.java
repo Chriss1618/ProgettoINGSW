@@ -32,6 +32,7 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Ingredient;
+import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
@@ -262,10 +263,9 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
     private void onCLickAddNewIngredient(){
         Log.d(TAG, "onCLickAddNewIngredient -> PREMUTO");
-//        Action action = new Action(ActionsListInventory.INDEX_ACTION_SHOW_NEW_INGREDIENT, null );
-//        SendAction(action);
-//
-        new DialogNewIngredient().showDialogNewIngredient();
+        Action action = new Action(ActionsListInventory.INDEX_ACTION_SHOW_NEW_INGREDIENT, null );
+        SendAction(action);
+
     }
     //FUNCTIONAL
     private void setIngredientsOnLayout(ArrayList<Ingredient> ListIngredient){
@@ -390,16 +390,21 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
             hideKeyboardFrom();
             if(EditText_GrandezzaIngredient.getText().toString().equals("")){
                 showGrandezzaNotValid();
-
+            }else{
+                hideGrandezzaNotValid();
                 Ricettario ricettario = new Ricettario();
+
+                Product product = (Product) manager.getData();
+
+
                 ricettario.setIngredient(IngredientSelected);
                 ricettario.setGrandezzaInProduct(Integer.parseInt(EditText_GrandezzaIngredient.getText().toString()));
                 ricettario.setTypeMeasure(TextView_MeasureSelected.getText().toString());
 
-                Action action = new Action(ActionsListInventory.INDEX_ACTION_ADD_TO_PRODUCT,ricettario);
-                SendAction(action);
-            }else{
-                hideGrandezzaNotValid();
+                product.getRicette().add(ricettario);
+
+                manager.setData(product);
+                manager.goBack();
             }
         }
 
