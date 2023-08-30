@@ -81,6 +81,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
             Categoria = (CategoriaMenu) manager.getData();
             PrepareReceiveFromGallery();
         }
+
     }
 
     @Override
