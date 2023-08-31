@@ -1,10 +1,8 @@
 package com.ratatouille.Models.Entity;
 
-import java.util.ArrayList;
-
 public class Ricettario {
 
-    private Integer          GrandezzaInProduct;
+    private Integer          Dosi;
     private String           TypeMeasure;
     private Ingredient       Ingredient;
 
@@ -12,17 +10,17 @@ public class Ricettario {
     }
 
     public Ricettario(Integer grandezzaInProduct, String typeMeasure, com.ratatouille.Models.Entity.Ingredient ingredient) {
-        GrandezzaInProduct = grandezzaInProduct;
+        Dosi = grandezzaInProduct;
         TypeMeasure = typeMeasure;
         Ingredient = ingredient;
     }
 
-    public Integer getGrandezzaInProduct() {
-        return GrandezzaInProduct;
+    public Integer getDosi() {
+        return Dosi;
     }
 
-    public void setGrandezzaInProduct(Integer grandezzaInProduct) {
-        GrandezzaInProduct = grandezzaInProduct;
+    public void setDosi(Integer dosi) {
+        Dosi = dosi;
     }
 
     public String getTypeMeasure() {

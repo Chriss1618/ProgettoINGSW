@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,7 +23,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_ProductInventory;
 import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListInventory;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
@@ -42,7 +40,6 @@ import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Fragment_ListInventary extends Fragment implements ViewLayout {
     //SYSTEM
@@ -398,7 +395,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
 
                 ricettario.setIngredient(IngredientSelected);
-                ricettario.setGrandezzaInProduct(Integer.parseInt(EditText_GrandezzaIngredient.getText().toString()));
+                ricettario.setDosi(Integer.parseInt(EditText_GrandezzaIngredient.getText().toString()));
                 ricettario.setTypeMeasure(TextView_MeasureSelected.getText().toString());
 
                 product.getRicette().add(ricettario);
