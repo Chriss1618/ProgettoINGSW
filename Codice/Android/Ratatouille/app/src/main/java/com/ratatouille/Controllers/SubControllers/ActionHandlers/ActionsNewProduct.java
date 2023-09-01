@@ -21,6 +21,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
 
 public class ActionsNewProduct extends ActionsViewHandler{
     //SYSTEM
@@ -59,12 +62,12 @@ public class ActionsNewProduct extends ActionsViewHandler{
 
         @Override
         public void handleAction(Action action) {
-            Product NewProduct = (Product) action.getData();
-
-            Log.d(TAG, "handleAction: Prodotto Passato->"+ NewProduct.getNameProduct());
-            String image = NewProduct.getStringDataImage(action.getManager().context);
-            sendNewProductToServer(image);
-            //action.callBack(sendNewProductToServer(NewProduct,action.getManager().context));
+            boolean isInserted = false;
+            action.callBack(isInserted);
+            if(isInserted){
+                Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
+                action.getManager().goBack();
+            }
         }
 
         private void sendNewProductToServer(String image){

@@ -279,7 +279,6 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
             if(isOk) new DialogMessage().showDialogSuccess();
             else new DialogMessage().showDialogError();
         });
-
     }
 
     private class DialogMessage{

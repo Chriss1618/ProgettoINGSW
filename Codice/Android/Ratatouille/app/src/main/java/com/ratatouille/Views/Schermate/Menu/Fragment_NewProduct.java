@@ -1,5 +1,6 @@
 package com.ratatouille.Views.Schermate.Menu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,7 +37,12 @@ import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
+import com.ratatouille.Views.Schermate.Inventario.Fragment_NewProductInventory;
 import com.squareup.picasso.Picasso;
+
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
 
 public class Fragment_NewProduct extends Fragment implements ViewLayout {
     //SYSTEM
@@ -50,6 +57,10 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
     CardView            CardView_AddNewProduct;
     CardView            CardView_Cancel;
+
+    LinearLayout    LinearLayout_Dialog;
+    LinearLayout    LinearLayout_DarkL;
+
     //layoutProdotto
     ImageView           ImageView_ProductImage;
     EditText            EditText_NomeProdotto;
@@ -143,6 +154,9 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
+        LinearLayout_Dialog     = View_Fragment.findViewById(R.id.linear_layout_dialog);
+        LinearLayout_DarkL      = View_Fragment.findViewById(R.id.darkRL);
+
         LinearLayout_TitleProduct   = View_Fragment.findViewById(R.id.toolbar_title_product);
         CardView_ProductData        = View_Fragment.findViewById(R.id.card_view_element_product);
         LinearLayout_Buttons        = View_Fragment.findViewById(R.id.linear_layout_buttons);
@@ -217,7 +231,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
             NewProduct.setID_category(Categoria.getID_categoria());
             Action action = new Action(ActionsNewProduct.INDEX_ACTION_CREATE_PRODUCT,
                     NewProduct,
-                    (isInserted)->ShowPopUp( (boolean)isInserted ));
+                    (isInserted)->showDialog( (boolean)isInserted ));
             sendAction(action);
 
         }
@@ -247,10 +261,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
 
     //FUNCTIONAL *********************
-    private void ShowPopUp(boolean isInserted){
-        Log.d(TAG, "ShowPopUp: Product isInserted->"+ isInserted);
-    }
-
 
     private void PrepareReceiveFromGallery(){
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -308,6 +318,64 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         return isValid;
     }
 
+    private void showDialog(boolean isOk){
+        requireActivity().runOnUiThread(() -> {
+            if(isOk) new DialogMessage().showDialogSuccess();
+            else new DialogMessage().showDialogError();
+        });
+    }
+
+    private class DialogMessage{
+        LinearLayout LinearLayout_Error;
+        LinearLayout LinearLayout_Success;
+
+        CardView CardView_Dialog_Cancel;
+
+        public DialogMessage() {
+            LinearLayout_Error      = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_error);
+            LinearLayout_Success    = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_accepted);
+
+            LinearLayout_Dialog     .setVisibility(View.VISIBLE);
+            LinearLayout_Error      .setVisibility(View.GONE);
+            LinearLayout_Success    .setVisibility(View.GONE);
+        }
+
+        private void showDialogError(){
+            CardView_Dialog_Cancel             = LinearLayout_Error.findViewById(R.id.card_view_dialog_confirm);
+
+            CardView_Dialog_Cancel .setOnClickListener(view -> dismissDialogError());
+
+            LinearLayout_Error              .setVisibility(View.VISIBLE);
+            LinearLayout_DarkL              .setVisibility(View.VISIBLE);
+
+            LinearLayout_Dialog              .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_DarkL              .startAnimation(Manager_Animation.getFadeIn(500));
+            hideKeyboardFrom();
+        }
+        private void dismissDialogError(){
+            LinearLayout_Dialog.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+            LinearLayout_DarkL.startAnimation(Manager_Animation.getFadeOut(500));
+
+            Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
+
+            LinearLayout_Error  .setVisibility(View.GONE);
+            LinearLayout_Dialog .setVisibility(View.GONE);
+            LinearLayout_DarkL  .setVisibility(View.GONE);
+        }
+        private void showDialogSuccess(){
+            LinearLayout_Success            .setVisibility(View.VISIBLE);
+            LinearLayout_DarkL              .setVisibility(View.VISIBLE);
+
+            LinearLayout_Dialog                .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_DarkL                  .startAnimation(Manager_Animation.getFadeIn(500));
+            hideKeyboardFrom();
+        }
+
+    }
+    public void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.requireView().getWindowToken(), 0);
+    }
     //********************************
     //ANIMATIONS
     @Override
