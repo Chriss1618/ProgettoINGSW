@@ -8,6 +8,7 @@ public class RecycleEventListener {
     public interface onCheckItemAdapterListener {
         void onCheckItem(String ItemName, Boolean flag);
     }
+
     public interface onClickItemOptionListener {
         void onClickItemOption(String ItemNameOption,int action);
     }
@@ -47,6 +48,7 @@ public class RecycleEventListener {
             AdapterCheckListener.onCheckItem(ItemName,flag);
         }
     }
+
     public void onClickItemOption(String ItemNameOption,int action){
         if(AdapterOptionListener != null ){
             AdapterOptionListener.onClickItemOption(ItemNameOption,action);

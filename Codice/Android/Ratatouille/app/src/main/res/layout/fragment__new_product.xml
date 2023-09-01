@@ -378,15 +378,6 @@
                                 android:contentDescription="@string/icon_add"
                                 android:src="@drawable/ic_add_category"
                                 tools:ignore="TouchTargetSizeCheck" />
-                            <ImageView
-                                android:id="@+id/ic_delete_ingrediente"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_marginStart="16dp"
-                                android:clickable="true"
-                                android:contentDescription="@string/icon_delete"
-                                android:src="@drawable/ic_trash_category"
-                                tools:ignore="TouchTargetSizeCheck" />
 
                         </LinearLayout>
                     </LinearLayout>

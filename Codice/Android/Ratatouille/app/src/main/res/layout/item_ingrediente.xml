@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <CheckBox
-        android:id="@+id/checkBox_name_ingredient"
+    <TextView
+        android:id="@+id/text_view_name_ingredient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Farina"
+        android:textColor="@color/Black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/text_view_ingredient_dosi"
         app:layout_constraintHorizontal_bias="0.0"
@@ -20,15 +21,29 @@
         android:id="@+id/text_view_ingredient_dosi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:autoSizeTextType="uniform"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/sf_compact_rounded"
         android:gravity="end"
         android:text="500gr"
         android:textColor="@color/Black"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ic_delete_ingrediente"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_delete_ingrediente"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:contentDescription="@string/icon_delete"
+
+        android:src="@drawable/ic_trash_category"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

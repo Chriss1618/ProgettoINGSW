@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.ratatouille.Controllers.Adapters.Adapter_IngredientProduct;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
@@ -32,6 +33,7 @@ import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
+import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
@@ -67,6 +69,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     private final Manager manager;
     private ActivityResultLauncher<Intent> resultLauncher;
     private Adapter_IngredientProduct adapterIngredientProduct;
+    private RecycleEventListener RecycleEventListener;
+
     //DATA
     private CategoriaMenu Categoria;
     private Product       NewProduct;
@@ -83,7 +87,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
             Categoria = (CategoriaMenu) manager.getData();
             PrepareReceiveFromGallery();
         }
-
+        RecycleEventListener    = new RecycleEventListener();
     }
 
     @Override
@@ -167,8 +171,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
             CardView_AddNewProduct          .setOnClickListener(view -> onClickAddNewProduct());
             ImageView_AddNewIngredient      .setOnClickListener(view -> onClickAddNewIngredient());
             CardView_Cancel                 .setOnClickListener(view -> manager.goBack());
-
     }
+
     @Override
     public void SetDataOnLayout() {
         Picasso.get()

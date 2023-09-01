@@ -231,7 +231,6 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
                 }
             }
         });
-
     }
 
     private void ShowDialogNewCategory(){
