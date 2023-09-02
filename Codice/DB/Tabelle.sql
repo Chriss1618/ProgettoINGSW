@@ -95,7 +95,8 @@ CREATE TABLE Ingrediente (
 CREATE TABLE Ricettario (
 	ID_Prodotto INTEGER NOT NULL ,
 	ID_Ingrediente INTEGER NOT NULL ,
-    qta FLOAT(6,2) NOT NULL,
+    Dosi FLOAT(6,2) NOT NULL,
+    UnitaMisura VARCHAR(2),
     PRIMARY KEY (ID_Prodotto,ID_Ingrediente),
     CONSTRAINT FK_ProdottoIngrediente FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto(ID_Prodotto) ON DELETE CASCADE,
     CONSTRAINT FK_IngredienteProdotto FOREIGN KEY (ID_Ingrediente) REFERENCES Ingrediente(ID_Ingrediente) ON DELETE CASCADE

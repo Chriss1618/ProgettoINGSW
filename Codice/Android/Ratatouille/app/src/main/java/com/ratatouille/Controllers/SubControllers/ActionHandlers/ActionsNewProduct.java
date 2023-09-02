@@ -15,6 +15,7 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Product;
+import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 
 import org.json.JSONArray;
@@ -64,12 +65,23 @@ public class ActionsNewProduct extends ActionsViewHandler{
         public void handleAction(Action action) {
             boolean isInserted = false;
             action.callBack(isInserted);
+            printNewProduct((Product) action.getData());
             if(isInserted){
                 Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
                 action.getManager().goBack();
             }
         }
 
+        private void printNewProduct(Product NewProduct){
+            Log.d(TAG, "printNewProduct ----------------------------------------------- ");
+            Log.d(TAG, "New Product: Name            ->" + NewProduct.getNameProduct());
+            Log.d(TAG, "New Product: ID_Category     ->" + NewProduct.getID_category());
+            Log.d(TAG, "New Product: List Ingredients ------------");
+            for (Ricettario ricettario: NewProduct.getRicette())
+                Log.d(TAG, "New Product: Ingrediente (id:"+ ricettario.getIngredient().getID_Ingredient()+")->" + ricettario.getIngredient().getNameIngredient() + " " +ricettario.getDosi() + ricettario.getTypeMeasure());
+            Log.d(TAG, "New Product: END List Ingredients --------");
+            Log.d(TAG, "printNewProduct ----------------------------------------------- ");
+        }
         private void sendNewProductToServer(String image){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("image", image);

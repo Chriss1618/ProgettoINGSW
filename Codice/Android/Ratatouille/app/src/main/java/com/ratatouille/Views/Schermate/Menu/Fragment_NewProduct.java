@@ -94,8 +94,9 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(manager.getData() != null){
-            Categoria = (CategoriaMenu) manager.getData();
+        if( manager.getData().getClass().getSimpleName().equals("CategoriaMenu") ){
+            NewProduct = new Product();
+            NewProduct.setID_category( ((CategoriaMenu) manager.getData()).getID_categoria() );
             PrepareReceiveFromGallery();
         }
         RecycleEventListener    = new RecycleEventListener();
@@ -104,8 +105,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     @Override
     public void onResume() {
         super.onResume();
-        if( manager.getData().getClass().getSimpleName().equals("Product")){
-            Log.d(TAG, "onResume: Ricetta Ricevuta");
+        if( manager.getData().getClass().getSimpleName().equals("Product") ){
+            Log.d(TAG, "onResume: Product Ricevuta");
             NewProduct = (Product) manager.getData();
             Log.d(TAG, "onResume: Nome Prodotto ->"+ NewProduct.getNameProduct());
             Log.d(TAG, "onResume: Price Prodotto ->"+ NewProduct.getPriceProduct());
@@ -116,6 +117,9 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
             }
             initRecycleView();
             SetDataOnLayout();
+        } else if( manager.getData().getClass().getSimpleName().equals("CategoriaMenu") ){
+            NewProduct = new Product();
+            NewProduct.setID_category( ((CategoriaMenu) manager.getData()).getID_categoria() );
         }
     }
 
@@ -221,6 +225,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
     private void onClickAddFromGallery(){
         Log.d(TAG, "PrepareReceiveFromGallery: Foto Selezionata");
+        ReadInputNewProduct();
+        manager.setData(NewProduct);
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         resultLauncher.launch(intent);
     }
@@ -228,7 +234,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     private void onClickAddNewProduct(){
         if(getAllInputs()){
             Log.d(TAG, "onClickAddNewProduct: All Inputs are OK");
-            NewProduct.setID_category(Categoria.getID_categoria());
             Action action = new Action(ActionsNewProduct.INDEX_ACTION_CREATE_PRODUCT,
                     NewProduct,
                     (isInserted)->showDialog( (boolean)isInserted ));
@@ -239,20 +244,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     }
 
     private void onClickAddNewIngredient(){
-        NewProduct.setNameProduct(EditText_NomeProdotto.getText().toString());
-        String price = EditText_PriceProduct.getText().toString() + "." +  EditText_CentsPriceProduct.getText().toString();
-        if(price.equals(".")) price = "0";
-        NewProduct.setPriceProduct(Float.parseFloat(price));
-        NewProduct.setDescriptionProduct(EditText_DescriptionProduct.getText().toString() );
-        NewProduct.setAllergeniProduct(EditText_Allergeni.getText().toString() );
-        NewProduct.setSendToKitchen(Switch_SendToKitchen.isChecked());
-        Log.d(TAG, "getAllInputs: New Prodotto ------------------------");
-        Log.d(TAG, "getAllInputs: Nome Prodotto->"+ NewProduct.getNameProduct());
-        Log.d(TAG, "getAllInputs: Price Prodotto->"+ NewProduct.getPriceProduct());
-        Log.d(TAG, "getAllInputs: Description Prodotto->"+ NewProduct.getDescriptionProduct());
-        Log.d(TAG, "getAllInputs: Allergeni Prodotto->"+ NewProduct.getAllergeniProduct());
-        Log.d(TAG, "getAllInputs: SendToKitchen Prodotto->"+ NewProduct.isSendToKitchen());
-        Log.d(TAG, "getAllInputs: --------------------------------------");
+        ReadInputNewProduct();
+
         Action action = new Action(ActionsNewProduct.INDEX_ACTION_ADD_INGREDIENTI,NewProduct);
         sendAction(action);
     }
@@ -262,6 +255,15 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
     //FUNCTIONAL *********************
 
+    private void ReadInputNewProduct(){
+        NewProduct.setNameProduct(EditText_NomeProdotto.getText().toString());
+        String price = EditText_PriceProduct.getText().toString() + "." +  EditText_CentsPriceProduct.getText().toString();
+        if(price.equals(".")) price = "0";
+        NewProduct.setPriceProduct(Float.parseFloat(price));
+        NewProduct.setDescriptionProduct(EditText_DescriptionProduct.getText().toString() );
+        NewProduct.setAllergeniProduct(EditText_Allergeni.getText().toString() );
+        NewProduct.setSendToKitchen(Switch_SendToKitchen.isChecked());
+    }
     private void PrepareReceiveFromGallery(){
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             try {
@@ -280,13 +282,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
 
     private boolean getAllInputs(){
-        NewProduct.setNameProduct(EditText_NomeProdotto.getText().toString());
-        String price = EditText_PriceProduct.getText().toString() + "." +  EditText_CentsPriceProduct.getText().toString();
-        if(price.equals(".")) price = "0";
-        NewProduct.setPriceProduct(Float.parseFloat(price));
-        NewProduct.setDescriptionProduct(EditText_DescriptionProduct.getText().toString() );
-        NewProduct.setAllergeniProduct(EditText_Allergeni.getText().toString() );
-        NewProduct.setSendToKitchen(Switch_SendToKitchen.isChecked());
+        ReadInputNewProduct();
+
         Log.d(TAG, "getAllInputs: New Prodotto ------------------------");
         Log.d(TAG, "getAllInputs: Nome Prodotto->"+ NewProduct.getNameProduct());
         Log.d(TAG, "getAllInputs: Price Prodotto->"+ NewProduct.getPriceProduct());
