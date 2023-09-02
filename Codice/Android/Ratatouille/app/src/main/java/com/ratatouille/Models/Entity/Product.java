@@ -15,15 +15,17 @@ public class Product {
     private int ID_product;
     private int ID_category;
 
-    private String URLImageProduct;
-    private String DataImageProduct;
-    private Uri UriImageProduct = null;
-
     private String NameProduct;
     private float PriceProduct ;
     private String DescriptionProduct;
     private String AllergeniProduct;
     private boolean isSendToKitchen;
+
+    private String  URLImageProduct;
+    private String  DataImageProduct;
+    private Uri     UriImageProduct = null;
+    private boolean hasPhoto;
+
     private ArrayList<Ricettario> Ricette;
 
     public Product() {
@@ -57,7 +59,12 @@ public class Product {
         return UriImageProduct;
     }
     public void setUriImageProduct(Uri uriImageProduct) {
+        hasPhoto = true;
         UriImageProduct = uriImageProduct;
+    }
+
+    public boolean isHasPhoto() {
+        return hasPhoto;
     }
 
     public String getDataImageProduct() {
