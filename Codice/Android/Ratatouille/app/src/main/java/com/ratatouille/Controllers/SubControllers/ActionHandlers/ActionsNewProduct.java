@@ -69,7 +69,7 @@ public class ActionsNewProduct extends ActionsViewHandler{
             boolean isInserted = sendNewProductToServer(NewProduct,action.getManager().context);
             action.callBack(isInserted);
             if(isInserted){
-                Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
+                Try.run(() -> TimeUnit.MILLISECONDS.sleep(1500));
                 action.getManager().goBack();
             }
         }
@@ -108,15 +108,16 @@ public class ActionsNewProduct extends ActionsViewHandler{
                 JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
                 if(BodyJSON != null){
                     Log.d(TAG, "sendToServer: RICEVUTO DA SERVER ->\n" + BodyJSON.toString(4));
-
+                    return true;
                 }
 
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
+
                 return false;
             }
-            Log.d(TAG, "sendNewProductToServer: true");
-            return true;
+            Log.d(TAG, "sendNewProductToServer: false");
+            return false;
 
         }
     }

@@ -2,18 +2,14 @@ package com.ratatouille.Controllers.SubControllers.RequestHandlers;
 
 import android.net.Uri;
 import android.util.Log;
-
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.LocalStorage;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class RequestIngredients implements RequestHandler{

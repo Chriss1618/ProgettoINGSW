@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_Product;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
@@ -33,7 +34,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     private RecycleEventListener        RecycleEventListener;
     private Manager manager;
     //DATA
-    private ArrayList<String>   TitleProducts;
+    private ArrayList<Product>   TitleProducts;
 
     //OTHER...
 
@@ -66,10 +67,6 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     @Override
     public void PrepareData() {
         TitleProducts = new ArrayList<>();
-        TitleProducts.add("Pizza Tonno");
-        TitleProducts.add("Pizza Margherita");
-        TitleProducts.add("Panino al Salame");
-        TitleProducts.add("Carbonara");
     }
 
     //LAYOUT

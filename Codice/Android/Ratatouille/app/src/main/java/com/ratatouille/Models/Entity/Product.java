@@ -79,6 +79,7 @@ public class Product {
     }
 
     public float getPriceProduct() {
+
         return PriceProduct;
     }
     public void setPriceProduct(float priceProduct) {

@@ -15,16 +15,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ratatouille.Controllers.Adapters.Adapter_Product;
 import com.ratatouille.Controllers.Adapters.ProductTouchHelper;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
+import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
+import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
@@ -47,7 +50,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private ImageView       ImageView_deleteProduct;
     private ImageView       ImageView_Back;
     private EditText        EditText_SearchProduct;
-
+    private TextView        TextView_NoProducts;
+    private ProgressBar     ProgressBar_LoadingProducts;
 
     //FUNCTIONAL
     private RecycleEventListener            RecycleEventListener;
@@ -56,9 +60,9 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private boolean                         isDeleting;
     private boolean                         isOrdering;
     //DATA
-    private ArrayList<String>   TitleProducts;
-    private CategoriaMenu       Categoria;
-    private String              Category_Name;
+    private ArrayList<Product>   ListProducts;
+    private CategoriaMenu        Categoria;
+    private String               Category_Name;
 
     //OTHER...
 
@@ -83,33 +87,29 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
                              Bundle savedInstanceState) {
         View_fragment = inflater.inflate(R.layout.fragment__list_products, container, false);
 
-        PrepareData();
         PrepareLayout();
+
+        PrepareData();
 
         return View_fragment;
     }
 
     //DATA
+    private void sendRequest(){
+        @SuppressWarnings("unchecked")
+        Request request = new Request(manager.getSourceInfo(), Categoria, ManagerRequestFactory.INDEX_REQUEST_PRODUCTS,
+                (list)-> setProductsOnLayout((ArrayList<Product>) list));
+        manager.HandleRequest(request);
+    }
+
     @Override
     public void PrepareData(){
-        TitleProducts = new ArrayList<>();
-        TitleProducts.add("Pizza Tonno ");
-        TitleProducts.add("Pizza Margherita");
-        TitleProducts.add("Panino al Salame");
-        TitleProducts.add("Carbonara");
-        TitleProducts.add("Pizza Tonno");
-        TitleProducts.add("Pizza Margherita");
-        TitleProducts.add("Panino al Salame");
-        TitleProducts.add("Carbonara");
-        TitleProducts.add("Pizza Tonno");
-        TitleProducts.add("Pizza Margherita");
-        TitleProducts.add("Panino al Salame");
-        TitleProducts.add("Carbonara");
-
         isDeleting = false;
         isOrdering = false;
+        ProgressBar_LoadingProducts .setVisibility(View.VISIBLE);
+        Recycler_Products           .setVisibility(View.GONE);
 
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_MENU_LIST_PRODUCTS);
+        sendRequest();
     }
 
     //LAYOUT
@@ -132,11 +132,14 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         ImageView_deleteProduct     = View_fragment.findViewById(R.id.ic_delete_product);
         ImageView_Back              = View_fragment.findViewById(R.id.ic_back);
         EditText_SearchProduct      = View_fragment.findViewById(R.id.edit_text_search_product);
+
+        ProgressBar_LoadingProducts = View_fragment.findViewById(R.id.progressbar);
+        TextView_NoProducts         = View_fragment.findViewById(R.id.text_view_empty);
+
     }
 
     @Override
     public void SetDataOnLayout() {
-        initListProductsRV();
         Text_View_TitleCategory.setText(Category_Name);
     }
 
@@ -156,18 +159,26 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         Recycler_Products.setNestedScrollingEnabled(false);
         boolean isFromLeft = manager.IndexFrom <= manager.IndexOnMain;
 
-        adapter_product = new Adapter_Product(getContext(),TitleProducts, RecycleEventListener,isFromLeft);
+        adapter_product = new Adapter_Product(getContext(),ListProducts, RecycleEventListener,isFromLeft);
 
         ItemTouchHelper.Callback callback = new ProductTouchHelper(adapter_product);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         adapter_product.setTouchHelper(itemTouchHelper);
         itemTouchHelper.attachToRecyclerView(Recycler_Products);
         Recycler_Products.setHasFixedSize(true); // Optional, if your item sizes are fixed
-        Recycler_Products.setItemViewCacheSize(TitleProducts.size()); // Set the cache size to the number of items
+        Recycler_Products.setItemViewCacheSize(ListProducts.size()); // Set the cache size to the number of items
 
         Recycler_Products.setAdapter(adapter_product);
-    }
 
+        checkEmptyRecycle();
+    }
+    private void setProductsOnLayout(ArrayList<Product> list){
+        requireActivity().runOnUiThread(() -> {
+            ListProducts = list;
+            initListProductsRV();
+            ProgressBar_LoadingProducts.setVisibility(View.GONE);
+        });
+    }
     //ACTIONS *************************************************************************
     private void onClickProduct(Product product){
         //Log.d(TAG, "PreparerData: Hai premuto l'item->"+product);
@@ -201,11 +212,23 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
             isOrdering = true;
         }
     }
+
     //FUNCTIONAL
     private void SendAction(Action action){
         manager.HandleAction(action);
     }
 
+    private void checkEmptyRecycle(){
+        if(ListProducts.isEmpty()) {
+            TextView_NoProducts.setVisibility(View.VISIBLE);
+            Recycler_Products.setVisibility(View.GONE);
+            StartAnimationEmptyProducts();
+        }else{
+            TextView_NoProducts.setVisibility(View.GONE);
+            Recycler_Products.setVisibility(View.VISIBLE);
+            StartAnimationProducts();
+        }
+    }
     //ANIMATIONS
     @Override
     public void StartAnimations(){
@@ -239,7 +262,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     }
     public void fromProductAnimations(){
         Text_View_TitleCategory .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
-        Recycler_Products       .startAnimation( Manager_Animation.getTranslateAnimatioINfromLeft(300) );
+
         ImageView_deleteProduct .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
         ImageView_AddProduct    .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
         ImageView_Order         .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
@@ -260,4 +283,12 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         ImageView_Order         .startAnimation( Manager_Animation.getTranslationOUTtoUp(300) );
     }
 
+    private void StartAnimationProducts(){
+        if(manager.IndexFrom > manager.IndexOnMain){
+            Recycler_Products       .startAnimation( Manager_Animation.getTranslateAnimatioINfromLeft(300) );
+        }
+    }
+    private void StartAnimationEmptyProducts(){
+        TextView_NoProducts         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
+    }
 }

@@ -49,9 +49,11 @@ public class ActionsListCategory extends ActionsViewHandler{
     }
     private static class AddNewCategory_ActionHandler implements ActionHandler {
         private CategoriaMenu addedCategory;
+        private Action action;
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: AddNewCategoryActionHandler->");
+            this.action = action;
             String category = (String)action.getData();
             if(sendNewCategoryToServer(category)){
                 action.callBack(addedCategory);
@@ -62,13 +64,13 @@ public class ActionsListCategory extends ActionsViewHandler{
         }
         private boolean sendNewCategoryToServer(String newCategory){
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("id_ristorante", "1")
+                    .appendQueryParameter("id_ristorante", new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer")+"")
                     .appendQueryParameter("NameCategory",newCategory);
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/CategoriaMenu.php";
 
             try {
                 JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-                if( BodyJSON != null && BodyJSON.getString("MSG").contains("1")){
+                if( BodyJSON != null && BodyJSON.getString("DATA").contains("1")){
 
                     JSONObject Categoria_Json = new JSONObject(BodyJSON.getString("DATA"));
                     addedCategory = new CategoriaMenu(

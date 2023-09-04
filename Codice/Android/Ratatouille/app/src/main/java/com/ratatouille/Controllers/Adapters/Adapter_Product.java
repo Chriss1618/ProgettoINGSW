@@ -21,11 +21,15 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ingredient;
+import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewHolder> implements ITouchAdapter {
@@ -45,13 +49,13 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     private boolean isOrdering;
 
     //DATA
-    private final ArrayList<String>         TitleProducts;
+    private final ArrayList<Product>         ListProducts;
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        String product = TitleProducts.get(fromPosition);
-        TitleProducts.remove(product);
-        TitleProducts.add(toPosition,product);
+        Product product = ListProducts.get(fromPosition);
+        ListProducts.remove(product);
+        ListProducts.add(toPosition,product);
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -138,9 +142,9 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         }
     }
 
-    public Adapter_Product(Context context,ArrayList<String> TitleProducts, RecycleEventListener RecycleEventListener,boolean isFromLeft){
+    public Adapter_Product(Context context, ArrayList<Product> ListProducts, RecycleEventListener RecycleEventListener, boolean isFromLeft){
         this.context                = context;
-        this.TitleProducts          = TitleProducts;
+        this.ListProducts          = ListProducts;
         this.RecycleEventListener   = RecycleEventListener;
         this.isFromLeft             = isFromLeft;
         this.Holders                = new ArrayList<>();
@@ -158,8 +162,8 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         this.Holder = holder;
         this.Holders.add(holder);
-        initializeLayout(position);
-        setActions(position);
+        initializeLayout( holder,position);
+        setActions( holder,position);
 
         if (isFromLeft) {
             this.Holder.Card_View_Element_Product.setVisibility(View.GONE);
@@ -173,17 +177,23 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
     @Override
     public int getItemCount() {
-        return TitleProducts.size();
+        return ListProducts.size();
     }
 
 
     //LAYOUT
-    private void initializeLayout( final int position){
-        this.Holder.Text_View_Title_Product.setText(TitleProducts.get(position));
+    private void initializeLayout(ViewHolder holder, final int position){
+        holder.Text_View_Title_Product.setText(ListProducts.get(position).getNameProduct());
+
+        String formattedValue = new DecimalFormat("0.00").format(ListProducts.get(position).getPriceProduct()) + context.getResources().getString(R.string.euro);
+        holder.Text_View_Price_Product.setText(formattedValue );
+        Picasso.get()
+                .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ ListProducts.get(position).getURLImageProduct())
+                .into(holder.Image_View_Product);
     }
 
-    private void setActions( final int position){
-        this.Holder.Card_View_Element_Product.setOnClickListener(view -> clickProduct(position));
+    private void setActions(ViewHolder holder, final int position){
+        holder.Card_View_Element_Product.setOnClickListener(view -> clickProduct(position));
         //this.Holders.get(position).Image_View_delete_element.setOnClickListener(view -> clickDeleteCategory(position));
         //this.Holder.Image_View_Product.setOnClickListener(view ->moveDrag( this.Holder ));
     }
@@ -192,11 +202,12 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
 
     }
+
     //ACTIONS
     private void clickProduct( final int position){
         Log.d(TAG, "Premuto in Product--------------------");
         Log.d(TAG, " Holder: "  + this.Holder.Text_View_Title_Product.getText().toString());
-        Log.d(TAG, " Array: "   + this.TitleProducts.get(position));
+        Log.d(TAG, " Array: "   + this.ListProducts.get(position).getNameProduct());
         Log.d(TAG, "--------------------------------------");
 
         //RecycleEventListener.onClickItem(TitleProducts.get(position));

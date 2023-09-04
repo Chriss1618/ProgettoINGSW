@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -38,6 +41,7 @@ import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Inventario.Fragment_NewProductInventory;
+import com.ratatouille.Views.Schermate.Login.Activity_Login;
 import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
@@ -81,7 +85,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     private ActivityResultLauncher<Intent> resultLauncher;
     private Adapter_IngredientProduct adapterIngredientProduct;
     private RecycleEventListener RecycleEventListener;
-
+    private DialogMessage DialogCreatingProduct;
     //DATA
     private CategoriaMenu Categoria;
     private Product       NewProduct;
@@ -234,6 +238,8 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     private void onClickAddNewProduct(){
         if(getAllInputs()){
             Log.d(TAG, "onClickAddNewProduct: All Inputs are OK");
+            DialogCreatingProduct = new DialogMessage();
+            DialogCreatingProduct.showLoading();
             Action action = new Action(ActionsNewProduct.INDEX_ACTION_CREATE_PRODUCT,
                     NewProduct,
                     (isInserted)->showDialog( (boolean)isInserted ));
@@ -280,7 +286,6 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         });
     }
 
-
     private boolean getAllInputs(){
         ReadInputNewProduct();
 
@@ -317,36 +322,63 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
     private void showDialog(boolean isOk){
         requireActivity().runOnUiThread(() -> {
-            if(isOk) new DialogMessage().showDialogSuccess();
-            else new DialogMessage().showDialogError();
+            if(isOk) DialogCreatingProduct.showDialogSuccess();
+            else DialogCreatingProduct.showDialogError();
         });
     }
 
     private class DialogMessage{
         LinearLayout LinearLayout_Error;
         LinearLayout LinearLayout_Success;
+        LinearLayout LinearLayout_Loading;
 
         CardView CardView_Dialog_Cancel;
+        private int numGiri = 0;
 
         public DialogMessage() {
             LinearLayout_Error      = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_error);
             LinearLayout_Success    = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_accepted);
+            LinearLayout_Loading    = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_loading);
 
             LinearLayout_Dialog     .setVisibility(View.VISIBLE);
             LinearLayout_Error      .setVisibility(View.GONE);
             LinearLayout_Success    .setVisibility(View.GONE);
+            LinearLayout_Loading    .setVisibility(View.GONE);
         }
 
+        private void showLoading(){
+            LinearLayout_Loading    .setVisibility(View.VISIBLE);
+            LinearLayout_DarkL      .setVisibility(View.VISIBLE);
+            LinearLayout_Loading    .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_DarkL       .startAnimation(Manager_Animation.getFadeIn(500));
+            new Thread(()->rotation(1500)).start();
+        }
+        private void rotation(int speed){
+
+            ImageView ImageView_Logo = LinearLayout_Loading.findViewById(R.id.image_view_logo);
+
+            ImageView_Logo.animate()
+                    .rotationBy(speed) // Use rotationBy instead of setting absolute rotation value
+                    .setDuration(5000)
+                    .withEndAction(() -> {
+                        // This will be executed when the animation ends
+                        int nextSpeed = (numGiri++ % 2 == 0) ? -1500 : 1500;
+                        rotation(nextSpeed);
+                    });
+
+        }
         private void showDialogError(){
             CardView_Dialog_Cancel             = LinearLayout_Error.findViewById(R.id.card_view_dialog_confirm);
 
             CardView_Dialog_Cancel .setOnClickListener(view -> dismissDialogError());
 
-            LinearLayout_Error              .setVisibility(View.VISIBLE);
-            LinearLayout_DarkL              .setVisibility(View.VISIBLE);
+            LinearLayout_Loading            .startAnimation(Manager_Animation.getFadeOut(200));
 
-            LinearLayout_Dialog              .startAnimation(Manager_Animation.getTranslationINfromUp(500));
-            LinearLayout_DarkL              .startAnimation(Manager_Animation.getFadeIn(500));
+            new Handler(Looper.getMainLooper()).postDelayed( ()->{
+                LinearLayout_Loading           .setVisibility(View.GONE);
+                LinearLayout_Error            .setVisibility(View.VISIBLE);
+                LinearLayout_Error            .startAnimation(Manager_Animation.getFadeIn(300));
+            },200);
             hideKeyboardFrom();
         }
         private void dismissDialogError(){
@@ -360,11 +392,13 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
             LinearLayout_DarkL  .setVisibility(View.GONE);
         }
         private void showDialogSuccess(){
-            LinearLayout_Success            .setVisibility(View.VISIBLE);
-            LinearLayout_DarkL              .setVisibility(View.VISIBLE);
+            LinearLayout_Loading            .startAnimation(Manager_Animation.getFadeOut(200));
+            new Handler(Looper.getMainLooper()).postDelayed( ()->{
+                LinearLayout_Loading            .setVisibility(View.GONE);
+                LinearLayout_Success            .setVisibility(View.VISIBLE);
+                LinearLayout_Success            .startAnimation(Manager_Animation.getFadeIn(300));
+            },200);
 
-            LinearLayout_Dialog                .startAnimation(Manager_Animation.getTranslationINfromUp(500));
-            LinearLayout_DarkL                  .startAnimation(Manager_Animation.getFadeIn(500));
             hideKeyboardFrom();
         }
 

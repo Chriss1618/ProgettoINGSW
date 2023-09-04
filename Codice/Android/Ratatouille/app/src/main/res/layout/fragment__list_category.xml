@@ -125,7 +125,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/sf_compact_rounded_regular_italic"
             android:text="@string/nessuna_categoria_creata"
-            android:textColor="@color/Gray"
+            android:textColor="@color/DarkGray"
             android:textSize="24sp" />
 
     </LinearLayout>

@@ -10,6 +10,6 @@ public class EndPointer {
     public static final String DELETE = "/Delete";
     public static final String SELECT = "/Select";
     public static final String IMAGES_INGREDIENT = "/Images/Ingredient/";
-    public static final String IMAGES_PRODUCT = "/Images/Ingredient/";
+    public static final String IMAGES_PRODUCT = "/Images/Product/";
     public static final String AUTHENTICATION = "/UserAuthentication.php";
 }

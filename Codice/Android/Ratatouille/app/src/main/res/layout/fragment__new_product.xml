@@ -597,7 +597,7 @@
 
                 android:fontFamily="@font/sf_compact_rounded_bold"
                 android:layout_gravity="center_horizontal"
-                android:text="Prodotto Creato !"
+                android:text="@string/prodotto_creato"
                 android:textColor="@color/Black"
                 android:textSize="25sp"
 
@@ -609,6 +609,42 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"/>
         </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_layout_dialog_loading"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:layout_margin="30dp">
+
+            <ImageView
+                android:id="@+id/image_view_logo"
+
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/ratatouille"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:gravity="center_horizontal"
+                    android:text="Creazione in corso"
+                    android:textColor="@color/DarkGray"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
