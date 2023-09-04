@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_Product;
 import com.ratatouille.Controllers.Adapters.ProductTouchHelper;
 import com.ratatouille.Controllers.ControlMapper;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
@@ -146,11 +149,14 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener    .setOnClickItemAdapterListener((item)-> onClickProduct( (Product)item ) );
+        RecycleEventListener    .setOnClickItemOptionAdapterListener( this::onClickDeleteProduct );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
         ImageView_Order         .setOnClickListener(            view -> onOrderClick());
         ImageView_BackOrder     .setOnClickListener(            view -> onOrderClick());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
         ImageView_Back          .setOnClickListener(            view -> manager.goBack());
+
+
     }
 
     private void initListProductsRV( ){
@@ -177,6 +183,24 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
             ListProducts = list;
             initListProductsRV();
             ProgressBar_LoadingProducts.setVisibility(View.GONE);
+            EditText_SearchProduct     .addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    Log.d(TAG, "onTextChanged: sta cambiando");
+                    if ( adapter_product != null ) adapter_product.filterList(charSequence.toString());
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
         });
     }
     //ACTIONS *************************************************************************
@@ -198,7 +222,15 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
             isDeleting = true;
         }
     }
-
+    private void onClickDeleteProduct(String categoryToDelete,int id_productToDelete){
+        Product ProductToDelete = null;
+        for (Product product: ListProducts) {
+            if(  product.getID_product() == id_productToDelete)  ProductToDelete = product;
+        }
+        Action action = new Action(ActionsListProducts.INDEX_ACTION_DELETE_PRODUCT, ProductToDelete,
+                (id_product)-> deleteItemFromRecycle( (Integer)id_product ));
+        SendAction(action);
+    }
     private void onOrderClick(){
         if(isOrdering){
             adapter_product.hideMoveIcon();
@@ -229,6 +261,19 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
             StartAnimationProducts();
         }
     }
+
+    private void deleteItemFromRecycle(Integer id_product){
+        requireActivity().runOnUiThread(() -> {
+            for(int indexItem = 0; indexItem < ListProducts.size() ; indexItem++){
+                if(ListProducts.get(indexItem).getID_product() == id_product){
+                    ListProducts.remove(indexItem);
+                    adapter_product.removeItem(id_product);
+                    break;
+                }
+            }
+        });
+    }
+
     //ANIMATIONS
     @Override
     public void StartAnimations(){

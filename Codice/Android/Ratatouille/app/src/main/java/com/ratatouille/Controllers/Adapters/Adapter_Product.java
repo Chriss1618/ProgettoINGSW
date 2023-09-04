@@ -21,16 +21,19 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ratatouille.Controllers.Adapters.Holders.ViewHolder_IngredientProduct;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Entity.Product;
+import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewHolder> implements ITouchAdapter {
     //SYSTEM
@@ -49,7 +52,8 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     private boolean isOrdering;
 
     //DATA
-    private final ArrayList<Product>         ListProducts;
+    private ArrayList<Product>         ListProducts;
+    private final ArrayList<Product>         ListProductsFiltered;
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
@@ -72,6 +76,16 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         LinearLayout LinearLayout_moveItem;
         LinearLayout LinearLayout_moveItem2;
         GestureDetector gestureDetector;
+
+        //DATA
+        Product product;
+        public void setProduct(Product product){
+            this.product = product;
+        }
+
+        public Product getProduct() {
+            return product;
+        }
 
         @SuppressLint("ClickableViewAccessibility")
         public ViewHolder(@NonNull View itemView) {
@@ -144,7 +158,8 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
     public Adapter_Product(Context context, ArrayList<Product> ListProducts, RecycleEventListener RecycleEventListener, boolean isFromLeft){
         this.context                = context;
-        this.ListProducts          = ListProducts;
+        this.ListProducts           = new ArrayList<>(ListProducts);;
+        this.ListProductsFiltered   = new ArrayList<>(ListProducts);;
         this.RecycleEventListener   = RecycleEventListener;
         this.isFromLeft             = isFromLeft;
         this.Holders                = new ArrayList<>();
@@ -162,6 +177,7 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         this.Holder = holder;
         this.Holders.add(holder);
+        holder.setProduct(ListProducts.get(position));
         initializeLayout( holder,position);
         setActions( holder,position);
 
@@ -194,14 +210,32 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
     private void setActions(ViewHolder holder, final int position){
         holder.Card_View_Element_Product.setOnClickListener(view -> clickProduct(position));
-        //this.Holders.get(position).Image_View_delete_element.setOnClickListener(view -> clickDeleteCategory(position));
+        this.Holders.get(position).Image_View_delete_element.setOnClickListener(view -> clickDeleteProduct(position,holder));
         //this.Holder.Image_View_Product.setOnClickListener(view ->moveDrag( this.Holder ));
     }
-    private void moveDrag(ViewHolder holder){
-        Log.d(TAG, "onTouch: Touched!");
 
+    public void removeItem(int id_product) {
+        Log.d(TAG, "removeItem: Inizio");
+        for (Product product : ListProducts) {
+            if(product.getID_product() == id_product){
+                ListProducts.remove(product);
+                removeFromHolders(id_product);
+            }
+        }
 
     }
+
+    public void removeFromHolders(int id_product) {
+        for(ViewHolder holder : Holders){
+            if(holder.getProduct().getID_product() == id_product){
+                Holders.remove(holder);
+                break;
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+
 
     //ACTIONS
     private void clickProduct( final int position){
@@ -212,11 +246,28 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
         //RecycleEventListener.onClickItem(TitleProducts.get(position));
     }
-    private void clickDeleteCategory(int position){
-        Log.d(TAG, "clickDeleteCategory: "+this.Holders.get(position).Text_View_Title_Product.getText().toString());
-
+    private void clickDeleteProduct(int position, ViewHolder holder){
+        Log.d(TAG, "clickDeleteCategory: "+holder.Text_View_Title_Product.getText().toString());
+        RecycleEventListener.onClickItemOption(holder.Text_View_Title_Product.getText().toString(),ListProducts.get(position).getID_product());
     }
 
+
+    //FUNCTIONAL
+    public void filterList(String filteredCategory){
+        Log.d(TAG, "filterList: inside");
+        if (filteredCategory.isEmpty()) {
+            ListProducts = new ArrayList<>(ListProductsFiltered);
+        }else {
+            ListProducts.clear();
+            for (Product item : ListProductsFiltered) {
+                if (item.getNameProduct().toLowerCase().contains(filteredCategory.toLowerCase())) {
+                    ListProducts.add(item);
+                }
+            }
+            notifyDataSetChanged();
+        }
+
+    }
     //ANIMATIONS
     private void StartAnimations(ViewHolder holder,int position){
         final Handler handler = new Handler();

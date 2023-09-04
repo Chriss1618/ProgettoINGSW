@@ -59,7 +59,7 @@ CREATE TABLE Prodotto (
     Allergeni VARCHAR(500),
     isSendToKitchen TINYINT DEFAULT 0,
     PhotoURL VARCHAR(300) ,
-    
+    Posizione INTEGER DEFAULT 0,
     PRIMARY KEY (ID_Prodotto),
     CONSTRAINT FK_CategoriaMenuProdotto FOREIGN KEY (ID_CategoryMenu) REFERENCES CategoriaMenu(ID_CategoryMenu) ON DELETE CASCADE
 );
