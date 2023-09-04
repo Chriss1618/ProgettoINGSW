@@ -153,28 +153,12 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener    .setOnClickItemAdapterListener   (this::onClickProduct);
-        RecycleEventListener     .setOnClickItemOptionAdapterListener( this::onClickDeleteIngredient );
+        RecycleEventListener    .setOnClickItemOptionAdapterListener( this::onClickDeleteIngredient );
 
         ImageView_DeleteProduct .setOnClickListener              (view -> onClickDeleteIngredients());
         ImageView_AddIngredient .setOnClickListener              (view -> onCLickAddNewIngredient());
 
-        EditText_SearchInventory     .addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if ( adapter_product_exist != null ) adapter_product_exist.filterList(charSequence.toString());
-                if ( adapter_product_missing != null ) adapter_product_missing.filterList(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
     @Override
     public void SetDataOnLayout() {
@@ -276,9 +260,26 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
             initListProductsExistRV();
             initListProductsMissingRV();
 
-            ProgressBar_Existing.setVisibility(View.GONE);
-            ProgressBar_Missing.setVisibility(View.GONE);
+            ProgressBar_Existing        .setVisibility(View.GONE);
+            ProgressBar_Missing         .setVisibility(View.GONE);
+            EditText_SearchInventory     .addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    Log.d(TAG, "onTextChanged: sta cambiando");
+                    if ( adapter_product_exist != null ) adapter_product_exist.filterList(charSequence.toString());
+                    if ( adapter_product_missing != null ) adapter_product_missing.filterList(charSequence.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
         });
     }
 

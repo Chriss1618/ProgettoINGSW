@@ -40,7 +40,7 @@ public class RequestProducts implements RequestHandler{
 
     private void setProducts(JSONObject BodyJSON) throws JSONException {
         Log.d(TAG, "setProducts: PRODUCTS ->\n" + BodyJSON.toString(4));
-        if(!BodyJSON.getString("MSG_STATUS").contains("0 Nessun Ingredient")){
+        if(!BodyJSON.getString("MSG_STATUS").contains("0 Nessun Product")){
             JSONArray ProductJSON = new JSONArray(BodyJSON.getString("DATA"));
 
             for(int i = 0 ; i<ProductJSON.length(); i++){

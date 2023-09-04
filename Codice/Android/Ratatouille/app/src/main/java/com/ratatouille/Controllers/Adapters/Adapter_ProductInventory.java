@@ -110,6 +110,7 @@ public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_Produ
     }
 
     public void filterList(String filteredCategory){
+        Log.d(TAG, "filterList: inside");
         if (filteredCategory.isEmpty()) {
             Ingredients = new ArrayList<>(IngredientsFiltered);
         }else {
@@ -119,6 +120,7 @@ public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_Produ
                     Ingredients.add(item);
                 }
             }
+            notifyDataSetChanged();
         }
 
     }

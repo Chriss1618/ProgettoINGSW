@@ -182,7 +182,8 @@ public class Fragment_EditProductInventory extends Fragment implements ViewLayou
         Log.d(TAG, "SetDataOnLayout: ingredientName->"+Ingredient.getNameIngredient());
         String[] cost = Ingredient.getPriceIngredient().split("\\.");
         String euro = cost[0];
-        String cents = cost[1];
+
+        String cents = (cost.length > 1)? cost[1]: "00";
 
         EditText_NameIngredient         .setText(Ingredient.getNameIngredient());
         EditText_Euro                   .setText(euro);

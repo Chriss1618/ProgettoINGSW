@@ -52,14 +52,9 @@ public class ActionsListInventory extends ActionsViewHandler{
     private static class DeleteIngredient_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
-            Log.d(TAG, "handleAction -> DELETE INGREDIENT");
             Ingredient ingredient = (Ingredient) action.getData();
-            Log.d(TAG, "handleAction: Nome Ingrediente da Rimuovere ->"+ ingredient.getNameIngredient());
             if(sendDeleteIngredientToServer(ingredient)){
                 action.callBack(ingredient.getID_Ingredient());
-                Log.d(TAG, "handleAction: Cancelled Ingredient");
-            }else{
-                Log.d(TAG, "handleAction: Ingredient Non Cancelled");
             }
         }
 
