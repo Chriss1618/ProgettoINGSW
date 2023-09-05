@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginEnd="8dp">
 
                     <ImageView
                         android:id="@+id/ic_order"
@@ -92,8 +92,8 @@
                     android:id="@+id/ic_add_product"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:clickable="true"
                     android:src="@drawable/ic_add_category"
                     android:contentDescription="@string/icon_add" />
@@ -101,7 +101,7 @@
                     android:id="@+id/ic_delete_product"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     android:clickable="true"
                     android:src="@drawable/ic_trash_category"
                     android:contentDescription="@string/icon_delete"/>
@@ -111,43 +111,104 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_search_category"
-            android:layout_margin="16dp">
+            >
 
-            <EditText
-                android:id="@+id/edit_text_search_product"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout_search_box"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-
-                android:autofillHints=""
-
+                android:layout_height="wrap_content"
                 android:background="@drawable/background_search_category"
-                android:ems="10"
-                android:hint="@string/cerca_prodotto_in_menu"
-                android:inputType="text"
-                android:paddingStart="42dp"
-                android:textColorHint="@color/DarkGray"
-                android:text=""
-                android:textColor="@color/Black"
-
-                android:textColorLink="@color/MainColor"
-                android:textCursorDrawable="@drawable/custom_cursor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="RtlSymmetry" />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:clickable="true"
-                android:contentDescription="@string/icon_add"
-                android:src="@drawable/ic_search"
-                app:layout_constraintStart_toStartOf="@+id/edit_text_search_product"
-                app:layout_constraintTop_toTopOf="@+id/edit_text_search_product" />
+                android:layout_margin="16dp">
 
+                <EditText
+                    android:id="@+id/edit_text_search_product"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="50dp"
+
+                    android:autofillHints=""
+
+                    android:background="@drawable/background_search_category"
+                    android:ems="10"
+                    android:hint="@string/cerca_prodotto_in_menu"
+                    android:inputType="text"
+                    android:paddingStart="42dp"
+                    android:text=""
+                    android:textColor="@color/Black"
+                    android:textColorHint="@color/DarkGray"
+
+                    android:textColorLink="@color/MainColor"
+                    android:textCursorDrawable="@drawable/custom_cursor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/icon_add"
+                    android:src="@drawable/ic_search"
+                    app:layout_constraintStart_toStartOf="@+id/edit_text_search_product"
+                    app:layout_constraintTop_toTopOf="@+id/edit_text_search_product" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <androidx.appcompat.widget.AppCompatButton
+
+                    android:id="@+id/button_cancel_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/background_button_white"
+                    android:ems="8"
+                    android:text="@string/annulla"
+                    android:textColor="@color/MainColor"
+                    android:visibility="gone"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+
+                    android:id="@+id/button_confirm_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:background="@drawable/background_button_main"
+
+                    android:layout_margin="16dp"
+                    android:ems="8"
+                    android:inputType="text"
+                    android:text="@string/conferma"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/DarkGray"
+                    android:textColorLink="@color/MainColor"
+
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_products"
             android:paddingStart="16dp"

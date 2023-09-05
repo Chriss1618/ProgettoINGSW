@@ -24,6 +24,7 @@ public class Product {
     private String  URLImageProduct;
     private String  DataImageProduct;
     private Uri     UriImageProduct = null;
+    private Integer Order;
     private boolean hasPhoto;
 
     private ArrayList<Ricettario> Ricette;
@@ -114,6 +115,13 @@ public class Product {
         Ricette = ricette;
     }
 
+    public Integer getOrder() {
+        return Order;
+    }
+    public void setOrder(Integer order) {
+        Order = order;
+    }
+
     //FUNCTIONAL
     public String getDataFromUriProduct(Context context){
         if( UriImageProduct == null ) return null;
@@ -148,7 +156,6 @@ public class Product {
         DataImageProduct = dataImageProduct;
     }
 
-    //FUNCTIONAL
     public String getEuro() {
         int parteIntera = (int) PriceProduct;
         return Integer.toString(parteIntera);

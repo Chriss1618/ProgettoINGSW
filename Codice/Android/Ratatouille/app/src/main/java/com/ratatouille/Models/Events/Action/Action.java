@@ -1,13 +1,16 @@
 package com.ratatouille.Models.Events.Action;
 
 import com.ratatouille.Controllers.SubControllers.Manager;
+import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.SourceInfo;
+
+import java.util.ArrayList;
 
 public class Action {
     private  SourceInfo SourceInfo;
     private  Manager Manager;
     private final Integer actionType;
-    private final Object Data;
+    private  Object Data;
     private  FunctionCallBackAction functionCallBack = null;
     private  FunctionCallBackAction2 functionCallBack2 = null;
 
@@ -27,6 +30,7 @@ public class Action {
         this.Data = data;
         this.functionCallBack = functionCallBack;
     }
+
     public Action(Integer actionType, Object data,FunctionCallBackAction2 functionCallBack) {
         this.actionType = actionType;
         this.Data = data;
@@ -65,6 +69,7 @@ public class Action {
     public Integer getActionType() {
         return actionType;
     }
+
     public Object getData() {
         return Data;
     }
@@ -74,6 +79,7 @@ public class Action {
     public SourceInfo getSourceInfo() {
         return SourceInfo;
     }
+
 
     public void callBack(){
         if ( this.functionCallBack != null ) this.functionCallBack.execute();

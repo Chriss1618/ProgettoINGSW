@@ -2,6 +2,7 @@ package com.ratatouille.Views.Schermate.Menu;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -37,6 +39,7 @@ import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment_ListProducts extends Fragment implements ViewLayout {
     //SYSTEM
@@ -45,6 +48,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
     //LAYOUT
     private View            View_fragment;
+    private ConstraintLayout ConstraintLayout_SearchBox;
     private TextView        Text_View_TitleCategory;
     private RecyclerView    Recycler_Products;
     private ImageView       ImageView_AddProduct;
@@ -52,6 +56,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private ImageView       ImageView_BackOrder;
     private ImageView       ImageView_deleteProduct;
     private ImageView       ImageView_Back;
+    private Button          Button_ConfirmOrder;
+    private Button          Button_CancelOrder;
     private EditText        EditText_SearchProduct;
     private TextView        TextView_NoProducts;
     private ProgressBar     ProgressBar_LoadingProducts;
@@ -64,6 +70,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     private boolean                         isOrdering;
     //DATA
     private ArrayList<Product>   ListProducts;
+    private ArrayList<Product>   ListProductsBeforeOrder;
+
     private CategoriaMenu        Categoria;
     private String               Category_Name;
 
@@ -135,6 +143,10 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         ImageView_deleteProduct     = View_fragment.findViewById(R.id.ic_delete_product);
         ImageView_Back              = View_fragment.findViewById(R.id.ic_back);
         EditText_SearchProduct      = View_fragment.findViewById(R.id.edit_text_search_product);
+        Button_ConfirmOrder         = View_fragment.findViewById(R.id.button_confirm_orders);
+        Button_CancelOrder          = View_fragment.findViewById(R.id.button_cancel_orders);
+        ConstraintLayout_SearchBox  = View_fragment.findViewById(R.id.constraint_layout_search_box);
+
 
         ProgressBar_LoadingProducts = View_fragment.findViewById(R.id.progressbar);
         TextView_NoProducts         = View_fragment.findViewById(R.id.text_view_empty);
@@ -155,8 +167,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         ImageView_BackOrder     .setOnClickListener(            view -> onOrderClick());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
         ImageView_Back          .setOnClickListener(            view -> manager.goBack());
-
-
+        Button_CancelOrder      .setOnClickListener(            view -> onCancelOrder());
+        Button_ConfirmOrder     .setOnClickListener(            view -> onConfirmOrder());
     }
 
     private void initListProductsRV( ){
@@ -232,24 +244,69 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         SendAction(action);
     }
     private void onOrderClick(){
+
         if(isOrdering){
             adapter_product.hideMoveIcon();
             ImageView_BackOrder.startAnimation(Manager_Animation.getFadeOut(300));
-            new Handler(Looper.getMainLooper()).postDelayed(()->ImageView_BackOrder.setVisibility(View.INVISIBLE),300);
+            Button_CancelOrder.startAnimation(Manager_Animation.getFadeOut(300));
+            Button_ConfirmOrder.startAnimation(Manager_Animation.getFadeOut(300));
+            ConstraintLayout_SearchBox.setVisibility(View.VISIBLE);
+            ConstraintLayout_SearchBox.startAnimation(Manager_Animation.getFadeIn(500));
+            new Handler(Looper.getMainLooper()).postDelayed(()->
+            {
+                ImageView_BackOrder.setVisibility(View.INVISIBLE);
+                Button_CancelOrder.setVisibility(View.GONE);
+                Button_ConfirmOrder.setVisibility(View.GONE);
+            },300);
             isOrdering = false;
+
         }else{
+            ListProductsBeforeOrder = new ArrayList<>(ListProducts);
+
             adapter_product.showMoveIcon();
             ImageView_BackOrder.setVisibility(View.VISIBLE);
             ImageView_BackOrder.startAnimation(Manager_Animation.getFadeIn(300));
             isOrdering = true;
+            ConstraintLayout_SearchBox.startAnimation(Manager_Animation.getFadeOut(300));
+            Button_CancelOrder.setVisibility(View.VISIBLE);
+            Button_ConfirmOrder.setVisibility(View.VISIBLE);
+            Button_CancelOrder.startAnimation(Manager_Animation.getFadeIn(500));
+            Button_ConfirmOrder.startAnimation(Manager_Animation.getFadeIn(500));
+            new Handler(Looper.getMainLooper()).postDelayed(()->
+            {
+                ConstraintLayout_SearchBox.setVisibility(View.GONE);
+            },300);
+
         }
     }
+
+    private void onCancelOrder(){
+        setProductsOnLayout(ListProductsBeforeOrder);
+
+        onOrderClick();
+    }
+
+    private void onConfirmOrder(){
+
+        if(adapter_product.getListProducts() != null && adapter_product.getListProducts().get(0).getOrder() != null){
+            UpdateOrderProducts(adapter_product.getListProducts());
+            ListProducts = new ArrayList<>(adapter_product.getListProducts());
+        }
+
+
+        onOrderClick();
+    }
+
 
     //FUNCTIONAL
     private void SendAction(Action action){
         manager.HandleAction(action);
     }
 
+    private void UpdateOrderProducts(ArrayList<Product> NewListProducts){
+        Action action = new Action(ActionsListProducts.INDEX_ACTION_ORDER_PRODUCTS,NewListProducts);
+        SendAction(action);
+    }
     private void checkEmptyRecycle(){
         if(ListProducts.isEmpty()) {
             TextView_NoProducts.setVisibility(View.VISIBLE);

@@ -61,6 +61,11 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         ListProducts.remove(product);
         ListProducts.add(toPosition,product);
         notifyItemMoved(fromPosition, toPosition);
+        int position = 0;
+        for(Product product1 : ListProducts){
+            ListProducts.get(position).setOrder(position);
+            position+=1;
+        }
     }
 
     public void setTouchHelper(ItemTouchHelper touchHelper){
@@ -167,6 +172,10 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         isOrdering = false;
     }
 
+    public ArrayList<Product> getListProducts() {
+        return ListProducts;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -250,7 +259,6 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         Log.d(TAG, "clickDeleteCategory: "+holder.Text_View_Title_Product.getText().toString());
         RecycleEventListener.onClickItemOption(holder.Text_View_Title_Product.getText().toString(),ListProducts.get(position).getID_product());
     }
-
 
     //FUNCTIONAL
     public void filterList(String filteredCategory){
