@@ -253,7 +253,7 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         Log.d(TAG, " Array: "   + this.ListProducts.get(position).getNameProduct());
         Log.d(TAG, "--------------------------------------");
 
-        //RecycleEventListener.onClickItem(TitleProducts.get(position));
+        RecycleEventListener.onClickItem(ListProducts.get(position));
     }
     private void clickDeleteProduct(int position, ViewHolder holder){
         Log.d(TAG, "clickDeleteCategory: "+holder.Text_View_Title_Product.getText().toString());

@@ -41,6 +41,8 @@ import com.ratatouille.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlinx.coroutines.channels.Send;
+
 public class Fragment_ListProducts extends Fragment implements ViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_ListProducts";
@@ -164,7 +166,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         RecycleEventListener    .setOnClickItemOptionAdapterListener( this::onClickDeleteProduct );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
         ImageView_Order         .setOnClickListener(            view -> onOrderClick());
-        ImageView_BackOrder     .setOnClickListener(            view -> onOrderClick());
+        ImageView_BackOrder     .setOnClickListener(            view -> onCancelOrder());
         ImageView_deleteProduct .setOnClickListener(            view -> onClickDeleteMember());
         ImageView_Back          .setOnClickListener(            view -> manager.goBack());
         Button_CancelOrder      .setOnClickListener(            view -> onCancelOrder());
@@ -218,7 +220,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     //ACTIONS *************************************************************************
     private void onClickProduct(Product product){
         //Log.d(TAG, "PreparerData: Hai premuto l'item->"+product);
-        toProductAnimations();
+        Action action = new Action(ActionsListProducts.INDEX_ACTION_OPEN_PRODUCT,product);
+        SendAction(action);
     }
 
     private void onClickAddProduct(){
@@ -355,7 +358,8 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         else toMenuAnimations();
         ImageView_Back              .startAnimation( Manager_Animation.getTranslateAnimatioOUT(300) );
         EditText_SearchProduct      .startAnimation( Manager_Animation.getFadeOut(300));
-
+        Button_CancelOrder          .startAnimation(Manager_Animation.getFadeOut(300));
+        Button_ConfirmOrder          .startAnimation(Manager_Animation.getFadeOut(300));
     }
 
     public void fromMenuAnimations(){
@@ -367,14 +371,13 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
         ImageView_deleteProduct .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
         ImageView_AddProduct    .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
-        ImageView_Order         .startAnimation( Manager_Animation.getTranslationINfromUp(300) );
     }
 
     public void toMenuAnimations(){
         Text_View_TitleCategory .startAnimation( Manager_Animation.getTranslationOUTtoDown(300) );
         Recycler_Products       .startAnimation( Manager_Animation.getTranslateAnimatioOUTtoRight(300) );
         ImageView_Order         .startAnimation( Manager_Animation.getTranslationOUTtoDown(300) );
-
+        if(ImageView_BackOrder.getVisibility() == View.VISIBLE) ImageView_BackOrder     .startAnimation( Manager_Animation.getTranslationOUTtoDown(300));
     }
 
     public void toProductAnimations(){
@@ -383,6 +386,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
         ImageView_deleteProduct .startAnimation( Manager_Animation.getTranslationOUTtoUp(300) );
         ImageView_AddProduct    .startAnimation( Manager_Animation.getTranslationOUTtoUp(300) );
         ImageView_Order         .startAnimation( Manager_Animation.getTranslationOUTtoUp(300) );
+        if(ImageView_BackOrder.getVisibility() == View.VISIBLE) ImageView_BackOrder     .startAnimation( Manager_Animation.getTranslationOUTtoUp(300));
     }
 
     private void StartAnimationProducts(){

@@ -37,7 +37,7 @@ public class ActionsListProducts extends ActionsViewHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: OpenProductInfo_ActionHandler->");
-
+            action.getManager().changeOnMain(ControlMapper.INDEX_MENU_INFO_PRODUCT,action.getData());
         }
     }
 
@@ -92,8 +92,7 @@ public class ActionsListProducts extends ActionsViewHandler {
             sendUpdateOrderProductToServer((ArrayList<Product>) action.getData());
         }
 
-        private boolean sendUpdateOrderProductToServer(ArrayList<Product> ListProducts){
-
+        private void sendUpdateOrderProductToServer(ArrayList<Product> ListProducts){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("nProducts",  ListProducts.size()+"");
             int index = 0;
@@ -110,16 +109,16 @@ public class ActionsListProducts extends ActionsViewHandler {
                 JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
                 if( BodyJSON != null ){
                     String Msg = BodyJSON.getString("DATA");
-                    if(Msg.contains("0 Connessione DB Fallita")) return false;
+                    //if(Msg.contains("0 Connessione DB Fallita")) return false;
                 }else{
                     Log.d(TAG, "sendUpdateOrderProductToServer: false");
-                    return false;
+                    //return false;
                 }
             }catch (Exception e){
                 Log.e(TAG, "sendUpdateOrderProductToServer: ",e);
             }
             Log.d(TAG, "sendUpdateOrderProductToServer: true");
-            return true;
+            //return true;
         }
     }
 
