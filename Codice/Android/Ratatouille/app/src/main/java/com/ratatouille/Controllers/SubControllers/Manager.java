@@ -106,7 +106,7 @@ public class Manager implements SubController {
         IndexFrom = IndexOnMain;
 
         ViewsFragments.get( getPositionView(IndexFrom) ).EndAnimations();
-
+        Log.d(TAG, "goBack: stackCount ->" + fragmentManager.getBackStackEntryCount());
         if(fragmentManager.getBackStackEntryCount() > 1){
             IndexOnMain = Integer.parseInt(Objects.requireNonNull(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2).getName()));
             getSourceInfo().setIndex_TypeView(IndexOnMain);
@@ -132,7 +132,7 @@ public class Manager implements SubController {
         fragmentManager.beginTransaction()
                 .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(positionList), String.valueOf(IndexOnMain))
                 .setReorderingAllowed(true)
-                .addToBackStack(String.valueOf(IndexOnMain))
+                .addToBackStack( String.valueOf(IndexOnMain) )
                 .commit();
     }
     private int getPositionView(int indexFragment){

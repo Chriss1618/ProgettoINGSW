@@ -4,9 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +23,9 @@ import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
+import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
@@ -31,8 +37,6 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
     //LAYOUT
     private View            Fragment_View;
-    private ImageView       ImageView_Logo;
-    private LinearLayout    Background;
     private Button          Button_Accedi;
     private Button          Button_RegistraRistorante;
     private TextView        Text_View_Welcome;
@@ -49,8 +53,8 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,8 +82,6 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
-        ImageView_Logo              = Fragment_View.findViewById(R.id.image_view_logo);
-        Background                  = Fragment_View.findViewById(R.id.background);
         Button_Accedi               = Fragment_View.findViewById(R.id.button_start);
         Text_View_Welcome           = Fragment_View.findViewById(R.id.text_view_welcome);
         Button_RegistraRistorante   = Fragment_View.findViewById(R.id.button_new_amministratore);
@@ -124,44 +126,30 @@ public class Fragment_Welcome extends Fragment implements ViewLayout {
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));
     }
 
-    public void RotateLogo(){
-        ImageView_Logo.animate().rotation(360).setDuration(2000).start();
-        ImageView_Logo.animate().alpha(0f).setDuration(0).start();
-        ImageView_Logo.animate().alpha(1f).setDuration(500).start();
-        ImageView_Logo.startAnimation(Manager_Animation.getTranslationINfromUp(700));
-    }
     private void animateIN(){
-        Button_Accedi               .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
-        Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationINfromDown(1000));
-        Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationINfromUp(1000));
-        MoveLogoFrom0to1();
-        RotateLogo();
+        requireActivity().runOnUiThread(() -> {
+            Log.d(TAG, "animateIN: Executed");
+            Button_Accedi.startAnimation(Manager_Animation.getTranslationINfromDown(1000));
+            Button_RegistraRistorante.startAnimation(Manager_Animation.getTranslationINfromDown(1000));
+            Text_View_Welcome.startAnimation(Manager_Animation.getTranslationINfromUp(1000));
+        });
     }
+
     private void animateOUT(){
         requireActivity().runOnUiThread(() -> {
             Button_Accedi               .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
             Button_RegistraRistorante   .startAnimation(Manager_Animation.getTranslationOUTtoDown(1000));
             Text_View_Welcome           .startAnimation(Manager_Animation.getTranslationOUTtoUp(1000));
 
-            MoveLogoFrom1to2();
-            Background.setVisibility(View.VISIBLE);
-            Background.startAnimation(Manager_Animation.getCircleReveal());
-            Try.run(() -> {
-                Button_Accedi.setVisibility(View.GONE);
-                Button_RegistraRistorante.setVisibility(View.GONE);
-            });
+            MoveLogo();
              //Attesa animazinoe Rotazione LOGO
         });
 
     }
 
-    public void MoveLogoFrom0to1(){
-        ImageView_Logo.animate().rotation(180).setDuration(500).start();
-        ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
-    }
-    public void MoveLogoFrom1to2(){
-        ImageView_Logo.animate().rotation(180).setDuration(1000).start();
-        ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoUp());
+    public void MoveLogo(){
+        ((Activity_Login) requireActivity()).fromWelcomeToLogin();
+        //animateIN();
     }
 
 }

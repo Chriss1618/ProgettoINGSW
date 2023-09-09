@@ -42,6 +42,8 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     private TextView    TextView_AllergeniProduct;
     private TextView    TextView_TitleAllergeniProduct;
     private TextView    TextView_PriceProduct;
+    private TextView    TextView_NameRicettaProduct;
+    private TextView    TextView_DoseRicettaProduct;
     private CardView    Card_Item_Product;
     private ImageView   ImageView_Edit_Product;
     private ProgressBar ProgressBar_Loading;
@@ -100,16 +102,18 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
-        LinearLayout_Ingredients = View_fragment.findViewById(R.id.linear_layout_ingredients);
-        Text_View_Title_Product = View_fragment.findViewById(R.id.text_view_name_product);
-        Card_Item_Product       = View_fragment.findViewById(R.id.card_view_element_product);
-        ImageView_Edit_Product  = View_fragment.findViewById(R.id.ic_edit_product);
-        ProgressBar_Loading     = View_fragment.findViewById(R.id.progressbar_existing);
+        LinearLayout_Ingredients    = View_fragment.findViewById(R.id.linear_layout_ingredients);
+        Text_View_Title_Product     = View_fragment.findViewById(R.id.text_view_name_product);
+        Card_Item_Product           = View_fragment.findViewById(R.id.card_view_element_product);
+        ImageView_Edit_Product      = View_fragment.findViewById(R.id.ic_edit_product);
+        ProgressBar_Loading         = View_fragment.findViewById(R.id.progressbar_existing);
         ImageView_Product           = View_fragment.findViewById(R.id.image_view_product);
         TextView_DescrizioneProduct = View_fragment.findViewById(R.id.text_view_product_description);
         TextView_AllergeniProduct   = View_fragment.findViewById(R.id.text_view_product_allergeni);
         TextView_TitleAllergeniProduct   = View_fragment.findViewById(R.id.text_view_title_allergeni);
         TextView_PriceProduct       = View_fragment.findViewById(R.id.text_view_price);
+        TextView_NameRicettaProduct = View_fragment.findViewById(R.id.text_view_product_ingredienti);
+        TextView_DoseRicettaProduct = View_fragment.findViewById(R.id.text_view_product_dosi);
     }
     @Override
     public void SetActionsOfLayout() {
@@ -141,9 +145,20 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
 
     //FUNCTIONAL
     private void setRicettarioOnLayout(ArrayList<Ricettario> ListIngredient){
+
+        Log.d(TAG, "setRicettarioOnLayout: Ricevutooo");
         requireActivity().runOnUiThread(()->{
-            LinearLayout_Ingredients.setVisibility(View.VISIBLE);
-            ProgressBar_Loading        .setVisibility(View.GONE);
+            Product.setRicette(ListIngredient);
+
+            for(Ricettario ricettario : Product.getRicette()){
+                String name = TextView_NameRicettaProduct.getText().toString() + ricettario.getIngredient().getNameIngredient() + "\n" ;
+                TextView_NameRicettaProduct.setText(name);
+
+                String dose = TextView_DoseRicettaProduct.getText().toString() + ricettario.getDosi() + "\n" ;
+                TextView_DoseRicettaProduct.setText(dose);
+            }
+            LinearLayout_Ingredients    .setVisibility(View.VISIBLE);
+            ProgressBar_Loading         .setVisibility(View.GONE);
 
         });
     }

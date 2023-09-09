@@ -1,5 +1,7 @@
 package com.ratatouille.Models.Animation;
 
+import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -118,30 +120,78 @@ public class Manager_Animation {
         return fade_in;
     }
 
-    public static AnimationSet getTranslateLogoDown(){
+    public static AnimationSet getTranslateLogoDown(Context context){
+//        AnimationSet set = new AnimationSet(true);
+//
+//        TranslateAnimation TA = new TranslateAnimation(
+//                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+//                TranslateAnimation.RELATIVE_TO_PARENT,-1f,
+//                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+//                TranslateAnimation.RELATIVE_TO_PARENT,0.69f);
+//        TA.setDuration(500);
+//        TA.setInterpolator(new LinearInterpolator());
+//
+//        set.addAnimation(TA);
+//        return set;
+
         AnimationSet set = new AnimationSet(true);
 
+// Get the screen width in dp
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
+
+// Calculate the duration as a fraction of the screen width
+        float screenWidthFraction = 0.5f; // Adjust this fraction as needed
+        long durationMillis = (long) (screenWidthDp * screenWidthFraction);
+
         TranslateAnimation TA = new TranslateAnimation(
-                TranslateAnimation.RELATIVE_TO_PARENT,0f,
-                TranslateAnimation.RELATIVE_TO_PARENT,-1f,
-                TranslateAnimation.RELATIVE_TO_PARENT,0f,
-                TranslateAnimation.RELATIVE_TO_PARENT,0.69f);
-        TA.setDuration(500);
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, -0.5f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f
+        );
+        TA.setDuration(durationMillis);
         TA.setInterpolator(new LinearInterpolator());
 
+        Animation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+        fadeOut.setDuration(durationMillis);
+
         set.addAnimation(TA);
+        set.addAnimation(fadeOut);
+
         return set;
     }
 
-    public static AnimationSet getTranslateLogoUp(){
+    public static AnimationSet getTranslateLogoUp(Context context){
+//        AnimationSet set = new AnimationSet(true);
+//
+//        TranslateAnimation TA = new TranslateAnimation(
+//                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+//                TranslateAnimation.RELATIVE_TO_PARENT,0.5f,
+//                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+//                TranslateAnimation.RELATIVE_TO_PARENT,-0.35f);
+//        TA.setDuration(500);
+//        TA.setInterpolator(new LinearInterpolator());
+//
+//        set.addAnimation(TA);
+//        return set;
         AnimationSet set = new AnimationSet(true);
 
+// Get the screen width in dp
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
+
+// Calculate the duration as a fraction of the screen width
+        float screenWidthFraction = 0.5f; // Adjust this fraction as needed
+        long durationMillis = (long) (screenWidthDp * screenWidthFraction);
+
         TranslateAnimation TA = new TranslateAnimation(
-                TranslateAnimation.RELATIVE_TO_PARENT,0f,
-                TranslateAnimation.RELATIVE_TO_PARENT,0.5f,
-                TranslateAnimation.RELATIVE_TO_PARENT,0f,
-                TranslateAnimation.RELATIVE_TO_PARENT,-0.35f);
-        TA.setDuration(500);
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0.5f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, -0.35f
+        );
+        TA.setDuration(durationMillis);
         TA.setInterpolator(new LinearInterpolator());
 
         set.addAnimation(TA);

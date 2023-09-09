@@ -150,18 +150,6 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/image_view_logo"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:contentDescription="@string/rotation_logo"
-        android:rotation="180"
-        android:src="@mipmap/ratatouille"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

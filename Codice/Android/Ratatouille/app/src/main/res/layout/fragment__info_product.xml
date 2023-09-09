@@ -208,7 +208,7 @@
                             android:autoSizeTextType="uniform"
                             android:fontFamily="@font/sf_compact_rounded"
                             android:gravity="start"
-                            android:text="@string/Esempio_Ingerdienti"
+                            android:text=""
                             android:textColor="@color/DarkGray"
                             android:textSize="15sp" />
 
@@ -221,7 +221,7 @@
                             android:autoSizeTextType="uniform"
                             android:fontFamily="@font/sf_compact_rounded"
                             android:gravity="end"
-                            android:text="@string/Esempio_Dosi"
+                            android:text=""
                             android:textColor="@color/DarkGray"
                             android:textSize="15sp" />
                     </LinearLayout>

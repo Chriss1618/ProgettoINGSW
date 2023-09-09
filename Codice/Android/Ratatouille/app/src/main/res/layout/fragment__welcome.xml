@@ -6,21 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Views.Schermate.Login.Fragment.Fragment_Welcome"
-    android:background="@color/MainColor">
-
-
-
-    <LinearLayout
-        android:id="@+id/background"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@drawable/circle"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    >
 
     <TextView
         android:id="@+id/text_view_welcome"
@@ -87,15 +73,6 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/image_view_logo"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:contentDescription="@string/imagine_logo"
-        android:src="@mipmap/ratatouille"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

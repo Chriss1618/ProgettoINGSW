@@ -22,7 +22,9 @@ import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
+import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
@@ -227,8 +229,7 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     }
 
     public void MoveLogoFrom1to2(){
-        ImageView_Logo.animate().rotation(360).setDuration(1000).start();
-        ImageView_Logo.startAnimation(Manager_Animation.getTranslateLogoDown());
+        ((Activity_Login) requireActivity()).backLoginToWelcome();
 
     }
 }

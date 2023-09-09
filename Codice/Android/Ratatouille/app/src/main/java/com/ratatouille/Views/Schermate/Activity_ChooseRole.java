@@ -1,6 +1,8 @@
 package com.ratatouille.Views.Schermate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     private static final String TAG = "Activity_ChooseRole";
 
     //LAYOUT
+    private MotionLayout motionLayout;
     private ImageView ImageView_Logo;
     private LinearLayout Background;
 
@@ -35,10 +38,8 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_role);
 
-        PrepareData();
-
         PrepareLayout();
-
+        PrepareData();
         StartAnimations();
     }
 
@@ -62,7 +63,7 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
 
     @Override
     public void LinkLayout() {
-
+        motionLayout            = findViewById(R.id.loading_activity);
         ImageView_Logo          = findViewById(R.id.image_view_logo);
         Background              = findViewById(R.id.background);
     }
@@ -77,28 +78,31 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     //FUNCTIONAL
     private void startLogin(){
         closeLoading();
-        Try.run(() -> TimeUnit.MILLISECONDS.sleep(400));
+        Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
         Intent intent = new Intent(this, Activity_Login.class);
         startActivity(intent);
+        overridePendingTransition(0, 0);
         finish();
     }
 
     private boolean AuthenticateUser(){
-        return (String) new LocalStorage(this).getData("Token","String") != null;
+        return new LocalStorage(this).getData("Token","String") != null;
     }
 
     private void startApp(){
         Log.d(TAG, " -> User Logged in! <- ");
         closeLoading();
+        Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
         Intent intent = new Intent(this, Activity_Amministratore.class);
         startActivity(intent);
+        overridePendingTransition(0, 0);
         finish();
     }
 
     //ANIMATIONS
     @Override
     public void StartAnimations() {
-        new Thread(this::rotateAnimationLogo).start();
+
     }
     @Override
     public void EndAnimations() {
@@ -106,30 +110,7 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     }
 
     private void closeLoading(){
-        runOnUiThread(() -> {
-            ImageView_Logo.animate().alpha(0f).setDuration(300).start();
-            Background.setVisibility(View.VISIBLE);
-            Background.startAnimation(Manager_Animation.getCircleReveal());
-        });
-
-    }
-    private void rotateAnimationLogo()  {
-        rotation(420);
-    }
-    private void rotation(int speed){
-//        runOnUiThread(() -> ImageView_Logo.animate().rotation(speed).setDuration(5000)
-//                .withEndAction( () -> rotation((numGiri++ % 2 == 0) ? -420 : 420) ).start()
-//        );
-        runOnUiThread(() -> ImageView_Logo.animate()
-                .rotationBy(speed) // Use rotationBy instead of setting absolute rotation value
-                .setDuration(5000)
-                .withEndAction(() -> {
-                    // This will be executed when the animation ends
-                    int nextSpeed = (numGiri++ % 2 == 0) ? -420 : 420;
-                    rotation(nextSpeed);
-                })
-                .start()
-        );
-
+        motionLayout.setTransition(R.id.start_app_transition);
+        motionLayout.transitionToEnd();
     }
 }

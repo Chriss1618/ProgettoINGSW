@@ -23,14 +23,14 @@ public class ActionsLogin extends ActionsViewHandler{
     public final static int INDEX_ACTION_START_REGISTER_ADMIN   = 0;
     public final static int INDEX_ACTION_START_LOGIN            = 1;
     public final static int INDEX_ACTION_LOGIN                  = 2;
-    public final static int INDEX_ACTION_REGISTER_ADMIN            = 3;
+    public final static int INDEX_ACTION_REGISTER_ADMIN         = 3;
 
     public ActionsLogin(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_START_REGISTER_ADMIN,     new StartRegisterAdmin_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_START_LOGIN,              new StartLogin_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_LOGIN,                    new Login_ActionHandler());
-        actionHandlerMap.put(INDEX_ACTION_REGISTER_ADMIN,              new RegisterAdmin_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_REGISTER_ADMIN,           new RegisterAdmin_ActionHandler());
     }
     private static class StartRegisterAdmin_ActionHandler implements ActionHandler{
         @Override
