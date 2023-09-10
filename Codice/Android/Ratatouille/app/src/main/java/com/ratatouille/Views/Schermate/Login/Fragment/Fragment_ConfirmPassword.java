@@ -24,6 +24,7 @@ import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Activity_Amministratore;
 import com.ratatouille.Views.Schermate.Activity_ChooseRole;
+import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
 import java.security.SecureRandom;
 import java.util.Random;
@@ -33,15 +34,6 @@ import io.vavr.control.Try;
 import maes.tech.intentanim.CustomIntent;
 
 public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     //SYSTEM
     private static final String TAG = "Fragment_ConfirmPasswor";
@@ -71,10 +63,7 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -196,13 +185,14 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
         Background.setVisibility(View.VISIBLE);
         Background.startAnimation(Manager_Animation.getCircleReveal());
         Button_Save.startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        ((Activity_Login) requireActivity()).fromConfirmToApp();
         final Handler handler = new Handler();
         handler.postDelayed(()->{
             Button_Save.setVisibility(View.GONE);
             getContext().startActivity(intent);
+            getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
             getActivity().finish();
-            getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             //CustomIntent.customType(manager.context,"fadein-to-fadeout");
         },300);
     }

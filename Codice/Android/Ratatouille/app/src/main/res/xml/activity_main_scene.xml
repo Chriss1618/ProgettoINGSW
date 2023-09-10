@@ -109,9 +109,61 @@
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/confirm">
+        <Constraint
+            android:id="@+id/linear_layout_container_fragment"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/image_view_logo"
+            motion:layout_constraintVertical_bias="1.0"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintEnd_toStartOf="parent"
+            android:layout_marginBottom="16dp"
+            android:rotation="0" />
+        <Constraint
+            android:id="@+id/constraintLayout_background"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:scaleX="5"
+            android:scaleY="5" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/starting_app">
+        <Constraint
+            android:id="@+id/constraintLayout_background"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:scaleX="0"
+            android:scaleY="0" />
+        <Constraint
+            android:layout_height="150dp"
+            motion:layout_constraintEnd_toStartOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="180dp"
+            android:id="@+id/image_view_logo"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="-100dp"
+            android:layout_marginBottom="16dp"
+            motion:layout_constraintVertical_bias="1.0"
+            android:rotation="-90" />
     </ConstraintSet>
     <Transition
         android:id="@+id/welcome_to_login_transition"
@@ -121,7 +173,11 @@
 
     </Transition>
     <Transition
-        android:id="@+id/login_to_welcome_transition"
+        android:id="@+id/login_to_confirm_transition"
         motion:constraintSetStart="@+id/login"
-        motion:constraintSetEnd="@+id/welcome" />
+        motion:constraintSetEnd="@+id/confirm" />
+    <Transition
+        android:id="@+id/toApp_transition"
+        motion:constraintSetStart="@+id/confirm"
+        motion:constraintSetEnd="@+id/starting_app" />
 </MotionScene>

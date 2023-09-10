@@ -229,7 +229,6 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     }
 
     public void MoveLogoFrom1to2(){
-        ((Activity_Login) requireActivity()).backLoginToWelcome();
-
+        ((Activity_Login) requireActivity()).fromLoginToConfirm();
     }
 }

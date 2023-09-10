@@ -75,7 +75,6 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
 
     @Override
     public void LinkLayout() {
-        typeUser = "Supervisore";
         switch (typeUser){
             case ControlMapper.INDEX_TYPE_USER_AMMINISTRATORE:
                 Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_amm);

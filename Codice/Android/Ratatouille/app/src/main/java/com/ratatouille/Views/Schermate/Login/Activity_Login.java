@@ -29,6 +29,7 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     //LAYOUT
     View            Fragment_View;
     MotionLayout    MotionLayout;
+    ImageView       ImageView_Logo;
 
     //FUNCTIONAL
     private Manager ManagerLogin;
@@ -75,6 +76,7 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     public void LinkLayout() {
         Fragment_View       = findViewById(R.id.fragment_container_view_login);
         MotionLayout        = findViewById(R.id.login_activity);
+        ImageView_Logo        = findViewById(R.id.image_view_logo);
     }
     @Override
     public void SetDataOnLayout() {
@@ -115,19 +117,14 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
         MotionLayout.transitionToEnd();
     }
 
-    public void backLoginToWelcome(){
-        MotionLayout.setTransition(R.id.login_to_welcome_transition);
+    public void fromLoginToConfirm(){
+        MotionLayout.setTransition(R.id.login_to_confirm_transition);
         MotionLayout.transitionToEnd();
-        Fragment_View       = findViewById(R.id.fragment_container_view_login);
-        Fragment_View.setVisibility(View.VISIBLE);
-
     }
 
-    private void fromLoginToConfirm(){
-
-    }
-
-    private void fromConfirmToApp(){
+    public void fromConfirmToApp(){
+        MotionLayout.setTransition(R.id.toApp_transition);
+        MotionLayout.transitionToEnd();
 
     }
 

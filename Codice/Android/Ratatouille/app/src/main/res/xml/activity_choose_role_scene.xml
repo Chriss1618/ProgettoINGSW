@@ -41,7 +41,7 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            android:rotation="420"
+            android:rotation="500"
             android:scaleX="0"
             android:scaleY="0"/>
         <Constraint
@@ -59,7 +59,8 @@
     <Transition
         android:id="@+id/start_app_transition"
         motion:constraintSetStart="@+id/end"
-        motion:constraintSetEnd="@+id/starting_app" >
+        motion:constraintSetEnd="@+id/starting_app"
+        motion:motionInterpolator="cubic(0.73,0.12,0.58,0.78)">
         <KeyFrameSet >
             <KeyAttribute
                 motion:motionTarget="@+id/image_view_logo"
