@@ -14,35 +14,44 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="UselessParent">
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar_menu_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="center"
             android:padding="8dp"
-            android:layout_marginTop="16dp">
+            android:orientation="horizontal">
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="start|center_vertical"
-                android:layout_marginStart="0dp">
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ic_back"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:padding="8dp"
                     android:clickable="true"
                     android:contentDescription="@string/icon_add"
+                    android:padding="8dp"
                     android:src="@drawable/ic_back" />
 
                 <TextView
                     android:id="@+id/text_view_title_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
 
+                    android:singleLine="true"
                     android:fontFamily="@font/sf_compact_rounded_bold"
                     android:text="@string/categoria"
                     android:textColor="@color/SoftBlack"
@@ -50,11 +59,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical|end"
-                android:layout_marginEnd="16dp">
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -66,15 +79,14 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:clickable="true"
-                        android:src="@drawable/ic_order"
                         android:contentDescription="@string/icon_add"
+                        android:src="@drawable/ic_order"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:visibility="invisible"
                         android:id="@+id/ic_back_order"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -82,12 +94,14 @@
                         android:contentDescription="@string/icon_add"
                         android:rotation="45"
                         android:src="@drawable/baseline_horizontal_rule_24"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <ImageView
                     android:id="@+id/ic_add_product"
                     android:layout_width="24dp"
@@ -95,19 +109,21 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:clickable="true"
-                    android:src="@drawable/ic_add_category"
-                    android:contentDescription="@string/icon_add" />
+                    android:contentDescription="@string/icon_add"
+                    android:src="@drawable/ic_add_category" />
+
                 <ImageView
                     android:id="@+id/ic_delete_product"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="8dp"
                     android:clickable="true"
-                    android:src="@drawable/ic_trash_category"
-                    android:contentDescription="@string/icon_delete"/>
+                    android:contentDescription="@string/icon_delete"
+                    android:src="@drawable/ic_trash_category" />
 
             </LinearLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

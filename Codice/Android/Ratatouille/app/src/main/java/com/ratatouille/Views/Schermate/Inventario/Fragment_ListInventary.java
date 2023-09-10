@@ -54,6 +54,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     private RecyclerView    Recycler_Products_Exist;
     private RecyclerView    Recycler_Products_Missing;
     private ImageView       ImageView_AddIngredient;
+    private ImageView       ImageView_Back;
     private ImageView       ImageView_DeleteProduct;
     private ProgressBar     ProgressBar_Existing;
     private ProgressBar     ProgressBar_Missing;
@@ -145,6 +146,10 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         ImageView_DeleteProduct     = View_Fragment.findViewById(R.id.ic_delete_product);
         ImageView_AddIngredient     = View_Fragment.findViewById(R.id.ic_add_ingrediente);
 
+        ImageView_Back              = View_Fragment.findViewById(R.id.ic_back);
+        if(manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.INDEX_TYPE_MANAGER_MENU)  ImageView_Back.setVisibility(View.VISIBLE);
+        else ImageView_Back.setVisibility(View.GONE);
+
         //Dialog
         LinearLayout_DarkL      = View_Fragment.findViewById(R.id.darkRL);
         LinearLayout_Dialog     = View_Fragment.findViewById(R.id.linear_layout_add_ingredient_dialog);
@@ -157,6 +162,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
 
         ImageView_DeleteProduct .setOnClickListener              (view -> onClickDeleteIngredients());
         ImageView_AddIngredient .setOnClickListener              (view -> onCLickAddNewIngredient());
+        ImageView_Back .setOnClickListener( view -> manager.goBack());
 
 
     }
