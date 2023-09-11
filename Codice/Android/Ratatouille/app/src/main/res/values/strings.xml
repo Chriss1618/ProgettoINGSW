@@ -3,7 +3,7 @@
     <string name="login">Login</string>
     <string name="under_login">Immetti la password che ti è stata inviata tramite mail!</string>
     <string name="email">EMAIL</string>
-    <string name="inserisci_la_tua_email">Inserisci la tua Email</string>
+    <string name="inserisci_la_sua_email">Inserisci la sua Email</string>
     <string name="password">PASSWORD</string>
     <string name="inserisci_la_password">Inserisci la Password</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -101,4 +101,8 @@
     <string name="specificare_la_grandezza">Specificare la grandezza!</string>
     <string name="prodotto_creato">Prodotto Creato !</string>
     <string name="conferma">CONFERMA</string>
+    <string name="inserisci_il_suo_cognome">Inserisci il suo Cognome</string>
+    <string name="devi_selezionare_un_ruolo">Devi selezionare un ruolo</string>
+    <string name="tutti_i_campi_devono_essere_compilati">Tutti i campi devono essere compilati</string>
+    <string name="utente_creato">Utente Creato!</string>
 </resources>

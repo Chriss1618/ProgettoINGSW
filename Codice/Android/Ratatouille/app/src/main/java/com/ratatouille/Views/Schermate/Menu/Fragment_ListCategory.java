@@ -142,8 +142,8 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         Recycler_Categories.setLayoutManager(mLayoutManager);
         Recycler_Categories.setNestedScrollingEnabled(false);
-        checkEmptyRecycle();
 
+        checkEmptyRecycle();
     }
 
     //ACTIONS *************************************************************************

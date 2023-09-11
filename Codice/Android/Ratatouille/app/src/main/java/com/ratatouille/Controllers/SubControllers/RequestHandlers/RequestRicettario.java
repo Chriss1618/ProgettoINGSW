@@ -2,21 +2,16 @@ package com.ratatouille.Controllers.SubControllers.RequestHandlers;
 
 import android.net.Uri;
 import android.util.Log;
-
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Request.Request;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class RequestRicettario implements RequestHandler{
     //SYSTEM

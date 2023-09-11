@@ -74,7 +74,7 @@
                     android:maxLength="20"
                     android:maxLines="1"
                     android:text="Ruolo"
-                    android:textColor="@color/Gray" />
+                    android:textColor="@color/DarkGray" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,7 +95,7 @@
 
                     android:text="Stato Account"
 
-                    android:textColor="@color/Gray" />
+                    android:textColor="@color/DarkGray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

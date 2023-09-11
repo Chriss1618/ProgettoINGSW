@@ -3,6 +3,8 @@ package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
@@ -55,6 +57,9 @@ public class ActionsLogin extends ActionsViewHandler{
         @Override
         public void handleAction(Action action) {
             Context context = action.getManager().context;
+            user = (Utente) action.getData();
+            getFCMToken(action);
+            Log.d(TAG, "handleAction: Token user Created ->" + user.getToken());
             if(getUserFromServer(action)){
                 new LocalStorage(context).putData("ID_Utente", user.getId_utente());
                 new LocalStorage(context).putData("ID_Ristorante", user.getId_Restaurant());
@@ -72,16 +77,36 @@ public class ActionsLogin extends ActionsViewHandler{
                 action.callBack(false);
             }
         }
+        private void getFCMToken(Action action) {
+            try {
+                final CountDownLatch latch = new CountDownLatch(1);
+                FirebaseApp.initializeApp(action.getManager().context);
+
+                FirebaseMessaging.getInstance().getToken() .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String token = task.getResult();
+                        user.setToken(token);
+                        Log.d(TAG, "getFCMToken: Ecco nuovo Token");
+                    } else {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                    }
+                    latch.countDown();
+                });
+                latch.await();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         private boolean getUserFromServer(Action action){
-            user = (Utente)action.getData();
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("Email", user.getEmail())
-                    .appendQueryParameter("Password",user.getPassword());
+                    .appendQueryParameter("Password",user.getPassword())
+                    .appendQueryParameter("Token",user.getToken());
             String url = EndPointer.StandardPath + "/Login.php";
 
             try {
                 JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-                if( BodyJSON != null && BodyJSON.getString("MSG").contains("1")){
+                if( BodyJSON != null && BodyJSON.getString("MSG_STATUS").contains("1")){
                     JSONArray DATA_Json = new JSONArray(BodyJSON.getString("DATA"));
                     JSONObject utente_Json = new JSONObject(DATA_Json.getString(0));
 
@@ -89,7 +114,6 @@ public class ActionsLogin extends ActionsViewHandler{
                     user.setId_Restaurant(Integer.parseInt( utente_Json.getString("ID_Ristorante") ));
                     user.setNome(utente_Json.getString("Nome"));
                     user.setCognome(utente_Json.getString("Cognome"));
-                    user.setToken(utente_Json.getString("Token"));
                     user.setType_user(utente_Json.getString("Type_User"));
 
                     Log.d(TAG, "getUserFromServer: true");
@@ -148,8 +172,6 @@ public class ActionsLogin extends ActionsViewHandler{
                     if (task.isSuccessful()) {
                         String token = task.getResult();
                         ((Utente) action.getData()).setToken(token);
-                        ((Utente) action.getData()).setNome("Amministratore");
-                        ((Utente) action.getData()).setCognome("");
                     } else {
                         Log.w(TAG, "Fetching FCM registration token failed", task.getException());
                     }

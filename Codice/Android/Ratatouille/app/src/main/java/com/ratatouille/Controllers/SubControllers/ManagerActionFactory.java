@@ -11,6 +11,7 @@ import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProd
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewIngredient;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsStaff;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsViewHandler;
 import com.ratatouille.Models.Events.Action.Action;
 import java.lang.reflect.InvocationTargetException;
@@ -44,6 +45,9 @@ public class ManagerActionFactory {
         classMap.put(ControlMapper.INDEX_INVENTORY_NEW,     ActionsNewIngredient.class);
         classMap.put(ControlMapper.INDEX_INVENTORY_INFO, ActionsInfoEditIngredient.class);
         classMap.put(ControlMapper.INDEX_INVENTORY_EDIT, ActionsInfoEditIngredient.class);
+        //STAFF
+        classMap.put(ControlMapper.INDEX_STAFF_LIST, ActionsStaff.class);
+        classMap.put(ControlMapper.INDEX_STAFF_NEW, ActionsStaff.class);
 
     }
 

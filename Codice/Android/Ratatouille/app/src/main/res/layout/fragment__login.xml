@@ -67,7 +67,7 @@
 
             android:background="@drawable/background_edit_text_stroke_white"
             android:ems="10"
-            android:hint="@string/inserisci_la_tua_email"
+            android:hint="Inserisci la tua Email"
 
             android:inputType="textEmailAddress"
             android:paddingStart="16dp"

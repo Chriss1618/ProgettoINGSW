@@ -92,6 +92,7 @@ public class Fragment_EditProduct extends Fragment implements ViewLayout {
     }
 
     public Fragment_EditProduct() {
+
     }
 
     @Override

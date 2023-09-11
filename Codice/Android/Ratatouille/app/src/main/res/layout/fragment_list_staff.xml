@@ -59,7 +59,6 @@
                     android:clickable="true"
                     android:src="@drawable/ic_remove_person"
                     android:contentDescription="@string/icon_delete"/>
-
             </LinearLayout>
         </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,9 +78,9 @@
                 android:hint="@string/cerca_membro_staff"
                 android:inputType="text"
                 android:paddingStart="42dp"
-                android:textColorHint="@color/Gray"
+                android:textColorHint="@color/DarkGray"
                 android:text=""
-                android:textColor="@color/Gray"
+                android:textColor="@color/DarkGray"
 
                 android:textColorLink="@color/MainColor"
                 android:textCursorDrawable="@color/MainColor"
@@ -106,6 +105,23 @@
             android:paddingEnd="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:visibility="gone"
+            android:layout_marginTop="64dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/text_view_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/sf_compact_rounded_regular_italic"
+            android:text="Nessuno Staff registrato!"
+            android:textColor="@color/DarkGray"
+            android:textSize="24sp" />
     </LinearLayout>
 
 </FrameLayout>
