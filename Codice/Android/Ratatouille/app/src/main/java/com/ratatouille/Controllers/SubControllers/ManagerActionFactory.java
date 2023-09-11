@@ -4,6 +4,7 @@ import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsAccountInfo;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditIngredient;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditProduct;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListInventory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
@@ -30,6 +31,8 @@ public class ManagerActionFactory {
         classMap.put(ControlMapper.INDEX_MENU_LIST_CATEGORY,    ActionsListCategory.class);
         classMap.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS,    ActionsListProducts.class);
         classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,      ActionsNewProduct.class);
+        classMap.put(ControlMapper.INDEX_MENU_INFO_PRODUCT,     ActionsInfoEditProduct.class);
+        classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,     ActionsInfoEditProduct.class);
         //ACCOUNT
         classMap.put(ControlMapper.INDEX_ACCOUNT_INFO,          ActionsAccountInfo.class);
 //        classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,  MenuViewFactory.class);
@@ -37,8 +40,8 @@ public class ManagerActionFactory {
         //STATS
 //        classMap.put(ControlMapper.INDEX_STATS_PRODUCTIVITY,  MenuViewFactory.class);
         //INVENTORY
-        classMap.put(ControlMapper.INDEX_INVENTORY_LIST, ActionsListInventory.class);
-        classMap.put(ControlMapper.INDEX_INVENTORY_NEW, ActionsNewIngredient.class);
+        classMap.put(ControlMapper.INDEX_INVENTORY_LIST,    ActionsListInventory.class);
+        classMap.put(ControlMapper.INDEX_INVENTORY_NEW,     ActionsNewIngredient.class);
         classMap.put(ControlMapper.INDEX_INVENTORY_INFO, ActionsInfoEditIngredient.class);
         classMap.put(ControlMapper.INDEX_INVENTORY_EDIT, ActionsInfoEditIngredient.class);
 

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditProduct;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.API.Rest.EndPointer;
@@ -22,12 +23,15 @@ import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Ricettario;
+import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import kotlinx.coroutines.channels.Send;
 
 public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     //SYSTEM
@@ -122,9 +126,16 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     @Override
     public void SetDataOnLayout() {
         Text_View_Title_Product.setText(Product.getNameProduct());
-        Picasso.get()
-                .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ Product.getURLImageProduct())
-                .into(ImageView_Product);
+        if(Product.isHasPhoto()){
+            Picasso.get()
+                    .load(Product.getUriImageProduct())
+                    .into(ImageView_Product);
+        }else{
+            Picasso.get()
+                    .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ Product.getURLImageProduct())
+                    .into(ImageView_Product);
+        }
+
 
         String priceProduct = Product.getEuro() + "," + Product.getCents() + " €";
 
@@ -139,8 +150,13 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     }
 
     //ACTIONS
+
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
     private void onClickEditProduct(){
-        EndAnimations();
+        Action action = new Action(ActionsInfoEditProduct.INDEX_ACTION_OPEN_EDIT_PRODUCT, Product, this::EndAnimations);
+        SendAction(action);
     }
 
     //FUNCTIONAL

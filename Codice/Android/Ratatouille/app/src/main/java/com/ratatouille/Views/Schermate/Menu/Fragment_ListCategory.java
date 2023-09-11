@@ -180,7 +180,10 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                adapter_category.filterList(charSequence.toString());
+                if(adapter_category != null){
+                    adapter_category.filterList(charSequence.toString());
+
+                }
             }
 
             @Override

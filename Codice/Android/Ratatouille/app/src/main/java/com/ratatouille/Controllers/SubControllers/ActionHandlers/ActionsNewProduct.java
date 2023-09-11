@@ -120,6 +120,7 @@ public class ActionsNewProduct extends ActionsViewHandler{
             return false;
 
         }
+
     }
     private static class AddIngredient_ActionHandler implements ActionHandler{
 

@@ -117,12 +117,15 @@ public class Manager implements SubController {
 
     public void useTemporaryNewView(int indexView,int typeManager){
         try{
+
             ViewLayout view = new ViewFactory().createView(typeManager,indexView,this);
             fragmentManager.beginTransaction()
                     .replace(ViewContainer.getId(), (Fragment) view, String.valueOf(indexView))
                     .setReorderingAllowed(true)
                     .addToBackStack(String.valueOf(indexView))
                     .commit();
+            IndexFrom = IndexOnMain;
+            IndexOnMain = indexView;
         }
         catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
 

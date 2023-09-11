@@ -115,16 +115,19 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     public void fromWelcomeToLogin(){
         MotionLayout.setTransition(R.id.welcome_to_login_transition);
         MotionLayout.transitionToEnd();
+        Log.d(TAG, "fromWelcomeToLogin: Inizia");
     }
 
     public void fromLoginToConfirm(){
         MotionLayout.setTransition(R.id.login_to_confirm_transition);
         MotionLayout.transitionToEnd();
+        Log.d(TAG, "fromLoginToConfirm: ");
     }
 
     public void fromConfirmToApp(){
         MotionLayout.setTransition(R.id.toApp_transition);
         MotionLayout.transitionToEnd();
+        Log.d(TAG, "fromConfirmToApp: ");
 
     }
 

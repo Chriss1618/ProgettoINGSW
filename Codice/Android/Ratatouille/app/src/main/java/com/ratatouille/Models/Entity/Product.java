@@ -68,6 +68,10 @@ public class Product {
         return hasPhoto;
     }
 
+    public void setHasPhoto(boolean hasPhoto) {
+        this.hasPhoto = hasPhoto;
+    }
+
     public String getDataImageProduct() {
         return DataImageProduct;
     }
