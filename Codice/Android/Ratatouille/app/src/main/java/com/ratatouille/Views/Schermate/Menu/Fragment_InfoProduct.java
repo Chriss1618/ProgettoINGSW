@@ -42,6 +42,7 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     private LinearLayout LinearLayout_Ingredients;
     private TextView    Text_View_Title_Product;
     private ImageView   ImageView_Product;
+    private ImageView   ImageView_Back;
     private TextView    TextView_DescrizioneProduct;
     private TextView    TextView_AllergeniProduct;
     private TextView    TextView_TitleAllergeniProduct;
@@ -108,6 +109,7 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     public void LinkLayout() {
         LinearLayout_Ingredients    = View_fragment.findViewById(R.id.linear_layout_ingredients);
         Text_View_Title_Product     = View_fragment.findViewById(R.id.text_view_name_product);
+        ImageView_Back              = View_fragment.findViewById(R.id.ic_back);
         Card_Item_Product           = View_fragment.findViewById(R.id.card_view_element_product);
         ImageView_Edit_Product      = View_fragment.findViewById(R.id.ic_edit_product);
         ProgressBar_Loading         = View_fragment.findViewById(R.id.progressbar_existing);
@@ -122,6 +124,7 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     @Override
     public void SetActionsOfLayout() {
         ImageView_Edit_Product.setOnClickListener(view -> onClickEditProduct());
+        ImageView_Back.setOnClickListener(view -> manager.goBack());
     }
     @Override
     public void SetDataOnLayout() {
@@ -182,13 +185,15 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     @Override
     public void StartAnimations(){
         Card_Item_Product       .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(300));
-
+        ImageView_Back          .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300) );
+        ImageView_Edit_Product.startAnimation(Manager_Animation.getFadeIn(300));
     }
 
     @Override
     public void EndAnimations(){
         Card_Item_Product       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
-
+        ImageView_Back          .startAnimation( Manager_Animation.getTranslateAnimatioOUT(300) );
+        ImageView_Edit_Product.startAnimation(Manager_Animation.getFadeOut(300));
     }
 
 }

@@ -23,18 +23,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:orientation="horizontal"
-                android:gravity="start"
+                android:gravity="start |center_vertical"
                 android:layout_marginStart="16dp">
-                <TextView
-                    android:visibility="gone"
-                    android:id="@id/text_view_title_product"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/ic_back"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/icon_add"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_back" />
 
-                    android:fontFamily="@font/sf_compact_rounded_bold"
-                    android:text="@string/Menu"
-                    android:textColor="@color/SoftBlack"
-                    android:textSize="30sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -45,8 +44,8 @@
                 android:layout_marginEnd="16dp">
                 <ImageView
                     android:id="@+id/ic_edit_product"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
                     android:clickable="true"
                     android:src="@drawable/ic_edit"

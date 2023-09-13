@@ -107,4 +107,6 @@
     <string name="utente_creato">Utente Creato!</string>
     <string name="devi_compilare_tutti_i_campi">Devi compilare tutti i campi</string>
     <string name="dati_aggiornati">Dati Aggiornati</string>
+    <string name="conferma_password">Conferma Password</string>
+    <string name="conferma_password_caps">CONFERMA PASSWORD</string>
 </resources>

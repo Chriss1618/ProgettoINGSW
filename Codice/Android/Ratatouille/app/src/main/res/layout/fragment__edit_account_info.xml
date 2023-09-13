@@ -62,7 +62,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="24dp"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
+                        android:layout_marginStart="42dp"
+                        android:fontFamily="@font/sf_compact_rounded_bold"
+
+                        android:text="NOME"
+                        android:textColor="@color/Black"
+                        android:textSize="15sp"
+
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -89,19 +102,31 @@
                             android:hint="@string/inserisci_nome"
                             android:inputType="text"
 
+                            android:textCursorDrawable="@drawable/custom_cursor"
                             android:padding="16dp"
                             android:text=""
 
                             android:textColor="@color/SoftBlack"
                             android:textColorLink="@color/MainColor"
-
-                            android:textCursorDrawable="@color/MainColor"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
 
                     </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
+                        android:layout_marginStart="42dp"
+                        android:fontFamily="@font/sf_compact_rounded_bold"
+
+                        android:text="COGNOME"
+                        android:textColor="@color/Black"
+                        android:textSize="15sp"
+
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -131,10 +156,10 @@
                             android:padding="16dp"
                             android:text=""
 
+                            android:textCursorDrawable="@drawable/custom_cursor"
                             android:textColor="@color/SoftBlack"
                             android:textColorLink="@color/MainColor"
 
-                            android:textCursorDrawable="@color/MainColor"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
@@ -187,7 +212,7 @@
                                 android:textColor="@color/SoftBlack"
 
                                 android:textColorLink="@color/MainColor"
-                                android:textCursorDrawable="@color/MainColor"
+                                android:textCursorDrawable="@drawable/custom_cursor"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
 
@@ -225,7 +250,7 @@
                                 android:textColor="@color/SoftBlack"
 
                                 android:textColorLink="@color/MainColor"
-                                android:textCursorDrawable="@color/MainColor"
+                                android:textCursorDrawable="@drawable/custom_cursor"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
 
@@ -263,7 +288,7 @@
                                 android:textColor="@color/SoftBlack"
 
                                 android:textColorLink="@color/MainColor"
-                                android:textCursorDrawable="@color/MainColor"
+                                android:textCursorDrawable="@drawable/custom_cursor"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
 
@@ -272,7 +297,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
+                            android:layout_marginBottom="32dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -311,7 +336,7 @@
                                 android:textColor="@color/SoftBlack"
 
                                 android:textColorLink="@color/MainColor"
-                                android:textCursorDrawable="@color/MainColor"
+                                android:textCursorDrawable="@drawable/custom_cursor"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
 

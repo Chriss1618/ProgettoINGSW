@@ -98,7 +98,7 @@ public class Adapter_Staff extends RecyclerView.Adapter<Adapter_Staff.ViewHolder
 
         }
 
-        if(NameStuffMembers.get(position).getToken().equals("NO_TOKEN")){
+        if(NameStuffMembers.get(position).getToken().equals("NO_TOKEN") || NameStuffMembers.get(position).getToken().equals("DISCONNECTED") ){
             this.Holders.get(position).Image_View_State_green.setImageResource(R.drawable.ic_state_neautral);
             this.Holders.get(position).Image_View_State_red.setImageResource(R.drawable.ic_state_red);
 

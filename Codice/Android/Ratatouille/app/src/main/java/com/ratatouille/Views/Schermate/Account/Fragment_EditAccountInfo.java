@@ -168,12 +168,12 @@ public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {
         currentUtente.setNome(EditText_NomeUtente.getText().toString());
         currentUtente.setCognome(EditText_CognomeUtente.getText().toString());
         manager.setData(currentUtente);
-
-        MyRestaurant.setName(EditText_NomeRestaurant.getText().toString());
-        MyRestaurant.setAddress(EditText_AddressRestaurant.getText().toString());
-        MyRestaurant.setPhone(EditText_PhoneRestaurant.getText().toString());
-        MyRestaurant.setnTavoli(EditText_NTavoliRestaurant.getText().toString());
-
+        if(currentUtente.getType_user().equals(ControlMapper.INDEX_TYPE_USER_AMMINISTRATORE)){
+            MyRestaurant.setName(EditText_NomeRestaurant.getText().toString());
+            MyRestaurant.setAddress(EditText_AddressRestaurant.getText().toString());
+            MyRestaurant.setPhone(EditText_PhoneRestaurant.getText().toString());
+            MyRestaurant.setnTavoli(EditText_NTavoliRestaurant.getText().toString());
+        }
         return checkData();
     }
 

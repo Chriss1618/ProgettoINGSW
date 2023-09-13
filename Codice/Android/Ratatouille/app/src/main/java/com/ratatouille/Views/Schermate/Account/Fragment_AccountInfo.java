@@ -40,8 +40,8 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     TextView            TextView_PhoneRestaurant;
     TextView            TextView_NTavoliRestaurant;
 
-    Button              Button_EditAccount;
-    ImageView           ImageView_Logout;
+    Button              Button_LogOut;
+    ImageView           ImageView_Edit;
 
     private ProgressBar ProgressBar;
     //FUNCTIONAL
@@ -106,13 +106,13 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
         TextView_PhoneRestaurant        = View_Fragment.findViewById(R.id.text_view_phone);
         TextView_NTavoliRestaurant      = View_Fragment.findViewById(R.id.text_view_n_tavoli);
 
-        Button_EditAccount              = View_Fragment.findViewById(R.id.button_edit_account);
-        ImageView_Logout                = View_Fragment.findViewById(R.id.ic_logout);
+        Button_LogOut             = View_Fragment.findViewById(R.id.button_edit_account);
+        ImageView_Edit                = View_Fragment.findViewById(R.id.ic_logout);
     }
     @Override
     public void SetActionsOfLayout() {
-        Button_EditAccount  .setOnClickListener(view -> onClickEditAccount());
-        ImageView_Logout    .setOnClickListener(view -> onClickLogOut());
+        ImageView_Edit  .setOnClickListener(view -> onClickEditAccount());
+        Button_LogOut    .setOnClickListener(view -> onClickLogOut());
     }
     @Override
     public void SetDataOnLayout() {
@@ -158,19 +158,19 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations() {
-        LinearLayout_TitleProduct       .startAnimation(Manager_Animation.getTranslationINfromUp(500));
-        Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationINfromDown(500));
+        LinearLayout_TitleProduct      .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+        Button_LogOut                  .startAnimation(Manager_Animation.getFadeIn(500));
     }
     @Override
     public void EndAnimations() {
 
-        LinearLayout_TitleProduct           .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
-        LinearLayout_InfoAccount            .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
-        Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
+        LinearLayout_TitleProduct      .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
+        LinearLayout_InfoAccount       .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        Button_LogOut                  .startAnimation(Manager_Animation.getTranslationOUTtoDownS(300));
     }
 
     public void toEditAccountAnimation(){
         LinearLayout_InfoAccount            .startAnimation(Manager_Animation.getFadeOut(300));
-        Button_EditAccount                  .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
+        Button_LogOut                  .startAnimation(Manager_Animation.getTranslationOUTtoDown(300));
     }
 }

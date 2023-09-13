@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +39,20 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     //LAYOUT
     private View            Fragment_View;
     private LinearLayout    LinearLayout_BackGroundError;
+    private LinearLayout    LinearLayout_Login_step;
+    private LinearLayout    LinearLayout_ConfirmPassword;
     private LinearLayout    LinearLayout_Error;
     private LinearLayout    LinearLayout_Login;
 
     private Button          Button_Login;
     private EditText        EditTex_Email;
     private EditText        EditTex_Password;
+    private EditText        EditTex_NEWPassword;
+    private EditText        EditTex_NEWConfirmPassword;
     private TextView        TextView_MsgLogin;
     private TextView        TextView_warningEmail;
     private TextView        TextView_warningPassword;
+    private TextView        TextView_warningConfirmPassowrd;
     private ImageView       ImageView_Logo;
 
     //FUNCTIONAL
@@ -102,12 +110,19 @@ public class Fragment_Login extends Fragment implements ViewLayout {
         LinearLayout_Login              = Fragment_View.findViewById(R.id.linear_layout_login);
         LinearLayout_Error              = Fragment_View.findViewById(R.id.linear_layout_error_login);
 
+        LinearLayout_Login_step        = Fragment_View.findViewById(R.id.linear_layout_login_step);
+        LinearLayout_ConfirmPassword        = Fragment_View.findViewById(R.id.linear_layout_confirm_password);
+
         LinearLayout_BackGroundError        = Fragment_View.findViewById(R.id.darkRL);
         EditTex_Email                       = Fragment_View.findViewById(R.id.edit_text_email);
         EditTex_Password                    = Fragment_View.findViewById(R.id.edit_text_password);
+
+        EditTex_NEWPassword                 = Fragment_View.findViewById(R.id.edit_text_new_password);
+        EditTex_NEWConfirmPassword          = Fragment_View.findViewById(R.id.edit_text_new_password_confirm);
         TextView_warningEmail               = Fragment_View.findViewById(R.id.warning_Email);
         TextView_warningPassword            = Fragment_View.findViewById(R.id.warning_password);
         TextView_MsgLogin                   = Fragment_View.findViewById(R.id.text_view_login_msg);
+        TextView_warningConfirmPassowrd     = Fragment_View.findViewById(R.id.warning_new_password);
         Button_Login        = Fragment_View.findViewById(R.id.button_login);
         ImageView_Logo      = Fragment_View.findViewById(R.id.image_view_logo);
     }
@@ -131,15 +146,52 @@ public class Fragment_Login extends Fragment implements ViewLayout {
     }
 
     private void onClickLogin(){
-        if(getAllInputs()){
-            Action action = new Action(isRegisteringAdmin ? ActionsLogin.INDEX_ACTION_REGISTER_ADMIN : ActionsLogin.INDEX_ACTION_LOGIN, Utente, manager, (flag) -> getResultLogin((boolean) flag), manager.getSourceInfo());
-            SendAction(action);
+        if(Button_Login.getText().toString().equals("Conferma")){
+            if(allPasswordOK()){
+                Action action = new Action(ActionsLogin.INDEX_ACTION_CONFIRM_PASSWORD , EditTex_NEWPassword.getText().toString());
+                SendAction(action);
+            }
+        }else{
+            if(getAllInputs()){
+                Action action = new Action(isRegisteringAdmin ? ActionsLogin.INDEX_ACTION_REGISTER_ADMIN : ActionsLogin.INDEX_ACTION_LOGIN, Utente, manager, (flag) -> getResultLogin((boolean) flag), manager.getSourceInfo());
+                SendAction(action);
+            }
+
         }
+
     }
 
     //FUNCTIONAL
     private void getResultLogin(boolean Authenticated){
         if(!Authenticated) ShowDialogErrorLogin();
+        else{
+            Boolean isFirsTime = (Boolean) new LocalStorage(manager.context).getData("isFirstTime","Boolean");
+            isFirsTime = isFirsTime == null;
+            if( isFirsTime ){
+                requireActivity().runOnUiThread(() -> {
+                    LinearLayout_Login_step.startAnimation(Manager_Animation.getTranslateAnimatioOUT(500));
+                    new Handler(Looper.getMainLooper()).postDelayed(()->LinearLayout_Login_step.setVisibility(View.GONE),500);
+
+                    new Handler(Looper.getMainLooper()).postDelayed(()->{
+                        LinearLayout_ConfirmPassword.setVisibility(View.VISIBLE);
+                        LinearLayout_ConfirmPassword.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+                    },200);
+                    Button_Login.setText("Conferma");
+                });
+            }
+        }
+
+    }
+
+    private boolean allPasswordOK(){
+        boolean isOk;
+        boolean isOKNewPassword = EditTex_NEWPassword.getText().toString().length() > 3;
+        boolean isOKNewPasswordConfirm = EditTex_NEWConfirmPassword.getText().toString().length() > 3
+                                    && EditTex_NEWConfirmPassword.getText().toString().equals(EditTex_NEWPassword.getText().toString());
+
+        isOk = showWarning(TextView_warningConfirmPassowrd,
+                isOKNewPassword && isOKNewPasswordConfirm  );
+        return isOk;
     }
     private boolean getAllInputs(){
         Utente.setEmail(EditTex_Email.getText().toString());

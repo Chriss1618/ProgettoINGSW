@@ -24,8 +24,9 @@ public class ActionsLogin extends ActionsViewHandler{
 
     public final static int INDEX_ACTION_START_REGISTER_ADMIN   = 0;
     public final static int INDEX_ACTION_START_LOGIN            = 1;
-    public final static int INDEX_ACTION_LOGIN                  = 2;
-    public final static int INDEX_ACTION_REGISTER_ADMIN         = 3;
+    public final static int INDEX_ACTION_CONFIRM_PASSWORD       = 2;
+    public final static int INDEX_ACTION_LOGIN                  = 3;
+    public final static int INDEX_ACTION_REGISTER_ADMIN         = 4;
 
     public ActionsLogin(){
         actionHandlerMap = new HashMap<>();
@@ -33,6 +34,7 @@ public class ActionsLogin extends ActionsViewHandler{
         actionHandlerMap.put(INDEX_ACTION_START_LOGIN,              new StartLogin_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_LOGIN,                    new Login_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_REGISTER_ADMIN,           new RegisterAdmin_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_CONFIRM_PASSWORD,         new ConfirmPassword_ActionHandler());
     }
     private static class StartRegisterAdmin_ActionHandler implements ActionHandler{
         @Override
@@ -53,6 +55,7 @@ public class ActionsLogin extends ActionsViewHandler{
     }
 
     private static class Login_ActionHandler implements ActionHandler{
+        Boolean isFirstTime;
         Utente user;
         @Override
         public void handleAction(Action action) {
@@ -60,6 +63,7 @@ public class ActionsLogin extends ActionsViewHandler{
             user = (Utente) action.getData();
             getFCMToken(action);
             Log.d(TAG, "handleAction: Token user Created ->" + user.getToken());
+            if( user.getToken() == null) user.setToken("NO_SERVICE_TOKEN_AVAILABLE");
             if(getUserFromServer(action)){
                 new LocalStorage(context).putData("ID_Utente", user.getId_utente());
                 new LocalStorage(context).putData("ID_Ristorante", user.getId_Restaurant());
@@ -69,9 +73,11 @@ public class ActionsLogin extends ActionsViewHandler{
                 new LocalStorage(context).putData("TypeUser",user.getType_user());
                 new LocalStorage(context).putData("Email",user.getEmail());
                 new LocalStorage(context).putData("Password",user.getPassword());
+                new LocalStorage(context).putData("isFirstTime", isFirstTime);
                 action.callBack(true);
                 Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));//Attesa animazinoe Rotazione LOGO
-                action.getManager().changeOnMain(ControlMapper.INDEX_LOGIN_CONFIRM,"");
+                if( !isFirstTime )
+                    action.getManager().changeOnMain(ControlMapper.INDEX_LOGIN_CONFIRM,"");
             }else{
                 Log.d(TAG, "handleAction: Utente Non Trovato");
                 action.callBack(false);
@@ -94,7 +100,7 @@ public class ActionsLogin extends ActionsViewHandler{
                 });
                 latch.await();
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                user.setToken("NO_SERVICE_TOKEN_AVAILABLE");
             }
         }
         private boolean getUserFromServer(Action action){
@@ -115,6 +121,7 @@ public class ActionsLogin extends ActionsViewHandler{
                     user.setNome(utente_Json.getString("Nome"));
                     user.setCognome(utente_Json.getString("Cognome"));
                     user.setType_user(utente_Json.getString("Type_User"));
+                    isFirstTime = utente_Json.getString("Token").equals("NO_TOKEN");
 
                     Log.d(TAG, "getUserFromServer: true");
                     return true;
@@ -141,11 +148,11 @@ public class ActionsLogin extends ActionsViewHandler{
             getFCMToken(action);
 
             startRegistration(action);
-
         }
 
         private void startRegistration(Action action){
             Context context = action.getManager().context;
+            if( ((Utente) action.getData()).getToken() == null) ((Utente) action.getData()).setToken("NO_SERVICE_TOKEN_AVAILABLE");
             if(stetUserToServer(action)){
                 new LocalStorage(context).putData("ID_Utente",((Utente) action.getData()).getId_utente());
                 new LocalStorage(context).putData("ID_Ristorante",((Utente) action.getData()).getId_Restaurant());
@@ -223,4 +230,43 @@ public class ActionsLogin extends ActionsViewHandler{
         }
     }
 
+    private static class ConfirmPassword_ActionHandler implements ActionHandler{
+        private Integer id_utente;
+        private String password;
+        @Override
+        public void handleAction(Action action) {
+            id_utente = (Integer) new LocalStorage(action.getManager().context).getData("ID_Utente", "Integer");
+            password = (String) action.getData();
+
+            boolean isUpdated = getUserFromServer(action);
+            action.callBack(isUpdated);
+            if(isUpdated)
+                action.getManager().changeOnMain(ControlMapper.INDEX_LOGIN_CONFIRM,"");
+        }
+
+        private boolean getUserFromServer(Action action){
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("ID_Utente", id_utente+"")
+                    .appendQueryParameter("Password",password);
+            String url = EndPointer.StandardPath + "/ResetPassword.php";
+
+            try {
+                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+                if( BodyJSON != null && BodyJSON.getString("MSG_STATUS").contains("1")){
+                    Log.d(TAG, "getUserFromServer: true");
+                    return true;
+                }else{
+                    assert BodyJSON != null;
+                    String messageError = BodyJSON.getString("MSG").replace("0 ","");
+                    action.getManager().setData(messageError);
+                    Log.d(TAG, "getUserFromServer: false");
+                    return false;
+                }
+
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+                return false;
+            }
+        }
+    }
 }

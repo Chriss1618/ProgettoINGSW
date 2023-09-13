@@ -20,23 +20,28 @@ public class LocalStorage {
     }
 
     public void putData(String key, Object value){
-        switch (value.getClass().getSimpleName()){
-            case "String":
-                Editor.putString(key, (String) value);
-                break;
-            case "Integer":
-                Editor.putInt(key, (Integer) value);
-                break;
-            case "Float":
-                Editor.putFloat(key, (Float) value);
-                break;
-            case "Boolean":
-                Editor.putBoolean(key, (Boolean) value);
-                break;
-            default:
+        try {
+            switch (value.getClass().getSimpleName()){
+                case "String":
+                    Editor.putString(key, (String) value);
+                    break;
+                case "Integer":
+                    Editor.putInt(key, (Integer) value);
+                    break;
+                case "Float":
+                    Editor.putFloat(key, (Float) value);
+                    break;
+                case "Boolean":
+                    Editor.putBoolean(key, (Boolean) value);
+                    break;
+                default:
+            }
+            Editor.commit();
+            Editor.apply();
+        }catch (NullPointerException e){
+            Log.d(TAG, "putData: value Null");
         }
-        Editor.commit();
-        Editor.apply();
+        
     }
 
     public Object getData(String key,String type){

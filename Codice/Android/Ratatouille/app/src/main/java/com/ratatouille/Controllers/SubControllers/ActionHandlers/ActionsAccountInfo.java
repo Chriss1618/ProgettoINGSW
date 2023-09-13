@@ -52,8 +52,10 @@ public class ActionsAccountInfo extends ActionsViewHandler{
     private static class LogOut_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
-            new LocalStorage(action.getManager().context).DeleteAllData();
-            triggerRebirth(action.getManager().context);
+            if(sendDisconnectToServer(action)){
+                new LocalStorage(action.getManager().context).DeleteAllData();
+                triggerRebirth(action.getManager().context);
+            }
         }
 
         public static void triggerRebirth(Context context) {
@@ -65,6 +67,31 @@ public class ActionsAccountInfo extends ActionsViewHandler{
             }
 
             Runtime.getRuntime().exit(0);
+        }
+
+        private boolean sendDisconnectToServer(Action action){
+            int id_utente = (Integer) new LocalStorage(action.getManager().context).getData("ID_Utente", "Integer");
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("ID_Utente", id_utente+"");
+            String url = EndPointer.StandardPath + "/Disconnect.php";
+
+            try {
+                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+                if( BodyJSON != null && BodyJSON.getString("MSG_STATUS").contains("1")){
+                    Log.d(TAG, "getUserFromServer: true");
+                    return true;
+                }else{
+                    assert BodyJSON != null;
+                    String messageError = BodyJSON.getString("MSG").replace("0 ","");
+                    action.getManager().setData(messageError);
+                    Log.d(TAG, "getUserFromServer: false");
+                    return false;
+                }
+
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+                return false;
+            }
         }
     }
 

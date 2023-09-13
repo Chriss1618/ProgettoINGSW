@@ -17,167 +17,299 @@
         android:paddingTop="64dp"
         android:paddingEnd="32dp"
         android:paddingBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:layout_width="210dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_login" />
 
-        <TextView
-            android:id="@+id/text_view_login_msg"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/sf_compact_rounded_bold"
-            android:text="@string/under_login"
-            android:textColor="@color/SoftBlack"
-            android:textSize="17sp"
-
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/sf_compact_rounded_bold"
-
-            android:text="@string/email"
-            android:textColor="@color/MainColor"
-            android:textSize="15sp"
-
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/edit_text_email"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent">
 
-            android:layout_marginTop="12dp"
-            android:autofillHints=""
+            <LinearLayout
+                android:id="@+id/linear_layout_login_step"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            android:background="@drawable/background_edit_text_stroke_white"
-            android:ems="10"
-            android:hint="Inserisci la tua Email"
+                <TextView
+                    android:id="@+id/text_view_login_msg"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
 
-            android:inputType="textEmailAddress"
-            android:paddingStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="@string/under_login"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="17sp"
 
-            android:text=""
-            android:textColor="@color/SoftBlack"
 
-            android:textColorLink="@color/MainColor"
-            android:textCursorDrawable="@drawable/custom_cursor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/warning_Email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            android:layout_marginStart="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sf_compact_rounded_regular_italic"
-            android:text="@string/warning_email"
-            android:layout_gravity="start"
-            android:textSize="15sp"
-            android:textColor="@color/red"
-            app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
 
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="@string/email"
+                    android:textColor="@color/MainColor"
+                    android:textSize="15sp"
 
-            android:text="@string/password"
-            android:textColor="@color/MainColor"
-            android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/edit_text_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
 
-        <EditText
-            android:id="@+id/edit_text_password"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:autofillHints=""
 
-            android:layout_marginTop="12dp"
-            android:autofillHints=""
+                    android:background="@drawable/background_edit_text_stroke_white"
+                    android:ems="10"
+                    android:hint="Inserisci la tua Email"
 
-            android:background="@drawable/background_edit_text_stroke_white"
-            android:ems="10"
-            android:hint="@string/inserisci_la_password"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="16dp"
 
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
+                    android:text=""
+                    android:textColor="@color/SoftBlack"
 
-            android:text=""
-            android:textColor="@color/SoftBlack"
+                    android:textColorLink="@color/MainColor"
+                    android:textCursorDrawable="@drawable/custom_cursor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
 
-            android:textColorLink="@color/MainColor"
-            android:textCursorDrawable="@drawable/custom_cursor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+                <TextView
+                    android:id="@+id/warning_Email"
+                    android:layout_width="wrap_content"
 
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/warning_password"
-            android:layout_marginStart="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sf_compact_rounded_regular_italic"
-            android:text="@string/warning_password"
-            android:layout_gravity="start"
-            android:textSize="15sp"
-            android:textColor="@color/red"
-            app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                    android:text="@string/warning_email"
+                    android:textColor="@color/red"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+
+                    android:text="@string/password"
+                    android:textColor="@color/MainColor"
+                    android:textSize="15sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_text_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+
+                    android:layout_marginTop="12dp"
+                    android:autofillHints=""
+
+                    android:background="@drawable/background_edit_text_stroke_white"
+                    android:ems="10"
+                    android:hint="@string/inserisci_la_password"
+
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+
+                    android:text=""
+                    android:textColor="@color/SoftBlack"
+
+                    android:textColorLink="@color/MainColor"
+                    android:textCursorDrawable="@drawable/custom_cursor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+                <TextView
+                    android:id="@+id/warning_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                    android:text="@string/warning_password"
+                    android:textColor="@color/red"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_layout_confirm_password"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="Reimposta la tua Password"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="17sp"
+
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+
+                    android:text="@string/password"
+                    android:textColor="@color/MainColor"
+                    android:textSize="15sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_text_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+
+                    android:layout_marginTop="12dp"
+                    android:autofillHints=""
+
+                    android:background="@drawable/background_edit_text_stroke_white"
+                    android:ems="10"
+                    android:hint="Inserisci nuova Password"
+
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+
+                    android:text=""
+                    android:textColor="@color/SoftBlack"
+
+                    android:textColorLink="@color/MainColor"
+                    android:textCursorDrawable="@drawable/custom_cursor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+
+                    android:text="@string/conferma_password_caps"
+                    android:textColor="@color/MainColor"
+                    android:textSize="15sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_text_new_password_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+
+                    android:layout_marginTop="12dp"
+                    android:autofillHints=""
+
+                    android:background="@drawable/background_edit_text_stroke_white"
+                    android:ems="10"
+                    android:hint="@string/conferma_password"
+
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+
+                    android:text=""
+                    android:textColor="@color/SoftBlack"
+
+                    android:textColorLink="@color/MainColor"
+                    android:textCursorDrawable="@drawable/custom_cursor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+                <TextView
+                    android:id="@+id/warning_new_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                    android:text="@string/warning_password"
+                    android:textColor="@color/red"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </LinearLayout>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <android.widget.Button
+        android:id="@+id/button_login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_login" >
+        android:layout_height="64dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/background_button_main"
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:fontFamily="@font/sf_compact_rounded"
+        android:paddingStart="36dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="13dp"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent
+"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <android.widget.Button
-            android:id="@+id/button_login"
-            android:layout_width="wrap_content"
-            android:layout_height="64dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/background_button_main"
-            android:drawableEnd="@drawable/ic_arrow_forward"
-            android:fontFamily="@font/sf_compact_rounded"
-            android:paddingStart="36dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="32dp"
-            android:paddingBottom="13dp"
-            android:text="@string/login"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:id="@+id/darkRL"
         android:layout_width="match_parent"
