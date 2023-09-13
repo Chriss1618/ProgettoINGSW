@@ -105,4 +105,6 @@
     <string name="devi_selezionare_un_ruolo">Devi selezionare un ruolo</string>
     <string name="tutti_i_campi_devono_essere_compilati">Tutti i campi devono essere compilati</string>
     <string name="utente_creato">Utente Creato!</string>
+    <string name="devi_compilare_tutti_i_campi">Devi compilare tutti i campi</string>
+    <string name="dati_aggiornati">Dati Aggiornati</string>
 </resources>

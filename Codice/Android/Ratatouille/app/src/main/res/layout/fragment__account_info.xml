@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:isScrollContainer="true"
+    android:background="@color/SoftGray"
     tools:context=".Views.Schermate.Account.Fragment_AccountInfo">
 
     <LinearLayout
@@ -21,42 +22,42 @@
             android:gravity="center"
             android:padding="8dp"
             android:layout_marginTop="16dp">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start"
-            android:layout_marginStart="16dp">
-            <TextView
-                android:id="@id/text_view_title_category"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginStart="16dp">
+                <TextView
+                    android:id="@id/text_view_title_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:fontFamily="@font/sf_compact_rounded_bold"
-                android:text="@string/Account"
-                android:textColor="@color/SoftBlack"
-                android:textSize="30sp" />
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="@string/Account"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="16dp">
+
+                <ImageView
+                    android:id="@+id/ic_logout"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/icon_delete"
+                    android:src="@drawable/ic_logout"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginEnd="16dp">
-
-            <ImageView
-                android:id="@+id/ic_logout"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="16dp"
-                android:clickable="true"
-                android:contentDescription="@string/icon_delete"
-                android:src="@drawable/ic_logout"
-                tools:ignore="TouchTargetSizeCheck" />
-
-        </LinearLayout>
-    </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,9 +73,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+
             <ScrollView
                 android:id="@+id/scrollView2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/button_edit_account"
@@ -119,12 +121,12 @@
                     </LinearLayout>
 
                     <TextView
-                        android:layout_marginStart="32dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:layout_marginStart="32dp"
                         android:layout_marginBottom="32dp"
                         android:fontFamily="@font/sf_compact_rounded_bold"
+                        android:gravity="center_horizontal"
                         android:text="Informazioni Attività"
                         android:textColor="@color/Black"
                         android:textSize="20sp" />
@@ -219,7 +221,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginStart="32dp"
                             android:fontFamily="@font/sf_compact_rounded"
                             android:gravity="center_vertical"

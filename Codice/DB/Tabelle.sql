@@ -3,7 +3,7 @@ CREATE TABLE Ristorante (
     NameRistorante VARCHAR(120) NOT NULL,
     AddressRistorante VARCHAR(120) NOT NULL,
     Phone VARCHAR(14) NOT NULL,
-    Email VARCHAR(254) NOT NULL,
+    NrTavoli INTEGER DEFAULT 0,
 
     PRIMARY KEY (ID_Ristorante)
 );
@@ -25,7 +25,7 @@ CREATE TABLE Utente (
 
 CREATE TABLE Tavolo (
 	ID_Tavolo INTEGER AUTO_INCREMENT,
-    Numero_tavolo VARCHAR(120) NOT NULL UNIQUE,
+    Numero_tavolo VARCHAR(120) NOT NULL,
     ID_Ristorante INTEGER NOT NULL,
     State_Tavolo TINYINT NOT NULL DEFAULT 0,
 

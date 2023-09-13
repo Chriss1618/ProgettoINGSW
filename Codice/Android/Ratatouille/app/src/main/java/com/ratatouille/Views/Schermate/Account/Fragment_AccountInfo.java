@@ -66,8 +66,8 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
                                           Bundle savedInstanceState) {
         View_Fragment = inflater.inflate(R.layout.fragment__account_info, container, false);
 
-        PrepareData();
         PrepareLayout();
+        PrepareData();
 
         StartAnimations();
         return View_Fragment;
@@ -83,7 +83,7 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
 
     private void sendRequest(){
         @SuppressWarnings("unchecked")
-        Request request = new Request(manager.getSourceInfo(), null, ManagerRequestFactory.INDEX_REQUEST_CATEGORY,
+        Request request = new Request(manager.getSourceInfo(), null, ManagerRequestFactory.INDEX_REQUEST_RESTAURANT,
                 (myRestaurant)-> setRestaurantOnLayout((Restaurant) myRestaurant));
         manager.HandleRequest(request);
     }
@@ -116,7 +116,7 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     }
     @Override
     public void SetDataOnLayout() {
-        LinearLayout_InfoAccount.setVisibility(View.GONE);
+        LinearLayout_InfoAccount.setVisibility(View.VISIBLE);
         if(manager.IndexFrom > manager.IndexOnMain){
             LinearLayout_InfoAccount        .startAnimation(Manager_Animation.getFadeIn(500));
         }else{
@@ -129,8 +129,7 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
         TextView_NomeRestaurant     .setText(MyRestaurant.getName());
         TextView_AddressRestaurant  .setText(MyRestaurant.getAddress());
         TextView_PhoneRestaurant    .setText(MyRestaurant.getPhone());
-        TextView_NTavoliRestaurant  .setText(MyRestaurant.get);
-
+        TextView_NTavoliRestaurant  .setText(MyRestaurant.getnTavoli());
 
     }
 
@@ -141,7 +140,7 @@ public class Fragment_AccountInfo extends Fragment implements ViewLayout {
     }
 
     private void onClickEditAccount(){
-        Action action = new Action(ActionsAccountInfo.INDEX_ACTION_OPEN_EDIT_ACCOUNT,null,this::EndAnimations);
+        Action action = new Action(ActionsAccountInfo.INDEX_ACTION_OPEN_EDIT_ACCOUNT,MyRestaurant);
         SendAction(action);
     }
     private void onClickLogOut(){

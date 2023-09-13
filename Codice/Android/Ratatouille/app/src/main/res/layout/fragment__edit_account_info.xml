@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/SoftGray"
     tools:context=".Views.Schermate.Account.Fragment_EditAccountInfo">
 
     <LinearLayout
@@ -37,71 +38,7 @@
                     android:textSize="30sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="end"
-                android:layout_marginEnd="16dp">
-
-                <ImageView
-                    android:id="@+id/ic_logout"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/icon_delete"
-                    android:src="@drawable/ic_logout"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </LinearLayout>
         </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraint_layout_image_account"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
-            <ImageView
-                android:id="@+id/image_view_chose_photo"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:background="@drawable/background_circle_main_color"
-                android:elevation="3dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_add_photo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/Descrizione_IMAGEVIEW_icon_set_imagine_profile" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/view2"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:elevation="12dp"
-                app:cardCornerRadius="80dp"
-                android:backgroundTint="@color/Gray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/image_view_account"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/Descrizione_IMAGEVIEW_imagine_profile" />
-            </androidx.cardview.widget.CardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,7 +60,7 @@
                     android:id="@+id/linear_layout_info_account"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="24dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -143,188 +80,256 @@
                         <EditText
                             android:id="@+id/edit_text_nome_persona"
                             android:layout_width="match_parent"
-                            android:layout_marginStart="8dp"
                             android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
                             android:autofillHints=""
 
                             android:background="@drawable/background_edit_text_stroke_white"
                             android:ems="10"
-                            android:hint="@string/nome_cognome"
-                            android:textSize="15sp"
+                            android:hint="@string/inserisci_nome"
+                            android:inputType="text"
 
-                            android:inputType="textEmailAddress"
                             android:padding="16dp"
-
                             android:text=""
-                            android:textColor="@color/SoftBlack"
 
+                            android:textColor="@color/SoftBlack"
                             android:textColorLink="@color/MainColor"
+
                             android:textCursorDrawable="@color/MainColor"
+                            android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_person"
+                            tools:ignore="ContentDescription" />
+
+                        <EditText
+                            android:id="@+id/edit_text_cognome_persona"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:autofillHints=""
+
+                            android:background="@drawable/background_edit_text_stroke_white"
+                            android:ems="10"
+                            android:hint="@string/inserisci_cognome"
+                            android:inputType="text"
+
+                            android:padding="16dp"
+                            android:text=""
+
+                            android:textColor="@color/SoftBlack"
+                            android:textColorLink="@color/MainColor"
+
+                            android:textCursorDrawable="@color/MainColor"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/linearLayout_info_restaurant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/sf_compact_rounded_bold"
+                            android:text="@string/informazioni_attivit"
+                            android:textColor="@color/Black"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_restaurant"
+                                tools:ignore="ContentDescription"/>
+
+                            <EditText
+                                android:id="@+id/edit_text_nome_attivita"
+                                android:layout_width="match_parent"
+                                android:layout_marginStart="8dp"
+                                android:layout_height="50dp"
+                                android:autofillHints=""
+
+                                android:background="@drawable/background_edit_text_stroke_white"
+                                android:ems="10"
+                                android:hint="@string/nome_attivit"
+                                android:textSize="15sp"
+
+                                android:inputType="textEmailAddress"
+                                android:padding="16dp"
+
+                                android:text=""
+                                android:textColor="@color/SoftBlack"
+
+                                android:textColorLink="@color/MainColor"
+                                android:textCursorDrawable="@color/MainColor"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_cell"
+                                tools:ignore="ContentDescription"/>
+
+                            <EditText
+                                android:id="@+id/edit_text_telefono"
+                                android:layout_width="match_parent"
+                                android:layout_marginStart="8dp"
+                                android:layout_height="50dp"
+                                android:autofillHints=""
+
+                                android:background="@drawable/background_edit_text_stroke_white"
+                                android:ems="10"
+                                android:hint="@string/numero_telefono"
+                                android:textSize="15sp"
+
+                                android:inputType="phone"
+                                android:padding="16dp"
+
+                                android:text=""
+                                android:textColor="@color/SoftBlack"
+
+                                android:textColorLink="@color/MainColor"
+                                android:textCursorDrawable="@color/MainColor"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_position"
+                                tools:ignore="ContentDescription"/>
+
+                            <EditText
+                                android:id="@+id/edit_text_address"
+                                android:layout_width="match_parent"
+                                android:layout_marginStart="8dp"
+                                android:layout_height="50dp"
+                                android:autofillHints=""
+
+                                android:background="@drawable/background_edit_text_stroke_white"
+                                android:ems="10"
+                                android:hint="@string/indirizzo"
+                                android:textSize="15sp"
+
+                                android:inputType="textEmailAddress"
+                                android:padding="16dp"
+
+                                android:text=""
+                                android:textColor="@color/SoftBlack"
+
+                                android:textColorLink="@color/MainColor"
+                                android:textCursorDrawable="@color/MainColor"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_table"
+                                tools:ignore="ContentDescription"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="32dp"
+                                android:fontFamily="@font/sf_compact_rounded"
+                                android:gravity="center_vertical"
+                                android:text="@string/numero_tavoli"
+                                android:textColor="@color/DarkGray"
+                                android:textSize="17sp" />
+
+                            <EditText
+                                android:id="@+id/edit_text_n_tavoli"
+                                android:layout_width="100dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_height="50dp"
+                                android:autofillHints=""
+                                android:textAlignment="center"
+                                android:background="@drawable/background_edit_text_stroke_white"
+                                android:ems="10"
+                                android:textSize="15sp"
+
+                                android:inputType="number"
+                                android:padding="16dp"
+
+                                android:text=""
+                                android:textColor="@color/SoftBlack"
+
+                                android:textColorLink="@color/MainColor"
+                                android:textCursorDrawable="@color/MainColor"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
                     <TextView
+                        android:visibility="gone"
+                        android:id="@+id/warning_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginBottom="16dp"
-                        android:fontFamily="@font/sf_compact_rounded_bold"
-                        android:text="@string/informazioni_attivit"
-                        android:textColor="@color/Black"
-                        android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_restaurant"
-                            tools:ignore="ContentDescription"/>
-
-                        <EditText
-                            android:id="@+id/edit_text_nome_attivita"
-                            android:layout_width="match_parent"
-                            android:layout_marginStart="8dp"
-                            android:layout_height="50dp"
-                            android:autofillHints=""
-
-                            android:background="@drawable/background_edit_text_stroke_white"
-                            android:ems="10"
-                            android:hint="@string/nome_attivit"
-                            android:textSize="15sp"
-
-                            android:inputType="textEmailAddress"
-                            android:padding="16dp"
-
-                            android:text=""
-                            android:textColor="@color/SoftBlack"
-
-                            android:textColorLink="@color/MainColor"
-                            android:textCursorDrawable="@color/MainColor"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_cell"
-                            tools:ignore="ContentDescription"/>
-
-                        <EditText
-                            android:id="@+id/edit_text_telefono"
-                            android:layout_width="match_parent"
-                            android:layout_marginStart="8dp"
-                            android:layout_height="50dp"
-                            android:autofillHints=""
-
-                            android:background="@drawable/background_edit_text_stroke_white"
-                            android:ems="10"
-                            android:hint="@string/numero_telefono"
-                            android:textSize="15sp"
-
-                            android:inputType="phone"
-                            android:padding="16dp"
-
-                            android:text=""
-                            android:textColor="@color/SoftBlack"
-
-                            android:textColorLink="@color/MainColor"
-                            android:textCursorDrawable="@color/MainColor"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_position"
-                            tools:ignore="ContentDescription"/>
-
-                        <EditText
-                            android:id="@+id/edit_text_email"
-                            android:layout_width="match_parent"
-                            android:layout_marginStart="8dp"
-                            android:layout_height="50dp"
-                            android:autofillHints=""
-
-                            android:background="@drawable/background_edit_text_stroke_white"
-                            android:ems="10"
-                            android:hint="@string/indirizzo"
-                            android:textSize="15sp"
-
-                            android:inputType="textEmailAddress"
-                            android:padding="16dp"
-
-                            android:text=""
-                            android:textColor="@color/SoftBlack"
-
-                            android:textColorLink="@color/MainColor"
-                            android:textCursorDrawable="@color/MainColor"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/DirettiveUtenteTV" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_table"
-                            tools:ignore="ContentDescription"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginStart="32dp"
-                            android:fontFamily="@font/sf_compact_rounded"
-                            android:gravity="center_vertical"
-                            android:text="@string/numero_tavoli"
-                            android:textColor="@color/Gray"
-                            android:textSize="17sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/sf_compact_rounded_bold"
-                            android:gravity="center_vertical"
-                            android:text="5"
-                            android:textColor="@color/Black"
-                            android:textSize="20sp"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
+                        android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                        android:text="@string/devi_compilare_tutti_i_campi"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="15sp"
+                        android:textColor="@color/red"
+                        app:drawableLeftCompat="@drawable/ic_baseline_warning_24" />
 
                 </LinearLayout>
 
@@ -415,5 +420,159 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/darkRL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linear_layout_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/background_edit_text_stroke_white"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:id="@+id/linear_layout_dialog_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_baseline_warning_24" />
+
+            <TextView
+                android:id="@+id/textview_msg_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:text="Errore, riprova."
+                android:textColor="@color/Black"
+                android:textSize="25sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_dialog_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="8dp"
+                app:cardUseCompatPadding="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingEnd="24dp"
+                    android:paddingStart="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_compact_rounded_bold"
+                        android:gravity="center"
+                        android:autoSizeMaxTextSize="25sp"
+                        android:autoSizeMinTextSize="9sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+
+                        android:text="OK"
+                        android:textColor="@color/MainColor"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_layout_dialog_accepted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:layout_margin="30dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/dati_aggiornati"
+                android:textColor="@color/Black"
+                android:textSize="25sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:src="@drawable/baseline_check_circle_24"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_layout_dialog_loading"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:layout_margin="30dp">
+
+            <ImageView
+                android:id="@+id/image_view_logo"
+
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/ratatouille"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/sf_compact_rounded_bold"
+                android:gravity="center_horizontal"
+                android:text="Creazione in corso"
+                android:textColor="@color/DarkGray"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </FrameLayout>

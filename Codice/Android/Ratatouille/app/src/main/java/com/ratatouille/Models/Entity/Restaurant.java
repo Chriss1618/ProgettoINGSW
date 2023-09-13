@@ -10,6 +10,9 @@ public class Restaurant {
     private String Phone;
     private String Email;
     private ArrayList<Tavolo>  ListTavoli;
+    private String nTavoli;
+
+
     public Restaurant() {
     }
 
@@ -46,5 +49,13 @@ public class Restaurant {
     }
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public String getnTavoli() {
+        return nTavoli;
+    }
+
+    public void setnTavoli(String nTavoli) {
+        this.nTavoli = nTavoli;
     }
 }

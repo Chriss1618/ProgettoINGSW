@@ -26,8 +26,9 @@ public class RequestAccount implements RequestHandler{
 
     private void getRestaurantFromServer(Request request){
 
-        Uri.Builder dataToSend  = new Uri.Builder().appendQueryParameter("id_ristorante",new LocalStorage(request.getManager().context).getData("ID_Ristorante","Integer")+"" );
-        String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/Restaurant.php";
+        Uri.Builder dataToSend  = new Uri.Builder().appendQueryParameter("ID_Ristorante",new LocalStorage(request.getManager().context).getData("ID_Ristorante","Integer")+"" );
+        String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/Account.php";
+
         try {
             JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
             MyRestaurant = new Restaurant();
@@ -44,8 +45,10 @@ public class RequestAccount implements RequestHandler{
             JSONArray CategorieJSON = new JSONArray(BodyJSON.getString("DATA"));
             for (int i = 0; i < CategorieJSON.length(); i++) {
                 JSONObject categoriaJSON = new JSONObject(CategorieJSON.getString(i));
-                MyRestaurant.setId_Restaurant("");
-                MyRestaurant.setName(categoriaJSON.getString("NomeCategoria"));
+                MyRestaurant.setName(categoriaJSON.getString("NameRistorante"));
+                MyRestaurant.setAddress(categoriaJSON.getString("AddressRistorante"));
+                MyRestaurant.setPhone(categoriaJSON.getString("Phone"));
+                MyRestaurant.setnTavoli(categoriaJSON.getString("nTavoli"));
 
             }
         }
