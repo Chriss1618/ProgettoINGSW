@@ -158,7 +158,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener    .setOnClickItemAdapterListener   (this::onClickProduct);
-        RecycleEventListener    .setOnClickItemOptionAdapterListener( this::onClickDeleteIngredient );
+        RecycleEventListener    .setOnClickItemOptionAdapterListener( (ingredientName,id_ingredient) -> onClickDeleteIngredient((String)ingredientName,id_ingredient) );
 
         ImageView_DeleteProduct .setOnClickListener              (view -> onClickDeleteIngredients());
         ImageView_AddIngredient .setOnClickListener              (view -> onCLickAddNewIngredient());

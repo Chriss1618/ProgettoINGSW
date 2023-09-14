@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     private TextView        TextView_StartOrder;
     private LinearLayout    LinearLayout_Total;
     private RecyclerView    Recycler_Products;
+    private ImageView       ImageView_Back;
     private CardView        CardView_AggiungiOrdine;
     //FUNCTIONAL
     private RecycleEventListener    RecycleEventListener;
@@ -96,6 +98,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
+        ImageView_Back                      = View_fragment.findViewById(R.id.ic_back);
         Progressbar             = View_fragment.findViewById(R.id.progressbar);
         TextView_EmptyList      = View_fragment.findViewById(R.id.text_view_empty);
         TextView_StartOrder     = View_fragment.findViewById(R.id.text_view_start_order);
@@ -114,6 +117,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
 
         CardView_ActivateOrder  .setOnClickListener(view -> onClickActivateOrder());
         CardView_CloseOrder     .setOnClickListener(view -> onClickCloseOrder());
+        ImageView_Back          .setOnClickListener(view -> manager.goBack());
     }
 
     @Override
@@ -160,6 +164,9 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations() {
+        if(manager.IndexFrom < manager.IndexOnMain){
+            ImageView_Back          .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600) );
+        }
         TextView_StartOrder     .startAnimation(Manager_Animation.getFadeIn(600));
         Text_View_Title         .startAnimation(Manager_Animation.getTranslationINfromUp(600));
         Text_View_TavoloTitle   .startAnimation(Manager_Animation.getFadeIn(300));
@@ -172,6 +179,12 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
 
     @Override
     public void EndAnimations() {
+        if(manager.IndexFrom < manager.IndexOnMain){
+
+
+            ImageView_Back          .startAnimation( Manager_Animation.getTranslateAnimatioOUT(300) );
+        }
+        Text_View_TavoloTitle   .startAnimation(Manager_Animation.getFadeOut(300));
         TextView_StartOrder     .startAnimation(Manager_Animation.getFadeOut(300));
         Text_View_Title         .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         CardView_ActivateOrder  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));

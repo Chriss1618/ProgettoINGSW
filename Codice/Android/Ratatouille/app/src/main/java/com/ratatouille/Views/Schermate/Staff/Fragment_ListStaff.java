@@ -118,12 +118,12 @@ public class Fragment_ListStaff extends Fragment implements ViewLayout {
         EditText_SearchStaff    = Fragment_View.findViewById(R.id.edit_text_name_staff);
         ProgressBar             = Fragment_View.findViewById(R.id.progressbar);
         Text_View_Empty         = Fragment_View.findViewById(R.id.text_view_empty);
-
     }
+
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener    .setOnClickItemAdapterListener( this::onClickStaffMember);
-        RecycleEventListener    .setOnClickItemOptionAdapterListener( this::onClickDeleteStaff );
+        RecycleEventListener    .setOnClickItemOptionAdapterListener( (item,id_staff)->onClickDeleteStaff((String)item,id_staff) );
         Image_View_AddMember    .setOnClickListener(            view -> onClickAddNewMember());
         Image_View_DeleteMember .setOnClickListener(            view -> onClickDeleteMember());
         EditText_SearchStaff    .addTextChangedListener( onChangeSearchStaff());

@@ -23,8 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="start"
-                android:layout_marginStart="16dp">
+                android:gravity="start">
                 <ImageView
                     android:layout_gravity="center"
                     android:id="@+id/ic_back"
@@ -103,12 +102,14 @@
                 app:layout_constraintTop_toTopOf="@+id/edit_text_name_category" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_categories"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
         <ProgressBar
             android:id="@+id/progressbar"
             android:visibility="gone"

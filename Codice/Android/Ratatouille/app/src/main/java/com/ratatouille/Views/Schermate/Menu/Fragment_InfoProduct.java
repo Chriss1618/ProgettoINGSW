@@ -3,9 +3,6 @@ package com.ratatouille.Views.Schermate.Menu;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditProduct;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
@@ -28,10 +23,8 @@ import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
-import kotlinx.coroutines.channels.Send;
 
 public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     //SYSTEM

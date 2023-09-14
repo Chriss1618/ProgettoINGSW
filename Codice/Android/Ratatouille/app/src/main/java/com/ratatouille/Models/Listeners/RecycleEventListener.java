@@ -10,7 +10,7 @@ public class RecycleEventListener {
     }
 
     public interface onClickItemOptionListener {
-        void onClickItemOption(String ItemNameOption,int action);
+        void onClickItemOption(Object ItemNameOption,int action);
     }
 
     //FUNCTIONAL
@@ -49,7 +49,7 @@ public class RecycleEventListener {
         }
     }
 
-    public void onClickItemOption(String ItemNameOption,int action){
+    public void onClickItemOption(Object ItemNameOption,int action){
         if(AdapterOptionListener != null ){
             AdapterOptionListener.onClickItemOption(ItemNameOption,action);
         }

@@ -44,6 +44,7 @@ public class Manager implements SubController {
 
     //DATA
     private Object data;
+    private Object dataAlternative;
 
     public Manager(SourceInfo sourceInfo,Context context, View view, FragmentManager fragmentManager, BottomBarListener bottomBarListener) {
         this.ViewsFragments     = new ArrayList<>();
@@ -73,6 +74,12 @@ public class Manager implements SubController {
     public Object getData(){ return data;}
     public void setData(Object data){
         this.data = data;
+    }
+    public Object getDataAlternative(){
+        return dataAlternative;
+    }
+    public void setDataAlternative(Object data){
+        this.dataAlternative = data;
     }
 
     //ShowPages

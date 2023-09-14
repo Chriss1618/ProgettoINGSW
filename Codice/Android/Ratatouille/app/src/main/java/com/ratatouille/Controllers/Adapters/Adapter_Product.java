@@ -163,8 +163,8 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
     public Adapter_Product(Context context, ArrayList<Product> ListProducts, RecycleEventListener RecycleEventListener, boolean isFromLeft){
         this.context                = context;
-        this.ListProducts           = new ArrayList<>(ListProducts);;
-        this.ListProductsFiltered   = new ArrayList<>(ListProducts);;
+        this.ListProducts           = new ArrayList<>(ListProducts);
+        this.ListProductsFiltered   = new ArrayList<>(ListProducts);
         this.RecycleEventListener   = RecycleEventListener;
         this.isFromLeft             = isFromLeft;
         this.Holders                = new ArrayList<>();

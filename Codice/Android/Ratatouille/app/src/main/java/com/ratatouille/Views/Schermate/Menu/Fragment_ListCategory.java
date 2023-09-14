@@ -128,7 +128,7 @@ public class Fragment_ListCategory extends Fragment implements ViewLayout {
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener        .setOnClickItemAdapterListener( (item)-> onClickCategory( (CategoriaMenu)item ) );
-        RecycleEventListener        .setOnClickItemOptionAdapterListener( this::onClickDeleteCategory );
+        RecycleEventListener        .setOnClickItemOptionAdapterListener( (item,id_category)->onClickDeleteCategory( (String)item,id_category ) );
 
         Image_View_AddCategory      .setOnClickListener(view -> onClickAddCategory());
         Image_View_DeleteCategory   .setOnClickListener(view -> onClickDeleteCategories());

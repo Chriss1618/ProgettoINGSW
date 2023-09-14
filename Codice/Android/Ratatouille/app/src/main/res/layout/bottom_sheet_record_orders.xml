@@ -38,32 +38,48 @@
             </LinearLayout>
             <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:orientation="horizontal"
-                android:background="@color/Gray"
+                android:background="@color/DarkGray"
             android:gravity="center"/>
             <androidx.constraintlayout.widget.ConstraintLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white">
+                android:background="@color/SoftGray">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_products"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
                     android:layout_width="match_parent"
+
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="150dp"
-                    android:minHeight="500dp"
+                    android:minHeight="100dp"
+                    android:layout_marginTop="130dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    app:layout_constraintBottom_toTopOf="@+id/card_view_send_chef"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/text_view_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:fontFamily="@font/sf_compact_rounded_regular_italic"
+                    android:text="Nessun ordine aggiunto ancora"
+                    android:textColor="@color/DarkGray"
+                    android:textSize="24sp"
+                    android:visibility="gone"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_cancel"
+                    app:layout_constraintVertical_bias="0.0" />
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_view_send_chef"
                     android:layout_width="wrap_content"
@@ -76,9 +92,9 @@
                     android:background="@color/MainColor"
                     app:cardCornerRadius="20dp"
                     app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toTopOf="@+id/card_view_cancel"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -125,13 +141,12 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="16dp"
                     android:background="@color/white"
                     app:cardCornerRadius="20dp"
                     app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_send_chef">
 
                     <LinearLayout
                         android:layout_width="match_parent"

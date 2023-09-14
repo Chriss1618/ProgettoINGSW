@@ -11,36 +11,59 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="UselessParent">
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar_menu_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="center"
             android:padding="8dp"
-            android:layout_marginTop="16dp">
+            android:orientation="horizontal">
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
                 android:orientation="horizontal"
-                android:gravity="start"
-                android:layout_marginStart="16dp">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ic_back"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/icon_add"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_back" />
+
                 <TextView
                     android:id="@+id/text_view_title_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
 
+                    android:singleLine="true"
                     android:fontFamily="@font/sf_compact_rounded_bold"
                     android:text="@string/categoria"
                     android:textColor="@color/SoftBlack"
                     android:textSize="30sp" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
                 android:orientation="horizontal"
-                android:gravity="end"
-                android:layout_marginEnd="16dp">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
                 <ImageView
                     android:id="@+id/ic_resoconto"
                     android:layout_width="30dp"
@@ -51,15 +74,23 @@
                     android:contentDescription="@string/icon_add" />
 
             </LinearLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_search_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:background="@drawable/background_search_category"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="16dp">
 
             <EditText
-                android:id="@+id/edit_text_name_category"
+                android:id="@+id/edit_text_search_product"
                 android:layout_width="match_parent"
+
                 android:layout_height="50dp"
 
                 android:autofillHints=""
@@ -69,15 +100,16 @@
                 android:hint="@string/cerca_prodotto_in_menu"
                 android:inputType="text"
                 android:paddingStart="42dp"
-                android:textColorHint="@color/Gray"
                 android:text=""
-                android:textColor="@color/Gray"
+                android:textColor="@color/Black"
+                android:textColorHint="@color/DarkGray"
 
                 android:textColorLink="@color/MainColor"
-                android:textCursorDrawable="@color/MainColor"
+                android:textCursorDrawable="@drawable/custom_cursor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlSymmetry" />
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -86,16 +118,34 @@
                 android:clickable="true"
                 android:contentDescription="@string/icon_add"
                 android:src="@drawable/ic_search"
-                app:layout_constraintStart_toStartOf="@+id/edit_text_name_category"
-                app:layout_constraintTop_toTopOf="@+id/edit_text_name_category" />
+                app:layout_constraintStart_toStartOf="@+id/edit_text_search_product"
+                app:layout_constraintTop_toTopOf="@+id/edit_text_search_product" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_products"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:visibility="gone"
+            android:layout_marginTop="64dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/text_view_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/sf_compact_rounded_regular_italic"
+            android:text="@string/nessun_prodotto"
+            android:textColor="@color/DarkGray"
+            android:textSize="24sp" />
     </LinearLayout>
 
 

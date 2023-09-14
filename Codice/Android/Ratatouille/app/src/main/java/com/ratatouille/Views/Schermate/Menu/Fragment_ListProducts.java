@@ -163,7 +163,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener    .setOnClickItemAdapterListener((item)-> onClickProduct( (Product)item ) );
-        RecycleEventListener    .setOnClickItemOptionAdapterListener( this::onClickDeleteProduct );
+        RecycleEventListener    .setOnClickItemOptionAdapterListener( (item, id_product)->onClickDeleteProduct( (String)item, id_product) );
         ImageView_AddProduct    .setOnClickListener(            view -> onClickAddProduct());
         ImageView_Order         .setOnClickListener(            view -> onOrderClick());
         ImageView_BackOrder     .setOnClickListener(            view -> onCancelOrder());
@@ -192,6 +192,7 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
         checkEmptyRecycle();
     }
+
     private void setProductsOnLayout(ArrayList<Product> list){
         requireActivity().runOnUiThread(() -> {
             ListProducts = list;
