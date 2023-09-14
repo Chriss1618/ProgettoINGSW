@@ -109,4 +109,5 @@
     <string name="dati_aggiornati">Dati Aggiornati</string>
     <string name="conferma_password">Conferma Password</string>
     <string name="conferma_password_caps">CONFERMA PASSWORD</string>
+    <string name="nessun_tavolo_registrato">Nessun Tavolo registrato</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
 
@@ -27,7 +28,7 @@ public class Adapter_TablesWaiter extends RecyclerView.Adapter<Adapter_TablesWai
     private final RecycleEventListener  RecycleEventListener;
 
     //DATA
-    private final ArrayList<String> Tables;
+    private final ArrayList<Tavolo> Tables;
 
 
     //OTHER...
@@ -47,7 +48,7 @@ public class Adapter_TablesWaiter extends RecyclerView.Adapter<Adapter_TablesWai
         }
     }
 
-    public Adapter_TablesWaiter( ArrayList<String> tables, RecycleEventListener recycleEventListener) {
+    public Adapter_TablesWaiter( ArrayList<Tavolo> tables, RecycleEventListener recycleEventListener) {
         this.RecycleEventListener = recycleEventListener;
         this.Tables = tables;
     }
@@ -73,7 +74,15 @@ public class Adapter_TablesWaiter extends RecyclerView.Adapter<Adapter_TablesWai
 
     //LAYOUT
     private void initializeLayout( final int position){
-        this.Holder.TextView_NumberTable.setText(Tables.get(position));
+        this.Holder.TextView_NumberTable.setText(Tables.get(position).getN_Tavolo());
+        if( Tables.get(position).isStateTavolo() ){
+            this.Holder.Image_View_State_red.setImageResource(R.drawable.ic_state_neautral);
+            this.Holder.Image_View_State_green.setImageResource(R.drawable.ic_state_green);
+
+        }else{
+            this.Holder.Image_View_State_green.setImageResource(R.drawable.ic_state_neautral);
+            this.Holder.Image_View_State_red.setImageResource(R.drawable.ic_state_red);
+        }
     }
 
     private void setActions( final int position){
@@ -82,7 +91,7 @@ public class Adapter_TablesWaiter extends RecyclerView.Adapter<Adapter_TablesWai
 
     private void clickTable( final int position){
         Log.d(TAG, "Premuto in Product--------------------");
-        Log.d(TAG, " Array: "   + this.Tables.get(position));
+        Log.d(TAG, " Array: "   + this.Tables.get(position).getN_Tavolo());
         Log.d(TAG, "--------------------------------------");
 
         RecycleEventListener.onClickItem(Tables.get(position));
