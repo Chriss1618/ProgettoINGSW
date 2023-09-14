@@ -46,12 +46,16 @@ public class ManagerActionFactory {
         classMap.put(ControlMapper.INDEX_INVENTORY_NEW,     ActionsNewIngredient.class);
         classMap.put(ControlMapper.INDEX_INVENTORY_INFO, ActionsInfoEditIngredient.class);
         classMap.put(ControlMapper.INDEX_INVENTORY_EDIT, ActionsInfoEditIngredient.class);
+
         //STAFF
         classMap.put(ControlMapper.INDEX_STAFF_LIST, ActionsStaff.class);
         classMap.put(ControlMapper.INDEX_STAFF_NEW, ActionsStaff.class);
 
-        //MENUWAITER
-        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_TABLE, ActionsMenuWaiter.class);
+        //MENU WAITER
+        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_TABLE,   ActionsMenuWaiter.class);
+        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_INFO_TABLE,   ActionsMenuWaiter.class);
+        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_CAT,     ActionsMenuWaiter.class);
+        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_PRODUCT, ActionsMenuWaiter.class);
 
     }
 

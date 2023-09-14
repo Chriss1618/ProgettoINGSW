@@ -6,15 +6,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_Category;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsMenuWaiter;
 import com.ratatouille.Controllers.SubControllers.Manager;
+import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Events.Action.Action;
+import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Entity.CategoriaMenu;
@@ -27,19 +37,20 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     private static final String TAG = "Fragment_ListCategoryCameriere";
 
     //LAYOUT
-    private android.view.View View_fragment;
+    private View            View_fragment;
     private TextView        Text_View_TitleCategory;
     private RecyclerView    Recycler_Categories;
-    private LinearLayout    LinearLayout_NewCategory;
-    private LinearLayout    LinearLayout_BackGroundNewCategory;
     private ImageView       Image_View_ShowResoconto;
-
+    private TextView        Text_View_Empty;
+    private ProgressBar     ProgressBar;
+    private EditText        EditText_SearchCategory;
+    private ImageView       ImageView_Back;
     //FUNCTIONAL
     private RecycleEventListener RecycleEventListener;
     private Manager manager;
-
+    private Adapter_Category        adapter_category;
     //DATA
-    private ArrayList<CategoriaMenu> TitleCategories;
+    private ArrayList<CategoriaMenu> ListCategoryMenu;
 
     //OTHER...
 
@@ -59,8 +70,8 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
                                           Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View_fragment = inflater.inflate(R.layout.fragment__list_category_cameriere, container, false);
-        PrepareData();
         PrepareLayout();
+        PrepareData();
 
         StartAnimations();
 
@@ -71,13 +82,16 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     //DATA
     @Override
     public void PrepareData(){
-        TitleCategories = new ArrayList<>();
-        TitleCategories.add(new CategoriaMenu("Primo",1));
-        TitleCategories.add(new CategoriaMenu("Primo",1));
-        TitleCategories.add(new CategoriaMenu("Primo",1));
-        TitleCategories.add(new CategoriaMenu("Primo",1));
+        ProgressBar.setVisibility(View.VISIBLE);
+        Recycler_Categories.setVisibility(View.GONE);
+        sendRequest();
     }
-
+    private void sendRequest(){
+        @SuppressWarnings("unchecked")
+        Request request = new Request(manager.getSourceInfo(), null, ManagerRequestFactory.INDEX_REQUEST_CATEGORY,
+                (list)-> setCategoriesOnLayout((ArrayList<CategoriaMenu>) list));
+        manager.HandleRequest(request);
+    }
     //LAYOUT
     @Override
     public void PrepareLayout() {
@@ -88,65 +102,92 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
 
     @Override
     public void LinkLayout() {
+        ImageView_Back                      = View_fragment.findViewById(R.id.ic_back);
+        ProgressBar                         = View_fragment.findViewById(R.id.progressbar);
         Text_View_TitleCategory             = View_fragment.findViewById(R.id.text_view_title_category);
         Image_View_ShowResoconto            = View_fragment.findViewById(R.id.ic_resoconto);
         Recycler_Categories                 = View_fragment.findViewById(R.id.recycler_categories);
-        LinearLayout_NewCategory            = View_fragment.findViewById(R.id.linear_layout_new_category);
-        LinearLayout_BackGroundNewCategory  = View_fragment.findViewById(R.id.darkRL);
+        Text_View_Empty                     = View_fragment.findViewById(R.id.text_view_empty);
+        EditText_SearchCategory             = View_fragment.findViewById(R.id.edit_text_name_category);
     }
     @Override
     public void SetDataOnLayout() {
-        initCategoryRV();
-        initDialog();
     }
     @Override
     public void SetActionsOfLayout() {
-        RecycleEventListener      .setOnClickItemAdapterListener(this::onClickCategory);
-        Image_View_ShowResoconto  .setOnClickListener(view ->onClickShowResoconto());
+
+        ImageView_Back              .setOnClickListener(view -> manager.goBack());
+        RecycleEventListener        .setOnClickItemAdapterListener((item)-> onClickCategory( (CategoriaMenu)item ) );
+        Image_View_ShowResoconto    .setOnClickListener(view ->onClickShowResoconto());
+        EditText_SearchCategory     .addTextChangedListener( onChangeSearchCategory() );
     }
 
     private void initCategoryRV(){
-        Adapter_Category adapter_category = new Adapter_Category(TitleCategories, RecycleEventListener,false);
+        adapter_category = new Adapter_Category(ListCategoryMenu, RecycleEventListener,false);
         Recycler_Categories.setAdapter(adapter_category);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         Recycler_Categories.setLayoutManager(mLayoutManager);
         Recycler_Categories.setNestedScrollingEnabled(false);
-    }
-    private void initDialog(){
 
-
+        checkEmptyRecycle();
     }
+
     //ACTIONS
-    private void onClickCategory(Object Category){
-        Log.d(TAG, "Ricevuto da Listener->"+Category);
-        EndAnimations();
+    private void SendAction(Action action){
+        manager.HandleAction(action);
+    }
+
+    private void onClickCategory(CategoriaMenu Category){
+        Log.d(TAG, "Ricevuto da Listener->"+Category.getNomeCategoria());
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_OPEN_LIST_PRODUCTS, Category);
+        SendAction(action);
     }
 
     private void onClickShowResoconto(){
         Log.d(TAG, "onClickShowResoconto");
         //managerOrdiniCameriere.showBottomSheet();
     }
+    private TextWatcher onChangeSearchCategory(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-    //FUNCTIONAL
+            }
 
-    private void showDialogNewCategory(){
-        CardView CardView_Cancel    = LinearLayout_NewCategory.findViewById(R.id.card_view_annulla);
-        CardView CardView_Add       = LinearLayout_NewCategory.findViewById(R.id.card_view_aggiungi);
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(adapter_category != null){
+                    adapter_category.filterList(charSequence.toString());
 
-        CardView_Cancel.setOnClickListener(view -> dismissDialogNewCategory());
+                }
+            }
 
-        LinearLayout_NewCategory            .setVisibility(android.view.View.VISIBLE);
-        LinearLayout_BackGroundNewCategory  .setVisibility(android.view.View.VISIBLE);
-        LinearLayout_NewCategory.startAnimation(Manager_Animation.getTranslationINfromUp(500));
-        LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeIn(500));
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
     }
 
-    private void dismissDialogNewCategory(){
-        LinearLayout_NewCategory.setVisibility(android.view.View.GONE);
-        LinearLayout_BackGroundNewCategory.setVisibility(android.view.View.GONE);
-        LinearLayout_NewCategory.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
-        LinearLayout_BackGroundNewCategory.startAnimation(Manager_Animation.getFadeOut(500));
+    //FUNCTIONAL
+    private void setCategoriesOnLayout(ArrayList<CategoriaMenu> list){
+        ListCategoryMenu = list;
+        requireActivity().runOnUiThread(() -> {
+            initCategoryRV();
+            ProgressBar.setVisibility(View.GONE);
+        });
+    }
+    private void checkEmptyRecycle(){
+        if(ListCategoryMenu.isEmpty()) {
+            Text_View_Empty.setVisibility(View.VISIBLE);
+            Recycler_Categories.setVisibility(View.GONE);
+            StartAnimationEmptyCategories();
+        }else{
+            Text_View_Empty.setVisibility(View.GONE);
+            Recycler_Categories.setVisibility(View.VISIBLE);
+            StartAnimationCategories();
+        }
     }
 
     //ANIMATIONS
@@ -160,5 +201,12 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     public void EndAnimations(){
         Text_View_TitleCategory .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         Recycler_Categories     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+    }
+    private void StartAnimationCategories(){
+        Recycler_Categories         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
+    }
+
+    private void StartAnimationEmptyCategories(){
+        Text_View_Empty         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
     }
 }

@@ -37,7 +37,6 @@ CREATE TABLE Ordine (
 	ID_Ordine INTEGER AUTO_INCREMENT,
     ID_Tavolo INTEGER NOT NULL,
     Prezzo_Totale FLOAT(5,2) NOT NULL DEFAULT 0.00,
-    
     PRIMARY KEY (ID_Ordine),
     CONSTRAINT FK_TavoloOrdine FOREIGN KEY (ID_Tavolo) REFERENCES Tavolo(ID_Tavolo)
 );
