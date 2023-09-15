@@ -54,119 +54,165 @@
                     android:textSize="30sp" />
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="end"
-                android:layout_marginEnd="16dp">
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_view_disponibile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:backgroundTint="@color/Green"
-                    android:visibility="visible"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:id="@+id/ic_state_green"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/icon_add"
+                    android:src="@drawable/ic_state_green" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp">
+                <ImageView
+                    android:id="@+id/ic_state_red"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="16dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/icon_delete"
+                    android:src="@drawable/ic_state_neautral" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sf_compact_rounded_bold"
-                            android:gravity="top"
-                            android:maxLines="1"
-
-                            android:text="Disponibile"
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_view_occupato"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:backgroundTint="@color/red"
-                    android:visibility="gone"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/card_view_disponibile"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sf_compact_rounded_bold"
-                            android:gravity="top"
-                            android:maxLines="1"
-
-                            android:text="Occupato"
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
-            android:id="@+id/linear_layout_total"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="start"
-            android:layout_marginStart="40dp">
-            <TextView
+            android:gravity="center"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:id="@+id/linear_layout_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginStart="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:fontFamily="@font/sf_compact_rounded_bold"
-                android:text="Totale:"
-                android:textColor="@color/SoftBlack"
-                android:textSize="15sp" />
-            <TextView
-                android:layout_width="wrap_content"
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="Totale:"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="  €"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="30sp" />
+                <TextView
+                    android:id="@id/text_view_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/sf_compact_rounded_bold"
+                    android:text="0,00"
+                    android:textColor="@color/SoftBlack"
+                    android:textSize="30sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
 
-                android:fontFamily="@font/sf_compact_rounded_bold"
-                android:text="  €"
-                android:textColor="@color/SoftBlack"
-                android:textSize="30sp" />
-            <TextView
-                android:id="@id/text_view_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="end"
+                    android:layout_marginEnd="16dp">
 
-                android:fontFamily="@font/sf_compact_rounded_bold"
-                android:text="0,00"
-                android:textColor="@color/SoftBlack"
-                android:textSize="30sp" />
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_disponibile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:backgroundTint="@color/Green"
+                        android:visibility="visible"
+                        app:cardCornerRadius="20dp"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                android:gravity="top"
+                                android:maxLines="1"
+
+                                android:text="Apri"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_occupato"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:backgroundTint="@color/red"
+                        android:visibility="gone"
+                        app:cardCornerRadius="20dp"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_compact_rounded_bold"
+                                android:gravity="top"
+                                android:maxLines="1"
+
+                                android:text="Chiudi"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
         </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

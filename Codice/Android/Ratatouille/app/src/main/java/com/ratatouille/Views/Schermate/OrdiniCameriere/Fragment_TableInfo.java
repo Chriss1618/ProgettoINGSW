@@ -49,6 +49,9 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     private RecyclerView    Recycler_Products;
     private ImageView       ImageView_Back;
     private CardView        CardView_AggiungiOrdine;
+
+    ImageView       Image_View_State_green;
+    ImageView       Image_View_State_red;
     //FUNCTIONAL
     private RecycleEventListener    RecycleEventListener;
     private Manager                 manager;
@@ -98,11 +101,13 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
 
     @Override
     public void LinkLayout() {
-        ImageView_Back                      = View_fragment.findViewById(R.id.ic_back);
+        ImageView_Back          = View_fragment.findViewById(R.id.ic_back);
         Progressbar             = View_fragment.findViewById(R.id.progressbar);
         TextView_EmptyList      = View_fragment.findViewById(R.id.text_view_empty);
         TextView_StartOrder     = View_fragment.findViewById(R.id.text_view_start_order);
 
+        Image_View_State_green  = View_fragment.findViewById(R.id.ic_state_green);
+        Image_View_State_red    = View_fragment.findViewById(R.id.ic_state_red);
         Text_View_Title         = View_fragment.findViewById(R.id.text_view_title);
         Text_View_TavoloTitle   = View_fragment.findViewById(R.id.text_view_tavolo_title);
         CardView_CloseOrder     = View_fragment.findViewById(R.id.card_view_occupato);
@@ -129,12 +134,18 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
             TextView_StartOrder     .setVisibility(View.VISIBLE);
             Recycler_Products       .setVisibility(View.GONE);
             CardView_AggiungiOrdine .setVisibility(View.GONE);
+
+            Image_View_State_red.setImageResource(R.drawable.ic_state_neautral);
+            Image_View_State_green.setImageResource(R.drawable.ic_state_green);
         }else{
             CardView_ActivateOrder  .setVisibility(View.GONE);
             TextView_StartOrder     .setVisibility(View.GONE);
             CardView_CloseOrder     .setVisibility(View.VISIBLE);
             Recycler_Products       .setVisibility(View.VISIBLE);
             CardView_AggiungiOrdine .setVisibility(View.VISIBLE);
+
+            Image_View_State_green.setImageResource(R.drawable.ic_state_neautral);
+            Image_View_State_red.setImageResource(R.drawable.ic_state_red);
         }
     }
     private void initListProductsRV( ){
@@ -149,7 +160,8 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         manager.HandleAction(action);
     }
     private void onClickActivateOrder(){
-        switchToCloseOrder();
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_CREATE_ORDER,Tavolo);
+        SendAction(action);
     }
     private void onClickCloseOrder(){
         switchToActiveOrder();
@@ -181,7 +193,6 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     public void EndAnimations() {
         if(manager.IndexFrom < manager.IndexOnMain){
 
-
             ImageView_Back          .startAnimation( Manager_Animation.getTranslateAnimatioOUT(300) );
         }
         Text_View_TavoloTitle   .startAnimation(Manager_Animation.getFadeOut(300));
@@ -201,6 +212,8 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
             new Handler(Looper.getMainLooper()).postDelayed(()->{
                 CardView_CloseOrder     .setVisibility(View.GONE);
                 CardView_AggiungiOrdine .setVisibility(View.GONE);
+                Image_View_State_red.setImageResource(R.drawable.ic_state_neautral);
+                Image_View_State_green.setImageResource(R.drawable.ic_state_green);
             },300);
 
             CardView_ActivateOrder  .setVisibility(View.VISIBLE);
@@ -217,6 +230,8 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
             new Handler(Looper.getMainLooper()).postDelayed(()->{
                 CardView_ActivateOrder.setVisibility(View.GONE);
                 TextView_StartOrder.setVisibility(View.GONE);
+                Image_View_State_green.setImageResource(R.drawable.ic_state_neautral);
+                Image_View_State_red.setImageResource(R.drawable.ic_state_red);
             },300);
             CardView_CloseOrder     .setVisibility(View.VISIBLE);
             CardView_AggiungiOrdine .setVisibility(View.VISIBLE);

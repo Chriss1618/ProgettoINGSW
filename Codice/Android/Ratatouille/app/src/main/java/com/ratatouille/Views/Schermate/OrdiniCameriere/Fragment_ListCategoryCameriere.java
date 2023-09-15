@@ -1,17 +1,21 @@
 package com.ratatouille.Views.Schermate.OrdiniCameriere;
 
+import android.app.Activity;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,6 +40,9 @@ import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.R;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import io.vavr.control.Try;
 
 
 public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayout {
@@ -51,12 +58,15 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     private ProgressBar     ProgressBar;
     private EditText        EditText_SearchCategory;
     private ImageView       ImageView_Back;
+    private LinearLayout    LinearLayout_Dialog;
+    private LinearLayout    LinearLayout_DarkL;
     private RecyclerView    Recycler_Products;
     //FUNCTIONAL
     private RecycleEventListener RecycleEventListener;
     private Manager manager;
     private Adapter_Category        adapter_category;
-    private BottomSheetReport BottomSheetReport;
+    private BottomSheetReport       BottomSheetReport;
+    private DialogMessage dialogMessage;
     //DATA
     private ArrayList<CategoriaMenu> ListCategoryMenu;
 
@@ -100,10 +110,11 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
                 (list)-> setCategoriesOnLayout((ArrayList<CategoriaMenu>) list));
         manager.HandleRequest(request);
     }
+
     //LAYOUT
     @Override
     public void PrepareLayout() {
-        BottomSheetReport = new BottomSheetReport(manager,View_fragment);
+        BottomSheetReport = new BottomSheetReport(manager,View_fragment,this);
 
         LinkLayout();
         SetActionsOfLayout();
@@ -112,6 +123,9 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
 
     @Override
     public void LinkLayout() {
+
+        LinearLayout_Dialog                 = View_fragment.findViewById(R.id.linear_layout_dialog);
+        LinearLayout_DarkL                  = View_fragment.findViewById(R.id.darkRL);
         ImageView_Back                      = View_fragment.findViewById(R.id.ic_back);
         ProgressBar                         = View_fragment.findViewById(R.id.progressbar);
         Text_View_TitleCategory             = View_fragment.findViewById(R.id.text_view_title_category);
@@ -200,8 +214,102 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
             StartAnimationCategories();
         }
     }
+    public void SendToKitchen(){
+        dialogMessage = new DialogMessage();
+        dialogMessage.showLoading();
 
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_SEND_TO_KITCHEN,(ArrayList<Product>)manager.getDataAlternative(),(isOk)->showDialog((Boolean) isOk));
+        SendAction(action);
+    }
+    //DIALOG
+    private void showDialog(boolean isOk){
+        if(isOk) ((ArrayList<Product>)manager.getDataAlternative()).clear();
+        requireActivity().runOnUiThread(() -> {
+            if(isOk) dialogMessage.showDialogSuccess();
+            else dialogMessage.showDialogError();
+        });
+    }
 
+    public class DialogMessage{
+        LinearLayout LinearLayout_Error;
+        LinearLayout LinearLayout_Success;
+        LinearLayout LinearLayout_Loading;
+
+        CardView CardView_Dialog_Cancel;
+        private int numGiri = 0;
+
+        public DialogMessage() {
+            LinearLayout_Error      = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_error);
+            LinearLayout_Success    = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_accepted);
+            LinearLayout_Loading    = LinearLayout_Dialog.findViewById(R.id.linear_layout_dialog_loading);
+
+            LinearLayout_Dialog     .setVisibility(View.VISIBLE);
+            LinearLayout_Error      .setVisibility(View.GONE);
+            LinearLayout_Success    .setVisibility(View.GONE);
+            LinearLayout_Loading    .setVisibility(View.GONE);
+        }
+
+        public void showLoading(){
+            LinearLayout_Loading    .setVisibility(View.VISIBLE);
+            LinearLayout_DarkL      .setVisibility(View.VISIBLE);
+            LinearLayout_Loading    .startAnimation(Manager_Animation.getTranslationINfromUp(500));
+            LinearLayout_DarkL       .startAnimation(Manager_Animation.getFadeIn(500));
+            new Thread(()->rotation(1500)).start();
+        }
+        private void rotation(int speed){
+
+            ImageView ImageView_Logo = LinearLayout_Loading.findViewById(R.id.image_view_logo);
+
+            ImageView_Logo.animate()
+                    .rotationBy(speed) // Use rotationBy instead of setting absolute rotation value
+                    .setDuration(5000)
+                    .withEndAction(() -> {
+                        // This will be executed when the animation ends
+                        int nextSpeed = (numGiri++ % 2 == 0) ? -1500 : 1500;
+                        rotation(nextSpeed);
+                    });
+
+        }
+        public void showDialogError(){
+            CardView_Dialog_Cancel             = LinearLayout_Error.findViewById(R.id.card_view_dialog_confirm);
+
+            CardView_Dialog_Cancel .setOnClickListener(view -> dismissDialogError());
+
+            LinearLayout_Loading            .startAnimation(Manager_Animation.getFadeOut(200));
+
+            new Handler(Looper.getMainLooper()).postDelayed( ()->{
+                LinearLayout_Loading           .setVisibility(View.GONE);
+                LinearLayout_Error            .setVisibility(View.VISIBLE);
+                LinearLayout_Error            .startAnimation(Manager_Animation.getFadeIn(300));
+            },200);
+            hideKeyboardFrom();
+        }
+        private void dismissDialogError(){
+            LinearLayout_Dialog.startAnimation(Manager_Animation.getTranslationOUTtoUp(500));
+            LinearLayout_DarkL.startAnimation(Manager_Animation.getFadeOut(500));
+
+            Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
+
+            LinearLayout_Error  .setVisibility(View.GONE);
+            LinearLayout_Dialog .setVisibility(View.GONE);
+            LinearLayout_DarkL  .setVisibility(View.GONE);
+        }
+        public void showDialogSuccess(){
+            LinearLayout_Loading            .startAnimation(Manager_Animation.getFadeOut(200));
+            new Handler(Looper.getMainLooper()).postDelayed( ()->{
+                LinearLayout_Loading            .setVisibility(View.GONE);
+                LinearLayout_Success            .setVisibility(View.VISIBLE);
+                LinearLayout_Success            .startAnimation(Manager_Animation.getFadeIn(300));
+            },200);
+            hideKeyboardFrom();
+        }
+
+    }
+    public void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) manager.context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.View_fragment.getWindowToken(), 0);
+    }
+    //END DIALOG
     //ANIMATIONS
     @Override
     public void StartAnimations(){
