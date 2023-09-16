@@ -28,6 +28,7 @@ import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
+import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
@@ -76,7 +77,7 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
         super.onCreate(savedInstanceState);
 
         RecycleEventListener = new RecycleEventListener();
-        Category_Name = (CategoriaMenu) manager.getData();
+        Category_Name = ((Ordine) manager.getData()).getCategoria();
     }
 
     @Override

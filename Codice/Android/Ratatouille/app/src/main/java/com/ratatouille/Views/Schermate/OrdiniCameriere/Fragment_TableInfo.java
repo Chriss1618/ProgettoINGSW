@@ -20,6 +20,7 @@ import com.ratatouille.Controllers.Adapters.Adapter_Product;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsMenuWaiter;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Events.Action.Action;
@@ -58,6 +59,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     //DATA
     private ArrayList<Product>   TitleProducts;
     private Tavolo               Tavolo;
+    private Ordine                  Ordine;
     //OTHER...
 
     public Fragment_TableInfo(Manager manager, int a) {
@@ -155,20 +157,23 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         Adapter_Product adapter_product = new Adapter_Product(getContext(),TitleProducts, RecycleEventListener,false);
         Recycler_Products.setAdapter(adapter_product);
     }
+
     //ACTIONS
     private void SendAction(Action action){
         manager.HandleAction(action);
     }
     private void onClickActivateOrder(){
-        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_CREATE_ORDER,Tavolo);
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_CREATE_ORDER,Tavolo,this::switchToCloseOrder);
         SendAction(action);
     }
+
     private void onClickCloseOrder(){
-        switchToActiveOrder();
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_CLOSE_TABLE,Tavolo,this::switchToActiveOrder);
+        SendAction(action);
     }
 
     private void onClickAddOrder(){
-        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_SHOW_MENU_WAITER,null);
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_SHOW_MENU_WAITER,Ordine);
         SendAction(action);
     }
     //FUNCTIONAL
@@ -198,14 +203,20 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         Text_View_TavoloTitle   .startAnimation(Manager_Animation.getFadeOut(300));
         TextView_StartOrder     .startAnimation(Manager_Animation.getFadeOut(300));
         Text_View_Title         .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
-        CardView_ActivateOrder  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
-        CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+
+        if(Tavolo.isStateTavolo()){
+            CardView_ActivateOrder  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        }else{
+            CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+        }
+
         Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
         CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationOUTtoDownS(300));
         LinearLayout_Total      .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }
 
     private void switchToActiveOrder(){
+        Tavolo = (Tavolo) manager.getData();
         CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(600));
         CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationOUTtoDownS(600));
         new Handler(Looper.getMainLooper()).postDelayed(()->{
@@ -224,6 +235,8 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     }
 
     private void switchToCloseOrder(){
+        Ordine = (Ordine) manager.getData();
+        Tavolo = Ordine.getTavolo();
         CardView_ActivateOrder  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(600));
         TextView_StartOrder     .startAnimation(Manager_Animation.getFadeOut(600));
         new Handler(Looper.getMainLooper()).postDelayed(()->{

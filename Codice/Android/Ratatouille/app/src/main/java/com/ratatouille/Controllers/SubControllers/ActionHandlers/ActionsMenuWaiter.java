@@ -7,7 +7,7 @@ import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.CategoriaMenu;
-import com.ratatouille.Models.Entity.Ingredient;
+import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Events.Action.Action;
@@ -30,6 +30,7 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
     public final static int INDEX_ACTION_OPEN_INFO_PRODUCT  = 3;
     public final static int INDEX_ACTION_SEND_TO_KITCHEN    = 4;
     public final static int INDEX_ACTION_CREATE_ORDER       = 5;
+    public final static int INDEX_ACTION_CLOSE_TABLE        = 6;
 
     public ActionsMenuWaiter(){
         actionHandlerMap = new HashMap<>();
@@ -39,6 +40,7 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
         actionHandlerMap.put(INDEX_ACTION_OPEN_INFO_PRODUCT,    new ShowInfoProduct_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_SEND_TO_KITCHEN,      new SendKitchen_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_CREATE_ORDER,         new CreateOrder_ActionHandler());
+        actionHandlerMap.put(INDEX_ACTION_CLOSE_TABLE,         new CloseOrder_ActionHandler());
     }
     private static class ShowTable_ActionHandler implements ActionHandler{
         @Override
@@ -58,8 +60,9 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
         public void handleAction(Action action) {
             CategoriaMenu categoria = (CategoriaMenu) action.getData();
             Log.d(TAG, "handleAction: GetCategorieActionHandler->"+ categoria.getNomeCategoria());
-
-            action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_PRODUCT,categoria);
+            Ordine ordine = (Ordine) action.getManager().getData();
+            ordine.setCategoria(categoria);
+            action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_PRODUCT,ordine);
         }
     }
 
@@ -71,19 +74,23 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
     }
     
     private static class SendKitchen_ActionHandler implements ActionHandler{
+        @SuppressWarnings("unchecked")
         @Override
         public void handleAction(Action action) {
-            Log.d(TAG, "handleAction: Sending to Kitchen");
             ArrayList<Product> ListProducts = (ArrayList<Product>) action.getData();
-            Log.d(TAG, "Senbding: "+ ListProducts.size()+" products");
+            Ordine ordine = (Ordine) action.getManager().getData();
+
+            Log.d(TAG, "handleAction: Sending to Kitchen");
+            Log.d(TAG, "handleAction: id_Ordine->"+ ordine.getId_Ordine());
+            Log.d(TAG, "Sending: "+ ListProducts.size()+" products");
+
             for(Product product : ListProducts){
-                Log.d(TAG, "handleAction: "+ product.getNameProduct());
+                Log.d(TAG, "Aggiungo all'ordine -> "+ product.getNameProduct());
             }
 
-
-            Try.run(() -> TimeUnit.MILLISECONDS.sleep(1500));
             action.callBack(true);
             Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
+
             action.getManager().goBack();
             if(action.getManager().IndexOnMain == ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_CAT) action.getManager().goBack();
         }
@@ -91,34 +98,77 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
     }
 
     private static class CreateOrder_ActionHandler implements ActionHandler{
+        private Ordine ordine;
         @Override
         public void handleAction(Action action) {
             Tavolo tavolo = (Tavolo) action.getData();
             Log.d(TAG, "handleAction: Ordine da creare su id_Tavolo->"+tavolo.getId_Tavolo());
             Log.d(TAG, "handleAction: Numero Tavolo->"+tavolo.getN_Tavolo());
+            boolean isInserted = CreateOrderToServer(tavolo);
+            action.getManager().setData(ordine);
+            if (isInserted) action.callBack();
         }
 
-//        private boolean CreateOrderToServer(Tavolo tavolo){
-//
-//            Uri.Builder dataToSend = new Uri.Builder()
-//                    .appendQueryParameter("id_ordine",  tavolo.getId_Tavolo()+"")
-//                    .appendQueryParameter("id_ingredient",    ingredient.getID_Ingredient()+"");
-//            String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/Ingredient.php";
-//
-//            try {
-//                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-//                if( BodyJSON != null ){
-//                    String Msg = BodyJSON.getString("MSG");
-//                    if(Msg.contains("Failed Deleting")) return false;
-//                }else{
-//                    Log.d(TAG, "sendDeleteIngredientToServer: false");
-//                    return false;
-//                }
-//            }catch (Exception e){
-//                Log.e(TAG, "getDataFromServer: ",e);
-//            }
-//            Log.d(TAG, "sendDeleteIngredientToServer: true");
-//            return true;
-//        }
+        private boolean CreateOrderToServer(Tavolo tavolo){
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("Id_Tavolo",  tavolo.getId_Tavolo()+"");
+            String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Order.php";
+
+            try {
+                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+                if( BodyJSON != null ){
+                    String Msg = BodyJSON.getString("MSG_STATUS");
+                    if(Msg.contains("1 Order Created")) {
+                        ordine = new Ordine();
+                        ordine.setId_Ordine(BodyJSON.getString("DATA"));
+                        tavolo.setStateTavolo(false);
+                        ordine.setTavolo(tavolo);
+                        ordine.setPrezzoTotale("0.00");
+                    }
+                }else{
+                    Log.d(TAG, "sendDeleteIngredientToServer: false");
+                    return false;
+                }
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+            }
+            Log.d(TAG, "sendDeleteIngredientToServer: true");
+            return true;
+        }
+    }
+    private static class CloseOrder_ActionHandler implements ActionHandler{
+        @Override
+        public void handleAction(Action action) {
+            Tavolo tavolo = (Tavolo) action.getData();
+            Log.d(TAG, "handleAction: chiudere tavolo su id_Tavolo->"+tavolo.getId_Tavolo());
+            Log.d(TAG, "handleAction: Numero Tavolo->"+tavolo.getN_Tavolo());
+            boolean isClosed = CloseTableToServer(tavolo);
+            action.getManager().setData(tavolo);
+            if (isClosed) action.callBack();
+        }
+
+        private boolean CloseTableToServer(Tavolo tavolo){
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("Id_Tavolo",  tavolo.getId_Tavolo()+"");
+            String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/OrderClose.php";
+
+            try {
+                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+                if( BodyJSON != null ){
+                    String Msg = BodyJSON.getString("MSG_STATUS");
+                    if(Msg.contains("1 Table Closed")) {
+                        tavolo.setStateTavolo(true);
+                        return true;
+                    }
+                }else{
+                    Log.d(TAG, "sendDeleteIngredientToServer: false");
+                    return false;
+                }
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+            }
+            Log.d(TAG, "sendDeleteIngredientToServer: true");
+            return true;
+        }
     }
 }

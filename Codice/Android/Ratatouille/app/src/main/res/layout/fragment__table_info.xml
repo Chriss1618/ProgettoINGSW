@@ -236,7 +236,7 @@
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/sf_compact_rounded_regular_italic"
                 android:gravity="center_horizontal"
-                android:text="Premere il tasto Disponibile per inizare a ordinare"
+                android:text="Premere il tasto Apri per inizare a ordinare"
                 android:textColor="@color/DarkGray"
                 android:textSize="24sp"
                 android:visibility="gone"
