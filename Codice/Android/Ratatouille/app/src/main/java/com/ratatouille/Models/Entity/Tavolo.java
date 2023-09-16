@@ -1,10 +1,13 @@
 package com.ratatouille.Models.Entity;
 
+import java.util.ArrayList;
+
 public class Tavolo {
     private String Id_Tavolo;
     private String ID_Restaurant;
     private String N_Tavolo;
     private boolean stateTavolo;
+    private ArrayList<Product> ProdottiOrdinati;
 
     public Tavolo() {
     }
@@ -35,5 +38,12 @@ public class Tavolo {
     }
     public void setStateTavolo(boolean stateTavolo) {
         this.stateTavolo = stateTavolo;
+    }
+
+    public ArrayList<Product> getProdottiOrdinati() {
+        return ProdottiOrdinati;
+    }
+    public void setProdottiOrdinati(ArrayList<Product> prodottiOrdinati) {
+        ProdottiOrdinati = prodottiOrdinati;
     }
 }

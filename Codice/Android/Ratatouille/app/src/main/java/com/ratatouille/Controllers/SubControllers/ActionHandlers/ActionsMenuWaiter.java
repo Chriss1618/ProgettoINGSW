@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
@@ -74,11 +75,14 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
     }
     
     private static class SendKitchen_ActionHandler implements ActionHandler{
+        private ArrayList<Product> ListProducts ;
+        private Ordine ordine ;
+
         @SuppressWarnings("unchecked")
         @Override
         public void handleAction(Action action) {
-            ArrayList<Product> ListProducts = (ArrayList<Product>) action.getData();
-            Ordine ordine = (Ordine) action.getManager().getData();
+            ListProducts = (ArrayList<Product>) action.getData();
+            ordine = (Ordine) action.getManager().getData();
 
             Log.d(TAG, "handleAction: Sending to Kitchen");
             Log.d(TAG, "handleAction: id_Ordine->"+ ordine.getId_Ordine());
@@ -87,13 +91,46 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
             for(Product product : ListProducts){
                 Log.d(TAG, "Aggiungo all'ordine -> "+ product.getNameProduct());
             }
+            boolean isOrdered = CreateOrderToServer();
+            action.callBack(isOrdered);
 
-            action.callBack(true);
-            Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
-
-            action.getManager().goBack();
-            if(action.getManager().IndexOnMain == ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_CAT) action.getManager().goBack();
+            if(isOrdered){
+                Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
+                action.getManager().goBack();
+                if(action.getManager().IndexOnMain == ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_CAT) action.getManager().goBack();
+            }
         }
+
+        private boolean CreateOrderToServer(){
+            Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("Id_Ordine", ordine.getId_Ordine())
+                    .appendQueryParameter("nProducts",ListProducts.size()+ "");
+            for(int i = 0 ; i < ListProducts.size(); i++){
+                dataToSend.appendQueryParameter("Id_Product"+i,ListProducts.get(i).getID_product()+ "");
+                dataToSend.appendQueryParameter("priceProduct"+i,ListProducts.get(i).getPriceProduct()+ "");
+            }
+
+            String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/ProdottoOrdinato.php";
+
+            try {
+                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
+                if( BodyJSON != null ){
+                    String Msg = BodyJSON.getString("MSG_STATUS");
+                    if(Msg.contains("1 Products Ordered")) {
+
+                    }
+                }else{
+                    Log.d(TAG, "sendDeleteIngredientToServer: false");
+                    return false;
+                }
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+            }
+            Log.d(TAG, "sendDeleteIngredientToServer: true");
+            return true;
+        }
+
+
 
     }
 

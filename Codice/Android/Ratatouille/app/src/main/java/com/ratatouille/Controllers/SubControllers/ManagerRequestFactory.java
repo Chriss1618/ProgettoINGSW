@@ -7,9 +7,9 @@ import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestIngredi
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestProducts;
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestRicettario;
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestStaff;
+import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestTableInfo;
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestTavoli;
 import com.ratatouille.Models.Events.Request.Request;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +22,7 @@ public class ManagerRequestFactory {
     public final static int INDEX_REQUEST_STAFF         = 4;
     public final static int INDEX_REQUEST_RESTAURANT    = 5;
     public final static int INDEX_REQUEST_TAVOLI        = 6;
+    public final static int INDEX_REQUEST_TAVOLO_INFO   = 7;
 
     Map<Integer, RequestHandler> requestHandlerMap ;
 
@@ -34,6 +35,7 @@ public class ManagerRequestFactory {
         requestHandlerMap.put(INDEX_REQUEST_STAFF,          new RequestStaff());
         requestHandlerMap.put(INDEX_REQUEST_RESTAURANT,     new RequestAccount());
         requestHandlerMap.put(INDEX_REQUEST_TAVOLI,         new RequestTavoli());
+        requestHandlerMap.put(INDEX_REQUEST_TAVOLO_INFO,    new RequestTableInfo());
     }
 
     public void handleRequest(Request request) {

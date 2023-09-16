@@ -68,7 +68,7 @@ CREATE TABLE ProdottoOrdinato (
 	ID_Ordine INTEGER ,
     ID_Prodotto INTEGER ,
     ID_Utente INTEGER ,
-    DataCompletamento TIMESTAMP,
+    DataCompletamento TIMESTAMP NULL DEFAULT NULL,
     
     PRIMARY KEY (ID_ProdottoOrdinato),
     CONSTRAINT FK_OrdineProdottoOrdinato FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine),

@@ -141,8 +141,14 @@ public class Adapter_ProductWaiter extends RecyclerView.Adapter<Adapter_ProductW
     }
     private void clickAddProduct(ViewHolder Holder,final int position){
         if ( isReport ) {
-            removeItem(Holder.Product);
-            sendOption(500,ListProducts.get(position),INDEX_ACTION_REMOVE_PRODUCT);
+            try{
+
+                sendOption(500,ListProducts.get(position),INDEX_ACTION_REMOVE_PRODUCT);
+                removeItem(Holder.Product);
+            }catch (IndexOutOfBoundsException ex){
+                Log.e(TAG, "clickAddProduct: ",ex );
+
+            }
         } else {
             showPlusOne(position);
             sendOption(0,ListProducts.get(position),INDEX_ACTION_ADD_PRODUCT);

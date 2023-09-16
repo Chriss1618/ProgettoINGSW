@@ -5,10 +5,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +17,18 @@ import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_Product;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsMenuWaiter;
 import com.ratatouille.Controllers.SubControllers.Manager;
+import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Events.Action.Action;
+import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
 import java.util.ArrayList;
-
-import kotlinx.coroutines.channels.Send;
 
 public class Fragment_TableInfo extends Fragment implements ViewLayout {
     //SYSTEM
@@ -38,12 +37,13 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     //LAYOUT
     private android.view.View View_fragment;
     private TextView        Text_View_Title;
+    private TextView        Text_View_TotalePrice;
     private TextView        Text_View_TavoloTitle;
 
     private CardView        CardView_ActivateOrder;
     private CardView        CardView_CloseOrder;
     
-    private ProgressBar     Progressbar;
+    private ProgressBar     ProgressBar;
     private TextView        TextView_EmptyList;
     private TextView        TextView_StartOrder;
     private LinearLayout    LinearLayout_Total;
@@ -59,7 +59,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     //DATA
     private ArrayList<Product>   TitleProducts;
     private Tavolo               Tavolo;
-    private Ordine                  Ordine;
+    private Ordine               Ordine;
     //OTHER...
 
     public Fragment_TableInfo(Manager manager, int a) {
@@ -79,8 +79,8 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         // Inflate the layout for this fragment
         View_fragment = inflater.inflate(R.layout.fragment__table_info, container, false);
 
-        PrepareData();
         PrepareLayout();
+        PrepareData();
 
         StartAnimations();
 
@@ -89,8 +89,19 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
 
     //DATA
     @Override
-    public void PrepareData() {
-        TitleProducts = new ArrayList<>();
+    public void PrepareData(){
+        if(!Tavolo.isStateTavolo()){
+            ProgressBar.setVisibility(View.VISIBLE);
+            Recycler_Products.setVisibility(View.GONE);
+            sendRequest();
+        }
+    }
+
+    private void sendRequest(){
+        @SuppressWarnings("unchecked")
+        Request request = new Request(manager.getSourceInfo(), Tavolo, ManagerRequestFactory.INDEX_REQUEST_TAVOLO_INFO,
+                (ordine)-> setProductOnLayout((Ordine) ordine));
+        manager.HandleRequest(request);
     }
 
     //LAYOUT
@@ -104,13 +115,14 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     @Override
     public void LinkLayout() {
         ImageView_Back          = View_fragment.findViewById(R.id.ic_back);
-        Progressbar             = View_fragment.findViewById(R.id.progressbar);
+        ProgressBar             = View_fragment.findViewById(R.id.progressbar);
         TextView_EmptyList      = View_fragment.findViewById(R.id.text_view_empty);
         TextView_StartOrder     = View_fragment.findViewById(R.id.text_view_start_order);
 
         Image_View_State_green  = View_fragment.findViewById(R.id.ic_state_green);
         Image_View_State_red    = View_fragment.findViewById(R.id.ic_state_red);
         Text_View_Title         = View_fragment.findViewById(R.id.text_view_title);
+        Text_View_TotalePrice   = View_fragment.findViewById(R.id.text_view_price);
         Text_View_TavoloTitle   = View_fragment.findViewById(R.id.text_view_tavolo_title);
         CardView_CloseOrder     = View_fragment.findViewById(R.id.card_view_occupato);
         CardView_ActivateOrder  = View_fragment.findViewById(R.id.card_view_disponibile);
@@ -126,29 +138,36 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         CardView_CloseOrder     .setOnClickListener(view -> onClickCloseOrder());
         ImageView_Back          .setOnClickListener(view -> manager.goBack());
     }
-
     @Override
     public void SetDataOnLayout() {
         Text_View_Title.setText(Tavolo.getN_Tavolo());
         if(Tavolo.isStateTavolo()){
-            CardView_ActivateOrder  .setVisibility(View.VISIBLE);
-            CardView_CloseOrder     .setVisibility(View.GONE);
-            TextView_StartOrder     .setVisibility(View.VISIBLE);
-            Recycler_Products       .setVisibility(View.GONE);
-            CardView_AggiungiOrdine .setVisibility(View.GONE);
-
-            Image_View_State_red.setImageResource(R.drawable.ic_state_neautral);
-            Image_View_State_green.setImageResource(R.drawable.ic_state_green);
+            setLayoutDisponibile();
         }else{
-            CardView_ActivateOrder  .setVisibility(View.GONE);
-            TextView_StartOrder     .setVisibility(View.GONE);
-            CardView_CloseOrder     .setVisibility(View.VISIBLE);
-            Recycler_Products       .setVisibility(View.VISIBLE);
-            CardView_AggiungiOrdine .setVisibility(View.VISIBLE);
-
-            Image_View_State_green.setImageResource(R.drawable.ic_state_neautral);
-            Image_View_State_red.setImageResource(R.drawable.ic_state_red);
+            setLayoutOccupato();
         }
+    }
+
+    private void setLayoutOccupato(){
+        CardView_ActivateOrder  .setVisibility(View.GONE);
+        TextView_StartOrder     .setVisibility(View.GONE);
+        CardView_CloseOrder     .setVisibility(View.VISIBLE);
+        Recycler_Products       .setVisibility(View.VISIBLE);
+        CardView_AggiungiOrdine .setVisibility(View.VISIBLE);
+
+        Image_View_State_green.setImageResource(R.drawable.ic_state_neautral);
+        Image_View_State_red.setImageResource(R.drawable.ic_state_red);
+    }
+
+    private void setLayoutDisponibile(){
+        CardView_ActivateOrder  .setVisibility(View.VISIBLE);
+        CardView_CloseOrder     .setVisibility(View.GONE);
+        TextView_StartOrder     .setVisibility(View.VISIBLE);
+        Recycler_Products       .setVisibility(View.GONE);
+        CardView_AggiungiOrdine .setVisibility(View.GONE);
+
+        Image_View_State_red.setImageResource(R.drawable.ic_state_neautral);
+        Image_View_State_green.setImageResource(R.drawable.ic_state_green);
     }
     private void initListProductsRV( ){
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
@@ -156,8 +175,20 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         Recycler_Products.setNestedScrollingEnabled(false);
         Adapter_Product adapter_product = new Adapter_Product(getContext(),TitleProducts, RecycleEventListener,false);
         Recycler_Products.setAdapter(adapter_product);
+        checkEmptyRecycle();
     }
+    private void clearLayout(){
+        requireActivity().runOnUiThread(() -> {
+            if(Ordine.getTavolo().getProdottiOrdinati() != null){
+                Ordine.getTavolo().getProdottiOrdinati().clear();
+                Ordine.setPrezzoTotale("0.00");
+                Text_View_TotalePrice.setText(Ordine.getPrezzoTotale());
+            }
+            TitleProducts = new ArrayList<>();
+            initListProductsRV();
+        });
 
+    }
     //ACTIONS
     private void SendAction(Action action){
         manager.HandleAction(action);
@@ -177,7 +208,27 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         SendAction(action);
     }
     //FUNCTIONAL
+    private void setProductOnLayout(Ordine ordine){
+        requireActivity().runOnUiThread(() -> {
+            Ordine = ordine;
+            TitleProducts =  Ordine.getTavolo().getProdottiOrdinati();
+            Text_View_TotalePrice.setText(Ordine.getPrezzoTotale());
+            initListProductsRV();
+            ProgressBar.setVisibility(View.GONE);
+        });
+    }
 
+    private void checkEmptyRecycle(){
+        if(TitleProducts.isEmpty()) {
+            TextView_EmptyList.setVisibility(View.VISIBLE);
+            Recycler_Products.setVisibility(View.GONE);
+            StartAnimationEmptyCategories();
+        }else{
+            TextView_EmptyList.setVisibility(View.GONE);
+            Recycler_Products.setVisibility(View.VISIBLE);
+            StartAnimationProducts();
+        }
+    }
     //ANIMATIONS
     @Override
     public void StartAnimations() {
@@ -214,9 +265,17 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationOUTtoDownS(300));
         LinearLayout_Total      .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }
+    private void StartAnimationProducts(){
+        Recycler_Products         .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
+    }
 
+    private void StartAnimationEmptyCategories(){
+        TextView_EmptyList        .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
+    }
     private void switchToActiveOrder(){
         Tavolo = (Tavolo) manager.getData();
+        clearLayout();
+        TextView_EmptyList.setVisibility(View.GONE);
         CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(600));
         CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationOUTtoDownS(600));
         new Handler(Looper.getMainLooper()).postDelayed(()->{
