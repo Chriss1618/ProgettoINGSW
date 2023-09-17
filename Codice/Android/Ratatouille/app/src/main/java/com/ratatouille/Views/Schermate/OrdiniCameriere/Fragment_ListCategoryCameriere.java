@@ -32,6 +32,7 @@ import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsMenuWait
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
@@ -219,12 +220,12 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
         dialogMessage = new DialogMessage();
         dialogMessage.showLoading();
 
-        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_SEND_TO_KITCHEN,(ArrayList<Product>)manager.getDataAlternative(),(isOk)->showDialog((Boolean) isOk));
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_SEND_TO_KITCHEN,manager.getData(),(isOk)->showDialog((Boolean) isOk));
         SendAction(action);
     }
     //DIALOG
     private void showDialog(boolean isOk){
-        if(isOk) ((ArrayList<Product>)manager.getDataAlternative()).clear();
+        if(isOk) ((Ordine)manager.getData()).getTavolo().getProdottiDaOrdinare().clear();
         requireActivity().runOnUiThread(() -> {
             if(isOk) dialogMessage.showDialogSuccess();
             else dialogMessage.showDialogError();

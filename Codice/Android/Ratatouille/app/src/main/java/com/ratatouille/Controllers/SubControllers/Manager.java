@@ -123,6 +123,22 @@ public class Manager implements SubController {
         new Handler(Looper.getMainLooper()).postDelayed( fragmentManager::popBackStack,300);
     }
 
+    public void goBack2(int indexFrom){
+        IndexFrom = indexFrom;
+
+        ViewsFragments.get( getPositionView(IndexFrom) ).EndAnimations();
+        Log.d(TAG, "goBack: stackCount ->" + fragmentManager.getBackStackEntryCount());
+        if(fragmentManager.getBackStackEntryCount() > 2){
+            IndexOnMain = Integer.parseInt(Objects.requireNonNull(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 3).getName()));
+            getSourceInfo().setIndex_TypeView(IndexOnMain);
+        }
+
+        new Handler(Looper.getMainLooper()).postDelayed( ()->{
+            fragmentManager.popBackStack();
+            fragmentManager.popBackStack();
+        },300);
+    }
+
     public void useTemporaryNewView(int indexView,int typeManager){
         try{
 

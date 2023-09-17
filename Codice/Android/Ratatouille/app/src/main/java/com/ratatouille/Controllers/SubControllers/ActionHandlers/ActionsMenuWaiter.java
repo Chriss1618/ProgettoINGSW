@@ -94,8 +94,8 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
 
             if(isOrdered){
                 Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
-                action.getManager().goBack();
                 if(action.getManager().IndexOnMain == ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_CAT) action.getManager().goBack();
+                else action.getManager().goBack2(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_TABLE);
             }
         }
 

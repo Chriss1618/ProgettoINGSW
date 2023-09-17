@@ -266,10 +266,9 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
             CardView_ActivateOrder  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
         }else{
             CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
+            Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
+            CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationOUTtoDownS(300));
         }
-
-        Recycler_Products       .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
-        CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationOUTtoDownS(300));
         LinearLayout_Total      .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
     }
     private void StartAnimationProducts(){
