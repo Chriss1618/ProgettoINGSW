@@ -59,10 +59,8 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
     private static class OpenListProducts_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
-            CategoriaMenu categoria = (CategoriaMenu) action.getData();
-            Log.d(TAG, "handleAction: GetCategorieActionHandler->"+ categoria.getNomeCategoria());
             Ordine ordine = (Ordine) action.getManager().getData();
-            ordine.setCategoria(categoria);
+            ordine.setCategoria((CategoriaMenu) action.getData());
             action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_PRODUCT,ordine);
         }
     }
@@ -70,7 +68,8 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
     private static class ShowInfoProduct_ActionHandler implements ActionHandler{
         @Override
         public void handleAction(Action action) {
-            action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_CAMERIERE_INFO_PRODUCT,action.getData());
+            action.getManager().setDataAlternative(action.getData());
+            action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_CAMERIERE_INFO_PRODUCT,action.getManager().getData());
         }
     }
     
@@ -81,9 +80,8 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
         @SuppressWarnings("unchecked")
         @Override
         public void handleAction(Action action) {
-            ListProducts = (ArrayList<Product>) action.getData();
-            ordine = (Ordine) action.getManager().getData();
-
+            ordine = (Ordine) action.getData();
+            ListProducts = ordine.getTavolo().getProdottiDaOrdinare();
             Log.d(TAG, "handleAction: Sending to Kitchen");
             Log.d(TAG, "handleAction: id_Ordine->"+ ordine.getId_Ordine());
             Log.d(TAG, "Sending: "+ ListProducts.size()+" products");
@@ -138,17 +136,17 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
         private Ordine ordine;
         @Override
         public void handleAction(Action action) {
-            Tavolo tavolo = (Tavolo) action.getData();
-            Log.d(TAG, "handleAction: Ordine da creare su id_Tavolo->"+tavolo.getId_Tavolo());
-            Log.d(TAG, "handleAction: Numero Tavolo->"+tavolo.getN_Tavolo());
-            boolean isInserted = CreateOrderToServer(tavolo);
+            ordine = (Ordine) action.getData();
+            Log.d(TAG, "handleAction: Ordine da creare su id_Tavolo->"+ordine.getTavolo().getId_Tavolo());
+            Log.d(TAG, "handleAction: Numero Tavolo->"+ordine.getTavolo().getN_Tavolo());
+            boolean isInserted = CreateOrderToServer();
             action.getManager().setData(ordine);
             if (isInserted) action.callBack();
         }
 
-        private boolean CreateOrderToServer(Tavolo tavolo){
+        private boolean CreateOrderToServer(){
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("Id_Tavolo",  tavolo.getId_Tavolo()+"");
+                    .appendQueryParameter("Id_Tavolo",  ordine.getTavolo().getId_Tavolo()+"");
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Order.php";
 
             try {
@@ -156,10 +154,8 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
                 if( BodyJSON != null ){
                     String Msg = BodyJSON.getString("MSG_STATUS");
                     if(Msg.contains("1 Order Created")) {
-                        ordine = new Ordine();
                         ordine.setId_Ordine(BodyJSON.getString("DATA"));
-                        tavolo.setStateTavolo(false);
-                        ordine.setTavolo(tavolo);
+                        ordine.getTavolo().setStateTavolo(false);
                         ordine.setPrezzoTotale("0.00");
                     }
                 }else{

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,6 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     private Manager                 manager;
     //DATA
     private ArrayList<Product>   TitleProducts;
-    private Tavolo               Tavolo;
     private Ordine               Ordine;
     //OTHER...
 
@@ -68,7 +68,8 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Tavolo = (Tavolo) manager.getData();
+        Ordine = new Ordine();
+        Ordine.setTavolo((Tavolo) manager.getData()) ;
         RecycleEventListener = new RecycleEventListener();
 
     }
@@ -90,7 +91,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     //DATA
     @Override
     public void PrepareData(){
-        if(!Tavolo.isStateTavolo()){
+        if(!Ordine.getTavolo().isStateTavolo()){
             ProgressBar.setVisibility(View.VISIBLE);
             Recycler_Products.setVisibility(View.GONE);
             sendRequest();
@@ -99,7 +100,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
 
     private void sendRequest(){
         @SuppressWarnings("unchecked")
-        Request request = new Request(manager.getSourceInfo(), Tavolo, ManagerRequestFactory.INDEX_REQUEST_TAVOLO_INFO,
+        Request request = new Request(manager.getSourceInfo(), Ordine, ManagerRequestFactory.INDEX_REQUEST_TAVOLO_INFO,
                 (ordine)-> setProductOnLayout((Ordine) ordine));
         manager.HandleRequest(request);
     }
@@ -140,8 +141,8 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     }
     @Override
     public void SetDataOnLayout() {
-        Text_View_Title.setText(Tavolo.getN_Tavolo());
-        if(Tavolo.isStateTavolo()){
+        Text_View_Title.setText(Ordine.getTavolo().getN_Tavolo());
+        if(Ordine.getTavolo().isStateTavolo()){
             setLayoutDisponibile();
         }else{
             setLayoutOccupato();
@@ -185,7 +186,9 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
                 Text_View_TotalePrice.setText(Ordine.getPrezzoTotale());
             }
             TitleProducts = new ArrayList<>();
-            initListProductsRV();
+            TextView_EmptyList.setVisibility(View.GONE);
+            Recycler_Products.setVisibility(View.GONE);
+
         });
 
     }
@@ -194,12 +197,12 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         manager.HandleAction(action);
     }
     private void onClickActivateOrder(){
-        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_CREATE_ORDER,Tavolo,this::switchToCloseOrder);
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_CREATE_ORDER,Ordine,this::switchToCloseOrder);
         SendAction(action);
     }
 
     private void onClickCloseOrder(){
-        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_CLOSE_TABLE,Tavolo,this::switchToActiveOrder);
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_CLOSE_TABLE,Ordine.getTavolo(),this::switchToActiveOrder);
         SendAction(action);
     }
 
@@ -210,9 +213,13 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     //FUNCTIONAL
     private void setProductOnLayout(Ordine ordine){
         requireActivity().runOnUiThread(() -> {
+
             Ordine = ordine;
+
             TitleProducts =  Ordine.getTavolo().getProdottiOrdinati();
-            Text_View_TotalePrice.setText(Ordine.getPrezzoTotale());
+            if(TitleProducts.size() != 0){
+                Text_View_TotalePrice.setText(Ordine.getPrezzoTotale());
+            }
             initListProductsRV();
             ProgressBar.setVisibility(View.GONE);
         });
@@ -224,7 +231,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
             Recycler_Products.setVisibility(View.GONE);
             StartAnimationEmptyCategories();
         }else{
-            TextView_EmptyList.setVisibility(View.GONE);
+
             Recycler_Products.setVisibility(View.VISIBLE);
             StartAnimationProducts();
         }
@@ -255,7 +262,7 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         TextView_StartOrder     .startAnimation(Manager_Animation.getFadeOut(300));
         Text_View_Title         .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
 
-        if(Tavolo.isStateTavolo()){
+        if(Ordine.getTavolo().isStateTavolo()){
             CardView_ActivateOrder  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
         }else{
             CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
@@ -273,9 +280,9 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
         TextView_EmptyList        .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(300));
     }
     private void switchToActiveOrder(){
-        Tavolo = (Tavolo) manager.getData();
+        Log.d(TAG, "switchToActiveOrder: Executed");
+        Ordine.setTavolo((Tavolo) manager.getData());
         clearLayout();
-        TextView_EmptyList.setVisibility(View.GONE);
         CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioOUT(600));
         CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationOUTtoDownS(600));
         new Handler(Looper.getMainLooper()).postDelayed(()->{
@@ -294,21 +301,25 @@ public class Fragment_TableInfo extends Fragment implements ViewLayout {
     }
 
     private void switchToCloseOrder(){
-        Ordine = (Ordine) manager.getData();
-        Tavolo = Ordine.getTavolo();
-        CardView_ActivateOrder  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(600));
-        TextView_StartOrder     .startAnimation(Manager_Animation.getFadeOut(600));
-        new Handler(Looper.getMainLooper()).postDelayed(()->{
+        requireActivity().runOnUiThread(() -> {
+            Ordine = (Ordine) manager.getData();
+            clearLayout();
+            initListProductsRV();
+            CardView_ActivateOrder  .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(600));
+            TextView_StartOrder     .startAnimation(Manager_Animation.getFadeOut(600));
             new Handler(Looper.getMainLooper()).postDelayed(()->{
-                CardView_ActivateOrder.setVisibility(View.GONE);
-                TextView_StartOrder.setVisibility(View.GONE);
-                Image_View_State_green.setImageResource(R.drawable.ic_state_neautral);
-                Image_View_State_red.setImageResource(R.drawable.ic_state_red);
+                new Handler(Looper.getMainLooper()).postDelayed(()->{
+                    CardView_ActivateOrder.setVisibility(View.GONE);
+                    TextView_StartOrder.setVisibility(View.GONE);
+                    Image_View_State_green.setImageResource(R.drawable.ic_state_neautral);
+                    Image_View_State_red.setImageResource(R.drawable.ic_state_red);
+                },300);
+                CardView_CloseOrder     .setVisibility(View.VISIBLE);
+                CardView_AggiungiOrdine .setVisibility(View.VISIBLE);
+                CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
+                CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationINfromDown(600));
             },300);
-            CardView_CloseOrder     .setVisibility(View.VISIBLE);
-            CardView_AggiungiOrdine .setVisibility(View.VISIBLE);
-            CardView_CloseOrder     .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(600));
-            CardView_AggiungiOrdine .startAnimation(Manager_Animation.getTranslationINfromDown(600));
-        },300);
+        });
+
     }
 }

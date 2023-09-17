@@ -23,7 +23,8 @@ import io.vavr.control.Try;
 public class Manager implements SubController {
     //SYSTEM
     private static final String TAG = "Manager_MenuFragments";
-
+    private static final long DEBOUNCE_INTERVAL = 1000; // 1 second
+    private long lastActionTime = 0;
     //LAYOUT
     public final Context                    context;
     public final BottomBarListener          bottomBarListener;
@@ -41,7 +42,6 @@ public class Manager implements SubController {
 
     public Integer      IndexOnMain;
     public Integer      IndexFrom;
-
     //DATA
     private Object data;
     private Object dataAlternative;
@@ -93,6 +93,7 @@ public class Manager implements SubController {
     }
     @Override
     public void changeOnMain(int indexMain, Object msg) {
+
         data = msg;
         IndexFrom = IndexOnMain;
         IndexOnMain = indexMain;
@@ -152,6 +153,13 @@ public class Manager implements SubController {
     }
 
     public void HandleAction(Action action){
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastActionTime < DEBOUNCE_INTERVAL) {
+            return;
+        }
+
+        lastActionTime = currentTime;
+
         action.setManager(this);
         action.setSourceInfo(getSourceInfo());
         new Thread(() -> ManagerAction.handleAction(action) ).start();

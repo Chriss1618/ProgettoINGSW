@@ -171,10 +171,10 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
 
     private void onClickAddProduct(Product Product, int action){
         Log.d(TAG, "onClickAddProduct");
-        ArrayList<Product> ListProductsReport = (ArrayList<Product>) manager.getDataAlternative();
-        if(ListProductsReport == null) ListProductsReport = new ArrayList<>();
-        ListProductsReport.add(Product);
-        manager.setDataAlternative(ListProductsReport);
+        Ordine ordine = (Ordine) manager.getData();
+
+        ordine.getTavolo().getProdottiDaOrdinare().add(Product);
+        manager.setData(ordine);
     }
 
     //FUNCTIONAL
@@ -220,12 +220,12 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
         dialogMessage = new DialogMessage();
         dialogMessage.showLoading();
 
-        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_SEND_TO_KITCHEN,(ArrayList<Product>)manager.getDataAlternative(),(isOk)->showDialog((Boolean) isOk));
+        Action action = new Action(ActionsMenuWaiter.INDEX_ACTION_SEND_TO_KITCHEN,manager.getData(),(isOk)->showDialog((Boolean) isOk));
         SendAction(action);
     }
     //DIALOG
     private void showDialog(boolean isOk){
-        if(isOk) ((ArrayList<Product>)manager.getDataAlternative()).clear();
+        if(isOk) ((Ordine)manager.getData()).getTavolo().getProdottiDaOrdinare().clear();
         requireActivity().runOnUiThread(() -> {
             if(isOk) dialogMessage.showDialogSuccess();
             else dialogMessage.showDialogError();

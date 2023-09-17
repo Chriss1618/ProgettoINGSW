@@ -22,14 +22,12 @@ public class RequestTableInfo implements RequestHandler{
     private static final String TAG = "RequestTableInfo";
 
     //DATA
-    private     Tavolo tavolo;
     private     Ordine ordine;
     protected   ArrayList<Product> ListProducts;
 
     @Override
     public void handleRequest(Request request) {
-        ordine = new Ordine();
-        ordine.setTavolo((Tavolo) request.getData());
+        ordine = (Ordine) request.getData();
         getOrdineTavoloFromServer(request);
     }
     private void getOrdineTavoloFromServer(Request request){
@@ -48,7 +46,7 @@ public class RequestTableInfo implements RequestHandler{
     }
 
     private void setOrdineTavolo(JSONObject BodyJSON) throws org.json.JSONException{
-        if(!BodyJSON.getString("MSG_STATUS").contains("0 Nessuna Ordine")) {
+        if(BodyJSON.getString("MSG_STATUS").contains("1 Ordini trovati")) {
             JSONObject tavoloInfoJSON = new JSONObject(BodyJSON.getString("DATA"));
 
             JSONArray ProductJSON = new JSONArray(tavoloInfoJSON.getString("ListaProdottiOrdinati"));
@@ -69,9 +67,12 @@ public class RequestTableInfo implements RequestHandler{
                 ListProducts.add(product);
             }
 
-            ordine.getTavolo().setProdottiOrdinati(ListProducts);
+
             ordine.setPrezzoTotale( tavoloInfoJSON.getString("PrezzoTotale"));
-            ordine.setId_Ordine( tavoloInfoJSON.getString("ID_Ordine"));
+            ordine.setId_Ordine( tavoloInfoJSON.getString("ID_Ordine") );
+        }else if (BodyJSON.getString("MSG_STATUS").contains("1 Nessun Ordine effettuato")){
+            ordine.setId_Ordine( BodyJSON.getString("DATA") );
         }
+        ordine.getTavolo().setProdottiOrdinati(ListProducts);
     }
 }

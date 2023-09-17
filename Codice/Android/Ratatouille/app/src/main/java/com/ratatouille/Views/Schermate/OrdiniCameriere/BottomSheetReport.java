@@ -23,6 +23,7 @@ import com.ratatouille.Controllers.Adapters.Adapter_ProductWaiter;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsMenuWaiter;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
@@ -127,7 +128,7 @@ public class BottomSheetReport implements ViewLayout {
     //DATA
     @Override
     public void PrepareData() {
-        ListProducts            = (ArrayList<Product>) manager.getDataAlternative();
+        ListProducts            = ((Ordine) manager.getData()).getTavolo().getProdottiDaOrdinare();
         if(ListProducts == null) ListProducts = new ArrayList<>();
     }
     //FUNCTIONAL
@@ -150,7 +151,7 @@ public class BottomSheetReport implements ViewLayout {
         Log.d(TAG, "onClickCancel: Elaboro");
 
         ListProducts.clear();
-        manager.setData(ListProducts);
+        ((Ordine) manager.getData()).getTavolo().getProdottiDaOrdinare().clear();
         initListProductsRV();
 
     }
@@ -158,7 +159,7 @@ public class BottomSheetReport implements ViewLayout {
     public void removeProduct(Product name){
         Log.d(TAG, "removeProduct: Rimozione");
         ListProducts.remove(name);
-        manager.setDataAlternative(ListProducts);
+        ((Ordine) manager.getData()).getTavolo().setProdottiDaOrdinare(ListProducts);
     }
     //ANIMATION
     @Override

@@ -8,8 +8,11 @@ public class Tavolo {
     private String N_Tavolo;
     private boolean stateTavolo;
     private ArrayList<Product> ProdottiOrdinati;
+    private ArrayList<Product> ProdottiDaOrdinare;
 
     public Tavolo() {
+        ProdottiOrdinati = new ArrayList<>();
+        ProdottiDaOrdinare = new ArrayList<>();
     }
 
     public String getId_Tavolo() {
@@ -45,5 +48,12 @@ public class Tavolo {
     }
     public void setProdottiOrdinati(ArrayList<Product> prodottiOrdinati) {
         ProdottiOrdinati = prodottiOrdinati;
+    }
+
+    public ArrayList<Product> getProdottiDaOrdinare() {
+        return ProdottiDaOrdinare;
+    }
+    public void setProdottiDaOrdinare(ArrayList<Product> prodottiDaOrdinare) {
+        ProdottiDaOrdinare = prodottiDaOrdinare;
     }
 }

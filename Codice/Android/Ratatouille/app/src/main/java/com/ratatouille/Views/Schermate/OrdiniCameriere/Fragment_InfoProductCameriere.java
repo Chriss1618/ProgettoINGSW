@@ -65,7 +65,7 @@ public class Fragment_InfoProductCameriere extends Fragment implements ViewLayou
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Product = (Product) manager.getData();
+        Product = (Product) manager.getDataAlternative();
 
     }
 

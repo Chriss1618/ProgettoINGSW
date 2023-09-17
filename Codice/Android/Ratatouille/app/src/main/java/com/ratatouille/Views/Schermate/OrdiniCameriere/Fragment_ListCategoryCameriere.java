@@ -62,11 +62,12 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     private LinearLayout    LinearLayout_DarkL;
     private RecyclerView    Recycler_Products;
     //FUNCTIONAL
-    private RecycleEventListener RecycleEventListener;
-    private Manager manager;
+    private RecycleEventListener    RecycleEventListener;
+    private Manager                 manager;
     private Adapter_Category        adapter_category;
     private BottomSheetReport       BottomSheetReport;
-    private DialogMessage dialogMessage;
+    private DialogMessage           dialogMessage;
+
     //DATA
     private ArrayList<CategoriaMenu> ListCategoryMenu;
 
@@ -78,8 +79,7 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+
         RecycleEventListener = new RecycleEventListener();
     }
 
@@ -214,6 +214,7 @@ public class Fragment_ListCategoryCameriere extends Fragment implements ViewLayo
             StartAnimationCategories();
         }
     }
+
     public void SendToKitchen(){
         dialogMessage = new DialogMessage();
         dialogMessage.showLoading();
