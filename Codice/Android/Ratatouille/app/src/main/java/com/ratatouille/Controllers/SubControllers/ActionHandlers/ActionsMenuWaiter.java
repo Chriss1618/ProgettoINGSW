@@ -11,6 +11,7 @@ import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Events.Action.Action;
+import com.ratatouille.Models.LocalStorage;
 
 import org.json.JSONObject;
 
@@ -75,13 +76,15 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
     
     private static class SendKitchen_ActionHandler implements ActionHandler{
         private ArrayList<Product> ListProducts ;
-        private Ordine ordine ;
-
+        private Ordine ordine;
+        private Action action;
         @SuppressWarnings("unchecked")
         @Override
         public void handleAction(Action action) {
             ordine = (Ordine) action.getData();
             ListProducts = ordine.getTavolo().getProdottiDaOrdinare();
+            this.action = action;
+
             Log.d(TAG, "handleAction: Sending to Kitchen");
             Log.d(TAG, "handleAction: id_Ordine->"+ ordine.getId_Ordine());
             Log.d(TAG, "Sending: "+ ListProducts.size()+" products");
@@ -101,6 +104,7 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
 
         private boolean CreateOrderToServer(){
             Uri.Builder dataToSend = new Uri.Builder()
+                    .appendQueryParameter("Id_Ristorante", new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer")+"")
                     .appendQueryParameter("Id_Ordine", ordine.getId_Ordine())
                     .appendQueryParameter("nProducts",ListProducts.size()+ "");
             for(int i = 0 ; i < ListProducts.size(); i++){

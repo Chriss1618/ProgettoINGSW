@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/linearLayout"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -49,16 +49,15 @@
                     android:textColor="@color/DarkGray" />
                 <TextView
                     android:id="@+id/text_view_number_table"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoSizeMaxTextSize="25sp"
-                    android:autoSizeMinTextSize="10sp"
+                    android:autoSizeMinTextSize="15sp"
                     android:autoSizeStepGranularity="1sp"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/sf_compact_rounded_bold"
-                    android:gravity="top"
+                    android:gravity="center"
                     android:maxLines="1"
-                    android:layout_marginStart="2dp"
                     android:text="2"
                     android:textColor="@color/Black" />
 

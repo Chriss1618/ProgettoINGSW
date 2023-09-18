@@ -259,17 +259,23 @@ public class Fragment_ListProductsCameriere extends Fragment implements ViewLayo
             new Thread(()->rotation(1500)).start();
         }
         private void rotation(int speed){
+            try{
+                requireActivity().runOnUiThread(() -> {
+                    ImageView ImageView_Logo = LinearLayout_Loading.findViewById(R.id.image_view_logo);
 
-            ImageView ImageView_Logo = LinearLayout_Loading.findViewById(R.id.image_view_logo);
+                    ImageView_Logo.animate()
+                            .rotationBy(speed) // Use rotationBy instead of setting absolute rotation value
+                            .setDuration(5000)
+                            .withEndAction(() -> {
+                                // This will be executed when the animation ends
+                                int nextSpeed = (numGiri++ % 2 == 0) ? -1500 : 1500;
+                                rotation(nextSpeed);
+                            });
 
-            ImageView_Logo.animate()
-                    .rotationBy(speed) // Use rotationBy instead of setting absolute rotation value
-                    .setDuration(5000)
-                    .withEndAction(() -> {
-                        // This will be executed when the animation ends
-                        int nextSpeed = (numGiri++ % 2 == 0) ? -1500 : 1500;
-                        rotation(nextSpeed);
-                    });
+                });
+            }catch (Exception ex){
+                Log.d(TAG, "rotation: Rotazione chiusa");
+            }
 
         }
         public void showDialogError(){

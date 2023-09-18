@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "985712514555",
-    "project_id": "ratatouille2023-ing",
-    "storage_bucket": "ratatouille2023-ing.appspot.com"
+    "project_number": "1012122133008",
+    "project_id": "ratatouille2023-4849f",
+    "storage_bucket": "ratatouille2023-4849f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:985712514555:android:fbdd769552c864d420275e",
+        "mobilesdk_app_id": "1:1012122133008:android:67986ebf82fc7c73796095",
         "android_client_info": {
           "package_name": "com.ratatouille"
         }
       },
       "oauth_client": [
         {
-          "client_id": "985712514555-ge8gs1bf6pk3t27c0b11dtp287tdbq9u.apps.googleusercontent.com",
+          "client_id": "1012122133008-93jts36bl7koqfchh1e6dl2p25s6da84.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFGrjz5hfm4HgQDkbrrJTjc_rrrmgrO2E"
+          "current_key": "AIzaSyBEyXYApzPpMXcpToVW_anCE-K8pwocXdc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "985712514555-ge8gs1bf6pk3t27c0b11dtp287tdbq9u.apps.googleusercontent.com",
+              "client_id": "1012122133008-93jts36bl7koqfchh1e6dl2p25s6da84.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
