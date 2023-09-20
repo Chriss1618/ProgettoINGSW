@@ -1,13 +1,11 @@
 package com.ratatouille.Views.Schermate.Menu;
 
 import android.os.Bundle;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
@@ -21,11 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.ratatouille.Controllers.Adapters.Adapter_Product;
 import com.ratatouille.Controllers.Adapters.ProductTouchHelper;
-import com.ratatouille.Controllers.ControlMapper;
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListProducts;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
@@ -37,11 +32,7 @@ import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import kotlinx.coroutines.channels.Send;
 
 public class Fragment_ListProducts extends Fragment implements ViewLayout {
     //SYSTEM

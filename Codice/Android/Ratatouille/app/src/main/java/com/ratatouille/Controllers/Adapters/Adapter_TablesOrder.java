@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ratatouille.Models.Entity.Ordine;
+import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
 
@@ -26,7 +28,7 @@ public class Adapter_TablesOrder extends RecyclerView.Adapter<Adapter_TablesOrde
     private final RecycleEventListener  RecycleEventListener;
 
     //DATA
-    private final ArrayList<String>     NumberTables;
+    private final ArrayList<Ordine>     NumberTables;
 
     //OTHER..
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -40,10 +42,9 @@ public class Adapter_TablesOrder extends RecyclerView.Adapter<Adapter_TablesOrde
         }
     }
 
-    public Adapter_TablesOrder(ArrayList<String> NumberTables,RecycleEventListener RecycleEventListener){
+    public Adapter_TablesOrder(ArrayList<Ordine> NumberTables, RecycleEventListener RecycleEventListener){
         this.NumberTables           = NumberTables;
         this.RecycleEventListener   = RecycleEventListener;
-
     }
 
     @NonNull
@@ -67,7 +68,7 @@ public class Adapter_TablesOrder extends RecyclerView.Adapter<Adapter_TablesOrde
 
     //LAYOUT
     private void initializeLayout(final int position){
-        this.Holder.Text_View_titoloTavolo.setText(NumberTables.get(position));
+        this.Holder.Text_View_titoloTavolo.setText(NumberTables.get(position).getTavolo().getN_Tavolo());
     }
     private void setActions(final int position){
         this.Holder.Card_View_Element_Tavolo.setOnClickListener(view -> clickCategory(position));

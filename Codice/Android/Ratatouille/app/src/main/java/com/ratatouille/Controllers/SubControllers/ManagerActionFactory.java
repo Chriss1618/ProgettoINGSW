@@ -12,6 +12,7 @@ import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsMenuWaiter;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewIngredient;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsOrdini;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsStaff;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsViewHandler;
 import com.ratatouille.Models.Events.Action.Action;
@@ -56,6 +57,9 @@ public class ManagerActionFactory {
         classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_INFO_TABLE,   ActionsMenuWaiter.class);
         classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_CAT,     ActionsMenuWaiter.class);
         classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_PRODUCT, ActionsMenuWaiter.class);
+
+        //CHEF
+        classMap.put(ControlMapper.INDEX_ORDINI_LIST, ActionsOrdini.class);
 
     }
 

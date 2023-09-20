@@ -8,6 +8,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
 
@@ -24,7 +26,7 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
     private final RecycleEventListener RecycleEventListener;
 
     //DATA
-    private final ArrayList<String> OrdersTable;
+    private final ArrayList<Product> OrdersTable;
     //OTHER..
     public static class ViewHolder extends RecyclerView.ViewHolder{
         CheckBox CheckBox_Order;
@@ -37,7 +39,7 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
         }
     }
 
-    public Adapter_OrdersTable(ArrayList<String> OrdersTable,RecycleEventListener recycleEventListener) {
+    public Adapter_OrdersTable(ArrayList<Product> OrdersTable, RecycleEventListener recycleEventListener) {
         this.RecycleEventListener   = recycleEventListener;
         this.OrdersTable            = OrdersTable;
     }
@@ -63,7 +65,7 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
 
     //LAYOUT
     private void initializeLayout(final int position){
-        this.Holder.CheckBox_Order.setText(OrdersTable.get(position));
+        this.Holder.CheckBox_Order.setText(OrdersTable.get(position).getNameProduct());
     }
     private void setActions(final int position){
         this.Holder.CheckBox_Order.setOnCheckedChangeListener((compoundButton, isChecked) -> checkOrder(isChecked,position));
@@ -76,7 +78,7 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
         Log.d(TAG, " Array      : "   + this.OrdersTable.get(position));
         Log.d(TAG, "--------------------------------------");
 
-        RecycleEventListener.onCheckItem(OrdersTable.get(position),isChecked);
+        RecycleEventListener.onCheckItem(position+"",isChecked);
     }
 
 }

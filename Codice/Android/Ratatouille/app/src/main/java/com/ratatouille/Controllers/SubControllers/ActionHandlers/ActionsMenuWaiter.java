@@ -107,9 +107,19 @@ public class ActionsMenuWaiter extends ActionsViewHandler{
                     .appendQueryParameter("Id_Ristorante", new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer")+"")
                     .appendQueryParameter("Id_Ordine", ordine.getId_Ordine())
                     .appendQueryParameter("nProducts",ListProducts.size()+ "");
+            boolean send = false;
             for(int i = 0 ; i < ListProducts.size(); i++){
                 dataToSend.appendQueryParameter("Id_Product"+i,ListProducts.get(i).getID_product()+ "");
                 dataToSend.appendQueryParameter("priceProduct"+i,ListProducts.get(i).getPriceProduct()+ "");
+                Log.d(TAG, "CreateOrderToServer: is Send to Chef->"+ ListProducts.get(i).isSendToKitchen());
+                if(ListProducts.get(i).isSendToKitchen()){
+                    send = true;
+                }
+            }
+            if(send){
+                dataToSend.appendQueryParameter("sendToKitchen", "SEND");
+            }else{
+                dataToSend.appendQueryParameter("sendToKitchen", "DONT SEND");
             }
 
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/ProdottoOrdinato.php";

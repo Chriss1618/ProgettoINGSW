@@ -26,7 +26,6 @@
                 android:gravity="start"
                 android:layout_marginStart="16dp">
                 <TextView
-                    android:id="@+id/text_view_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -42,6 +41,17 @@
                 android:orientation="horizontal"
                 android:gravity="end"
                 android:layout_marginEnd="2dp">
+                <ImageView
+                    android:id="@+id/ic_history_order"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_history"
+                    android:contentDescription="@string/icon_add" />
+
+
+
             </LinearLayout>
         </LinearLayout>
         <androidx.cardview.widget.CardView
@@ -77,46 +87,34 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:gravity="start"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/image_view_account"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/text_view_name_staff"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:fontFamily="@font/sf_compact_rounded_bold"
                         android:gravity="top"
                         android:maxLength="30"
                         android:maxLines="1"
-                        android:text="TAVOLO 1"
+                        android:text="TAVOLO "
                         android:textColor="@color/Black" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="32dp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
                     <TextView
+                        android:id="@+id/text_view_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="20sp"
                         android:fontFamily="@font/sf_compact_rounded_bold"
-                        android:text="  21 min"
-
-                        android:textColor="@color/DarkGray"
-                        app:drawableStartCompat="@drawable/ic_timer" />
+                        android:gravity="top"
+                        android:maxLength="30"
+                        android:maxLines="1"
+                        android:text="1"
+                        android:textColor="@color/Black" />
 
                 </LinearLayout>
 

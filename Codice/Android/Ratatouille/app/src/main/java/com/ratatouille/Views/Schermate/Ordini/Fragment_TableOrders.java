@@ -1,10 +1,16 @@
 package com.ratatouille.Views.Schermate.Ordini;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,6 +19,9 @@ import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_OrdersTable;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
+import com.ratatouille.Models.Entity.Ordine;
+import com.ratatouille.Models.Entity.Product;
+import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
@@ -34,10 +43,30 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
     private Manager manager;
 
     //DATA
-    ArrayList<String> OrdersTable;
+    ArrayList<Product> OrdersTable;
+    int positionCurrentTable;
+    //Others
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: Azione ricevuta da FCM");
+            PrepareData();
 
-    //OTHER...
+        }
+    };
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter("getListOrder");
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver);
+    }
     public Fragment_TableOrders(Manager manager, int a) {
         this.manager = manager;
     }
@@ -45,8 +74,7 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+
         RecycleEventListener = new RecycleEventListener();
     }
 
@@ -56,8 +84,8 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
         // Inflate the layout for this fragment
         View_Fragment = inflater.inflate(R.layout.fragment__table_orders, container, false);
 
-        PrepareData();
         PrepareLayout();
+        PrepareData();
 
         StartAnimations();
 
@@ -67,14 +95,17 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
     //DATA
     @Override
     public void PrepareData() {
-        OrdersTable = new ArrayList<>();
-
-        OrdersTable.add("Pizza Mandarini");
-        OrdersTable.add("Carbonara");
-        OrdersTable.add("Insalata Leggera");
-        OrdersTable.add("Marinara");
-        OrdersTable.add("Polipetti in Salamoia");
-
+        ArrayList<Ordine> ListOrdini= (ArrayList<Ordine>) manager.getData();
+        String id_tavolo = (String) manager.getDataAlternative();
+        for ( int position = 0; position < ListOrdini.size();position++) {
+            Ordine ordine = ListOrdini.get(position);
+            if(ordine.getTavolo().getId_Tavolo().equals(id_tavolo)){
+                OrdersTable = ordine.getTavolo().getProdottiOrdinati();
+                positionCurrentTable = position;
+            }
+        }
+        initOrdersTableRV();
+        TextView_Title.setText(ListOrdini.get(positionCurrentTable).getTavolo().getN_Tavolo());
     }
 
     //LAYOUT
@@ -99,7 +130,7 @@ public class Fragment_TableOrders extends Fragment implements ViewLayout {
     }
     @Override
     public void SetDataOnLayout() {
-        initOrdersTableRV();
+
     }
     private void initOrdersTableRV(){
         Adapter_OrdersTable adapter_ordersTable = new Adapter_OrdersTable(OrdersTable, RecycleEventListener);
