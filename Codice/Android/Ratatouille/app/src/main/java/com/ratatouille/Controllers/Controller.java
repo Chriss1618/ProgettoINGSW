@@ -13,7 +13,7 @@ import com.ratatouille.Models.Events.SourceInfo;
 import java.util.ArrayList;
 
 public class Controller implements IController {
-
+    //scusate
     //SYSTEM
     private static final String TAG = "Controller_Amministratore";
 
