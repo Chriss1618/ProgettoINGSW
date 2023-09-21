@@ -195,14 +195,13 @@ public class ActionsLogin extends ActionsViewHandler{
             Utente user = ((Utente) action.getData());
             Log.d(TAG, "stetUserToServer: Email->"+user.getEmail());
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("Nome", user.getNome())
+                    .appendQueryParameter("Nome", "Amministratore" )
                     .appendQueryParameter("Token", user.getToken())
-                    .appendQueryParameter("TypeUser", user.getType_user())
-                    .appendQueryParameter("Cognome", user.getCognome())
+                    .appendQueryParameter("TypeUser", "Amministratore")
+                    .appendQueryParameter("Cognome", "")
                     .appendQueryParameter("Email", user.getEmail())
                     .appendQueryParameter("Password",user.getPassword());
             String url = EndPointer.StandardPath + "/RegisterUser.php";
-
             try {
                 JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
                 if( BodyJSON != null && BodyJSON.getString("MSG").contains("1")){
@@ -213,7 +212,7 @@ public class ActionsLogin extends ActionsViewHandler{
                     user.setNome(DATA_Json.getString("Nome"));
                     user.setCognome(DATA_Json.getString("Cognome"));
                     user.setToken(DATA_Json.getString("Token"));
-                    user.setType_user(DATA_Json.getString("Type_User"));
+                    user.setType_user("Amministratore");
                     return true;
                 }else{
                     assert BodyJSON != null;

@@ -81,6 +81,10 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
     }
 
     //DATA
+    private void sendRequest(){
+
+    }
+
     @Override
     public void PrepareData() {
         setOperatoriSala();
