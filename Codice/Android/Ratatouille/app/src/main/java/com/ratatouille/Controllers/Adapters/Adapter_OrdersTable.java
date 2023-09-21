@@ -21,7 +21,7 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
 
     //LAYOUT
     private ViewHolder Holder;
-
+    private ArrayList<ViewHolder> HoldersList;
     //FUNCTIONAL
     private final RecycleEventListener RecycleEventListener;
 
@@ -31,7 +31,7 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
     public static class ViewHolder extends RecyclerView.ViewHolder{
         CheckBox CheckBox_Order;
         TextView Text_View_Qta;
-
+        Product product;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             CheckBox_Order  = itemView.findViewById(R.id.checkBox_order);
@@ -42,6 +42,7 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
     public Adapter_OrdersTable(ArrayList<Product> OrdersTable, RecycleEventListener recycleEventListener) {
         this.RecycleEventListener   = recycleEventListener;
         this.OrdersTable            = OrdersTable;
+        this.HoldersList            = new ArrayList<>();
     }
 
     @NonNull
@@ -54,6 +55,8 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         this.Holder = holder;
+        HoldersList.add(holder);
+        Holder.product = OrdersTable.get(position);
         initializeLayout(position);
         setActions(position);
     }
@@ -78,7 +81,17 @@ public class Adapter_OrdersTable extends RecyclerView.Adapter<Adapter_OrdersTabl
         Log.d(TAG, " Array      : "   + this.OrdersTable.get(position));
         Log.d(TAG, "--------------------------------------");
 
-        RecycleEventListener.onCheckItem(position+"",isChecked);
+        //RecycleEventListener.onCheckItem(position+"",isChecked);
+
     }
+
+    public ArrayList<Product> getOrdersTableChecked(){
+        ArrayList<Product> ordersChecked = new ArrayList<>();
+        for (ViewHolder holder : HoldersList){
+            if( holder.CheckBox_Order.isChecked()) ordersChecked.add(holder.product);
+        }
+        return ordersChecked;
+    }
+
 
 }

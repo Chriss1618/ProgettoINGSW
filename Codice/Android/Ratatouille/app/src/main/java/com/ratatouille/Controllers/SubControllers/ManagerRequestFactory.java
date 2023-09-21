@@ -39,6 +39,7 @@ public class ManagerRequestFactory {
         requestHandlerMap.put(INDEX_REQUEST_TAVOLI,         new RequestTavoli());
         requestHandlerMap.put(INDEX_REQUEST_TAVOLO_INFO,    new RequestTableInfo());
         requestHandlerMap.put(INDEX_REQUEST_ORDINI_TAVOLO,  new RequestOrdiniTavoli());
+
     }
 
     public void handleRequest(Request request) {

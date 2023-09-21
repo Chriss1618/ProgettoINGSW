@@ -36,8 +36,8 @@
                 android:id="@+id/linearLayout2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:gravity="start"
+                android:layout_marginStart="32dp"
+                android:gravity="start|center_vertical"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,24 +48,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/sf_compact_rounded_bold"
-                    android:gravity="top"
-                    android:maxLength="30"
+                    android:fontFamily="@font/sf_compact_rounded_regular_italic"
                     android:maxLines="1"
-                    android:text="TAVOLO "
-                    android:textColor="@color/Black" />
+                    android:text="@string/tavolo"
+                    android:textColor="@color/DarkGray"
+                    android:textSize="20sp" />
+
                 <TextView
                     android:id="@+id/text_view_name_table"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:layout_marginStart="8dp"
                     android:fontFamily="@font/sf_compact_rounded_bold"
-                    android:gravity="top"
                     android:maxLength="30"
                     android:maxLines="1"
                     android:text="1"
-                    android:textColor="@color/Black" />
+                    android:textColor="@color/Black"
+                    android:textSize="30sp" />
 
             </LinearLayout>
 

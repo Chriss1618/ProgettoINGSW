@@ -60,6 +60,7 @@ public class ManagerActionFactory {
 
         //CHEF
         classMap.put(ControlMapper.INDEX_ORDINI_LIST, ActionsOrdini.class);
+        classMap.put(ControlMapper.INDEX_ORDINI_TABLE, ActionsOrdini.class);
 
     }
 

@@ -151,7 +151,7 @@ public class Fragment_EditProduct extends Fragment implements ViewLayout {
         CardView_ProductData        = View_Fragment.findViewById(R.id.card_view_element_product);
         LinearLayout_Buttons        = View_Fragment.findViewById(R.id.linear_layout_buttons);
         ImageView_AddFromGallery    = View_Fragment.findViewById(R.id.image_view_add_from_gallery);
-        CardView_EditProduct      = View_Fragment.findViewById(R.id.card_view_salva);
+        CardView_EditProduct        = View_Fragment.findViewById(R.id.card_view_salva);
         CardView_Cancel             = View_Fragment.findViewById(R.id.card_view_annulla);
 
         ImageView_ProductImage      = View_Fragment.findViewById(R.id.image_view_product);

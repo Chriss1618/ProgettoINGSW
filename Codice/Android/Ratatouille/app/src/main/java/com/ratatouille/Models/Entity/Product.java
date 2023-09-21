@@ -26,9 +26,9 @@ public class Product {
     private Uri     UriImageProduct = null;
     private Integer Order;
     private boolean hasPhoto;
-    private String     Id_User;
-    private String  TimestampCompletamento;
-
+    private String      Id_User;
+    private String      TimestampCompletamento;
+    private String      Id_ProdottoOrdinato;
     private ArrayList<Ricettario> Ricette;
 
     public Product() {
@@ -140,6 +140,13 @@ public class Product {
     }
     public void setTimestampCompletamento(String timestampCompletamento) {
         TimestampCompletamento = timestampCompletamento;
+    }
+
+    public String getId_ProdottoOrdinato() {
+        return Id_ProdottoOrdinato;
+    }
+    public void setId_ProdottoOrdinato(String id_ProdottoOrdinato) {
+        Id_ProdottoOrdinato = id_ProdottoOrdinato;
     }
 
     //FUNCTIONAL

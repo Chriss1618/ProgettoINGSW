@@ -9,31 +9,29 @@
         android:id="@+id/text_view_order_completed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:text="Pizza (1)"
-        android:textSize="20sp"
         android:textColor="@color/Black"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_view_product_qta"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_view_product_qta"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <ImageView
         android:id="@+id/text_view_product_qta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_weight="1"
+        android:layout_marginStart="16dp"
 
-        android:textSize="20sp"
+        android:layout_weight="1"
         android:autoSizeTextType="uniform"
-        android:drawableStart="@drawable/ic_table"
         android:fontFamily="@font/sf_compact_rounded_bold"
         android:gravity="end"
-        android:text="  31"
+        android:src="@drawable/baseline_check_box_24"
         android:textColor="@color/Black"
+
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

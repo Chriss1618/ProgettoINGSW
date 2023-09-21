@@ -74,6 +74,7 @@ public class RequestOrdiniTavoli implements RequestHandler {
 
                     product.setId_User(   ProdottoJSON.getString("Id_User") );
                     product.setTimestampCompletamento( ProdottoJSON.getString("TimestampCompletamento") );
+                    product.setId_ProdottoOrdinato(ProdottoJSON.getString("ID_ProdottoOrdinato"));
                     tavolo.getProdottiOrdinati().add(product);
                 }
                 ordine.setTavolo(tavolo);

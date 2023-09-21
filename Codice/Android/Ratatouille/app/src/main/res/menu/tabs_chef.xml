@@ -5,7 +5,7 @@
         android:title="@string/Inventario" />
     <item
         android:id="@+id/tab_ordini"
-        android:icon="@drawable/ordini"
+        android:icon="@drawable/baseline_fact_check_24"
         android:title="@string/ordini" />
     <item
         android:id="@+id/tab_menu"

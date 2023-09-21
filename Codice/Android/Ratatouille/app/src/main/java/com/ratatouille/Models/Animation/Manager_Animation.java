@@ -235,6 +235,25 @@ public class Manager_Animation {
         return set;
     }
 
+    public static AnimationSet getTranslationINfromUpSlower(int milliseconds){
+        AnimationSet set = new AnimationSet(true);
+
+        TranslateAnimation TA = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+                TranslateAnimation.RELATIVE_TO_PARENT,0f,
+                TranslateAnimation.RELATIVE_TO_PARENT,-0.5f,
+                TranslateAnimation.RELATIVE_TO_PARENT,0f);
+        TA.setDuration(milliseconds);
+        TA.setInterpolator(new LinearInterpolator());
+
+        Animation fadeOut = new AlphaAnimation(0.0f , 1.0f);
+        fadeOut.setDuration(milliseconds);
+
+        set.addAnimation(TA);
+        set.addAnimation(fadeOut);
+        return set;
+    }
+
     public static AnimationSet getTranslationINfromDownSlower(int milliseconds){
         AnimationSet set = new AnimationSet(true);
 

@@ -110,4 +110,8 @@
     <string name="conferma_password">Conferma Password</string>
     <string name="conferma_password_caps">CONFERMA PASSWORD</string>
     <string name="nessun_tavolo_registrato">Nessun Tavolo registrato</string>
+    <string name="oridni_per_tavolo">Oridni per Tavolo</string>
+    <string name="ordini_preparati">Ordini preparati!</string>
+    <string name="prodotti_preparati">Prodotti Preparati</string>
+    <string name="tavolo">TAVOLO</string>
 </resources>

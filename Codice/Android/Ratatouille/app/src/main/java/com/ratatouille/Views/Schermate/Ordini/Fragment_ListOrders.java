@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_TablesOrder;
@@ -24,13 +22,12 @@ import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.API.Firebase.FCMService;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ordine;
-import com.ratatouille.Models.Entity.Tavolo;
+import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.R;
-
 import java.util.ArrayList;
 
 public class Fragment_ListOrders extends Fragment implements ViewLayout {
@@ -41,7 +38,6 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
     private android.view.View   View_Fragment;
     private TextView            TextView_Title;
     private RecyclerView        recyclerView_TablesOrders;
-    private ImageView           ImageView_HistoryOrders;
     private TextView            TextView_NoOrder;
     private ProgressBar         ProgressBar_LoadingProducts;
 
@@ -125,7 +121,6 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
     public void LinkLayout() {
         TextView_Title              = View_Fragment.findViewById(R.id.text_view_title);
         recyclerView_TablesOrders   = View_Fragment.findViewById(R.id.recycler_orders);
-        ImageView_HistoryOrders     = View_Fragment.findViewById(R.id.ic_history_order);
 
         ProgressBar_LoadingProducts = View_Fragment.findViewById(R.id.progressbar);
         TextView_NoOrder            = View_Fragment.findViewById(R.id.text_view_empty);
@@ -133,15 +128,16 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
     @Override
     public void SetActionsOfLayout() {
         RecycleEventListener    .setOnClickItemAdapterListener((ordine) ->onClickTable((Ordine) ordine));
-        ImageView_HistoryOrders.setOnClickListener(view -> onHistoryClick());
     }
     @Override
     public void SetDataOnLayout() {
     }
 
     private void initFeaturesRV(){
+
         Adapter_TablesOrder adapter_tablesOrder = new Adapter_TablesOrder(ListOrdini, RecycleEventListener);
         recyclerView_TablesOrders.setAdapter(adapter_tablesOrder);
+
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView_TablesOrders.setLayoutManager(mLayoutManager);
@@ -152,7 +148,17 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
 
     private void setTablesOnLayout(ArrayList<Ordine> list){
         requireActivity().runOnUiThread(() -> {
-            ListOrdini = list;
+            ListOrdini = new ArrayList<>();
+            for(Ordine ordine : list){
+                for(int i = 0 ; i< ordine.getTavolo().getProdottiOrdinati().size();i++){
+                    Product product = ordine.getTavolo().getProdottiOrdinati().get(i);
+                    if(  product.getId_User().equals("null") ){
+                        ListOrdini.add(ordine);
+                        break;
+                    }
+                }
+            }
+            //ListOrdini = list;
             initFeaturesRV();
             ProgressBar_LoadingProducts.setVisibility(View.GONE);
 
@@ -189,13 +195,11 @@ public class Fragment_ListOrders extends Fragment implements ViewLayout {
     public void StartAnimations() {
         TextView_Title              .startAnimation(Manager_Animation.getTranslationINfromUp(600));
 
-        ImageView_HistoryOrders     .startAnimation(Manager_Animation.getTranslationINfromUp(600));
     }
     @Override
     public void EndAnimations() {
         TextView_Title              .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
         recyclerView_TablesOrders   .startAnimation(Manager_Animation.getTranslateAnimatioOUT(300));
-        ImageView_HistoryOrders     .startAnimation(Manager_Animation.getTranslationOUTtoUp(300));
 
     }
 
