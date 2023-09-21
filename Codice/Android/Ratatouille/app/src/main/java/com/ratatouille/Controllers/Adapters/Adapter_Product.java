@@ -184,6 +184,7 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         this.Holder = holder;
         this.Holders.add(holder);
         holder.setProduct(ListProducts.get(position));
@@ -197,7 +198,7 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         if (isDeleting) {
             this.Holder.Image_View_delete_element.setVisibility(View.VISIBLE);
         }
-
+        
     }
 
     @Override
@@ -207,19 +208,31 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
 
     //LAYOUT
-    private void initializeLayout(ViewHolder holder, final int position){
-        holder.Text_View_Title_Product.setText(ListProducts.get(position).getNameProduct());
+    private void initializeLayout(ViewHolder holder, final int position) {
+        try {
+            holder.Text_View_Title_Product.setText(ListProducts.get(position).getNameProduct());
 
-        String formattedValue = new DecimalFormat("0.00").format(ListProducts.get(position).getPriceProduct()) + context.getResources().getString(R.string.euro);
-        holder.Text_View_Price_Product.setText(formattedValue );
-        Picasso.get()
-                .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ ListProducts.get(position).getURLImageProduct())
-                .into(holder.Image_View_Product);
+            String formattedValue = new DecimalFormat("0.00").format(ListProducts.get(position).getPriceProduct()) + context.getResources().getString(R.string.euro);
+            holder.Text_View_Price_Product.setText(formattedValue );
+            Picasso.get()
+                    .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ ListProducts.get(position).getURLImageProduct())
+                    .into(holder.Image_View_Product);
+        }catch (Exception exception){
+            Log.e(TAG, "setActions: ",exception );
+        }
+
     }
 
-    private void setActions(ViewHolder holder, final int position){
-        holder.Card_View_Element_Product.setOnClickListener(view -> clickProduct(position));
-        this.Holders.get(position).Image_View_delete_element.setOnClickListener(view -> clickDeleteProduct(position,holder));
+    private void setActions(ViewHolder holder, final int position) {
+        try {
+            holder.Card_View_Element_Product.setOnClickListener(view -> clickProduct(position));
+            this.Holders.get(position).Image_View_delete_element.setOnClickListener(view -> clickDeleteProduct(position,holder));
+
+        }catch (Exception exception){
+            Log.e(TAG, "setActions: ",exception );
+        }
+
+
         //this.Holder.Image_View_Product.setOnClickListener(view ->moveDrag( this.Holder ));
     }
 

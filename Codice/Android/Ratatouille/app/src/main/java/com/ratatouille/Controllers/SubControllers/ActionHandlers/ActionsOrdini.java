@@ -37,23 +37,19 @@ public class ActionsOrdini extends ActionsViewHandler{
         @Override
         public void handleAction(Action action) {
             ArrayList<Ordine> ListTables = (ArrayList<Ordine>) action.getData();
-
             action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_TABLE,ListTables);
-
         }
 
     }
-    private static class ShowHistory_ActionHandler implements ActionHandler{
 
+    private static class ShowHistory_ActionHandler implements ActionHandler{
         @Override
         public void handleAction(Action action) {
             ArrayList<Ordine> ListTables = (ArrayList<Ordine>) action.getData();
-
             action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_HISTORY,ListTables);
-
         }
-
     }
+
     private static class ConfirmOrders_ActionHandler implements ActionHandler{
         private ArrayList<Product> ListReady;
         @Override
