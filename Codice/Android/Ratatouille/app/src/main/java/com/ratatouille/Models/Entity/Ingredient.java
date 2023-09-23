@@ -27,13 +27,14 @@ public class Ingredient implements Cloneable{
     private String DataImageIngredient;
     private Uri UriImageIngredient = null;
     private boolean hasPhoto = false;
+    private boolean hasUrl = false;
 
     public Ingredient() {
     }
     public Ingredient(Ingredient newIngredient) {
         this.ID_Ingredient = newIngredient.ID_Ingredient;
         this.ID_Ristorante = newIngredient.ID_Ristorante;
-        NameIngredient = newIngredient.NameIngredient;
+        this.NameIngredient = newIngredient.NameIngredient;
         this.Description = newIngredient.Description;
         this.PriceIngredient = newIngredient.PriceIngredient;
         SizeIngredient = newIngredient.SizeIngredient;
@@ -114,6 +115,7 @@ public class Ingredient implements Cloneable{
         return URLImageIngredient;
     }
     public void setURLImageIngredient(String URLImageIngredient) {
+        this.hasUrl = true;
         this.URLImageIngredient = URLImageIngredient;
     }
 
@@ -126,6 +128,10 @@ public class Ingredient implements Cloneable{
 
     public boolean isHasPhoto() {
         return hasPhoto;
+    }
+
+    public boolean isHasUrl() {
+        return hasUrl;
     }
 
     public void setHasPhoto(boolean hasPhoto) {

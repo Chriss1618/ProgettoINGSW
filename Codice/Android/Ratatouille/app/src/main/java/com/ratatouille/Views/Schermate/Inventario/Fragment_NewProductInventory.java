@@ -11,26 +11,42 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.internal.EdgeToEdgeUtils;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewIngredient;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ingredient;
+import com.ratatouille.Models.Entity.ProductOpenFood;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
@@ -47,7 +63,7 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     LinearLayout    LinearLayout_DarkL;
 
     TextView        TextView_Title;
-    EditText        EditText_NameIngredient;
+    AutoCompleteTextView EditText_NameIngredient;
     EditText        EditText_Euro;
     EditText        EditText_Cents;
     EditText        EditText_Description;
@@ -76,10 +92,11 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     //FUNCTIONAL
     private Manager manager;
     private ActivityResultLauncher<Intent> resultLauncher;
-
+    private RequestQueue queue;
     //DATA
     private Ingredient Ingredient;
-
+    private ArrayList<String> NameSuggestions;
+    private ArrayList<ProductOpenFood> ListProductsFood;
     //OTHER...
 
     public Fragment_NewProductInventory(Manager manager, int a) {
@@ -167,7 +184,7 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
         ImageView_ChangePhoto   .setOnClickListener( view -> onClickChoosePhoto());
         CardView_Salva          .setOnClickListener( view -> onClickSalva());
         CardView_Cancel         .setOnClickListener( view -> onClickCancel());
-
+        EditText_NameIngredient .addTextChangedListener( onChangeName() );
     }
 
     @Override
@@ -201,6 +218,95 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
         Action action = new Action(ActionsNewIngredient.INDEX_ACTION_CANCEL,Ingredient);
         sendAction(action);
 
+    }
+    private TextWatcher onChangeName(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String apiUrl = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=" + charSequence + "&search_simple=1&json=1";
+                if(queue != null)queue.cancelAll(apiUrl);
+                queue = Volley.newRequestQueue(manager.context);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                        Request.Method.GET,
+                        apiUrl,
+                        null,
+                        response -> {
+                            // Parsing dei dati JSON qui
+                            ListProductsFood = parseJsonResponse(response);
+                            NameSuggestions = new ArrayList<>();
+                            for(ProductOpenFood product : ListProductsFood){
+                                NameSuggestions.add(product.getProductName());
+                            }
+                            // Aggiorna l'elenco dei risultati nell'UI
+                            updateAutoCompleteResults(NameSuggestions);
+                        },
+                        error -> {
+                            Log.d(TAG, "onTextChanged: Errore JSON Request OpenFood");
+                        }
+                );
+
+                queue.add(jsonObjectRequest);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+    }
+    //*******************************
+    private void updateAutoCompleteResults(ArrayList<String> products){
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(manager.context,
+                android.R.layout.simple_dropdown_item_1line, products);
+
+        EditText_NameIngredient.setAdapter(adapter);
+        EditText_NameIngredient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // The "position" parameter tells you which item was selected in the adapter
+                String selectedCountry = (String) parent.getItemAtPosition(position);
+                for(ProductOpenFood productOpenFood : ListProductsFood){
+                    if(productOpenFood.getProductName().equals(selectedCountry)){
+                        Picasso.get()
+                                .load(productOpenFood.getImageUrl())
+                                .into(ImageView_IngredientImage);
+                        Ingredient.setURLImageIngredient(productOpenFood.getImageUrl());
+                    }
+                }
+            }
+        });
+
+
+
+
+
+    }
+    private ArrayList<ProductOpenFood> parseJsonResponse(JSONObject response) {
+        ArrayList<ProductOpenFood> products = new ArrayList<>();
+
+        try {
+            JSONArray productsArray = response.getJSONArray("products");
+            for (int i = 0; i < productsArray.length(); i++) {
+                JSONObject productObject = productsArray.getJSONObject(i);
+                String productName = productObject.optString("product_name", "");
+                String imageUrl = productObject.optString("image_url", "");
+
+                ProductOpenFood product = new ProductOpenFood();
+                product.setProductName(productName);
+                product.setImageUrl(imageUrl);
+
+                products.add(product);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return products;
     }
 
     //FUNCTIONAL

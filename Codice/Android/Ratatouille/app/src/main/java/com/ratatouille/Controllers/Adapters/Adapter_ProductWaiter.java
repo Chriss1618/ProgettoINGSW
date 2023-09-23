@@ -105,10 +105,15 @@ public class Adapter_ProductWaiter extends RecyclerView.Adapter<Adapter_ProductW
             holder.Card_View_Element_Product.setVisibility(View.GONE);
             StartAnimations(holder.Card_View_Element_Product,position);
         }
-
-        Picasso.get()
-                .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ ListProducts.get(position).getURLImageProduct())
-                .into(holder.Image_View_Product);
+        if(ListProducts.get(position).getURLImageProduct().contains("https")){
+            Picasso.get()
+                    .load(ListProducts.get(position).getURLImageProduct())
+                    .into(holder.Image_View_Product);
+        }else{
+            Picasso.get()
+                    .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ ListProducts.get(position).getURLImageProduct())
+                    .into(holder.Image_View_Product);
+        }
         String formattedValue = new DecimalFormat("0.00").format(ListProducts.get(position).getPriceProduct()) + context.getResources().getString(R.string.euro);
         holder.Text_View_Price_Product.setText(formattedValue );
     }

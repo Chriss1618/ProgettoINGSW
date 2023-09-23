@@ -76,6 +76,7 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
     TextView            Text_View_Title_productivity;
     LinearLayout        Linear_Layout_Date_produttivita;
     LinearLayout        Linear_Layout_HorizontalBar;
+    CardView            Card_view_BarChart;
     CardView            Card_view_from_Data;
     CardView            Card_view_to_Data;
     TextView            Text_View_From_Data;
@@ -202,6 +203,7 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
         Text_View_From_Data             = view_fragment.findViewById(R.id.edit_text_from_data);
         Text_View_to_Data               = view_fragment.findViewById(R.id.edit_text_to_data);
         Card_view_Pie_Chart             = view_fragment.findViewById(R.id.card_view_element_pie_chart);
+        Card_view_BarChart             = view_fragment.findViewById(R.id.card_view_element_bar_chart);
         ProgressBar                     = view_fragment.findViewById(R.id.progressbar);
         Text_View_Empty                 = view_fragment.findViewById(R.id.text_view_empty);
     }
@@ -260,7 +262,8 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
             if(user.getScore() > 0){
                 pieEntries.add(new PieEntry(user.getScore(), user.getNome() + " " +user.getCognome()));
                 stats.getShownStaffChef().add(user);
-                if(max < user.getScore()) max = user.getScore();
+                //if(max < user.getScore()) max = user.getScore();
+                max += user.getScore();
             }
         }
         PieData pieData;
@@ -315,8 +318,8 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
             public void onValueSelected(Entry e, Highlight h) {
                 int index = Pie_Chart_Productivity.getData().getDataSetForEntry(e).getEntryIndex((PieEntry) e);
 
-                Log.d(TAG, "onValueSelected: nome:"+stats.getShownStaffChef().get(index).getNome());
-                Log.d(TAG, "onValueSelected: value->"+stats.getShownStaffChef().get(index).getScore());
+                //Log.d(TAG, "onValueSelected: nome:"+stats.getShownStaffChef().get(index).getNome());
+                //Log.d(TAG, "onValueSelected: value->"+stats.getShownStaffChef().get(index).getScore());
             }
 
             @Override
@@ -379,7 +382,16 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
             createHorizontalBar(user.getScore(),max,androidColors[indexColor]);
             indexColor++;
         }
+        Card_view_Pie_Chart.setVisibility(View.VISIBLE);
+        Card_view_Pie_Chart.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+        Pie_Chart_Productivity.startAnimation(Manager_Animation.getFadeIn(1000));
+        Pie_Chart_Productivity.animate().rotationBy(-180).setDuration(1500).start();
 
+        new Handler(Looper.getMainLooper()).postDelayed(()->{
+            Card_view_BarChart.setVisibility(View.VISIBLE);
+            Card_view_BarChart.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+            Linear_Layout_HorizontalBar.startAnimation(Manager_Animation.getFadeIn(1000));
+        },250);
     }
 
 
@@ -575,18 +587,10 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations(){
-        final Handler handler = new Handler();
-        Pie_Chart_Productivity.setVisibility(android.view.View.GONE);
-        Pie_Chart_Productivity.animate().rotation(240).start();
-        handler.postDelayed(()->{
-                Pie_Chart_Productivity.setVisibility(android.view.View.VISIBLE);
-                Pie_Chart_Productivity.startAnimation(Manager_Animation.getFadeIn(400));
-                Pie_Chart_Productivity.animate().rotationBy(120).setDuration(600).start();
-            },400
-        );
+        Card_view_Pie_Chart.setVisibility(View.GONE);
+        Card_view_BarChart.setVisibility(View.GONE);
         Text_View_Title_productivity    .startAnimation(Manager_Animation.getTranslationINfromUp(500));
         Linear_Layout_Date_produttivita .startAnimation(Manager_Animation.getTranslateAnimatioINfromLeft(500));
-        Card_view_Pie_Chart             .startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
     }
 
     @Override
@@ -596,5 +600,6 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
         Card_view_Pie_Chart             .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(300));
         Pie_Chart_Productivity          .startAnimation(Manager_Animation.getFadeOut(400));
         Pie_Chart_Productivity          .animate().rotationBy(120).setDuration(400).start();
+        Card_view_BarChart              .startAnimation(Manager_Animation.getTranslateAnimatioOUTtoRight(500));
     }
 }

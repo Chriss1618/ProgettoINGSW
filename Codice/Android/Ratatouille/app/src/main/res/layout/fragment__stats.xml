@@ -163,6 +163,7 @@
                             />
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pie_chart_productivity"
+                            android:rotation="180"
                             android:layout_width="match_parent"
                             android:layout_height="330dp"/>
                     </LinearLayout>

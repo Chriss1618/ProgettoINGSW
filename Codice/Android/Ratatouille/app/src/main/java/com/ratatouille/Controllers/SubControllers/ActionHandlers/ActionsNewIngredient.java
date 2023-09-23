@@ -45,16 +45,18 @@ public class ActionsNewIngredient extends ActionsViewHandler {
 
         private boolean sendToServer(Action action){
             Ingredient ingredient = (Ingredient) action.getData();
-
+            Log.d(TAG, "sendToServer: Invio url ->"+ ingredient.getURLImageIngredient());
+            Log.d(TAG, "sendToServer: has url ->" + (ingredient.isHasUrl()? ingredient.getURLImageIngredient(): "NoURL"));
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("id_ristorante", ingredient.getID_Ristorante()+"")
-                    .appendQueryParameter("NameIngredient", ingredient.getNameIngredient())
-                    .appendQueryParameter("Description", ingredient.getDescription())
-                    .appendQueryParameter("Prezzo", ingredient.getPriceIngredient())
-                    .appendQueryParameter("Misura", ingredient.getSizeIngredient()+"")
-                    .appendQueryParameter("PhotoDATA", ingredient.isHasPhoto()? ingredient.getDataFromUriProduct(action.getManager().context): "NoPhoto")
-                    .appendQueryParameter("UnitaMisura", ingredient.getMeasureType())
-                    .appendQueryParameter("Quantita", ingredient.getQtaIngredient()+"");
+                    .appendQueryParameter("id_ristorante",      ingredient.getID_Ristorante()+"")
+                    .appendQueryParameter("NameIngredient",     ingredient.getNameIngredient())
+                    .appendQueryParameter("Description",        ingredient.getDescription())
+                    .appendQueryParameter("Prezzo",             ingredient.getPriceIngredient())
+                    .appendQueryParameter("Misura",             ingredient.getSizeIngredient()+"")
+                    .appendQueryParameter("PhotoDATA",          ingredient.isHasPhoto()? ingredient.getDataFromUriProduct(action.getManager().context): "NoPhoto")
+                    .appendQueryParameter("PhotoURL",           ingredient.isHasUrl()? ingredient.getURLImageIngredient(): "NoURL")
+                    .appendQueryParameter("UnitaMisura",        ingredient.getMeasureType())
+                    .appendQueryParameter("Quantita",           ingredient.getQtaIngredient()+"");
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/Ingredient.php";
 
             try {

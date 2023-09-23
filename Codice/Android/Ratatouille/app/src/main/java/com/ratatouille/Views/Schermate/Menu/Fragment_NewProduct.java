@@ -15,17 +15,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.ratatouille.Controllers.Adapters.Adapter_IngredientProduct;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
@@ -34,6 +43,7 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Product;
+import com.ratatouille.Models.Entity.ProductOpenFood;
 import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Interfaces.ViewLayout;
@@ -44,6 +54,13 @@ import com.ratatouille.Views.Schermate.Inventario.Fragment_NewProductInventory;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.ProtectionDomain;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
@@ -67,7 +84,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
 
     //layoutProdotto
     ImageView           ImageView_ProductImage;
-    EditText            EditText_NomeProdotto;
+    AutoCompleteTextView EditText_NomeProdotto;
     EditText            EditText_PriceProduct;
     EditText            EditText_CentsPriceProduct;
     EditText            EditText_DescriptionProduct;
@@ -86,9 +103,12 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
     private Adapter_IngredientProduct adapterIngredientProduct;
     private RecycleEventListener RecycleEventListener;
     private DialogMessage DialogCreatingProduct;
+    RequestQueue queue;
     //DATA
     private CategoriaMenu Categoria;
     private Product       NewProduct;
+    private ArrayList<String> NameSuggestions;
+    private ArrayList<ProductOpenFood> ListProductsFood;
     //OTHER...
 
     public Fragment_NewProduct(Manager manager_MenuFragments,int a) {
@@ -193,6 +213,7 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
             CardView_AddNewProduct          .setOnClickListener(view -> onClickAddNewProduct());
             ImageView_AddNewIngredient      .setOnClickListener(view -> onClickAddNewIngredient());
             CardView_Cancel                 .setOnClickListener(view -> manager.goBack());
+            EditText_NomeProdotto           .addTextChangedListener( onChangeName() );
     }
 
     @Override
@@ -255,8 +276,98 @@ public class Fragment_NewProduct extends Fragment implements ViewLayout {
         Action action = new Action(ActionsNewProduct.INDEX_ACTION_ADD_INGREDIENTI,NewProduct);
         sendAction(action);
     }
+    private TextWatcher onChangeName(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String apiUrl = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=" + charSequence + "&search_simple=1&json=1";
+                if(queue != null)queue.cancelAll(apiUrl);
+                queue = Volley.newRequestQueue(manager.context);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                        Request.Method.GET,
+                        apiUrl,
+                        null,
+                        response -> {
+                            // Parsing dei dati JSON qui
+                            ListProductsFood = parseJsonResponse(response);
+                            NameSuggestions = new ArrayList<>();
+                            for(ProductOpenFood product : ListProductsFood){
+                                NameSuggestions.add(product.getProductName());
+                            }
+                            // Aggiorna l'elenco dei risultati nell'UI
+                            updateAutoCompleteResults(NameSuggestions);
+                        },
+                        error -> {
+                            Log.d(TAG, "onTextChanged: Errore JSON Request OpenFood");
+                        }
+                );
+
+                queue.add(jsonObjectRequest);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+    }
     //*******************************
+    private void updateAutoCompleteResults(ArrayList<String> products){
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(manager.context,
+                android.R.layout.simple_dropdown_item_1line, products);
+
+        EditText_NomeProdotto.setAdapter(adapter);
+        EditText_NomeProdotto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // The "position" parameter tells you which item was selected in the adapter
+                String selectedCountry = (String) parent.getItemAtPosition(position);
+                for(ProductOpenFood productOpenFood : ListProductsFood){
+                    if(productOpenFood.getProductName().equals(selectedCountry)){
+                        Picasso.get()
+                                .load(productOpenFood.getImageUrl())
+                                .into(ImageView_ProductImage);
+                        NewProduct.setURLImageProduct(productOpenFood.getImageUrl());
+                    }
+                }
+            }
+        });
+
+
+
+
+
+    }
+    private ArrayList<ProductOpenFood> parseJsonResponse(JSONObject response) {
+        ArrayList<ProductOpenFood> products = new ArrayList<>();
+
+        try {
+            JSONArray productsArray = response.getJSONArray("products");
+            for (int i = 0; i < productsArray.length(); i++) {
+                JSONObject productObject = productsArray.getJSONObject(i);
+                String productName = productObject.optString("product_name", "");
+                String imageUrl = productObject.optString("image_url", "");
+
+                ProductOpenFood product = new ProductOpenFood();
+                product.setProductName(productName);
+                product.setImageUrl(imageUrl);
+
+                products.add(product);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
+
+
+
 
 
     //FUNCTIONAL *********************

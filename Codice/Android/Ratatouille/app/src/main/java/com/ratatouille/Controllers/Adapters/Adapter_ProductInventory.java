@@ -88,9 +88,16 @@ public class Adapter_ProductInventory extends RecyclerView.Adapter<Adapter_Produ
         holder.Text_View_Title_Product      .setText( Ingredients.get(position).getNameIngredient() );
         holder.Text_View_Qta_Product        .setText( Ingredients.get(position).getQtaIngredient() +"" );
         holder.Text_View_Measure_Product    .setText( Ingredients.get(position).getSizeIngredient() +" "+ Ingredients.get(position).getMeasureType());
-        Picasso.get()
-                .load(EndPointer.StandardPath+ EndPointer.IMAGES_INGREDIENT+ Ingredients.get(position).getURLImageIngredient())
-                .into(holder.Image_View_Product);
+        Log.d(TAG, "initializeLayout: URL Ingredient->"+ Ingredients.get(position).getURLImageIngredient());
+        if(Ingredients.get(position).getURLImageIngredient().contains("https")){
+            Picasso.get()
+                    .load(Ingredients.get(position).getURLImageIngredient())
+                    .into(holder.Image_View_Product);
+        }else{
+            Picasso.get()
+                    .load(EndPointer.StandardPath+ EndPointer.IMAGES_INGREDIENT+ Ingredients.get(position).getURLImageIngredient())
+                    .into(holder.Image_View_Product);
+        }
         if(isShowingDeleting) showDeleteIcon();
     }
 

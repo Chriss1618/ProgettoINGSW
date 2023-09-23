@@ -26,11 +26,11 @@ public class Product {
     private Uri     UriImageProduct = null;
     private Integer Order;
     private boolean hasPhoto;
+    private boolean hasUrl;
     private String      Id_User;
     private String      TimestampCompletamento;
     private String      Id_ProdottoOrdinato;
     private ArrayList<Ricettario> Ricette;
-
     public Product() {
         Ricette = new ArrayList<>();
         isSendToKitchen = false;
@@ -55,6 +55,7 @@ public class Product {
         return URLImageProduct;
     }
     public void setURLImageProduct(String URLImageProduct) {
+        hasUrl = true;
         this.URLImageProduct = URLImageProduct;
     }
 
@@ -68,6 +69,10 @@ public class Product {
 
     public boolean isHasPhoto() {
         return hasPhoto;
+    }
+
+    public boolean isHasUrl() {
+        return hasUrl;
     }
 
     public void setHasPhoto(boolean hasPhoto) {

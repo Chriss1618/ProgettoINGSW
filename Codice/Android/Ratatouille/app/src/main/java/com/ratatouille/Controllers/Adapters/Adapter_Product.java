@@ -214,9 +214,16 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
 
             String formattedValue = new DecimalFormat("0.00").format(ListProducts.get(position).getPriceProduct()) + context.getResources().getString(R.string.euro);
             holder.Text_View_Price_Product.setText(formattedValue );
-            Picasso.get()
-                    .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ ListProducts.get(position).getURLImageProduct())
-                    .into(holder.Image_View_Product);
+            if(ListProducts.get(position).getURLImageProduct().contains("https")){
+                Picasso.get()
+                        .load(ListProducts.get(position).getURLImageProduct())
+                        .into(holder.Image_View_Product);
+            }else{
+                Picasso.get()
+                        .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ ListProducts.get(position).getURLImageProduct())
+                        .into(holder.Image_View_Product);
+
+            }
         }catch (Exception exception){
             Log.e(TAG, "setActions: ",exception );
         }
@@ -236,17 +243,37 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         //this.Holder.Image_View_Product.setOnClickListener(view ->moveDrag( this.Holder ));
     }
 
-    public void removeItem(int id_product) {
-        Log.d(TAG, "removeItem: Inizio");
-        for (Product product : ListProducts) {
-            if(product.getID_product() == id_product){
-                ListProducts.remove(product);
-                removeFromHolders(id_product);
+//    public void removeItem(int id_product) {
+//        Log.d(TAG, "removeItem: Inizio");
+//        for (Product product : ListProducts) {
+//            if(product.getID_product() == id_product){
+//                ListProducts.remove(product);
+//                removeFromHolders(id_product);
+//            }
+//        }
+//
+//    }
+    public void removeItem(int id_cat) {
+        int index = ListProducts.size();
+        for(int i = 0; i< ListProducts.size();i++){
+            if(ListProducts.get(i).getID_product() == id_cat){
+                ListProducts.remove(i);
+                index = i;
+                notifyItemRemoved(i);
+                break;
+            }
+        }
+        for(int i = 0; i< ListProductsFiltered.size();i++){
+            if(ListProductsFiltered.get(i).getID_product() == id_cat){
+                ListProductsFiltered.remove(i);
+                break;
             }
         }
 
+        for (int i = index; i < ListProducts.size(); i++) {
+            notifyItemChanged(i);
+        }
     }
-
     public void removeFromHolders(int id_product) {
         for(ViewHolder holder : Holders){
             if(holder.getProduct().getID_product() == id_product){
