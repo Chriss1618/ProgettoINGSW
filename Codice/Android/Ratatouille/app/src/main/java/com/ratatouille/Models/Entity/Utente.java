@@ -9,9 +9,10 @@ public class Utente {
     private String Password;
     private String Token;
     private Integer id_Restaurant;
+    private int score;
 
     public Utente(){
-
+        score = 0;
     }
 
 
@@ -69,5 +70,16 @@ public class Utente {
     }
     public void setId_Restaurant(int id_Restaurant) {
         this.id_Restaurant = id_Restaurant;
+    }
+
+    public void setId_Restaurant(Integer id_Restaurant) {
+        this.id_Restaurant = id_Restaurant;
+    }
+
+    public int getScore() {
+        return score;
+    }
+    public void setScore(int score) {
+        this.score = score;
     }
 }

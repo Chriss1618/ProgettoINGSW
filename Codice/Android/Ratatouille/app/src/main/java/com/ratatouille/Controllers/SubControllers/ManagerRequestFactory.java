@@ -8,6 +8,7 @@ import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestOrdiniT
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestProducts;
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestRicettario;
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestStaff;
+import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestStats;
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestTableInfo;
 import com.ratatouille.Controllers.SubControllers.RequestHandlers.RequestTavoli;
 import com.ratatouille.Models.Events.Request.Request;
@@ -25,6 +26,7 @@ public class ManagerRequestFactory {
     public final static int INDEX_REQUEST_TAVOLI        = 6;
     public final static int INDEX_REQUEST_TAVOLO_INFO   = 7;
     public final static int INDEX_REQUEST_ORDINI_TAVOLO = 8;
+    public final static int INDEX_REQUEST_STATS         = 9;
 
     Map<Integer, RequestHandler> requestHandlerMap ;
 
@@ -39,6 +41,7 @@ public class ManagerRequestFactory {
         requestHandlerMap.put(INDEX_REQUEST_TAVOLI,         new RequestTavoli());
         requestHandlerMap.put(INDEX_REQUEST_TAVOLO_INFO,    new RequestTableInfo());
         requestHandlerMap.put(INDEX_REQUEST_ORDINI_TAVOLO,  new RequestOrdiniTavoli());
+        requestHandlerMap.put(INDEX_REQUEST_STATS,          new RequestStats());
 
     }
 
