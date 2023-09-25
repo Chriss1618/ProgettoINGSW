@@ -339,9 +339,16 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
             EditText_GrandezzaIngredient    = LinearLayout_Dialog.findViewById(R.id.edit_text_new_grandezza);
             TextView_WarningGrandezza       = LinearLayout_Dialog.findViewById(R.id.warning_Misura);
 
-            Picasso.get()
-                    .load(EndPointer.StandardPath + EndPointer.IMAGES_INGREDIENT + IngredientSelected.getURLImageIngredient())
-                    .into(ImageView_Ingredient);
+            if(IngredientSelected.getURLImageIngredient().contains("https")){
+                Picasso.get()
+                        .load(IngredientSelected.getURLImageIngredient())
+                        .into(ImageView_Ingredient);
+            }else{
+                Picasso.get()
+                        .load(EndPointer.StandardPath+ EndPointer.IMAGES_INGREDIENT+ IngredientSelected.getURLImageIngredient())
+                        .into(ImageView_Ingredient);
+            }
+
             TextView_IngredientName.setText(IngredientSelected.getNameIngredient());
 
             TextView_Kg     = LinearLayout_Dialog.findViewById(R.id.text_view_kg);

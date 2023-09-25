@@ -243,16 +243,7 @@ public class Adapter_Product  extends RecyclerView.Adapter<Adapter_Product.ViewH
         //this.Holder.Image_View_Product.setOnClickListener(view ->moveDrag( this.Holder ));
     }
 
-//    public void removeItem(int id_product) {
-//        Log.d(TAG, "removeItem: Inizio");
-//        for (Product product : ListProducts) {
-//            if(product.getID_product() == id_product){
-//                ListProducts.remove(product);
-//                removeFromHolders(id_product);
-//            }
-//        }
-//
-//    }
+
     public void removeItem(int id_cat) {
         int index = ListProducts.size();
         for(int i = 0; i< ListProducts.size();i++){

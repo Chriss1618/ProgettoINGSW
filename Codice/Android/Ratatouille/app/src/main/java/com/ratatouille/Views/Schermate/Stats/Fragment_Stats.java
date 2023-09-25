@@ -105,6 +105,8 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
     private int monthFrom;
     private int dayFrom;
 
+    private boolean isLoaded = false;
+
     //OTHER..
 
     public Fragment_Stats(Manager manager,int a) {
@@ -302,7 +304,7 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
                 }
             };
 
-            Pie_Chart_Productivity.setCenterText("Chef");
+            Pie_Chart_Productivity.setCenterText("Totale: " + max);
         }
 
 
@@ -382,16 +384,25 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
             createHorizontalBar(user.getScore(),max,androidColors[indexColor]);
             indexColor++;
         }
-        Card_view_Pie_Chart.setVisibility(View.VISIBLE);
-        Card_view_Pie_Chart.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
-        Pie_Chart_Productivity.startAnimation(Manager_Animation.getFadeIn(1000));
-        Pie_Chart_Productivity.animate().rotationBy(-180).setDuration(1500).start();
+        if(!isLoaded){
+            isLoaded = true;
+            Card_view_Pie_Chart.setVisibility(View.VISIBLE);
+            Card_view_Pie_Chart.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+            Pie_Chart_Productivity.startAnimation(Manager_Animation.getFadeIn(1000));
 
-        new Handler(Looper.getMainLooper()).postDelayed(()->{
-            Card_view_BarChart.setVisibility(View.VISIBLE);
-            Card_view_BarChart.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
-            Linear_Layout_HorizontalBar.startAnimation(Manager_Animation.getFadeIn(1000));
-        },250);
+            Pie_Chart_Productivity.animate().rotationBy(-180).setDuration(1500).start();
+
+            new Handler(Looper.getMainLooper()).postDelayed(()->{
+                Card_view_BarChart.setVisibility(View.VISIBLE);
+                Card_view_BarChart.startAnimation(Manager_Animation.getTranslateAnimatioINfromRight(500));
+                Linear_Layout_HorizontalBar.startAnimation(Manager_Animation.getFadeIn(1000));
+            },250);
+        }else{
+            Card_view_Pie_Chart     .startAnimation(Manager_Animation.getFadeIn(500));
+            Card_view_BarChart      .startAnimation(Manager_Animation.getFadeIn(1000));
+
+        }
+
     }
 
 

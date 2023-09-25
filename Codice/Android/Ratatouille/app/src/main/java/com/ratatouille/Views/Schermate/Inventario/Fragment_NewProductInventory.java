@@ -272,9 +272,12 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
                 String selectedCountry = (String) parent.getItemAtPosition(position);
                 for(ProductOpenFood productOpenFood : ListProductsFood){
                     if(productOpenFood.getProductName().equals(selectedCountry)){
-                        Picasso.get()
-                                .load(productOpenFood.getImageUrl())
-                                .into(ImageView_IngredientImage);
+                        if(!productOpenFood.getImageUrl().isEmpty()){
+
+                            Picasso.get()
+                                    .load(productOpenFood.getImageUrl())
+                                    .into(ImageView_IngredientImage);
+                        }
                         Ingredient.setURLImageIngredient(productOpenFood.getImageUrl());
                     }
                 }
