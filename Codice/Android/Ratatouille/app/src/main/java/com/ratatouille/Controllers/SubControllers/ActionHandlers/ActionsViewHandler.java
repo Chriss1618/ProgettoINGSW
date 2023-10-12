@@ -5,7 +5,7 @@ import com.ratatouille.Models.Events.Action.Action;
 import java.util.Map;
 
 public class ActionsViewHandler {
-    Map<Integer, ActionHandler> actionHandlerMap = null;
+    protected Map<Integer, ActionHandler> actionHandlerMap = null;
 
     public void handleAction(Action action){
         ActionHandler handler = actionHandlerMap.get( action.getActionType() );

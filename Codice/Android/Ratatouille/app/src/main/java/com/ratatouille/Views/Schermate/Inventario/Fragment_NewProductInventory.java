@@ -214,10 +214,8 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
     }
 
     private void onClickCancel(){
-
         Action action = new Action(ActionsNewIngredient.INDEX_ACTION_CANCEL,Ingredient);
         sendAction(action);
-
     }
     private TextWatcher onChangeName(){
         return new TextWatcher() {
@@ -259,6 +257,7 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
             }
         };
     }
+
     //*******************************
     private void updateAutoCompleteResults(ArrayList<String> products){
         ArrayAdapter<String> adapter = new ArrayAdapter<>(manager.context,
@@ -283,10 +282,6 @@ public class Fragment_NewProductInventory extends Fragment implements ViewLayout
                 }
             }
         });
-
-
-
-
 
     }
     private ArrayList<ProductOpenFood> parseJsonResponse(JSONObject response) {

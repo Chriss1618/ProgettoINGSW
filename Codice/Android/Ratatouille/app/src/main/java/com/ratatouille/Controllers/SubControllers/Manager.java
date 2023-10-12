@@ -25,6 +25,7 @@ public class Manager implements SubController {
     private static final String TAG = "Manager_MenuFragments";
     private static final long DEBOUNCE_INTERVAL = 1000; // 1 second
     private long lastActionTime = 0;
+
     //LAYOUT
     public final Context                    context;
     public final BottomBarListener          bottomBarListener;
@@ -91,6 +92,7 @@ public class Manager implements SubController {
 
         getSourceInfo().setIndex_TypeView(IndexOnMain);
     }
+
     @Override
     public void changeOnMain(int indexMain, Object msg) {
 
@@ -152,7 +154,6 @@ public class Manager implements SubController {
             IndexOnMain = indexView;
         }
         catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
-
     }
 
     private void loadFragment(int positionList){

@@ -47,24 +47,28 @@ public class ActionsListCategory extends ActionsViewHandler{
             action.callBack();
         }
     }
-    private static class AddNewCategory_ActionHandler implements ActionHandler {
+    protected static class AddNewCategory_ActionHandler implements ActionHandler {
         private CategoriaMenu addedCategory;
         private Action action;
+
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: AddNewCategoryActionHandler->");
             this.action = action;
-            String category = (String)action.getData();
-            if(sendNewCategoryToServer(category)){
+            String category     = (String)action.getData();
+            String id_restaurant = new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer")+"";
+
+            if(sendNewCategoryToServer(category,id_restaurant) > 0 ){
                 action.callBack(addedCategory);
                 Log.d(TAG, "handleAction: Aggiunto Categoria");
             }else{
                 Log.d(TAG, "handleAction: Categoria Non Aggiunto");
             }
         }
-        private boolean sendNewCategoryToServer(String newCategory){
+
+        protected int sendNewCategoryToServer(String newCategory, String id_restaurant){
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("id_ristorante", new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer")+"")
+                    .appendQueryParameter("id_ristorante",id_restaurant )
                     .appendQueryParameter("NameCategory",newCategory);
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/CategoriaMenu.php";
 
@@ -78,26 +82,28 @@ public class ActionsListCategory extends ActionsViewHandler{
                             Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
                     );
                     Log.d(TAG, "sendNewCategoryToServer: true");
-                    return true;
+                    return addedCategory.getID_categoria();
                 }else{
 
                     Log.d(TAG, "sendNewCategoryToServer: false");
-                    return false;
+                    return 0;
                 }
 
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
-                return false;
+                return 0;
             }
         }
     }
-    private static class DeleteCategory_ActionHandler implements ActionHandler {
-        int id_category;
+    protected static class DeleteCategory_ActionHandler implements ActionHandler {
+
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: DeleteCategoryActionHandler->");
-            id_category = ((CategoriaMenu) action.getData()).getID_categoria();
-            if(sendDeleteCategoryToServer(action)){
+            int id_category = ((CategoriaMenu) action.getData()).getID_categoria();
+            int id_restaurant = (int) new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer");
+
+            if(sendDeleteCategoryToServer(id_category,id_restaurant)){
                 action.callBack(id_category);
                 Log.d(TAG, "handleAction: Cancelled Categoria");
             }else{
@@ -105,8 +111,7 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
         }
 
-        private boolean sendDeleteCategoryToServer(Action action){
-            int id_restaurant = (int) new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer");
+        protected boolean sendDeleteCategoryToServer(int id_category, int id_restaurant){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("id_ristorante", id_restaurant+"")
                     .appendQueryParameter("id_category",id_category+"");

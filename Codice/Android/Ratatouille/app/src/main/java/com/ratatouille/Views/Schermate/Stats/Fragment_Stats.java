@@ -597,6 +597,12 @@ public class Fragment_Stats extends Fragment implements ViewLayout {
 
     //ANIMATIONS
     @Override
+    public void onPause() {
+        super.onPause();
+        isLoaded = false;
+    }
+
+    @Override
     public void StartAnimations(){
         Card_view_Pie_Chart.setVisibility(View.GONE);
         Card_view_BarChart.setVisibility(View.GONE);

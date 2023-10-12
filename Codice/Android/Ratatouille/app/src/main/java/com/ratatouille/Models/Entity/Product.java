@@ -25,15 +25,19 @@ public class Product {
     private String  DataImageProduct;
     private Uri     UriImageProduct = null;
     private Integer Order;
+
     private boolean hasPhoto;
     private boolean hasUrl;
     private String      Id_User;
     private String      TimestampCompletamento;
     private String      Id_ProdottoOrdinato;
     private ArrayList<Ricettario> Ricette;
+
     public Product() {
         Ricette = new ArrayList<>();
         isSendToKitchen = false;
+        hasPhoto = false;
+        hasUrl = false;
 
     }
 
@@ -158,6 +162,7 @@ public class Product {
     public String getDataFromUriProduct(Context context){
         if( UriImageProduct == null ) return null;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
         Bitmap bitmapProduct = getBitmapFromUri(this.getUriImageProduct(),context);
         if(bitmapProduct != null){
             bitmapProduct.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);

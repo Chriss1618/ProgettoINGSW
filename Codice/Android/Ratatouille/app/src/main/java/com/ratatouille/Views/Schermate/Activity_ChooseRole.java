@@ -22,9 +22,9 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     private static final String TAG = "Activity_ChooseRole";
 
     //LAYOUT
-    private MotionLayout motionLayout;
-    private ImageView ImageView_Logo;
-    private LinearLayout Background;
+    private MotionLayout    motionLayout;
+    private ImageView       ImageView_Logo;
+    private LinearLayout    Background;
 
     //DATA
     private int numGiri = 0;

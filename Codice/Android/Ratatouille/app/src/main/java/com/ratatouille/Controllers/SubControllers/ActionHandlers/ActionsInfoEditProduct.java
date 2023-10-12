@@ -1,6 +1,5 @@
 package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
@@ -9,12 +8,9 @@ import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
-
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-
 import io.vavr.control.Try;
 
 public class ActionsInfoEditProduct extends ActionsViewHandler{
@@ -44,24 +40,28 @@ public class ActionsInfoEditProduct extends ActionsViewHandler{
         }
     }
 
-    private static class EditProduct_ActionHandler implements ActionHandler {
+    protected static class EditProduct_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
             Product product = (Product) action.getData();
             Log.d(TAG, "handleAction: EDIT->"+ product.getNameProduct());
 
-            boolean isUpdated = sendProductToServer(product,action.getManager().context);
+            String PhotoDATA =  product.isHasPhoto()? product.getDataFromUriProduct(action.getManager().context): "NoPhoto";
+            product.setDataImageProduct(PhotoDATA);
+            String id_product = product.getID_product()+ "";
+            boolean isUpdated = sendUpdatedProductToServer(product,id_product);
             action.callBack(isUpdated);
             Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
             action.getManager().setData(action.getData());
             action.getManager().goBack();
         }
-        private boolean sendProductToServer(Product newProduct, Context context){
+
+        protected boolean sendUpdatedProductToServer(Product newProduct, String id_product){
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("ID_Product",        newProduct.getID_product()+"")
+                    .appendQueryParameter("ID_Product",         id_product )
                     .appendQueryParameter("NameProduct",        newProduct.getNameProduct())
-                    .appendQueryParameter("PhotoDATA",          newProduct.isHasPhoto()? newProduct.getDataFromUriProduct(context): "NoPhoto")
-                    .appendQueryParameter("PhotoURL",            newProduct.getURLImageProduct())
+                    .appendQueryParameter("PhotoDATA",          newProduct.isHasPhoto()? newProduct.getDataImageProduct(): "NoPhoto")
+                    .appendQueryParameter("PhotoURL",           newProduct.getURLImageProduct())
                     .appendQueryParameter("PriceProduct",       newProduct.getPriceProduct()+"")
                     .appendQueryParameter("DescriptionProduct", newProduct.getDescriptionProduct())
                     .appendQueryParameter("AllergeniProduct",   newProduct.getAllergeniProduct())
@@ -75,10 +75,9 @@ public class ActionsInfoEditProduct extends ActionsViewHandler{
                 nIngredient+=1;
             }
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.UPDATE + "/Product.php";
-
             try {
                 JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-                if(BodyJSON != null){
+                if(BodyJSON.getString("MSG_STATUS").contains("1")){
                     Log.d(TAG, "sendToServer: RICEVUTO DA SERVER ->\n" + BodyJSON.toString(4));
                     return true;
                 }

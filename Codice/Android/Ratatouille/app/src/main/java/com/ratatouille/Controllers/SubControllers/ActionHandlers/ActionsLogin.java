@@ -36,6 +36,7 @@ public class ActionsLogin extends ActionsViewHandler{
         actionHandlerMap.put(INDEX_ACTION_REGISTER_ADMIN,           new RegisterAdmin_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_CONFIRM_PASSWORD,         new ConfirmPassword_ActionHandler());
     }
+
     private static class StartRegisterAdmin_ActionHandler implements ActionHandler{
         @Override
         public void handleAction(Action action) {
@@ -54,7 +55,7 @@ public class ActionsLogin extends ActionsViewHandler{
         }
     }
 
-    private static class Login_ActionHandler implements ActionHandler{
+    protected static class Login_ActionHandler implements ActionHandler{
         Boolean isFirstTime;
         Utente user;
         @Override
@@ -64,16 +65,16 @@ public class ActionsLogin extends ActionsViewHandler{
             getFCMToken(action);
             Log.d(TAG, "handleAction: Token user Created ->" + user.getToken());
             if( user.getToken() == null) user.setToken("NO_SERVICE_TOKEN_AVAILABLE");
-            if(getUserFromServer(action)){
-                new LocalStorage(context).putData("ID_Utente", user.getId_utente());
-                new LocalStorage(context).putData("ID_Ristorante", user.getId_Restaurant());
-                new LocalStorage(context).putData("Nome",user.getNome());
-                new LocalStorage(context).putData("Cognome",user.getCognome());
-                new LocalStorage(context).putData("Token",user.getToken());
-                new LocalStorage(context).putData("TypeUser",user.getType_user());
-                new LocalStorage(context).putData("Email",user.getEmail());
-                new LocalStorage(context).putData("Password",user.getPassword());
-                new LocalStorage(context).putData("isFirstTime", isFirstTime);
+            if(getUserFromServer(user.getEmail(), user.getPassword(), user.getToken())){
+                new LocalStorage(context).putData("ID_Utente",      user.getId_utente());
+                new LocalStorage(context).putData("ID_Ristorante",  user.getId_Restaurant());
+                new LocalStorage(context).putData("Nome",           user.getNome());
+                new LocalStorage(context).putData("Cognome",        user.getCognome());
+                new LocalStorage(context).putData("Token",          user.getToken());
+                new LocalStorage(context).putData("TypeUser",       user.getType_user());
+                new LocalStorage(context).putData("Email",          user.getEmail());
+                new LocalStorage(context).putData("Password",       user.getPassword());
+                new LocalStorage(context).putData("isFirstTime",    isFirstTime);
                 action.callBack(true);
                 Try.run(() -> TimeUnit.MILLISECONDS.sleep(200));//Attesa animazinoe Rotazione LOGO
                 if( !isFirstTime )
@@ -103,11 +104,12 @@ public class ActionsLogin extends ActionsViewHandler{
                 user.setToken("NO_SERVICE_TOKEN_AVAILABLE");
             }
         }
-        private boolean getUserFromServer(Action action){
+
+        protected boolean getUserFromServer(String Email, String Password, String Token){
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("Email", user.getEmail())
-                    .appendQueryParameter("Password",user.getPassword())
-                    .appendQueryParameter("Token",user.getToken());
+                    .appendQueryParameter("Email", Email)
+                    .appendQueryParameter("Password",Password)
+                    .appendQueryParameter("Token",Token);
             String url = EndPointer.StandardPath + "/Login.php";
 
             try {
@@ -115,12 +117,13 @@ public class ActionsLogin extends ActionsViewHandler{
                 if( BodyJSON != null && BodyJSON.getString("MSG_STATUS").contains("1")){
                     JSONArray DATA_Json = new JSONArray(BodyJSON.getString("DATA"));
                     JSONObject utente_Json = new JSONObject(DATA_Json.getString(0));
-
+                    user = new Utente();
                     user.setId_utente(Integer.parseInt( utente_Json.getString("ID_Utente") ));
                     user.setId_Restaurant(Integer.parseInt( utente_Json.getString("ID_Ristorante") ));
                     user.setNome(utente_Json.getString("Nome"));
                     user.setCognome(utente_Json.getString("Cognome"));
                     user.setType_user(utente_Json.getString("Type_User"));
+                    user.setToken(Token);
                     isFirstTime = utente_Json.getString("Token").equals("NO_TOKEN");
 
                     Log.d(TAG, "getUserFromServer: true");
@@ -128,7 +131,7 @@ public class ActionsLogin extends ActionsViewHandler{
                 }else{
                     assert BodyJSON != null;
                     String messageError = BodyJSON.getString("MSG").replace("0 ","");
-                    action.getManager().setData(messageError);
+                    //action.getManager().setData(messageError);
                     Log.d(TAG, "getUserFromServer: false");
                     return false;
                 }
@@ -153,7 +156,7 @@ public class ActionsLogin extends ActionsViewHandler{
         private void startRegistration(Action action){
             Context context = action.getManager().context;
             if( ((Utente) action.getData()).getToken() == null) ((Utente) action.getData()).setToken("NO_SERVICE_TOKEN_AVAILABLE");
-            if(stetUserToServer(action)){
+            if(RegisterUserToServer(action)){
                 new LocalStorage(context).putData("ID_Utente",((Utente) action.getData()).getId_utente());
                 new LocalStorage(context).putData("ID_Ristorante",((Utente) action.getData()).getId_Restaurant());
                 new LocalStorage(context).putData("Nome",((Utente) action.getData()).getNome());
@@ -191,7 +194,7 @@ public class ActionsLogin extends ActionsViewHandler{
 
         }
 
-        private boolean stetUserToServer(Action action){
+        private boolean RegisterUserToServer(Action action){
             Utente user = ((Utente) action.getData());
             Log.d(TAG, "stetUserToServer: Email->"+user.getEmail());
             Uri.Builder dataToSend = new Uri.Builder()
