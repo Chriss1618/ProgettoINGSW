@@ -20,55 +20,49 @@ public class LoginTest {
 
     }
 
-    //Insieme di test Black Box
+    //Insieme di test BlackBox
     @Test
-    public void TestLoginEmptyEmailAndPassword(){
+    public void IncorrectCredentials(){
+        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "NonSonoNelDB123", "123123"));
+    }
+
+    @Test
+    public void CorrectCredentials(){
+        Assert.assertTrue(loginAction.getUserFromServer("SononelDB@example.com", "SonoNelDB123", ""));
+    }
+
+
+    @Test
+    public void EmptyEmailAndPassword(){
         Assert.assertFalse(loginAction.getUserFromServer("", "", ""));
     }
 
     @Test
-    public void TestLoginEmptyEmail(){
-        Assert.assertFalse(loginAction.getUserFromServer("", "123123", "123123"));
+    public void EmptyEmail(){
+        Assert.assertFalse(loginAction.getUserFromServer("", "SonoNelDB123", "123123"));
     }
 
     @Test
-    public void TestLoginEmptyPassword(){
+    public void EmptyPassword(){
+        Assert.assertFalse(loginAction.getUserFromServer("SononelDB@example.com", "", "123123"));
+    }
+
+    @Test
+    public void IncorrectEmail(){
+        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "SonoNelDB123", "123123"));
+    }
+
+    @Test
+    public void IncorrectPassword(){
+        Assert.assertFalse(loginAction.getUserFromServer("SononelDB@example.com", "1231231", "123123"));
+    }
+
+    @Test
+    public void IncorrectEmailAndEmptyPassword(){
         Assert.assertFalse(loginAction.getUserFromServer("123123", "", "123123"));
     }
 
-    @Test
-    public void TestLoginWrongEmailAndPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("Gigiolone", "Pescheria", "123123"));
-    }
-
-    @Test
-    public void TestLoginWrongEmail(){
-        Assert.assertFalse(loginAction.getUserFromServer("1231231", "123123", "123123"));
-    }
-
-    @Test
-    public void TestLoginWrongPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("123123", "1231231", "123123"));
-    }
-
-    @Test
-    public void TestLoginCorrectEmailAndEmptyPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("123123", "", "123123"));
-    }
-
-    @Test
-    public void TestLoginWrongEmailAndEmptyPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("123123", "", "123123"));
-    }
-
-    @Test
-    public void TestLoginCorrectCredentials(){
-        Assert.assertTrue(loginAction.getUserFromServer("123123", "123123", "123123"));
-    }
-
-    //Insieme di White Box
-
-
+    //Insieme di test WhiteBox
 
 
     @After
