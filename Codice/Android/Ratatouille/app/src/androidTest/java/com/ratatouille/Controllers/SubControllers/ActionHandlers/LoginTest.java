@@ -22,16 +22,26 @@ public class LoginTest {
 
     //Insieme di test BlackBox
     @Test
-    public void IncorrectCredentials(){
-        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "NonSonoNelDB123", "123123"));
-    }
-
-    @Test
     public void CorrectCredentials(){
         Assert.assertTrue(loginAction.getUserFromServer("SononelDB@example.com", "SonoNelDB123", ""));
     }
 
+    @Test
+    public void CorrectEmailAndIncorrectPassword(){
+        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "SonoNelDB123", ""));
+    }
 
+    @Test
+    public void IncorrectEmailAndCorrectPassword(){
+        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "SonoNelDB123", ""));
+    }
+
+    @Test
+    public void IncorrectCredentials(){
+        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "NonSonoNelDB123", ""));
+    }
+
+    //Insieme di test WhiteBox
     @Test
     public void EmptyEmailAndPassword(){
         Assert.assertFalse(loginAction.getUserFromServer("", "", ""));
@@ -39,30 +49,28 @@ public class LoginTest {
 
     @Test
     public void EmptyEmail(){
-        Assert.assertFalse(loginAction.getUserFromServer("", "SonoNelDB123", "123123"));
+        Assert.assertFalse(loginAction.getUserFromServer("", "SonoNelDB123", ""));
     }
 
     @Test
     public void EmptyPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("SononelDB@example.com", "", "123123"));
+        Assert.assertFalse(loginAction.getUserFromServer("SononelDB@example.com", "", ""));
     }
 
     @Test
     public void IncorrectEmail(){
-        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "SonoNelDB123", "123123"));
+        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "SonoNelDB123", ""));
     }
 
     @Test
     public void IncorrectPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("SononelDB@example.com", "1231231", "123123"));
+        Assert.assertFalse(loginAction.getUserFromServer("SononelDB@example.com", "NonSonoNelDB123", ""));
     }
 
     @Test
     public void IncorrectEmailAndEmptyPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("123123", "", "123123"));
+        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "", ""));
     }
-
-    //Insieme di test WhiteBox
 
 
     @After

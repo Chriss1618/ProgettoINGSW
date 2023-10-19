@@ -18,12 +18,20 @@ public class DeleteCategoryTest {
     }
 
     @Test
-    public void TestDeletingExistingCategory(){
-        String nameCategory = "Insalata";
+    public void CorrectCategoryAndCorrectId(){
+        String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
 
         Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest));
+    }
 
+    @Test
+    public void CorrectCategoryAndCorrectId(){
+        String nameCategory = "CategoriaDaEliminare";
+        int id_rest = 1;
+        int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
+
+        Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, 123123));
     }
 }
