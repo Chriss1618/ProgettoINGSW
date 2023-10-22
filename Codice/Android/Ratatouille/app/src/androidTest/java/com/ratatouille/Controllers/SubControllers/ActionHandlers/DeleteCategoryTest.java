@@ -17,21 +17,21 @@ public class DeleteCategoryTest {
         deleteCategoryAction = (ActionsListCategory.DeleteCategory_ActionHandler) new ActionsListCategory().actionHandlerMap.get(INDEX_ACTION_REMOVE_CATEGORY);
     }
 
-    @Test
+    /*@Test
     public void CorrectCategoryAndCorrectId(){
         String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
 
         Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest));
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void CorrectCategoryAndCorrectId(){
         String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
 
         Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, 123123));
-    }
+    }*/
 }

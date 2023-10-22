@@ -1,6 +1,7 @@
 package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 
 import static com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory.INDEX_ACTION_ADD_CATEGORY;
+import static com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory.INDEX_ACTION_REMOVE_CATEGORY;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,56 +10,60 @@ import org.junit.Test;
 public class InsertCategoryTest {
 
     private ActionsListCategory.AddNewCategory_ActionHandler addCategoryAction;
+    private ActionsListCategory.DeleteCategory_ActionHandler deleteCategoryAction;
+    int newCategory;
 
     @Before
     public  void  setUp(){
         addCategoryAction = (ActionsListCategory.AddNewCategory_ActionHandler) new ActionsListCategory().actionHandlerMap.get(INDEX_ACTION_ADD_CATEGORY);
+        deleteCategoryAction = (ActionsListCategory.DeleteCategory_ActionHandler) new ActionsListCategory().actionHandlerMap.get(INDEX_ACTION_REMOVE_CATEGORY);
     }
 
     //Insieme di Test BlackBox
     @Test
-    public void CorrectCategoryAndCorrectId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "123"));
-        //cancellare la categoria inserita
+    public void CorrectCategoryAndCorrectRestaurantId(){
+        newCategory = addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "1");
+        Assert.assertEquals(0,newCategory);
+        deleteCategoryAction.sendDeleteCategoryToServer(newCategory, "1");
     }
 
     @Test
-    public void CorrectCategoryAndIncorrectId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "IdPresenteNelDB"));
+    public void CorrectCategoryAndIncorrectRestaurantId(){
+        Assert.assertEquals(0, addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "IdNonPresenteNelDB"));
     }
 
     @Test
-    public void CorrectCategoryAndEmptyId(){
+    public void CorrectCategoryAndEmptyRestaurantId(){
         Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", ""));
     }
 
     @Test
-    public void IncorrectCategoryAndCorrectId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaPresenteNelDB", "123"));
+    public void IncorrectCategoryAndCorrectRestaurantId(){
+        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaPresenteNelDB", "1"));
     }
 
     @Test
-    public void IncorrectCategoryAndIncorrectId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaPresenteNelDB", "IdPresenteNelDB"));
+    public void IncorrectCategoryAndIncorrectRestaurantId(){
+        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaPresenteNelDB", "IdNonPresenteNelDB"));
     }
 
     @Test
-    public void IncorrectCategoryAndEmptyId(){
+    public void IncorrectCategoryAndEmptyRestaurantId(){
         Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaPresenteNelDB", ""));
     }
 
     @Test
-    public void EmptyCategoryAndCorrectId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", "123"));
+    public void EmptyCategoryAndCorrectRestaurantId(){
+        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", "1"));
     }
 
     @Test
-    public void EmptyCategoryAndIncorrectId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", "IdPresenteNelDB"));
+    public void EmptyCategoryAndIncorrectRestaurantId(){
+        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", "IdNonPresenteNelDB"));
     }
 
     @Test
-    public void EmptyCategoryAndEmptyId(){
+    public void EmptyCategoryAndEmptyRestaurantId(){
         Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", ""));
     }
 }
