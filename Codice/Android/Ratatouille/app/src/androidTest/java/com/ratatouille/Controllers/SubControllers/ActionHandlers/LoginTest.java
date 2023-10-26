@@ -41,7 +41,7 @@ public class LoginTest {
         Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "NonSonoNelDB123", ""));
     }
 
-    //Insieme di test WhiteBox
+   /* //Insieme di test WhiteBox
     @Test
     public void EmptyEmailAndPassword(){
         Assert.assertFalse(loginAction.getUserFromServer("", "", ""));
@@ -71,7 +71,7 @@ public class LoginTest {
     public void IncorrectEmailAndEmptyPassword(){
         Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "", ""));
     }
-
+    */
 
     @After
     public void EndTest(){

@@ -17,21 +17,42 @@ public class DeleteCategoryTest {
         deleteCategoryAction = (ActionsListCategory.DeleteCategory_ActionHandler) new ActionsListCategory().actionHandlerMap.get(INDEX_ACTION_REMOVE_CATEGORY);
     }
 
-    /*@Test
-    public void CorrectCategoryAndCorrectId(){
+    @Test
+    public void CorrectCategoryAndCorrectRestaurantId(){
         String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
 
         Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest));
-    }*/
+    }
 
-    /*@Test
-    public void CorrectCategoryAndCorrectId(){
+    @Test
+    public void CorrectCategoryAndIncorrectRestaurantId(){
         String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
 
-        Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, 123123));
-    }*/
+        Assert.assertFalse(deleteCategoryAction.sendDeleteCategoryToServer(idCat, 123123));
+        deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest);
+    }
+
+    @Test
+    public void IncorrectCategoryAndCorrectRestaurantId(){
+        String nameCategory = "CategoriaDaEliminare";
+        int id_rest = 1;
+        int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
+
+        Assert.assertFalse(deleteCategoryAction.sendDeleteCategoryToServer(123123, id_rest));
+        deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest);
+    }
+
+    @Test
+    public void IncorrectCategoryAndIncorrectRestaurantId(){
+        String nameCategory = "CategoriaDaEliminare";
+        int id_rest = 1;
+        int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
+
+        Assert.assertFalse(deleteCategoryAction.sendDeleteCategoryToServer(123123, 123123));
+        deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest);
+    }
 }

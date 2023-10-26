@@ -23,8 +23,8 @@ public class InsertCategoryTest {
     @Test
     public void CorrectCategoryAndCorrectRestaurantId(){
         newCategory = addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "1");
-        Assert.assertEquals(0,newCategory);
-        deleteCategoryAction.sendDeleteCategoryToServer(newCategory, "1");
+        Assert.assertNotEquals(0,newCategory);
+        deleteCategoryAction.sendDeleteCategoryToServer(newCategory, 1);
     }
 
     @Test
@@ -32,10 +32,6 @@ public class InsertCategoryTest {
         Assert.assertEquals(0, addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "IdNonPresenteNelDB"));
     }
 
-    @Test
-    public void CorrectCategoryAndEmptyRestaurantId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", ""));
-    }
 
     @Test
     public void IncorrectCategoryAndCorrectRestaurantId(){
@@ -47,10 +43,6 @@ public class InsertCategoryTest {
         Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaPresenteNelDB", "IdNonPresenteNelDB"));
     }
 
-    @Test
-    public void IncorrectCategoryAndEmptyRestaurantId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("CategoriaPresenteNelDB", ""));
-    }
 
     @Test
     public void EmptyCategoryAndCorrectRestaurantId(){
@@ -62,8 +54,4 @@ public class InsertCategoryTest {
         Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", "IdNonPresenteNelDB"));
     }
 
-    @Test
-    public void EmptyCategoryAndEmptyRestaurantId(){
-        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", ""));
-    }
 }

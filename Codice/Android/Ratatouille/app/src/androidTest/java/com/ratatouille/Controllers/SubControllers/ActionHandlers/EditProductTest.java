@@ -23,13 +23,56 @@ public class EditProductTest {
         editProductAction = (ActionsInfoEditProduct.EditProduct_ActionHandler) new ActionsInfoEditProduct().actionHandlerMap.get(INDEX_ACTION_EDIT_PRODUCT);
     }
 
-    @Test
-    public void TestEmptyProduct(){
+   @Test
+    public void CorrectProductCorrectProductId(){
 
         Product newProd = new Product();
+        newProd.setID_product(1);
+        newProd.setID_category(124);
+        newProd.setNameProduct("Prova");
+        newProd.setPriceProduct(1);
+        newProd.setDescriptionProduct("è una prova");
+        newProd.setAllergeniProduct("è na prov");
 
-        Assert.assertFalse(editProductAction.sendUpdatedProductToServer(newProd,"1"));
+
+
+
+
+        Assert.assertTrue(editProductAction.sendUpdatedProductToServer(newProd,"35"));
 
     }
 
+    @Test
+    public void CorrectProductIncorrectProductId(){
+
+        Product newProd = new Product();
+        newProd.setID_product(1);
+        newProd.setID_category(124);
+        newProd.setNameProduct("Prova");
+        newProd.setPriceProduct(1);
+        newProd.setDescriptionProduct("è una prova");
+        newProd.setAllergeniProduct("è na prov");
+
+
+        Assert.assertFalse(editProductAction.sendUpdatedProductToServer(newProd,""));
+
+    }
+
+    @Test
+    public void IncorrectProductCorrectProductId(){
+
+        Product newProd = new Product();
+
+        Assert.assertFalse(editProductAction.sendUpdatedProductToServer(newProd,"35"));
+
+    }
+
+    @Test
+    public void IncorrectProductIncorrectProductId(){
+
+        Product newProd = new Product();
+
+        Assert.assertFalse(editProductAction.sendUpdatedProductToServer(newProd,""));
+
+    }
 }
