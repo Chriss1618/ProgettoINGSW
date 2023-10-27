@@ -49,21 +49,21 @@ public class ActionsListInventory extends ActionsViewHandler{
         }
     }
 
-    private static class DeleteIngredient_ActionHandler implements ActionHandler {
+    protected static class DeleteIngredient_ActionHandler implements ActionHandler {
         @Override
         public void handleAction(Action action) {
             Ingredient ingredient = (Ingredient) action.getData();
-            if(sendDeleteIngredientToServer(ingredient)){
+            if( sendDeleteIngredientToServer(ingredient.getID_Ristorante(), ingredient.getID_Ingredient() ) ){
                 action.callBack(ingredient.getID_Ingredient());
             }
         }
 
-        private boolean sendDeleteIngredientToServer(Ingredient ingredient){
-            Log.d(TAG, "sendDeleteIngredientToServer: idIngredient = "+ingredient.getID_Ingredient());
-            Log.d(TAG, "sendDeleteIngredientToServer: idRestaurant = "+ingredient.getID_Ristorante());
+        public boolean sendDeleteIngredientToServer(int id_ristorante, int  id_ingredient){
+            Log.d(TAG, "sendDeleteIngredientToServer: idIngredient = "+id_ingredient);
+            Log.d(TAG, "sendDeleteIngredientToServer: idRestaurant = "+id_ristorante);
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("id_ristorante",  ingredient.getID_Ristorante()+"")
-                    .appendQueryParameter("id_ingredient",    ingredient.getID_Ingredient()+"");
+                    .appendQueryParameter("id_ristorante",  id_ristorante+"")
+                    .appendQueryParameter("id_ingredient",    id_ingredient+"");
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/Ingredient.php";
 
             try {

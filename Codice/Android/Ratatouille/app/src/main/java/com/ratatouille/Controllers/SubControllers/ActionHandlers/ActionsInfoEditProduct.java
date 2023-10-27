@@ -66,8 +66,9 @@ public class ActionsInfoEditProduct extends ActionsViewHandler{
                     .appendQueryParameter("DescriptionProduct", newProduct.getDescriptionProduct())
                     .appendQueryParameter("AllergeniProduct",   newProduct.getAllergeniProduct())
                     .appendQueryParameter("isSendToKitchen",    newProduct.isSendToKitchen()+"")
-                    .appendQueryParameter("nIngredient",    newProduct.getRicette().size()+"");
+                    .appendQueryParameter("nIngredient",        newProduct.getRicette().size()+"");
             int nIngredient = 0;
+
             for(Ricettario ricettario : newProduct.getRicette()){
                 dataToSend.appendQueryParameter("ID_Ingrediente" +nIngredient,  ricettario.getIngredient().getID_Ingredient()+"");
                 dataToSend.appendQueryParameter("Dosi" +nIngredient,            ricettario.getDosi()+"");

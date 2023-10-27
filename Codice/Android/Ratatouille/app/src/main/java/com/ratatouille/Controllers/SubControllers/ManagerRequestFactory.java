@@ -28,7 +28,7 @@ public class ManagerRequestFactory {
     public final static int INDEX_REQUEST_ORDINI_TAVOLO = 8;
     public final static int INDEX_REQUEST_STATS         = 9;
 
-    Map<Integer, RequestHandler> requestHandlerMap ;
+    public Map<Integer, RequestHandler> requestHandlerMap ;
 
     public ManagerRequestFactory() {
         requestHandlerMap = new HashMap<>();

@@ -2,12 +2,14 @@ package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 import static com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory.INDEX_ACTION_ADD_CATEGORY;
 import static com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory.INDEX_ACTION_REMOVE_CATEGORY;
 
+import android.util.Log;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DeleteCategoryTest {
-
+    private static final String TAG = "DeleteCategoryTest";
     private ActionsListCategory.AddNewCategory_ActionHandler addCategoryAction;
     private ActionsListCategory.DeleteCategory_ActionHandler deleteCategoryAction;
 
@@ -22,7 +24,7 @@ public class DeleteCategoryTest {
         String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
-
+        Log.d(TAG, "CorrectCategoryAndCorrectRestaurantId: ");
         Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest));
     }
 
@@ -31,8 +33,9 @@ public class DeleteCategoryTest {
         String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
-
+        Log.d(TAG, "CorrectCategoryAndIncorrectRestaurantId: idCat B -> "+idCat);
         Assert.assertFalse(deleteCategoryAction.sendDeleteCategoryToServer(idCat, 123123));
+        Log.d(TAG, "CorrectCategoryAndIncorrectRestaurantId: idCat A -> "+idCat);
         deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest);
     }
 

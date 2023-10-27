@@ -74,7 +74,7 @@ public class ActionsListCategory extends ActionsViewHandler{
 
             try {
                 JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-                if( BodyJSON != null && BodyJSON.getString("DATA").contains("1")){
+                if( BodyJSON != null && BodyJSON.getString("MSG_STATUS").contains("1")){
 
                     JSONObject Categoria_Json = new JSONObject(BodyJSON.getString("DATA"));
                     addedCategory = new CategoriaMenu(

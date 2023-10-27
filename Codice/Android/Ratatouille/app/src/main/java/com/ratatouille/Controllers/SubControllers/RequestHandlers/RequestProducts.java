@@ -8,6 +8,7 @@ import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Request.Request;
+import com.ratatouille.Models.LocalStorage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,24 +24,38 @@ public class RequestProducts implements RequestHandler{
     @Override
     public void handleRequest(Request request) {
         CategoriaMenu categoriaMenu = (CategoriaMenu)request.getData();
+        int id_ristorante = (Integer) new LocalStorage(request.getManager().context).getData("ID_Ristorante", "Integer");
+        if(getProductsFromServer(categoriaMenu.getID_categoria(),id_ristorante)){
+            request.callBack(ListProducts);
+        }else{
+            request.callBack(ListProducts);
+        }
+    }
+
+    public boolean getProductsFromServer(int id_category,int id_restaurant){
         Uri.Builder dataToSend  = new Uri.Builder()
-                .appendQueryParameter("ID_Category",categoriaMenu.getID_categoria() + "");
+                .appendQueryParameter("ID_Category",id_category + "")
+                .appendQueryParameter("id_restaurant",id_restaurant + "");
         String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/Product.php";
         try {
             JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-            ListProducts = new ArrayList<>();
-            setProducts(BodyJSON);
+            if(BodyJSON.getString("MSG_STATUS").contains("1")){
+                setProducts( BodyJSON );
+                ListProducts = new ArrayList<>();
+                setProducts(BodyJSON);
+                return true;
+            }
 
-            request.callBack(ListProducts);
 
         }catch ( Exception e ){
             Log.e(TAG, "getDataFromServer: ",e);
         }
-    }
 
+        return false;
+    }
     private void setProducts(JSONObject BodyJSON) throws JSONException {
         Log.d(TAG, "setProducts: PRODUCTS ->\n" + BodyJSON.toString(4));
-        if(!BodyJSON.getString("MSG_STATUS").contains("0 Nessun Product")){
+        if(BodyJSON.getString("MSG_STATUS").contains("1 Products Trovati")){
             JSONArray ProductJSON = new JSONArray(BodyJSON.getString("DATA"));
 
             for(int i = 0 ; i<ProductJSON.length(); i++){

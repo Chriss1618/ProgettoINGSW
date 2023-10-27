@@ -3,12 +3,14 @@ package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 import static com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory.INDEX_ACTION_ADD_CATEGORY;
 import static com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory.INDEX_ACTION_REMOVE_CATEGORY;
 
+import android.util.Log;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class InsertCategoryTest {
-
+    private static final String TAG = "InsertCategoryTest";
     private ActionsListCategory.AddNewCategory_ActionHandler addCategoryAction;
     private ActionsListCategory.DeleteCategory_ActionHandler deleteCategoryAction;
     int newCategory;
@@ -23,6 +25,7 @@ public class InsertCategoryTest {
     @Test
     public void CorrectCategoryAndCorrectRestaurantId(){
         newCategory = addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "1");
+        Log.d(TAG, "CorrectCategoryAndCorrectRestaurantId: newCategory->"+newCategory);
         Assert.assertNotEquals(0,newCategory);
         deleteCategoryAction.sendDeleteCategoryToServer(newCategory, 1);
     }

@@ -28,7 +28,7 @@ public class LoginTest {
 
     @Test
     public void CorrectEmailAndIncorrectPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "SonoNelDB123", ""));
+        Assert.assertFalse(loginAction.getUserFromServer("SonoNelDB@example.com", "NonSonoNelDB123", ""));
     }
 
     @Test

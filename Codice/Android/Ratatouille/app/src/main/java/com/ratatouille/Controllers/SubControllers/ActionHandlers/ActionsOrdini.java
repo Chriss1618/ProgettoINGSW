@@ -53,6 +53,7 @@ public class ActionsOrdini extends ActionsViewHandler{
     private static class ConfirmOrders_ActionHandler implements ActionHandler{
         private ArrayList<Product> ListReady;
         @Override
+
         public void handleAction(Action action) {
             ListReady = (ArrayList<Product>) action.getData();
             if(sendNewProductToServer(action.getManager().context)){

@@ -66,6 +66,7 @@ public class ServerCommunication {
     private void sendRequestToServer() throws Exception{
         String data = dataToSend.build().getEncodedQuery();
 
+        Log.d(TAG, "sendRequestToServer: Sent -> "+ data);
         OutputStream os = conn.getOutputStream();
         BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(os, StandardCharsets.UTF_8));
         writer.write(data);
@@ -84,6 +85,7 @@ public class ServerCommunication {
             builder.append(line);
         }
         bufferedReader.close();
+        Log.d(TAG, "getResponseFromServer: recived ->"+ builder);
         return new JSONObject( builder.toString() );
     }
 }
