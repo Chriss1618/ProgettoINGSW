@@ -40,7 +40,6 @@ public class RequestProducts implements RequestHandler{
         try {
             JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
             if(BodyJSON.getString("MSG_STATUS").contains("1")){
-                setProducts( BodyJSON );
                 ListProducts = new ArrayList<>();
                 setProducts(BodyJSON);
                 return true;
