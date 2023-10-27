@@ -1,38 +1,34 @@
 package com.ratatouille.Controllers.SubControllers.RequestHandlers;
-
-import static com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditProduct.INDEX_ACTION_EDIT_PRODUCT;
 import static com.ratatouille.Controllers.SubControllers.ManagerRequestFactory.INDEX_REQUEST_PRODUCTS;
-
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditProduct;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
-
-import junit.framework.TestCase;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class RequestProductsTest extends TestCase {
+public class RequestProductsTest {
     private RequestProducts editProductAction;
 
-    public void setUp() throws Exception {
+    @Before
+    public void setUp()  {
         editProductAction = (RequestProducts) new ManagerRequestFactory().requestHandlerMap.get(INDEX_REQUEST_PRODUCTS);
-        super.setUp();
     }
 
-    public void testGetProductsFromServerIncorrectRestaurantCorrectCategory() {
+    @Test
+    public void IncorrectRestaurantCorrectCategory() {
         int id_cat = 1;
         int id_restaurant = 12;
         Assert.assertFalse( editProductAction.getProductsFromServer(id_cat,id_restaurant) );
 
     }
-
-    public void testGetProductsFromServerCorrectRestaurantCorrectCategory() {
+    @Test
+    public void CorrectRestaurantCorrectCategory() {
         int id_cat = 113;
         int id_restaurant = 1;
         Assert.assertTrue( editProductAction.getProductsFromServer(id_cat,id_restaurant) );
 
     }
-
-    public void testGetProductsFromServerCorrectRestaurantIncorrectCategory() {
+    @Test
+    public void CorrectRestaurantIncorrectCategory() {
         int id_cat = 112;
         int id_restaurant = 1;
 
