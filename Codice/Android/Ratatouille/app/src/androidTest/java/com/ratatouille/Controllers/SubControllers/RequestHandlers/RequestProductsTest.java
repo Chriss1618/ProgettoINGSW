@@ -1,5 +1,7 @@
 package com.ratatouille.Controllers.SubControllers.RequestHandlers;
 import static com.ratatouille.Controllers.SubControllers.ManagerRequestFactory.INDEX_REQUEST_PRODUCTS;
+
+import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,25 +16,31 @@ public class RequestProductsTest {
     }
 
     @Test
-    public void IncorrectRestaurantCorrectCategory() {
-        int id_cat = 1;
-        int id_restaurant = 12;
-        Assert.assertFalse( editProductAction.getProductsFromServer(id_cat,id_restaurant) );
-
-    }
-    @Test
     public void CorrectRestaurantCorrectCategory() {
-        int id_cat = 113;
-        int id_restaurant = 1;
-        Assert.assertTrue( editProductAction.getProductsFromServer(id_cat,id_restaurant) );
-
+        int id_Exist_Restaurant = 1;
+        int id_Exist_Category = 281;
+        Assert.assertTrue( editProductAction.getProductsFromServer(id_Exist_Category, id_Exist_Restaurant));
     }
+
     @Test
     public void CorrectRestaurantIncorrectCategory() {
-        int id_cat = 112;
-        int id_restaurant = 1;
+        int id_Exist_Restaurant = 1;
+        int id_Not_Exist_Category = 123123;
+        Assert.assertFalse( editProductAction.getProductsFromServer(id_Not_Exist_Category ,id_Exist_Restaurant));
+    }
 
-        Assert.assertFalse( editProductAction.getProductsFromServer(id_cat,id_restaurant) );
+    @Test
+    public void IncorrectRestaurantCorrectCategory() {
+        int id_Not_Exist_Restaurant = 123123;
+        int id_Exist_Category = 281;
+        Assert.assertFalse( editProductAction.getProductsFromServer(id_Exist_Category, id_Not_Exist_Restaurant) );
+    }
 
+
+    @Test
+    public void IncorrectRestaurantIncorrectCategory() {
+        int id_Not_Exist_Restaurant = 123123;
+        int id_Not_Exist_Category = 123123;
+        Assert.assertFalse( editProductAction.getProductsFromServer(id_Not_Exist_Category,id_Not_Exist_Restaurant));
     }
 }

@@ -59,7 +59,7 @@ public class ActionsNewProduct extends ActionsViewHandler{
 
     }
 
-    private static class CreateProduct_ActionHandler implements ActionHandler{
+    public static class CreateProduct_ActionHandler implements ActionHandler{
 
         @Override
         public void handleAction(Action action) {
@@ -85,7 +85,7 @@ public class ActionsNewProduct extends ActionsViewHandler{
             Log.d(TAG, "printNewProduct ----------------------------------------------- ");
         }
 
-        private boolean sendNewProductToServer(Product newProduct,Context context){
+        public boolean sendNewProductToServer(Product newProduct,Context context){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("ID_category",        newProduct.getID_category()+"")
                     .appendQueryParameter("NameProduct",        newProduct.getNameProduct())

@@ -24,7 +24,7 @@ public class DeleteCategoryTest {
         String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
-        Log.d(TAG, "CorrectCategoryAndCorrectRestaurantId: ");
+
         Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest));
     }
 
@@ -33,9 +33,8 @@ public class DeleteCategoryTest {
         String nameCategory = "CategoriaDaEliminare";
         int id_rest = 1;
         int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
-        Log.d(TAG, "CorrectCategoryAndIncorrectRestaurantId: idCat B -> "+idCat);
+
         Assert.assertFalse(deleteCategoryAction.sendDeleteCategoryToServer(idCat, 123123));
-        Log.d(TAG, "CorrectCategoryAndIncorrectRestaurantId: idCat A -> "+idCat);
         deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest);
     }
 
