@@ -32,20 +32,26 @@ public class RequestProducts implements RequestHandler{
         }
     }
 
-    public boolean getProductsFromServer(int id_category,int id_restaurant){
+    protected JSONObject getResponseServer(int id_category, int id_restaurant){
         Uri.Builder dataToSend  = new Uri.Builder()
                 .appendQueryParameter("ID_Category",id_category + "")
                 .appendQueryParameter("id_restaurant",id_restaurant + "");
-        String      url         = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/Product.php";
+        final String  url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.SELECT + "/Product.php";
+
+        return new ServerCommunication().getData( dataToSend, url);
+    }
+    protected boolean CheckJSON(JSONObject BodyJSON) throws JSONException {
+        return BodyJSON.getString("MSG_STATUS").contains("1");
+    }
+
+    public boolean getProductsFromServer(int id_category,int id_restaurant){
         try {
-            JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-            if(BodyJSON.getString("MSG_STATUS").contains("1")){
-                ListProducts = new ArrayList<>();
+            JSONObject BodyJSON =  getResponseServer( id_category, id_restaurant);
+            if(CheckJSON( BodyJSON) ){
+
                 setProducts(BodyJSON);
                 return true;
             }
-
-
         }catch ( Exception e ){
             Log.e(TAG, "getDataFromServer: ",e);
         }
@@ -53,7 +59,7 @@ public class RequestProducts implements RequestHandler{
         return false;
     }
     private void setProducts(JSONObject BodyJSON) throws JSONException {
-        Log.d(TAG, "setProducts: PRODUCTS ->\n" + BodyJSON.toString(4));
+        ListProducts = new ArrayList<>();
         if(BodyJSON.getString("MSG_STATUS").contains("1 Products Trovati")){
             JSONArray ProductJSON = new JSONArray(BodyJSON.getString("DATA"));
 

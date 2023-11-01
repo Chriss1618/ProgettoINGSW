@@ -1,7 +1,10 @@
 package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
@@ -13,6 +16,7 @@ import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.LocalStorage;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
@@ -58,9 +62,11 @@ public class ActionsLogin extends ActionsViewHandler{
     protected static class Login_ActionHandler implements ActionHandler{
         Boolean isFirstTime;
         Utente user;
+        String Msg_error = "Controlla la tua connessione";
+        Context context;
         @Override
         public void handleAction(Action action) {
-            Context context = action.getManager().context;
+             context = action.getManager().context;
             user = (Utente) action.getData();
             getFCMToken(action);
             Log.d(TAG, "handleAction: Token user Created ->" + user.getToken());
@@ -81,6 +87,7 @@ public class ActionsLogin extends ActionsViewHandler{
                     action.getManager().changeOnMain(ControlMapper.INDEX_LOGIN_CONFIRM,"");
             }else{
                 Log.d(TAG, "handleAction: Utente Non Trovato");
+                action.getManager().setData(Msg_error);
                 action.callBack(false);
             }
         }
@@ -105,34 +112,45 @@ public class ActionsLogin extends ActionsViewHandler{
             }
         }
 
-        protected boolean getUserFromServer(String Email, String Password, String Token){
+
+        protected JSONObject getResponseServer(String Email, String Password, String Token){
             Uri.Builder dataToSend = new Uri.Builder()
-                    .appendQueryParameter("Email", Email)
-                    .appendQueryParameter("Password",Password)
-                    .appendQueryParameter("Token",Token);
-            String url = EndPointer.StandardPath + "/Login.php";
+                    .appendQueryParameter("Email",      Email)
+                    .appendQueryParameter("Password",   Password)
+                    .appendQueryParameter("Token",      Token);
 
+            final String url = EndPointer.StandardPath + "/Login.php";
+
+            return new ServerCommunication().getData( dataToSend, url);
+        }
+
+        protected void getUtenteFromJSON(JSONObject BodyJSON, String Token) throws JSONException {
+            JSONArray DATA_Json = new JSONArray(BodyJSON.getString("DATA"));
+            JSONObject utente_Json =  new JSONObject(DATA_Json.getString(0));
+
+            user = new Utente();
+            user.setId_utente(Integer.parseInt( utente_Json.getString("ID_Utente") ));
+            user.setId_Restaurant(Integer.parseInt( utente_Json.getString("ID_Ristorante") ));
+            user.setNome(utente_Json.getString("Nome"));
+            user.setCognome(utente_Json.getString("Cognome"));
+            user.setType_user(utente_Json.getString("Type_User"));
+            user.setToken(Token);
+            isFirstTime = utente_Json.getString("Token").equals("NO_TOKEN");
+        }
+
+        protected boolean CheckJSON(JSONObject BodyJSON) throws JSONException {
+            return BodyJSON.getString("MSG_STATUS").contains("1");
+        }
+
+        protected boolean getUserFromServer(String Email, String Password, String Token){
             try {
-                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-                if( BodyJSON != null && BodyJSON.getString("MSG_STATUS").contains("1")){
-                    JSONArray DATA_Json = new JSONArray(BodyJSON.getString("DATA"));
-                    JSONObject utente_Json = new JSONObject(DATA_Json.getString(0));
-                    user = new Utente();
-                    user.setId_utente(Integer.parseInt( utente_Json.getString("ID_Utente") ));
-                    user.setId_Restaurant(Integer.parseInt( utente_Json.getString("ID_Ristorante") ));
-                    user.setNome(utente_Json.getString("Nome"));
-                    user.setCognome(utente_Json.getString("Cognome"));
-                    user.setType_user(utente_Json.getString("Type_User"));
-                    user.setToken(Token);
-                    isFirstTime = utente_Json.getString("Token").equals("NO_TOKEN");
+                JSONObject BodyJSON = getResponseServer( Email, Password,Token);
 
-                    Log.d(TAG, "getUserFromServer: true");
+                if( CheckJSON( BodyJSON) ){
+                    getUtenteFromJSON( BodyJSON,  Token);
                     return true;
                 }else{
-                    assert BodyJSON != null;
-                    String messageError = BodyJSON.getString("MSG").replace("0 ","");
-                    //action.getManager().setData(messageError);
-                    Log.d(TAG, "getUserFromServer: false");
+                    Msg_error = BodyJSON.getString("MSG_STATUS").replace("0 ","");
                     return false;
                 }
 

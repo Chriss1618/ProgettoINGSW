@@ -9,6 +9,7 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.LocalStorage;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 
@@ -66,35 +67,45 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
         }
 
-        protected int sendNewCategoryToServer(String newCategory, String id_restaurant){
+        protected JSONObject getResponseServer(String newCategory, String id_restaurant){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("id_ristorante",id_restaurant )
                     .appendQueryParameter("NameCategory",newCategory);
             String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.INSERT + "/CategoriaMenu.php";
 
-            try {
-                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-                if( BodyJSON != null && BodyJSON.getString("MSG_STATUS").contains("1")){
+            return new ServerCommunication().getData( dataToSend, url);
+        }
+        protected boolean CheckJSON(JSONObject BodyJSON) throws JSONException {
+            return BodyJSON.getString("MSG_STATUS").contains("1");
+        }
 
-                    JSONObject Categoria_Json = new JSONObject(BodyJSON.getString("DATA"));
-                    addedCategory = new CategoriaMenu(
-                            Categoria_Json.getString("NomeCategoria"),
-                            Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
-                    );
-                    Log.d(TAG, "sendNewCategoryToServer: true");
+        protected void getCategoryFromJSON(JSONObject BodyJSON) throws JSONException{
+            JSONObject Categoria_Json = new JSONObject(BodyJSON.getString("DATA"));
+            addedCategory = new CategoriaMenu(
+                    Categoria_Json.getString("NomeCategoria"),
+                    Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
+            );
+        }
+
+
+        protected int sendNewCategoryToServer(String newCategory, String id_restaurant){
+
+            try {
+                JSONObject BodyJSON = getResponseServer( newCategory, id_restaurant);
+                if( CheckJSON( BodyJSON) ){
+
+                    getCategoryFromJSON( BodyJSON );
                     return addedCategory.getID_categoria();
                 }else{
-
-                    Log.d(TAG, "sendNewCategoryToServer: false");
                     return 0;
                 }
 
             }catch (Exception e){
-                Log.e(TAG, "getDataFromServer: ",e);
                 return 0;
             }
         }
     }
+
     protected static class DeleteCategory_ActionHandler implements ActionHandler {
 
         @Override
@@ -103,34 +114,30 @@ public class ActionsListCategory extends ActionsViewHandler{
             int id_category = ((CategoriaMenu) action.getData()).getID_categoria();
             int id_restaurant = (int) new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer");
 
-            if(sendDeleteCategoryToServer(id_category,id_restaurant)){
+            if( sendDeleteCategoryToServer(id_category,id_restaurant)){
                 action.callBack(id_category);
                 Log.d(TAG, "handleAction: Cancelled Categoria");
             }else{
                 Log.d(TAG, "handleAction: Categoria Non Cancelled");
             }
         }
-
-        protected boolean sendDeleteCategoryToServer(int id_category, int id_restaurant){
+        protected JSONObject getResponseServer(int id_category, int id_restaurant){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("id_ristorante", id_restaurant+"")
                     .appendQueryParameter("id_category",id_category+"");
-            String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/CategoriaMenu.php";
+            final String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/CategoriaMenu.php";
 
+            return new ServerCommunication().getData( dataToSend, url);
+        }
+
+        protected boolean sendDeleteCategoryToServer(int id_category, int id_restaurant){
             try {
-                JSONObject BodyJSON = new ServerCommunication().getData( dataToSend, url);
-                if( BodyJSON != null ){
-                    String Msg = BodyJSON.getString("MSG");
-                    if(Msg.contains("Failed Deleting")) return false;
-                }else{
-                    Log.d(TAG, "sendDeleteCategoryToServer: false");
-                    return false;
-                }
+                JSONObject BodyJSON = getResponseServer( id_category,  id_restaurant);
+                return ! BodyJSON.getString("MSG").contains("Failed Deleting");
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
+                return false;
             }
-            Log.d(TAG, "sendDeleteCategoryToServer: true");
-            return true;
         }
     }
 }

@@ -3,8 +3,10 @@ package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 
 import static com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin.INDEX_ACTION_LOGIN;
 
+import android.provider.Settings;
 import android.util.Log;
 
+import org.json.JSONException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,37 +43,18 @@ public class LoginTest {
         Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "NonSonoNelDB123", ""));
     }
 
-   /* //Insieme di test WhiteBox
+    //Insieme di test WhiteBox
     @Test
-    public void EmptyEmailAndPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("", "", ""));
-    }
+    public void responseFromServerTest() throws JSONException {
 
-    @Test
-    public void EmptyEmail(){
-        Assert.assertFalse(loginAction.getUserFromServer("", "SonoNelDB123", ""));
-    }
+        String Email = "NonSonoNelDB";
+        String Password = "NonSonoNelDB123";
+        String Token = "";
+        // read the airplane mode setting
 
-    @Test
-    public void EmptyPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("SononelDB@example.com", "", ""));
-    }
+        Assert.assertFalse( loginAction.getUserFromServer(Email, Password, Token) );
 
-    @Test
-    public void IncorrectEmail(){
-        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "SonoNelDB123", ""));
     }
-
-    @Test
-    public void IncorrectPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("SononelDB@example.com", "NonSonoNelDB123", ""));
-    }
-
-    @Test
-    public void IncorrectEmailAndEmptyPassword(){
-        Assert.assertFalse(loginAction.getUserFromServer("NonSonoNelDB", "", ""));
-    }
-    */
 
     @After
     public void EndTest(){
