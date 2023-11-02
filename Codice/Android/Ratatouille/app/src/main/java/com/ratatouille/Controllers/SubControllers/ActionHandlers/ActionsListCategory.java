@@ -75,32 +75,32 @@ public class ActionsListCategory extends ActionsViewHandler{
 
             return new ServerCommunication().getData( dataToSend, url);
         }
-        protected boolean CheckJSON(JSONObject BodyJSON) throws JSONException {
-            return BodyJSON.getString("MSG_STATUS").contains("1");
+        protected boolean CheckJSON(JSONObject BodyJSON) {
+            try{
+                return BodyJSON.getString("MSG_STATUS").contains("1");
+            }catch (Exception e){
+                return false;
+            }
         }
 
-        protected void getCategoryFromJSON(JSONObject BodyJSON) throws JSONException{
-            JSONObject Categoria_Json = new JSONObject(BodyJSON.getString("DATA"));
-            addedCategory = new CategoriaMenu(
-                    Categoria_Json.getString("NomeCategoria"),
-                    Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
-            );
+        protected void getCategoryFromJSON(JSONObject BodyJSON) {
+            try{
+                JSONObject Categoria_Json = new JSONObject(BodyJSON.getString("DATA"));
+                addedCategory = new CategoriaMenu(
+                        Categoria_Json.getString("NomeCategoria"),
+                        Integer.parseInt( Categoria_Json.getString("ID_CategoriaMenu") )
+                );
+            }catch (Exception e){
+                addedCategory = null;
+            }
         }
-
 
         protected int sendNewCategoryToServer(String newCategory, String id_restaurant){
-
-            try {
-                JSONObject BodyJSON = getResponseServer( newCategory, id_restaurant);
-                if( CheckJSON( BodyJSON) ){
-
-                    getCategoryFromJSON( BodyJSON );
-                    return addedCategory.getID_categoria();
-                }else{
-                    return 0;
-                }
-
-            }catch (Exception e){
+            JSONObject BodyJSON = getResponseServer( newCategory, id_restaurant);
+            if( CheckJSON( BodyJSON) ){
+                getCategoryFromJSON( BodyJSON );
+                return addedCategory.getID_categoria();
+            }else{
                 return 0;
             }
         }
@@ -129,15 +129,18 @@ public class ActionsListCategory extends ActionsViewHandler{
 
             return new ServerCommunication().getData( dataToSend, url);
         }
-
-        protected boolean sendDeleteCategoryToServer(int id_category, int id_restaurant){
-            try {
-                JSONObject BodyJSON = getResponseServer( id_category,  id_restaurant);
-                return ! BodyJSON.getString("MSG").contains("Failed Deleting");
+        protected boolean CheckJSON(JSONObject BodyJSON)  {
+            try{
+                return BodyJSON.getString("MSG").contains("1");
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
                 return false;
             }
+        }
+
+        protected boolean sendDeleteCategoryToServer(int id_category, int id_restaurant){
+            JSONObject BodyJSON = getResponseServer( id_category,  id_restaurant);
+            return CheckJSON(BodyJSON);
         }
     }
 }

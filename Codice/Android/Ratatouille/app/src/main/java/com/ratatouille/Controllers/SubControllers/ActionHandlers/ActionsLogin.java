@@ -124,40 +124,52 @@ public class ActionsLogin extends ActionsViewHandler{
             return new ServerCommunication().getData( dataToSend, url);
         }
 
-        protected void getUtenteFromJSON(JSONObject BodyJSON, String Token) throws JSONException {
-            JSONArray DATA_Json = new JSONArray(BodyJSON.getString("DATA"));
-            JSONObject utente_Json =  new JSONObject(DATA_Json.getString(0));
-
-            user = new Utente();
-            user.setId_utente(Integer.parseInt( utente_Json.getString("ID_Utente") ));
-            user.setId_Restaurant(Integer.parseInt( utente_Json.getString("ID_Ristorante") ));
-            user.setNome(utente_Json.getString("Nome"));
-            user.setCognome(utente_Json.getString("Cognome"));
-            user.setType_user(utente_Json.getString("Type_User"));
-            user.setToken(Token);
-            isFirstTime = utente_Json.getString("Token").equals("NO_TOKEN");
-        }
-
-        protected boolean CheckJSON(JSONObject BodyJSON) throws JSONException {
-            return BodyJSON.getString("MSG_STATUS").contains("1");
-        }
-
-        protected boolean getUserFromServer(String Email, String Password, String Token){
+        protected void getUtenteFromJSON(JSONObject BodyJSON, String Token) {
             try {
-                JSONObject BodyJSON = getResponseServer( Email, Password,Token);
+                JSONArray DATA_Json = new JSONArray(BodyJSON.getString("DATA"));
+                JSONObject utente_Json = new JSONObject(DATA_Json.getString(0));
 
-                if( CheckJSON( BodyJSON) ){
-                    getUtenteFromJSON( BodyJSON,  Token);
-                    return true;
-                }else{
-                    Msg_error = BodyJSON.getString("MSG_STATUS").replace("0 ","");
-                    return false;
-                }
+                user = new Utente();
+                user.setId_utente(Integer.parseInt(utente_Json.getString("ID_Utente")));
+                user.setId_Restaurant(Integer.parseInt(utente_Json.getString("ID_Ristorante")));
+                user.setNome(utente_Json.getString("Nome"));
+                user.setCognome(utente_Json.getString("Cognome"));
+                user.setType_user(utente_Json.getString("Type_User"));
+                user.setToken(Token);
+                isFirstTime = utente_Json.getString("Token").equals("NO_TOKEN");
+            }catch (Exception e){
+                user = null;
+            }
+        }
 
+        protected void setMSGError(JSONObject BodyJSON) {
+            try{
+                Msg_error = BodyJSON.getString("MSG_STATUS").replace("0 ","");
+            }catch (Exception e){
+                Log.e(TAG, "getDataFromServer: ",e);
+                Msg_error = "Errore ";
+            }
+        }
+        protected boolean CheckJSON(JSONObject BodyJSON) {
+            try{
+                return BodyJSON.getString("MSG_STATUS").contains("1");
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
                 return false;
             }
+        }
+        protected boolean getUserFromServer(String Email, String Password, String Token){
+
+            JSONObject BodyJSON = getResponseServer( Email, Password,Token);
+
+            if( CheckJSON( BodyJSON) ){
+                getUtenteFromJSON( BodyJSON,  Token);
+                return true;
+            }else{
+                setMSGError(BodyJSON);
+                return false;
+            }
+
         }
     }
 

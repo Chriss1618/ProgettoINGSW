@@ -40,44 +40,49 @@ public class RequestProducts implements RequestHandler{
 
         return new ServerCommunication().getData( dataToSend, url);
     }
-    protected boolean CheckJSON(JSONObject BodyJSON) throws JSONException {
-        return BodyJSON.getString("MSG_STATUS").contains("1");
+    protected boolean CheckJSON(JSONObject BodyJSON)  {
+        try{
+            return BodyJSON.getString("MSG_STATUS").contains("1");
+
+        }catch ( Exception e ){
+            Log.e(TAG, "getDataFromServer: ",e);
+            return false;
+        }
     }
 
     public boolean getProductsFromServer(int id_category,int id_restaurant){
-        try {
-            JSONObject BodyJSON =  getResponseServer( id_category, id_restaurant);
-            if(CheckJSON( BodyJSON) ){
+        JSONObject BodyJSON =  getResponseServer( id_category, id_restaurant);
+        if(CheckJSON( BodyJSON) ){
 
-                setProducts(BodyJSON);
-                return true;
+            setProducts(BodyJSON);
+            return true;
+        }else return false;
+
+    }
+    private void setProducts(JSONObject BodyJSON)  {
+        try{
+            ListProducts = new ArrayList<>();
+            if(BodyJSON.getString("MSG_STATUS").contains("1 Products Trovati")){
+                JSONArray ProductJSON = new JSONArray(BodyJSON.getString("DATA"));
+
+                for(int i = 0 ; i<ProductJSON.length(); i++){
+                    JSONObject productJSON = new JSONObject(ProductJSON.getString(i));
+                    Product product = new Product();
+
+                    product.setID_product( Integer.parseInt(productJSON.getString("ID_Prodotto")));
+                    product.setID_category(Integer.parseInt(productJSON.getString("ID_CategoryMenu")));
+                    product.setNameProduct(productJSON.getString("NameProdotto"));
+                    product.setPriceProduct(Float.parseFloat(productJSON.getString("PriceProdotto")));
+                    product.setDescriptionProduct(productJSON.getString("Description"));
+                    product.setAllergeniProduct(productJSON.getString("Allergeni"));
+                    product.setSendToKitchen(productJSON.getString("isSendToKitchen").equals("1"));
+                    product.setURLImageProduct(productJSON.getString("PhotoURL"));
+
+                    ListProducts.add(product);
+                }
             }
         }catch ( Exception e ){
             Log.e(TAG, "getDataFromServer: ",e);
-        }
-
-        return false;
-    }
-    private void setProducts(JSONObject BodyJSON) throws JSONException {
-        ListProducts = new ArrayList<>();
-        if(BodyJSON.getString("MSG_STATUS").contains("1 Products Trovati")){
-            JSONArray ProductJSON = new JSONArray(BodyJSON.getString("DATA"));
-
-            for(int i = 0 ; i<ProductJSON.length(); i++){
-                JSONObject productJSON = new JSONObject(ProductJSON.getString(i));
-                Product product = new Product();
-
-                product.setID_product( Integer.parseInt(productJSON.getString("ID_Prodotto")));
-                product.setID_category(Integer.parseInt(productJSON.getString("ID_CategoryMenu")));
-                product.setNameProduct(productJSON.getString("NameProdotto"));
-                product.setPriceProduct(Float.parseFloat(productJSON.getString("PriceProdotto")));
-                product.setDescriptionProduct(productJSON.getString("Description"));
-                product.setAllergeniProduct(productJSON.getString("Allergeni"));
-                product.setSendToKitchen(productJSON.getString("isSendToKitchen").equals("1"));
-                product.setURLImageProduct(productJSON.getString("PhotoURL"));
-
-                ListProducts.add(product);
-            }
         }
     }
 }
