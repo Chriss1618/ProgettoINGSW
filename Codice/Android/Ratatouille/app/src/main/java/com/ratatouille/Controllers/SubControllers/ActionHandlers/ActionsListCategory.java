@@ -104,6 +104,8 @@ public class ActionsListCategory extends ActionsViewHandler{
                 return 0;
             }
         }
+
+
     }
 
     protected static class DeleteCategory_ActionHandler implements ActionHandler {
@@ -142,5 +144,6 @@ public class ActionsListCategory extends ActionsViewHandler{
             JSONObject BodyJSON = getResponseServer( id_category,  id_restaurant);
             return CheckJSON(BodyJSON);
         }
+
     }
 }

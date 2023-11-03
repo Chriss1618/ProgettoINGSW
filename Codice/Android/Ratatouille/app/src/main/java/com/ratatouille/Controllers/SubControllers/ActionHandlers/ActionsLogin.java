@@ -158,10 +158,10 @@ public class ActionsLogin extends ActionsViewHandler{
                 return false;
             }
         }
+
+
         protected boolean getUserFromServer(String Email, String Password, String Token){
-
             JSONObject BodyJSON = getResponseServer( Email, Password,Token);
-
             if( CheckJSON( BodyJSON) ){
                 getUtenteFromJSON( BodyJSON,  Token);
                 return true;
@@ -169,8 +169,9 @@ public class ActionsLogin extends ActionsViewHandler{
                 setMSGError(BodyJSON);
                 return false;
             }
-
         }
+
+
     }
 
     private static class RegisterAdmin_ActionHandler implements ActionHandler{

@@ -53,12 +53,12 @@ public class RequestProducts implements RequestHandler{
     public boolean getProductsFromServer(int id_category,int id_restaurant){
         JSONObject BodyJSON =  getResponseServer( id_category, id_restaurant);
         if(CheckJSON( BodyJSON) ){
-
             setProducts(BodyJSON);
             return true;
-        }else return false;
-
+        }
+        else return false;
     }
+
     private void setProducts(JSONObject BodyJSON)  {
         try{
             ListProducts = new ArrayList<>();
