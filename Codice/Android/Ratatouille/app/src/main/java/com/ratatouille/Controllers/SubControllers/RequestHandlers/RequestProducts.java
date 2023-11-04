@@ -32,7 +32,7 @@ public class RequestProducts implements RequestHandler{
         }
     }
 
-    protected JSONObject getResponseServer(int id_category, int id_restaurant){
+    protected JSONObject sendToServer(int id_category, int id_restaurant){
         Uri.Builder dataToSend  = new Uri.Builder()
                 .appendQueryParameter("ID_Category",id_category + "")
                 .appendQueryParameter("id_restaurant",id_restaurant + "");
@@ -40,7 +40,7 @@ public class RequestProducts implements RequestHandler{
 
         return new ServerCommunication().getData( dataToSend, url);
     }
-    protected boolean CheckJSON(JSONObject BodyJSON)  {
+    protected boolean JSONCheckProductsExist( JSONObject BodyJSON )  {
         try{
             return BodyJSON.getString("MSG_STATUS").contains("1");
 
@@ -50,16 +50,16 @@ public class RequestProducts implements RequestHandler{
         }
     }
 
-    public boolean getProductsFromServer(int id_category,int id_restaurant){
-        JSONObject BodyJSON =  getResponseServer( id_category, id_restaurant);
-        if(CheckJSON( BodyJSON) ){
-            setProducts(BodyJSON);
+    public boolean getProductsFromServer( int id_category, int id_restaurant ){
+        JSONObject ResponseServerJSON =  sendToServer( id_category, id_restaurant );
+        if( JSONCheckProductsExist( ResponseServerJSON) ){
+            SaveProducts( ResponseServerJSON );
             return true;
         }
         else return false;
     }
 
-    private void setProducts(JSONObject BodyJSON)  {
+    private void SaveProducts(JSONObject BodyJSON)  {
         try{
             ListProducts = new ArrayList<>();
             if(BodyJSON.getString("MSG_STATUS").contains("1 Products Trovati")){

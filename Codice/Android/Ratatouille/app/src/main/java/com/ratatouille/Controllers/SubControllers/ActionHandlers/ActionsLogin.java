@@ -113,7 +113,7 @@ public class ActionsLogin extends ActionsViewHandler{
         }
 
 
-        protected JSONObject getResponseServer(String Email, String Password, String Token){
+        protected JSONObject sendToServer(String Email, String Password, String Token){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("Email",      Email)
                     .appendQueryParameter("Password",   Password)
@@ -124,7 +124,7 @@ public class ActionsLogin extends ActionsViewHandler{
             return new ServerCommunication().getData( dataToSend, url);
         }
 
-        protected void getUtenteFromJSON(JSONObject BodyJSON, String Token) {
+        protected void saveUtenteFromJSON(JSONObject BodyJSON, String Token) {
             try {
                 JSONArray DATA_Json = new JSONArray(BodyJSON.getString("DATA"));
                 JSONObject utente_Json = new JSONObject(DATA_Json.getString(0));
@@ -142,15 +142,15 @@ public class ActionsLogin extends ActionsViewHandler{
             }
         }
 
-        protected void setMSGError(JSONObject BodyJSON) {
+        protected void getMSGError(JSONObject ResponseServerJSON) {
             try{
-                Msg_error = BodyJSON.getString("MSG_STATUS").replace("0 ","");
+                Msg_error = ResponseServerJSON.getString("MSG_STATUS").replace("0 ","");
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
-                Msg_error = "Errore ";
+                Msg_error = "Errore";
             }
         }
-        protected boolean CheckJSON(JSONObject BodyJSON) {
+        protected boolean JSONCheckIsLoginCorrect(JSONObject BodyJSON) {
             try{
                 return BodyJSON.getString("MSG_STATUS").contains("1");
             }catch (Exception e){
@@ -160,13 +160,13 @@ public class ActionsLogin extends ActionsViewHandler{
         }
 
 
-        protected boolean getUserFromServer(String Email, String Password, String Token){
-            JSONObject BodyJSON = getResponseServer( Email, Password,Token);
-            if( CheckJSON( BodyJSON) ){
-                getUtenteFromJSON( BodyJSON,  Token);
+        protected boolean getUserFromServer( String Email, String Password, String Token ){
+            JSONObject ResponseServerJSON = sendToServer( Email, Password, Token );
+            if( JSONCheckIsLoginCorrect( ResponseServerJSON ) ){
+                saveUtenteFromJSON( ResponseServerJSON,  Token );
                 return true;
             }else{
-                setMSGError(BodyJSON);
+                getMSGError( ResponseServerJSON );
                 return false;
             }
         }

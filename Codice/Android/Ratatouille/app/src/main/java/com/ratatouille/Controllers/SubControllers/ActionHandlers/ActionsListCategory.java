@@ -67,7 +67,7 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
         }
 
-        protected JSONObject getResponseServer(String newCategory, String id_restaurant){
+        protected JSONObject sendToServer(String newCategory, String id_restaurant){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("id_ristorante",id_restaurant )
                     .appendQueryParameter("NameCategory",newCategory);
@@ -75,9 +75,9 @@ public class ActionsListCategory extends ActionsViewHandler{
 
             return new ServerCommunication().getData( dataToSend, url);
         }
-        protected boolean CheckJSON(JSONObject BodyJSON) {
+        protected boolean JSONCheckIsInserted(JSONObject ResponseServerJSON) {
             try{
-                return BodyJSON.getString("MSG_STATUS").contains("1");
+                return ResponseServerJSON.getString("MSG_STATUS").contains("1");
             }catch (Exception e){
                 return false;
             }
@@ -95,10 +95,10 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
         }
 
-        protected int sendNewCategoryToServer(String newCategory, String id_restaurant){
-            JSONObject BodyJSON = getResponseServer( newCategory, id_restaurant);
-            if( CheckJSON( BodyJSON) ){
-                getCategoryFromJSON( BodyJSON );
+        protected int sendNewCategoryToServer( String newCategory, String id_restaurant ){
+            JSONObject ResponseServerJSON = sendToServer( newCategory, id_restaurant );
+            if( JSONCheckIsInserted( ResponseServerJSON ) ){
+                getCategoryFromJSON( ResponseServerJSON );
                 return addedCategory.getID_categoria();
             }else{
                 return 0;
@@ -123,26 +123,26 @@ public class ActionsListCategory extends ActionsViewHandler{
                 Log.d(TAG, "handleAction: Categoria Non Cancelled");
             }
         }
-        protected JSONObject getResponseServer(int id_category, int id_restaurant){
+        protected JSONObject sendToServer(int id_category, int id_restaurant){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("id_ristorante", id_restaurant+"")
                     .appendQueryParameter("id_category",id_category+"");
-            final String url = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/CategoriaMenu.php";
+            final String UrlDeleteCategory = EndPointer.StandardPath + EndPointer.VERSION_ENDPOINT + EndPointer.DELETE + "/CategoriaMenu.php";
 
-            return new ServerCommunication().getData( dataToSend, url);
+            return new ServerCommunication().getData( dataToSend, UrlDeleteCategory);
         }
-        protected boolean CheckJSON(JSONObject BodyJSON)  {
+        protected boolean JSONCheckIsDeleted(JSONObject ResponseServerJSON)  {
             try{
-                return BodyJSON.getString("MSG").contains("1");
+                return ResponseServerJSON.getString("MSG").contains("1");
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
                 return false;
             }
         }
 
-        protected boolean sendDeleteCategoryToServer(int id_category, int id_restaurant){
-            JSONObject BodyJSON = getResponseServer( id_category,  id_restaurant);
-            return CheckJSON(BodyJSON);
+        protected boolean sendDeleteCategoryToServer( int id_category, int id_restaurant ){
+            JSONObject ResponseServerJSON = sendToServer( id_category,  id_restaurant);
+            return JSONCheckIsDeleted( ResponseServerJSON );
         }
 
     }
