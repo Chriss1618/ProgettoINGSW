@@ -43,4 +43,17 @@ public class RequestProductsTest {
         int id_Not_Exist_Category = 123123;
         Assert.assertFalse( editProductAction.getProductsFromServer(id_Not_Exist_Category,id_Not_Exist_Restaurant));
     }
+
+    //Insieme di test WhiteBox
+    @Test
+    public void RequestProductTestPath_54_55_56_57() {
+        int id_Exist_Restaurant = 1;
+        int id_Exist_Category = 281;
+        Assert.assertTrue( editProductAction.getProductsFromServer(id_Exist_Category, id_Exist_Restaurant));
+    }
+
+    @Test
+    public void RequestProductTestPath_54_55_59() {
+        Assert.assertFalse( editProductAction.getProductsFromServer(0,0));
+    }
 }

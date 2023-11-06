@@ -25,7 +25,6 @@ public class InsertCategoryTest {
     @Test
     public void CorrectCategoryAndCorrectRestaurantId(){
         newCategory = addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "1");
-        Log.d(TAG, "CorrectCategoryAndCorrectRestaurantId: newCategory->"+newCategory);
         Assert.assertNotEquals(0,newCategory);
         deleteCategoryAction.sendDeleteCategoryToServer(newCategory, 1);
     }
@@ -55,6 +54,19 @@ public class InsertCategoryTest {
     @Test
     public void EmptyCategoryAndIncorrectRestaurantId(){
         Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", "IdNonPresenteNelDB"));
+    }
+
+    //Insieme di test WhiteBox
+    @Test
+    public void InsertCategoryTestPath_99_100_101_102(){
+        newCategory = addCategoryAction.sendNewCategoryToServer("CategoriaNonPresenteNelDB", "1");
+        Assert.assertNotEquals(0,newCategory);
+        deleteCategoryAction.sendDeleteCategoryToServer(newCategory, 1);
+    }
+
+    @Test
+    public void InsertCategoryTestPath_99_100_104(){
+        Assert.assertEquals(0,addCategoryAction.sendNewCategoryToServer("", ""));
     }
 
 }

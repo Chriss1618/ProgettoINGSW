@@ -45,15 +45,13 @@ public class LoginTest {
 
     //Insieme di test WhiteBox
     @Test
-    public void responseFromServerTest() throws JSONException {
+    public void LoginTestPath_164_165_166_167(){
+        Assert.assertTrue( loginAction.getUserFromServer("SonoNelDB@example.com", "SonoNelDB123", "") );
+    }
 
-        String Email = "NonSonoNelDB";
-        String Password = "NonSonoNelDB123";
-        String Token = "";
-        // read the airplane mode setting
-
-        Assert.assertFalse( loginAction.getUserFromServer(Email, Password, Token) );
-
+    @Test
+    public void LoginTestPath_164_165_169_170(){
+        Assert.assertFalse( loginAction.getUserFromServer("", "", "") );
     }
 
     @After

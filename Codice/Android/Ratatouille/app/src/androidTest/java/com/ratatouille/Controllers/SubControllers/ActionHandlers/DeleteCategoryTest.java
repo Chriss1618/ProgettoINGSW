@@ -57,4 +57,14 @@ public class DeleteCategoryTest {
         Assert.assertFalse(deleteCategoryAction.sendDeleteCategoryToServer(123123, 123123));
         deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest);
     }
+
+    //Insieme di test WhiteBox
+    @Test
+    public void DeleteCategoryTestPath_144_145(){
+        String nameCategory = "CategoriaDaEliminare";
+        int id_rest = 1;
+        int idCat = addCategoryAction.sendNewCategoryToServer(nameCategory, id_rest+"");
+
+        Assert.assertTrue(deleteCategoryAction.sendDeleteCategoryToServer(idCat, id_rest));
+    }
 }
