@@ -77,12 +77,14 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
 
     //FUNCTIONAL
     private void startLogin(){
+        Log.d(TAG, "startLogin: ");
         closeLoading();
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
         Intent intent = new Intent(this, Activity_Login.class);
         startActivity(intent);
-        overridePendingTransition(0, 0);
+        //overridePendingTransition(0, 0);
         finish();
+        Log.d(TAG, "startLogin: finished");
     }
 
     private boolean AuthenticateUser(){
@@ -91,11 +93,13 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
 
     private void startApp(){
         Log.d(TAG, " -> User Logged in! <- ");
-        closeLoading();
+        if(motionLayout != null ) closeLoading();
+
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
+        Log.d(TAG, "startApp: getting Intent");
         Intent intent = new Intent(this, Activity_Amministratore.class);
         startActivity(intent);
-        overridePendingTransition(0, 0);
+        //overridePendingTransition(0, 0);
         finish();
     }
 
@@ -110,7 +114,9 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
     }
 
     private void closeLoading(){
+        Log.d(TAG, "closeLoading: STARTING");
         motionLayout.setTransition(R.id.start_app_transition);
         motionLayout.transitionToEnd();
+        Log.d(TAG, "closeLoading: FINISHED");
     }
 }

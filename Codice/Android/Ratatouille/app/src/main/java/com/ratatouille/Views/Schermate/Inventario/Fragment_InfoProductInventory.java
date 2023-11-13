@@ -107,9 +107,20 @@ public class Fragment_InfoProductInventory extends Fragment implements ViewLayou
     }
     @Override
     public void SetDataOnLayout() {
-        Picasso.get()
-                .load(EndPointer.StandardPath+"/Images/Ingredient/"+ Ingredient.getURLImageIngredient())
-                .into(ImageView_Ingredient);
+        if(Ingredient.getURLImageIngredient().contains("https")){
+            Picasso.get()
+                    .load(Ingredient.getURLImageIngredient())
+                    .into(ImageView_Ingredient);
+        }else if(Ingredient.isHasPhoto()){
+            Picasso.get()
+                    .load(Ingredient.getUriImageIngredient())
+                    .into(ImageView_Ingredient);
+        }else {
+            Picasso.get()
+                    .load(EndPointer.StandardPath+"/Images/Ingredient/"+ Ingredient.getURLImageIngredient())
+                    .into(ImageView_Ingredient);
+        }
+
         TextView_Ingredient     .setText(Ingredient.getNameIngredient());
         TextView_Description    .setText(Ingredient.getDescription());
         TextView_Misura         .setText(Ingredient.getSizeIngredient() + " " + Ingredient.getMeasureType());

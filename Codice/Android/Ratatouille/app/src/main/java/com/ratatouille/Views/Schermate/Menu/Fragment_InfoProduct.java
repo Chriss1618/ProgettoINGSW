@@ -122,11 +122,15 @@ public class Fragment_InfoProduct extends Fragment implements ViewLayout {
     @Override
     public void SetDataOnLayout() {
         Text_View_Title_Product.setText(Product.getNameProduct());
-        if(Product.isHasPhoto()){
+        if(Product.getURLImageProduct().contains("https")){
+            Picasso.get()
+                    .load(Product.getURLImageProduct())
+                    .into(ImageView_Product);
+        }else if(Product.isHasPhoto()){
             Picasso.get()
                     .load(Product.getUriImageProduct())
                     .into(ImageView_Product);
-        }else{
+        }else {
             Picasso.get()
                     .load(EndPointer.StandardPath+ EndPointer.IMAGES_PRODUCT+ Product.getURLImageProduct())
                     .into(ImageView_Product);

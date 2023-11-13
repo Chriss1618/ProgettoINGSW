@@ -27,6 +27,7 @@ import com.ratatouille.Views.Schermate.Activity_ChooseRole;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
 import java.security.SecureRandom;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -189,10 +190,9 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
         final Handler handler = new Handler();
         handler.postDelayed(()->{
             Button_Save.setVisibility(View.GONE);
-            getContext().startActivity(intent);
-            getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            requireContext().startActivity(intent);
 
-            getActivity().finish();
+            requireActivity().finish();
             //CustomIntent.customType(manager.context,"fadein-to-fadeout");
         },300);
     }

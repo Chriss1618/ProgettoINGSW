@@ -201,10 +201,20 @@ public class Fragment_EditProductInventory extends Fragment implements ViewLayou
             case "cl" : TextView_MeasureSelected = TextView_Ml; break;
         }
         setSelected();
+        if(Ingredient.getURLImageIngredient().contains("https")){
+            Picasso.get()
+                    .load(Ingredient.getURLImageIngredient())
+                    .into(ImageView_IngredientImage);
+        }else if(Ingredient.isHasPhoto()){
+            Picasso.get()
+                    .load(Ingredient.getUriImageIngredient())
+                    .into(ImageView_IngredientImage);
+        }else {
+            Picasso.get()
+                    .load(EndPointer.StandardPath+"/Images/Ingredient/"+ Ingredient.getURLImageIngredient())
+                    .into(ImageView_IngredientImage);
+        }
 
-        Picasso.get()
-                .load(EndPointer.StandardPath + EndPointer.IMAGES_INGREDIENT + Ingredient.getURLImageIngredient())
-                .into(ImageView_IngredientImage);
 
     }
     //ACTIONS

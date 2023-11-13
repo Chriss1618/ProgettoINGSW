@@ -286,8 +286,11 @@ public class Fragment_EditProduct extends Fragment implements ViewLayout {
     }
 
     private void setData(){
-
-        if(EditProduct.getUriImageProduct() != null){
+        if(EditProduct.getURLImageProduct().contains("https")){
+            Picasso.get()
+                    .load(EditProduct.getURLImageProduct())
+                    .into(ImageView_ProductImage);
+        }else  if(EditProduct.getUriImageProduct() != null){
             Picasso.get()
                     .load(EditProduct.getUriImageProduct())
                     .into(ImageView_ProductImage);
