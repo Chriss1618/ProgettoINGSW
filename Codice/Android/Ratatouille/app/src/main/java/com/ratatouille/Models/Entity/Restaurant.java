@@ -9,7 +9,6 @@ public class Restaurant {
     private String Address;
     private String Phone;
     private String Email;
-    private ArrayList<Tavolo>  ListTavoli;
     private String nTavoli;
 
 

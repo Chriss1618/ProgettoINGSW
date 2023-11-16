@@ -11,9 +11,8 @@ import com.ratatouille.Models.LocalStorage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-public class RequestCategory implements RequestHandler {
+public class RequestCategory extends RequestHandler {
 
     //SYSTEM
     private static final String TAG = "RequestCategory";
@@ -24,20 +23,6 @@ public class RequestCategory implements RequestHandler {
     @Override
     public void handleRequest(Request request) {
         getCategoriesFromServer(request);
-    }
-    private void setCategories(JSONObject BodyJSON) throws org.json.JSONException{
-
-        //Log.d(TAG, "\nDATA_JSON ->"+CategorieJSON.toString(4));
-        if(!BodyJSON.getString("MSG_STATUS").contains("0 Nessuna Categoria")) {
-            JSONArray CategorieJSON = new JSONArray(BodyJSON.getString("DATA"));
-            for (int i = 0; i < CategorieJSON.length(); i++) {
-                JSONObject categoriaJSON = new JSONObject(CategorieJSON.getString(i));
-                ListCategoryMenu.add(new CategoriaMenu(
-                        categoriaJSON.getString("NomeCategoria"),
-                        Integer.parseInt(categoriaJSON.getString("ID_CategoriaMenu"))
-                ));
-            }
-        }
     }
     private void getCategoriesFromServer(Request request){
 
@@ -54,6 +39,20 @@ public class RequestCategory implements RequestHandler {
             Log.e(TAG, "getDataFromServer: ",e);
         }
 
+    }
+    private void setCategories(JSONObject BodyJSON) throws org.json.JSONException{
+
+        //Log.d(TAG, "\nDATA_JSON ->"+CategorieJSON.toString(4));
+        if(!BodyJSON.getString("MSG_STATUS").contains("0 Nessuna Categoria")) {
+            JSONArray CategorieJSON = new JSONArray(BodyJSON.getString("DATA"));
+            for (int i = 0; i < CategorieJSON.length(); i++) {
+                JSONObject categoriaJSON = new JSONObject(CategorieJSON.getString(i));
+                ListCategoryMenu.add(new CategoriaMenu(
+                        categoriaJSON.getString("NomeCategoria"),
+                        Integer.parseInt(categoriaJSON.getString("ID_CategoriaMenu"))
+                ));
+            }
+        }
     }
 
 }

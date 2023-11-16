@@ -28,6 +28,7 @@ public class Product {
 
     private boolean hasPhoto;
     private boolean hasUrl;
+
     private String      Id_User;
     private String      TimestampCompletamento;
     private String      Id_ProdottoOrdinato;

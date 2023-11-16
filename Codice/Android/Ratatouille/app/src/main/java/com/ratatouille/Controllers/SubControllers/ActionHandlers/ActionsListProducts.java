@@ -25,32 +25,35 @@ public class ActionsListProducts extends ActionsViewHandler {
     public final static int INDEX_ACTION_ORDER_PRODUCTS         = 3;
 
     public ActionsListProducts() {
+        MapLocalActions();
+    }
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_OPEN_PRODUCT,     new OpenProductInfo_ActionHandler()  );
         actionHandlerMap.put(INDEX_ACTION_OPEN_NEW_PRODUCT, new OpenNewProduct_ActionHandler()  );
         actionHandlerMap.put(INDEX_ACTION_DELETE_PRODUCT,   new DeleteProduct_ActionHandler()  );
         actionHandlerMap.put(INDEX_ACTION_ORDER_PRODUCTS,   new OrderProducts_ActionHandler()  );
     }
-
     //ACTIONS HANDLED **************************************************************
-    private static class OpenProductInfo_ActionHandler implements ActionHandler {
+    private static class OpenProductInfo_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: OpenProductInfo_ActionHandler->");
-            action.getManager().changeOnMain(ControlMapper.INDEX_MENU_INFO_PRODUCT,action.getData());
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_MENU_INFO_PRODUCT,action.getData());
         }
     }
 
-    private static class OpenNewProduct_ActionHandler implements ActionHandler {
+    private static class OpenNewProduct_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: GetCategorieActionHandler->");
             action.getManager().hideBottomBar();
-            action.getManager().changeOnMain(ControlMapper.INDEX_MENU_NEW_PRODUCT, action.getData());
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_MENU_NEW_PRODUCT, action.getData());
         }
     }
 
-    private static class DeleteProduct_ActionHandler implements ActionHandler {
+    private static class DeleteProduct_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Product product = (Product) action.getData();
@@ -59,7 +62,7 @@ public class ActionsListProducts extends ActionsViewHandler {
             }
         }
 
-        private boolean sendDeleteProductToServer(Product product){
+        protected boolean sendDeleteProductToServer(Product product){
             Log.d(TAG, "sendDeleteProductToServer: ID_product = "+product.getID_product());
             Log.d(TAG, "sendDeleteProductToServer: ID_category = "+product.getID_category());
             Uri.Builder dataToSend = new Uri.Builder()
@@ -84,7 +87,7 @@ public class ActionsListProducts extends ActionsViewHandler {
         }
     }
 
-    private static class OrderProducts_ActionHandler implements ActionHandler {
+    private static class OrderProducts_ActionHandler implements IActionHandler {
         @SuppressWarnings("unchecked")
         @Override
         public void handleAction(Action action) {
@@ -92,7 +95,7 @@ public class ActionsListProducts extends ActionsViewHandler {
             sendUpdateOrderProductToServer((ArrayList<Product>) action.getData());
         }
 
-        private void sendUpdateOrderProductToServer(ArrayList<Product> ListProducts){
+        protected void sendUpdateOrderProductToServer(ArrayList<Product> ListProducts){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("nProducts",  ListProducts.size()+"");
             int index = 0;

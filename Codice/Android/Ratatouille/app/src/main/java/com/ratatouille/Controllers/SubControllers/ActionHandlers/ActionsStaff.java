@@ -1,17 +1,12 @@
 package com.ratatouille.Controllers.SubControllers.ActionHandlers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Entity.Product;
-import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.LocalStorage;
@@ -34,24 +29,29 @@ public class ActionsStaff extends ActionsViewHandler{
     public final static int INDEX_ACTION_CREATE_STAFF        = 2;
 
     public ActionsStaff(){
+        MapLocalActions();
+    }
+
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_ADD_STAFF,        new OpenNewStaff_ActionHandler() );
         actionHandlerMap.put(INDEX_ACTION_REMOVE_STAFF,     new RemoveStaff_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_CREATE_STAFF,     new CreateStaff_ActionHandler());
     }
 
-    private static class OpenNewStaff_ActionHandler implements ActionHandler{
+    private static class OpenNewStaff_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> Clicked Add Stuff");
-            action.getManager().changeOnMain(ControlMapper.INDEX_STAFF_NEW,null);
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_STAFF_NEW,null);
 
         }
 
     }
 
-    private static class RemoveStaff_ActionHandler implements ActionHandler{
+    private static class RemoveStaff_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {
@@ -75,19 +75,19 @@ public class ActionsStaff extends ActionsViewHandler{
                     String Msg = BodyJSON.getString("MSG");
                     if(Msg.contains("1 Utente Eliminato")) return true;
                 }else{
-                    Log.d(TAG, "sendDeleteCategoryToServer: false");
+                    Log.d(TAG, "sendDeleteStaffToServer: false");
                     return false;
                 }
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);
             }
-            Log.d(TAG, "sendDeleteCategoryToServer: true");
+            Log.d(TAG, "sendDeleteStaffToServer: true");
             return false;
         }
 
     }
 
-    private static class CreateStaff_ActionHandler implements ActionHandler{
+    private static class CreateStaff_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {

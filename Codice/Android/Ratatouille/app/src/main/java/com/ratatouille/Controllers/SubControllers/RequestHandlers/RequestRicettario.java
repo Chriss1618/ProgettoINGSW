@@ -13,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-public class RequestRicettario implements RequestHandler{
+public class RequestRicettario extends RequestHandler {
     //SYSTEM
     private static final String TAG = "RequestRicettario";
 

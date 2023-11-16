@@ -7,6 +7,7 @@ public class Stats {
     private ArrayList<Utente> ListStaffChef;
     private ArrayList<Product> ListOrdiniCompletati;
     private ArrayList<Utente> ShownStaffChef;
+
     public Stats() {
         ListStaffChef = new ArrayList<>();
         ListOrdiniCompletati = new ArrayList<>();

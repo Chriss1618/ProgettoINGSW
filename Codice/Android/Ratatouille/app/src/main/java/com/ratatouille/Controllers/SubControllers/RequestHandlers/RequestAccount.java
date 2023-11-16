@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Restaurant;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.LocalStorage;
@@ -13,11 +12,11 @@ import com.ratatouille.Models.LocalStorage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class RequestAccount implements RequestHandler{
+public class RequestAccount extends RequestHandler {
     //SYSTEM
     private static final String TAG = "RequestAccount";
     //DATA
-    Restaurant MyRestaurant;
+    private Restaurant MyRestaurant;
     @Override
     public void handleRequest(Request request) {
         getRestaurantFromServer(request);

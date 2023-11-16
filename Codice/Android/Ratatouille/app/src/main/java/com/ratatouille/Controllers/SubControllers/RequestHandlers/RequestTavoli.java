@@ -6,7 +6,6 @@ import android.util.Log;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.Tavolo;
-import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.LocalStorage;
 
@@ -16,7 +15,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class RequestTavoli implements RequestHandler{
+public class RequestTavoli extends RequestHandler {
 
     //SYSTEM
     private static final String TAG = "RequestTavoli";

@@ -33,14 +33,14 @@ import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
 
-public class Fragment_ListProductsCameriere extends Fragment implements ViewLayout {
+public class Fragment_ListProductsCameriere extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_ListProductsCa";
     private static final String CATEGORY_TAG = "category";

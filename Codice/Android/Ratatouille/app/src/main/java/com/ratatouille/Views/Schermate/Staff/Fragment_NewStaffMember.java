@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,22 +22,17 @@ import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsStaff;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Entity.CategoriaMenu;
-import com.ratatouille.Models.Entity.Product;
-import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Action.Action;
-import com.ratatouille.Models.Interfaces.ViewLayout;
-import com.ratatouille.Models.LocalStorage;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Menu.Fragment_NewProduct;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
 
-public class Fragment_NewStaffMember extends Fragment implements ViewLayout {
+public class Fragment_NewStaffMember extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_NewStaffMember";
     private static final int INDEX_WAITER = 0;
@@ -221,11 +215,11 @@ public class Fragment_NewStaffMember extends Fragment implements ViewLayout {
         NewUtente.setCognome(EditText_Cognome.getText().toString());
         switch (roleSelected){
             case INDEX_WAITER :
-                NewUtente.setType_user(ControlMapper.INDEX_TYPE_USER_CAMERIERE);break;
+                NewUtente.setType_user(ControlMapper.TypeUserMapper.NAME_TYPE_USER_CAMERIERE);break;
             case INDEX_SUPERVISORE:
-                NewUtente.setType_user(ControlMapper.INDEX_TYPE_USER_SUPERVISORE);break;
+                NewUtente.setType_user(ControlMapper.TypeUserMapper.NAME_TYPE_USER_SUPERVISORE);break;
             case INDEX_CHEF:
-                NewUtente.setType_user(ControlMapper.INDEX_TYPE_USER_CHEF);break;
+                NewUtente.setType_user(ControlMapper.TypeUserMapper.NAME_TYPE_USER_CHEF);break;
         }
         return checkStaff();
     }

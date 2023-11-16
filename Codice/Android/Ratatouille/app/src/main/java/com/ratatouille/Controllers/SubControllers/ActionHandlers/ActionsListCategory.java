@@ -9,7 +9,6 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.LocalStorage;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 
@@ -24,6 +23,11 @@ public class ActionsListCategory extends ActionsViewHandler{
     public final static int INDEX_ACTION_REMOVE_CATEGORY        = 3;
 
     public ActionsListCategory(){
+        MapLocalActions();
+    }
+
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_OPEN_LIST_PRODUCTS,   new OpenListProducts_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_SHOW_ADD_CATEGORY,    new showAddNewCategory_ActionHandler());
@@ -32,30 +36,29 @@ public class ActionsListCategory extends ActionsViewHandler{
     }
 
     //ACTIONS HANDLED **************************************************************
-    private static class OpenListProducts_ActionHandler implements ActionHandler {
+    protected static class OpenListProducts_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             CategoriaMenu categoria = (CategoriaMenu) action.getData();
             Log.d(TAG, "handleAction: GetCategorieActionHandler->"+ categoria.getNomeCategoria());
 
-            action.getManager().changeOnMain(ControlMapper.INDEX_MENU_LIST_PRODUCTS,categoria);
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_MENU_LIST_PRODUCTS,categoria);
         }
     }
-    private static class showAddNewCategory_ActionHandler implements ActionHandler {
+
+    protected static class showAddNewCategory_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: OpenPopUpNewCategoryActionHandler->");
             action.callBack();
         }
     }
-    protected static class AddNewCategory_ActionHandler implements ActionHandler {
+    protected static class AddNewCategory_ActionHandler implements IActionHandler {
         private CategoriaMenu addedCategory;
-        private Action action;
 
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction: AddNewCategoryActionHandler->");
-            this.action = action;
             String category     = (String)action.getData();
             String id_restaurant = new LocalStorage(action.getManager().context).getData("ID_Ristorante","Integer")+"";
 
@@ -67,7 +70,7 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
         }
 
-        protected JSONObject sendToServer(String newCategory, String id_restaurant){
+        private JSONObject sendToServer(String newCategory, String id_restaurant){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("id_ristorante",id_restaurant )
                     .appendQueryParameter("NameCategory",newCategory);
@@ -75,7 +78,7 @@ public class ActionsListCategory extends ActionsViewHandler{
 
             return new ServerCommunication().getData( dataToSend, url);
         }
-        protected boolean JSONCheckIsInserted(JSONObject ResponseServerJSON) {
+        private boolean JSONCheckIsInserted(JSONObject ResponseServerJSON) {
             try{
                 return ResponseServerJSON.getString("MSG_STATUS").contains("1");
             }catch (Exception e){
@@ -83,7 +86,7 @@ public class ActionsListCategory extends ActionsViewHandler{
             }
         }
 
-        protected void getCategoryFromJSON(JSONObject BodyJSON) {
+        private void getCategoryFromJSON(JSONObject BodyJSON) {
             try{
                 JSONObject Categoria_Json = new JSONObject(BodyJSON.getString("DATA"));
                 addedCategory = new CategoriaMenu(
@@ -108,7 +111,7 @@ public class ActionsListCategory extends ActionsViewHandler{
 
     }
 
-    protected static class DeleteCategory_ActionHandler implements ActionHandler {
+    protected static class DeleteCategory_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {
@@ -123,7 +126,7 @@ public class ActionsListCategory extends ActionsViewHandler{
                 Log.d(TAG, "handleAction: Categoria Non Cancelled");
             }
         }
-        protected JSONObject sendToServer(int id_category, int id_restaurant){
+        private JSONObject sendToServer(int id_category, int id_restaurant){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("id_ristorante", id_restaurant+"")
                     .appendQueryParameter("id_category",id_category+"");
@@ -131,8 +134,9 @@ public class ActionsListCategory extends ActionsViewHandler{
 
             return new ServerCommunication().getData( dataToSend, UrlDeleteCategory);
         }
-        protected boolean JSONCheckIsDeleted(JSONObject ResponseServerJSON)  {
+        private boolean JSONCheckIsDeleted(JSONObject ResponseServerJSON)  {
             try{
+                if(ResponseServerJSON == null ) return false;
                 return ResponseServerJSON.getString("MSG").contains("1");
             }catch (Exception e){
                 Log.e(TAG, "getDataFromServer: ",e);

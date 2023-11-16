@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -25,16 +24,15 @@ import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Restaurant;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Action.Action;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Staff.Fragment_NewStaffMember;
 
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
 
-public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {
+public class Fragment_EditAccountInfo extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_EditAccountInf";
 
@@ -139,7 +137,7 @@ public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {
         EditText_NomeUtente         .setText(Nome);
         EditText_CognomeUtente      .setText(Cognome);
 
-        if(currentUtente.getType_user().equals(ControlMapper.INDEX_TYPE_USER_AMMINISTRATORE)){
+        if(currentUtente.getType_user().equals(ControlMapper.TypeUserMapper.NAME_TYPE_USER_AMMINISTRATORE)){
 
             EditText_NomeRestaurant     .setText(MyRestaurant.getName());
             EditText_AddressRestaurant  .setText(MyRestaurant.getAddress());
@@ -168,7 +166,7 @@ public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {
         currentUtente.setNome(EditText_NomeUtente.getText().toString());
         currentUtente.setCognome(EditText_CognomeUtente.getText().toString());
         manager.setData(currentUtente);
-        if(currentUtente.getType_user().equals(ControlMapper.INDEX_TYPE_USER_AMMINISTRATORE)){
+        if(currentUtente.getType_user().equals(ControlMapper.TypeUserMapper.NAME_TYPE_USER_AMMINISTRATORE)){
             MyRestaurant.setName(EditText_NomeRestaurant.getText().toString());
             MyRestaurant.setAddress(EditText_AddressRestaurant.getText().toString());
             MyRestaurant.setPhone(EditText_PhoneRestaurant.getText().toString());
@@ -186,7 +184,7 @@ public class Fragment_EditAccountInfo extends Fragment implements ViewLayout {
         boolean isAddressOK         = MyRestaurant.getAddress() != null && !MyRestaurant.getAddress().equals("");
         boolean isPhoneOK           = MyRestaurant.getPhone() != null && !MyRestaurant.getPhone().equals("");
         boolean isNTavoliOK         = MyRestaurant.getnTavoli() != null && !MyRestaurant.getnTavoli().equals("");
-        if( currentUtente.getType_user().equals(ControlMapper.INDEX_TYPE_USER_AMMINISTRATORE) ) isCognomeOK = true;
+        if( currentUtente.getType_user().equals(ControlMapper.TypeUserMapper.NAME_TYPE_USER_AMMINISTRATORE) ) isCognomeOK = true;
         else{
             isNameRestaurantOK = true;
             isAddressOK = true;

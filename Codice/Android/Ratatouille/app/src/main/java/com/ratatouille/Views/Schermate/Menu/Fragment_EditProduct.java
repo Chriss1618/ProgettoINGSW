@@ -29,14 +29,11 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.ratatouille.Controllers.Adapters.Adapter_IngredientProduct;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditProduct;
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Product;
-import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
@@ -46,7 +43,7 @@ import java.util.concurrent.TimeUnit;
 import io.vavr.control.Try;
 
 
-public class Fragment_EditProduct extends Fragment implements ViewLayout {
+public class Fragment_EditProduct extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_EditProduct";
 
@@ -105,11 +102,11 @@ public class Fragment_EditProduct extends Fragment implements ViewLayout {
     @Override
     public void onResume() {
         super.onResume();
-        if( manager.IndexFrom == ControlMapper.INDEX_MENU_INFO_PRODUCT){
+        if( manager.IndexFrom == ControlMapper.IndexViewMapper.INDEX_MENU_INFO_PRODUCT){
             Log.d(TAG, "onResume: vieni da Info Product");
             setData();
             initRecycleView();
-        } else if( manager.IndexFrom == ControlMapper.INDEX_INVENTORY_LIST){
+        } else if( manager.IndexFrom == ControlMapper.IndexViewMapper.INDEX_INVENTORY_LIST){
             Log.d(TAG, "onResume: Vieni da Inventario");
             setData();
             initRecycleView();

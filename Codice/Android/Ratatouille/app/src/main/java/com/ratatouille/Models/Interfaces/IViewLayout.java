@@ -1,6 +1,6 @@
 package com.ratatouille.Models.Interfaces;
 
-public interface ViewLayout {
+public interface IViewLayout {
     void PrepareData();
     void PrepareLayout();
 

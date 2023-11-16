@@ -23,6 +23,11 @@ public class ActionsInfoEditProduct extends ActionsViewHandler{
     public final static int INDEX_ACTION_ADD_INGREDIENTI        = 2;
 
     public ActionsInfoEditProduct(){
+        MapLocalActions();
+    }
+
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_OPEN_EDIT_PRODUCT,    new OpenEditProduct_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_EDIT_PRODUCT,         new EditProduct_ActionHandler());
@@ -30,17 +35,17 @@ public class ActionsInfoEditProduct extends ActionsViewHandler{
     }
 
     //ACTIONS HANDLED **************************************************************
-    private static class OpenEditProduct_ActionHandler implements ActionHandler {
+    protected static class OpenEditProduct_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Product product = (Product) action.getData();
             Log.d(TAG, "handleAction: openEDIT->"+ product.getNameProduct());
             action.callBack();
-            action.getManager().changeOnMain(ControlMapper.INDEX_MENU_EDIT_PRODUCT,product);
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_MENU_EDIT_PRODUCT,product);
         }
     }
 
-    protected static class EditProduct_ActionHandler implements ActionHandler {
+    protected static class EditProduct_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Product product = (Product) action.getData();
@@ -95,13 +100,13 @@ public class ActionsInfoEditProduct extends ActionsViewHandler{
 
     }
 
-    private static class AddIngredient_ActionHandler implements ActionHandler{
+    protected static class AddIngredient_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> Choose Ingredient");
             action.getManager().setData(action.getData());
-            action.getManager().useTemporaryNewView(ControlMapper.INDEX_INVENTORY_LIST,ControlMapper.INDEX_TYPE_MANAGER_INVENTORY);
+            action.getManager().useTemporaryNewView(ControlMapper.IndexViewMapper.INDEX_INVENTORY_LIST,ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_INVENTORY);
         }
 
     }

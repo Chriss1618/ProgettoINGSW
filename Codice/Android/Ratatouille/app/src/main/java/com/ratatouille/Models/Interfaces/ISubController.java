@@ -1,8 +1,6 @@
 package com.ratatouille.Models.Interfaces;
 
-public interface SubController {
-    void showMain();
+public interface ISubController extends IController {
     void changeOnMain(int indexMain, Object msg);
-    void closeView();
-    void goBack();
+    void goBack(int indexFrom);
 }

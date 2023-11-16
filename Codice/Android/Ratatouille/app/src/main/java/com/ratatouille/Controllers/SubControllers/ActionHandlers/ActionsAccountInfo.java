@@ -8,17 +8,15 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.ratatouille.Controllers.ControlMapper;
+import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Restaurant;
-import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.Views.Schermate.Activity_ChooseRole;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -36,29 +34,34 @@ public class ActionsAccountInfo extends ActionsViewHandler{
     public final static int INDEX_ACTION_EDIT_ACCOUNT           = 2;
 
     public ActionsAccountInfo(){
+        MapLocalActions();
+    }
+
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_OPEN_EDIT_ACCOUNT,    new OpenEditAccount_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_LOGOUT,               new LogOut_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_EDIT_ACCOUNT,         new EditAccount_ActionHandler());
     }
 
-    private static class OpenEditAccount_ActionHandler implements ActionHandler {
+    protected static class OpenEditAccount_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
-            action.getManager().changeOnMain(ControlMapper.INDEX_ACCOUNT_EDIT,action.getData());
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_ACCOUNT_EDIT,action.getData());
         }
     }
 
-    private static class LogOut_ActionHandler implements ActionHandler {
+    protected static class LogOut_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
-            if(sendDisconnectToServer(action)){
-                new LocalStorage(action.getManager().context).DeleteAllData();
-                triggerRebirth(action.getManager().context);
+            if( sendDisconnectToServer( action.getManager().context, action.getManager() ) ){
+                new LocalStorage( action.getManager().context ).DeleteAllData();
+                triggerRebirth( action.getManager().context );
             }
         }
 
-        public static void triggerRebirth(Context context) {
+        private static void triggerRebirth(Context context) {
             Intent intent = new Intent(context, Activity_ChooseRole.class);
             intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
@@ -69,8 +72,8 @@ public class ActionsAccountInfo extends ActionsViewHandler{
             Runtime.getRuntime().exit(0);
         }
 
-        private boolean sendDisconnectToServer(Action action){
-            int id_utente = (Integer) new LocalStorage(action.getManager().context).getData("ID_Utente", "Integer");
+        private boolean sendDisconnectToServer(Context context, Manager manager){
+            int id_utente = (Integer) new LocalStorage(context).getData("ID_Utente", "Integer");
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("ID_Utente", id_utente+"");
             String url = EndPointer.StandardPath + "/Disconnect.php";
@@ -83,7 +86,7 @@ public class ActionsAccountInfo extends ActionsViewHandler{
                 }else{
                     assert BodyJSON != null;
                     String messageError = BodyJSON.getString("MSG").replace("0 ","");
-                    action.getManager().setData(messageError);
+                    manager.setData(messageError);
                     Log.d(TAG, "getUserFromServer: false");
                     return false;
                 }
@@ -95,10 +98,9 @@ public class ActionsAccountInfo extends ActionsViewHandler{
         }
     }
 
-    private static class EditAccount_ActionHandler implements ActionHandler {
-
-        Utente utente;
-        Restaurant MyRestaurant;
+    protected static class EditAccount_ActionHandler implements IActionHandler {
+        private Utente utente;
+        private Restaurant MyRestaurant;
 
         @Override
         public void handleAction(Action action) {

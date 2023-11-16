@@ -3,7 +3,7 @@ package com.ratatouille.Views;
 import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.Interfaces.IViewFactory;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Views.Schermate.Account.AccountViewFactory;
 import com.ratatouille.Views.Schermate.Inventario.InventarioViewFactory;
@@ -23,17 +23,17 @@ public class ViewFactory {
 
     private static final Map<Integer, Class<? extends IViewFactory>> classMap = new HashMap<>();
     static {
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_LOGIN,            LoginViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_MENU,             MenuViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STATS,            StatsViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_STAFF,            StaffViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ACCOUNT,          AccountViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_INVENTORY,        InventarioViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI,           OrdiniViewFactory.class);
-        classMap.put(ControlMapper.INDEX_TYPE_MANAGER_ORDINI_CAMERIERE, OrdiniCameriereViewFactory.class);
+        classMap.put(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_LOGIN,            LoginViewFactory.class);
+        classMap.put(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_MENU,             MenuViewFactory.class);
+        classMap.put(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_STATS,            StatsViewFactory.class);
+        classMap.put(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_STAFF,            StaffViewFactory.class);
+        classMap.put(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_ACCOUNT,          AccountViewFactory.class);
+        classMap.put(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_INVENTORY,        InventarioViewFactory.class);
+        classMap.put(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_ORDINI,           OrdiniViewFactory.class);
+        classMap.put(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_ORDINI_CAMERIERE, OrdiniCameriereViewFactory.class);
     }
 
-    public ViewLayout createView(int typeManager,int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
+    public IViewLayout createView(int typeManager, int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeManager))
                     .getConstructor()

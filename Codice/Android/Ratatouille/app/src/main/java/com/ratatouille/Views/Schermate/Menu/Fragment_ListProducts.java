@@ -29,12 +29,12 @@ import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.R;
 import java.util.ArrayList;
 
-public class Fragment_ListProducts extends Fragment implements ViewLayout {
+public class Fragment_ListProducts extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_ListProducts";
     private static final String CATEGORY_TAG = "stringToPass";
@@ -283,9 +283,11 @@ public class Fragment_ListProducts extends Fragment implements ViewLayout {
 
     private void onConfirmOrder(){
 
-        if(adapter_product.getListProducts() != null && adapter_product.getListProducts().get(0).getOrder() != null){
-            UpdateOrderProducts(adapter_product.getListProducts());
-            ListProducts = new ArrayList<>(adapter_product.getListProducts());
+        if(adapter_product.getListProducts() != null  && adapter_product.getListProducts().size() > 0){
+            if(adapter_product.getListProducts().get(0).getOrder() != null){
+                UpdateOrderProducts(adapter_product.getListProducts());
+                ListProducts = new ArrayList<>(adapter_product.getListProducts());
+            }
         }
 
 

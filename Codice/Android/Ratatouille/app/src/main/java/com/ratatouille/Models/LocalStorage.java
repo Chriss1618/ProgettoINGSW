@@ -8,13 +8,11 @@ public class LocalStorage {
     //SYSTEM
     private static final String TAG = "LocalStorage";
 
-
-    Context context;
-    SharedPreferences.Editor Editor;
-    SharedPreferences Pref;
+    //FUNCTIONAL
+    private final SharedPreferences.Editor Editor;
+    private final SharedPreferences Pref;
 
     public LocalStorage(Context context) {
-        this.context = context;
         this.Pref = context.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         this.Editor = this.Pref.edit();
     }

@@ -12,29 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Activity_Amministratore;
 import com.ratatouille.Views.Schermate.Activity_ChooseRole;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
-import java.security.SecureRandom;
-import java.util.Objects;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-import io.vavr.control.Try;
-import maes.tech.intentanim.CustomIntent;
-
-public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
+public class Fragment_ConfirmPassword extends Fragment implements IViewLayout {
 
     //SYSTEM
     private static final String TAG = "Fragment_ConfirmPasswor";
@@ -131,7 +121,7 @@ public class Fragment_ConfirmPassword extends Fragment implements ViewLayout {
 
     @Override
     public void SetDataOnLayout() {
-        manager.getSourceInfo().setIndex_TypeView(ControlMapper.INDEX_LOGIN_CONFIRM);
+        manager.getSourceInfo().setIndex_TypeView(ControlMapper.IndexViewMapper.INDEX_LOGIN_CONFIRM);
     }
 
     @Override

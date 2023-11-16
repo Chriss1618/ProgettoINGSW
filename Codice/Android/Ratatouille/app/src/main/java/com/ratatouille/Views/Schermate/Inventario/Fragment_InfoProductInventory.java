@@ -16,12 +16,12 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Events.Action.Action;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
 
-public class Fragment_InfoProductInventory extends Fragment implements ViewLayout {
+public class Fragment_InfoProductInventory extends Fragment implements IViewLayout {
     //SYSTEM
 
     //LAYOUT

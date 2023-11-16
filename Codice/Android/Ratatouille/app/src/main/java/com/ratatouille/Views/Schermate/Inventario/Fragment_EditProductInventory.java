@@ -24,23 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsInfoEditIngredient;
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewIngredient;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Events.Action.Action;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import io.vavr.control.Try;
-
-public class Fragment_EditProductInventory extends Fragment implements ViewLayout {
+public class Fragment_EditProductInventory extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_EditProductInv";
 

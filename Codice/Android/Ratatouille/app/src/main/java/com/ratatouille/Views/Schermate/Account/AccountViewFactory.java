@@ -4,7 +4,7 @@ import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Interfaces.IViewFactory;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,13 +12,13 @@ import java.util.Objects;
 
 public class AccountViewFactory implements IViewFactory {
     private static final String TAG = "AccountViewFactory";
-    private static final Map<Integer, Class<? extends ViewLayout>> classMap = new HashMap<>();
+    private static final Map<Integer, Class<? extends IViewLayout>> classMap = new HashMap<>();
     static {
-        classMap.put(ControlMapper.INDEX_ACCOUNT_INFO,  Fragment_AccountInfo.class);
-        classMap.put(ControlMapper.INDEX_ACCOUNT_EDIT,  Fragment_EditAccountInfo.class);
+        classMap.put(ControlMapper.IndexViewMapper.INDEX_ACCOUNT_INFO,  Fragment_AccountInfo.class);
+        classMap.put(ControlMapper.IndexViewMapper.INDEX_ACCOUNT_EDIT,  Fragment_EditAccountInfo.class);
     }
 
-    public ViewLayout createView(int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
+    public IViewLayout createView(int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeView))
                     .getConstructor(Manager.class)

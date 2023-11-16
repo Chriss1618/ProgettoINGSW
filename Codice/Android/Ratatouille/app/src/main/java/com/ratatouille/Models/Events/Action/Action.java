@@ -20,6 +20,7 @@ public class Action {
     public interface FunctionCallBackAction2{
         void execute(Object data);
     }
+
     public Action(Integer actionType, Object data) {
         this.actionType = actionType;
         this.Data = data;
@@ -59,10 +60,11 @@ public class Action {
         this.SourceInfo = SourceInfo;
     }
 
-    public void setSourceInfo(com.ratatouille.Models.Events.SourceInfo sourceInfo) {
+
+    public void setSourceInfo(SourceInfo sourceInfo) {
         SourceInfo = sourceInfo;
     }
-    public void setManager(com.ratatouille.Controllers.SubControllers.Manager manager) {
+    public void setManager(Manager manager) {
         Manager = manager;
     }
 

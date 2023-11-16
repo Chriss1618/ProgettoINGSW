@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,13 +13,10 @@ import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Events.SourceInfo;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Login.Fragment.Fragment_Welcome;
 
-import maes.tech.intentanim.CustomIntent;
-
-public class Activity_Login extends AppCompatActivity implements ViewLayout {
+public class Activity_Login extends AppCompatActivity implements IViewLayout {
     //SYSTEM
     private static final String TAG = "MainActivity";
 
@@ -38,11 +32,11 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
 
     @Override
     public void onBackPressed() {
-        if(ManagerLogin.IndexOnMain == ControlMapper.INDEX_LOGIN_LOGIN){
+        if(ManagerLogin.IndexOnMain == ControlMapper.IndexViewMapper.INDEX_LOGIN_LOGIN){
             MotionLayout.startAnimation(Manager_Animation.getFadeOut(500));
             startActivity(new Intent(this,Activity_Login.class));
             finish();
-        }else if(ManagerLogin.IndexOnMain == ControlMapper.INDEX_LOGIN_WELCOME){
+        }else if(ManagerLogin.IndexOnMain == ControlMapper.IndexViewMapper.INDEX_LOGIN_WELCOME){
             finish();
         }
     }
@@ -103,7 +97,7 @@ public class Activity_Login extends AppCompatActivity implements ViewLayout {
     //LAYOUT FUNCTION
     private void constructController(){
         ManagerLogin = new Manager(
-                new SourceInfo(ControlMapper.INDEX_TYPE_MANAGER_LOGIN,ControlMapper.INDEX_TYPE_MANAGER_LOGIN),
+                new SourceInfo(ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_LOGIN,ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_LOGIN),
                 this,
                 Fragment_View,
                 getSupportFragmentManager(),

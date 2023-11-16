@@ -11,12 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ratatouille.Controllers.Adapters.Holders.ViewHolder_IngredientProduct;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Entity.CategoriaMenu;
-import com.ratatouille.Models.Entity.Product;
-import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
@@ -89,11 +85,11 @@ public class Adapter_Staff extends RecyclerView.Adapter<Adapter_Staff.ViewHolder
         this.Holders.get(position).Text_View_Ruolo_Staff.setText(NameStuffMembers.get(position).getType_user());
         switch (NameStuffMembers.get(position).getType_user()){
 
-            case ControlMapper.INDEX_TYPE_USER_CAMERIERE :  this.Holders.get(position).Image_View_Role.setImageResource(R.drawable.ic_table_white);
+            case ControlMapper.TypeUserMapper.NAME_TYPE_USER_CAMERIERE:  this.Holders.get(position).Image_View_Role.setImageResource(R.drawable.ic_table_white);
             break;
-            case ControlMapper.INDEX_TYPE_USER_CHEF:        this.Holders.get(position).Image_View_Role.setImageResource(R.drawable.ic_staff_chef_white);
+            case ControlMapper.TypeUserMapper.NAME_TYPE_USER_CHEF:        this.Holders.get(position).Image_View_Role.setImageResource(R.drawable.ic_staff_chef_white);
             break;
-            case ControlMapper.INDEX_TYPE_USER_SUPERVISORE:  this.Holders.get(position).Image_View_Role.setImageResource(R.drawable.ic_staff_supervisore_white);
+            case ControlMapper.TypeUserMapper.NAME_TYPE_USER_SUPERVISORE:  this.Holders.get(position).Image_View_Role.setImageResource(R.drawable.ic_staff_supervisore_white);
             break;
 
         }

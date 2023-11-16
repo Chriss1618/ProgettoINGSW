@@ -18,12 +18,12 @@ import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.Controller;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Listeners.BottomBarListener;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
-public class Activity_Amministratore extends AppCompatActivity implements ViewLayout {
+public class Activity_Amministratore extends AppCompatActivity implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Activity_Amministratore";
 
@@ -76,20 +76,20 @@ public class Activity_Amministratore extends AppCompatActivity implements ViewLa
     @Override
     public void LinkLayout() {
         switch (typeUser){
-            case ControlMapper.INDEX_TYPE_USER_AMMINISTRATORE:
+            case ControlMapper.TypeUserMapper.NAME_TYPE_USER_AMMINISTRATORE:
                 Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_amm);
-                typeController = ControlMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE;
+                typeController = ControlMapper.TypeUserMapper.INDEX_TYPE_CONTROLLER_AMMINISTRATORE;
                 break;
-            case ControlMapper.INDEX_TYPE_USER_SUPERVISORE:
-                typeController = ControlMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE;
+            case ControlMapper.TypeUserMapper.NAME_TYPE_USER_SUPERVISORE:
+                typeController = ControlMapper.TypeUserMapper.INDEX_TYPE_CONTROLLER_SUPERVISORE;
                 Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_sup);
                 break;
-            case ControlMapper.INDEX_TYPE_USER_CHEF:
-                typeController = ControlMapper.INDEX_TYPE_CONTROLLER_CHEF;
+            case ControlMapper.TypeUserMapper.NAME_TYPE_USER_CHEF:
+                typeController = ControlMapper.TypeUserMapper.INDEX_TYPE_CONTROLLER_CHEF;
                 Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_chef);
                 break;
-            case ControlMapper.INDEX_TYPE_USER_CAMERIERE:
-                typeController = ControlMapper.INDEX_TYPE_CONTROLLER_CAMERIERE;
+            case ControlMapper.TypeUserMapper.NAME_TYPE_USER_CAMERIERE:
+                typeController = ControlMapper.TypeUserMapper.INDEX_TYPE_CONTROLLER_CAMERIERE;
                 Bottom_Bar_Amministratore = findViewById(R.id.bottom_bar_cam);
                 break;
         }

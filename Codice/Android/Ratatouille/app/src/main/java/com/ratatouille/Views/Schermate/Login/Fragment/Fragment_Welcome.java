@@ -4,34 +4,27 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsLogin;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Events.Action.Action;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
 
 
-public class Fragment_Welcome extends Fragment implements ViewLayout {
+public class Fragment_Welcome extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_Welcome";
 

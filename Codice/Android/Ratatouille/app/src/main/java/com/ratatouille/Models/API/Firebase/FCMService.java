@@ -1,7 +1,5 @@
 package com.ratatouille.Models.API.Firebase;
 
-import static java.security.AccessController.getContext;
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,24 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.util.Log;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Interfaces.ViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Activity_Amministratore;
-import com.ratatouille.Views.Schermate.Ordini.Fragment_ListOrders;
 
 import org.json.JSONObject;
 
@@ -37,20 +28,8 @@ public class FCMService extends FirebaseMessagingService {
     private static final String TAG = "FCMService";
 
     //DATA
-    Integer id_utente;
-    String token;
-    //FUNCTIONAL
-    ViewLayout Fragment;
-    Manager manager;
-    FCMService instance;
-    public FCMService() {
-
-    }
-
-    public FCMService(ViewLayout fragment, Manager manager) {
-        this.Fragment   = fragment;
-        this.manager    = manager;
-    }
+    private Integer id_utente;
+    private String token;
 
     @Override
     public void onNewToken(@NonNull String token) {
@@ -64,7 +43,7 @@ public class FCMService extends FirebaseMessagingService {
 
     }
 
-    private boolean UpdateTokenDB(){
+    private void UpdateTokenDB(){
         Uri.Builder dataToSend = new Uri.Builder()
                 .appendQueryParameter("ID_Utente", id_utente+"")
                 .appendQueryParameter("Token", token);
@@ -76,19 +55,17 @@ public class FCMService extends FirebaseMessagingService {
             if( BodyJSON != null ){
                 String Msg = BodyJSON.getString("MSG_STATUS");
                 if(Msg.contains("1 Token Updated")) {
-                    return true;
+                    return;
                 }
             }else{
                 Log.d(TAG, "sendDeleteIngredientToServer: false");
-                return false;
+                return;
             }
         }catch (Exception e){
             Log.e(TAG, "getDataFromServer: ",e);
         }
         Log.d(TAG, "sendDeleteIngredientToServer: true");
-        return true;
     }
-
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {

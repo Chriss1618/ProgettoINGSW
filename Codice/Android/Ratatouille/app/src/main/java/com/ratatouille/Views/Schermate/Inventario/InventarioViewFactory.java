@@ -4,7 +4,7 @@ import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Interfaces.IViewFactory;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,15 +12,15 @@ import java.util.Objects;
 
 public class InventarioViewFactory implements IViewFactory {
     private static final String TAG = "InventarioViewFactory";
-    private static final Map<Integer, Class<? extends ViewLayout>> classMap = new HashMap<>();
+    private static final Map<Integer, Class<? extends IViewLayout>> classMap = new HashMap<>();
     static {
-        classMap.put(ControlMapper.INDEX_INVENTORY_LIST,    Fragment_ListInventary.class);
-        classMap.put(ControlMapper.INDEX_INVENTORY_NEW,     Fragment_NewProductInventory.class);
-        classMap.put(ControlMapper.INDEX_INVENTORY_INFO,    Fragment_InfoProductInventory.class);
-        classMap.put(ControlMapper.INDEX_INVENTORY_EDIT,    Fragment_EditProductInventory.class);
+        classMap.put(ControlMapper.IndexViewMapper.INDEX_INVENTORY_LIST,    Fragment_ListInventary.class);
+        classMap.put(ControlMapper.IndexViewMapper.INDEX_INVENTORY_NEW,     Fragment_NewProductInventory.class);
+        classMap.put(ControlMapper.IndexViewMapper.INDEX_INVENTORY_INFO,    Fragment_InfoProductInventory.class);
+        classMap.put(ControlMapper.IndexViewMapper.INDEX_INVENTORY_EDIT,    Fragment_EditProductInventory.class);
     }
 
-    public ViewLayout createView(int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
+    public IViewLayout createView(int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeView))
                     .getConstructor(Manager.class,int.class)

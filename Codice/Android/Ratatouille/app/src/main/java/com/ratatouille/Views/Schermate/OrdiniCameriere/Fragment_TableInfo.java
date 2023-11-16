@@ -20,18 +20,17 @@ import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsMenuWait
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 import java.util.ArrayList;
 
-public class Fragment_TableInfo extends Fragment implements ViewLayout {
+public class Fragment_TableInfo extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_TableInfo";
 

@@ -26,31 +26,35 @@ public class ActionsOrdini extends ActionsViewHandler{
     public final static int INDEX_ACTION_OPEN_HISTORY           = 2;
 
     public ActionsOrdini(){
+        MapLocalActions();
+    }
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_SELECT_TABLE,     new TableSelected_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_CONFIRM_ORDERS,   new ConfirmOrders_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_OPEN_HISTORY,   new ShowHistory_ActionHandler());
     }
 
-    private static class TableSelected_ActionHandler implements ActionHandler{
+    private static class TableSelected_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {
             ArrayList<Ordine> ListTables = (ArrayList<Ordine>) action.getData();
-            action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_TABLE,ListTables);
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_ORDINI_TABLE,ListTables);
         }
 
     }
 
-    private static class ShowHistory_ActionHandler implements ActionHandler{
+    private static class ShowHistory_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             ArrayList<Ordine> ListTables = (ArrayList<Ordine>) action.getData();
-            action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_HISTORY,ListTables);
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_ORDINI_HISTORY,ListTables);
         }
     }
 
-    private static class ConfirmOrders_ActionHandler implements ActionHandler{
+    private static class ConfirmOrders_ActionHandler implements IActionHandler {
         private ArrayList<Product> ListReady;
         @Override
 
@@ -59,7 +63,7 @@ public class ActionsOrdini extends ActionsViewHandler{
             if(sendNewProductToServer(action.getManager().context)){
                 action.callBack(true);
                 Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
-                action.getManager().changeOnMain(ControlMapper.INDEX_ORDINI_LIST,null);
+                action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_ORDINI_LIST,null);
             }else{
                 action.callBack(false);
             }

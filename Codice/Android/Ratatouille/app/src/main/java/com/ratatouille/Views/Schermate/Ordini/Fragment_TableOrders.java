@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -32,14 +31,14 @@ import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import io.vavr.control.Try;
 
-public class Fragment_TableOrders extends Fragment implements ViewLayout {
+public class Fragment_TableOrders extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_TableOrders";
 

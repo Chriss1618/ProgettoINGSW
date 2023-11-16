@@ -31,6 +31,10 @@ public class ManagerRequestFactory {
     public Map<Integer, RequestHandler> requestHandlerMap ;
 
     public ManagerRequestFactory() {
+        MapLocalRequests();
+    }
+
+    private void MapLocalRequests(){
         requestHandlerMap = new HashMap<>();
         requestHandlerMap.put(INDEX_REQUEST_CATEGORY,       new RequestCategory());
         requestHandlerMap.put(INDEX_REQUEST_INGREDIENTS,    new RequestIngredients());
@@ -42,10 +46,9 @@ public class ManagerRequestFactory {
         requestHandlerMap.put(INDEX_REQUEST_TAVOLO_INFO,    new RequestTableInfo());
         requestHandlerMap.put(INDEX_REQUEST_ORDINI_TAVOLO,  new RequestOrdiniTavoli());
         requestHandlerMap.put(INDEX_REQUEST_STATS,          new RequestStats());
-
     }
 
-    public void handleRequest(Request request) {
+    public void MapRequest(Request request) {
         RequestHandler handler = requestHandlerMap.get(request.getTypeRequest());
         if (handler != null)  handler.handleRequest(request);
     }

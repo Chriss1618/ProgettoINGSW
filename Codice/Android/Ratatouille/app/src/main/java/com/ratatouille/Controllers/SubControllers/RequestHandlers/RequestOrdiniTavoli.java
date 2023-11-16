@@ -7,7 +7,6 @@ import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
-import com.ratatouille.Models.Entity.Restaurant;
 import com.ratatouille.Models.Entity.Tavolo;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.LocalStorage;
@@ -17,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class RequestOrdiniTavoli implements RequestHandler {
+public class RequestOrdiniTavoli extends RequestHandler {
     //SYSTEM
     private static final String TAG = "RequestOrdiniTavoli";
     //DATA

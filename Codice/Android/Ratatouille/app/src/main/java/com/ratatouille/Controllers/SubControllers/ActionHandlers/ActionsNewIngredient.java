@@ -8,7 +8,6 @@ import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Events.Action.Action;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -25,13 +24,17 @@ public class ActionsNewIngredient extends ActionsViewHandler {
     public final static int INDEX_ACTION_CANCEL                 = 1;
 
     public ActionsNewIngredient() {
+        MapLocalActions();
+    }
+
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_CREATE_INGREDIENT,      new CreateIngredient_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_CANCEL,               new Cancel_ActionHandler());
     }
 
-    protected static class CreateIngredient_ActionHandler implements ActionHandler {
-        String nome;
+    protected static class CreateIngredient_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> CREATE NEW INGREDIENT");
@@ -39,11 +42,11 @@ public class ActionsNewIngredient extends ActionsViewHandler {
             action.callBack(isInserted);
             if(isInserted){
                 Try.run(() -> TimeUnit.MILLISECONDS.sleep(1000));
-                action.getManager().changeOnMain(ControlMapper.INDEX_INVENTORY_LIST,null);
+                action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_INVENTORY_LIST,null);
             }
         }
 
-        public boolean sendToServer( Action action ){
+        private boolean sendToServer( Action action ){
             Ingredient ingredient = (Ingredient) action.getData();
             Log.d(TAG, "sendToServer: Invio url ->"+ ingredient.getURLImageIngredient());
             Log.d(TAG, "sendToServer: has url ->" + (ingredient.isHasUrl()? ingredient.getURLImageIngredient(): "NoURL"));
@@ -78,7 +81,7 @@ public class ActionsNewIngredient extends ActionsViewHandler {
         }
     }
 
-    private static class Cancel_ActionHandler implements ActionHandler {
+    protected static class Cancel_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> CANCEL NEW INGREDIENT");

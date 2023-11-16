@@ -28,7 +28,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -37,7 +36,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.ratatouille.Controllers.Adapters.Adapter_IngredientProduct;
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsNewProduct;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.Animation.Manager_Animation;
@@ -46,26 +44,22 @@ import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.ProductOpenFood;
 import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Inventario.Fragment_NewProductInventory;
-import com.ratatouille.Views.Schermate.Login.Activity_Login;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.ProtectionDomain;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
 
-public class Fragment_NewProduct extends Fragment implements ViewLayout {
+public class Fragment_NewProduct extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_NewProduct";
 

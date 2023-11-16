@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import com.ratatouille.Controllers.SubControllers.Manager;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 
-public class Fragment_ReportOrder extends Fragment implements ViewLayout {
+public class Fragment_ReportOrder extends Fragment implements IViewLayout {
     private Manager manager;
     public Fragment_ReportOrder() {
     }

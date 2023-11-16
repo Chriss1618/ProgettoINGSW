@@ -6,32 +6,22 @@ import androidx.constraintlayout.motion.widget.MotionLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 import com.ratatouille.Views.Schermate.Login.Activity_Login;
 import java.util.concurrent.TimeUnit;
 import io.vavr.control.Try;
 
-public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout {
+public class Activity_ChooseRole extends AppCompatActivity implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Activity_ChooseRole";
 
     //LAYOUT
     private MotionLayout    motionLayout;
-    private ImageView       ImageView_Logo;
-    private LinearLayout    Background;
-
-    //DATA
-    private int numGiri = 0;
-
-    //FUNCTIONAL
-
-    //OTHER...
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +53,7 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
 
     @Override
     public void LinkLayout() {
-        motionLayout            = findViewById(R.id.loading_activity);
-        ImageView_Logo          = findViewById(R.id.image_view_logo);
-        Background              = findViewById(R.id.background);
+        motionLayout = findViewById(R.id.loading_activity);
     }
     @Override
     public void SetDataOnLayout() {
@@ -77,14 +65,11 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
 
     //FUNCTIONAL
     private void startLogin(){
-        Log.d(TAG, "startLogin: ");
         closeLoading();
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
         Intent intent = new Intent(this, Activity_Login.class);
         startActivity(intent);
-        //overridePendingTransition(0, 0);
         finish();
-        Log.d(TAG, "startLogin: finished");
     }
 
     private boolean AuthenticateUser(){
@@ -96,10 +81,8 @@ public class Activity_ChooseRole extends AppCompatActivity implements ViewLayout
         if(motionLayout != null ) closeLoading();
 
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
-        Log.d(TAG, "startApp: getting Intent");
         Intent intent = new Intent(this, Activity_Amministratore.class);
         startActivity(intent);
-        //overridePendingTransition(0, 0);
         finish();
     }
 

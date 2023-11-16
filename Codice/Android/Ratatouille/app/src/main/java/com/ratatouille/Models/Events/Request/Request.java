@@ -5,10 +5,10 @@ import com.ratatouille.Models.Events.SourceInfo;
 
 public class Request {
     private SourceInfo SourceInfo;
-    private final Object      Data;
-    private final int         TypeRequest;
-    private final FunctionCallBack functionCallBack;
     private Manager Manager;
+    private final int         TypeRequest;
+    private final Object      Data;
+    private final FunctionCallBack functionCallBack;
     public interface FunctionCallBack{
         void execute(Object data);
     }
@@ -19,10 +19,10 @@ public class Request {
         TypeRequest = typeRequest;
         this.functionCallBack = functionCallBack;
     }
-    public void setSourceInfo(com.ratatouille.Models.Events.SourceInfo sourceInfo) {
+    public void setSourceInfo(SourceInfo sourceInfo) {
         SourceInfo = sourceInfo;
     }
-    public void setManager(com.ratatouille.Controllers.SubControllers.Manager manager) {
+    public void setManager(Manager manager) {
         Manager = manager;
     }
     public Manager getManager() {

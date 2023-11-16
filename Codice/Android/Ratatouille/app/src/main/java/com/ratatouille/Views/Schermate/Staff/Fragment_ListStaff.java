@@ -15,22 +15,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ratatouille.Controllers.Adapters.Adapter_Staff;
-import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsListCategory;
 import com.ratatouille.Controllers.SubControllers.ActionHandlers.ActionsStaff;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Controllers.SubControllers.ManagerRequestFactory;
 import com.ratatouille.Models.Animation.Manager_Animation;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 
 import java.util.ArrayList;
 
-public class Fragment_ListStaff extends Fragment implements ViewLayout {
+public class Fragment_ListStaff extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_ListStaff";
 

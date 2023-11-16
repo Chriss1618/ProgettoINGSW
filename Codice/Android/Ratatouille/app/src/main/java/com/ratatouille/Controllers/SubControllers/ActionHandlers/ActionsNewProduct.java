@@ -7,18 +7,13 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Entity.CategoriaMenu;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -37,13 +32,17 @@ public class ActionsNewProduct extends ActionsViewHandler{
     public final static int INDEX_ACTION_CREATE_PRODUCT         = 4;
 
     public ActionsNewProduct(){
+        MapLocalActions();
+    }
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_ADD_FROM_GALLERY, new OpenGallery_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_CREATE_PRODUCT,   new CreateProduct_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_ADD_INGREDIENTI,  new AddIngredient_ActionHandler());
     }
 
-    private static class OpenGallery_ActionHandler implements ActionHandler{
+    private static class OpenGallery_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {
@@ -59,7 +58,7 @@ public class ActionsNewProduct extends ActionsViewHandler{
 
     }
 
-    public static class CreateProduct_ActionHandler implements ActionHandler{
+    public static class CreateProduct_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {
@@ -85,7 +84,7 @@ public class ActionsNewProduct extends ActionsViewHandler{
             Log.d(TAG, "printNewProduct ----------------------------------------------- ");
         }
 
-        public boolean sendNewProductToServer(Product newProduct,Context context){
+        protected boolean sendNewProductToServer(Product newProduct,Context context){
             Uri.Builder dataToSend = new Uri.Builder()
                     .appendQueryParameter("ID_category",        newProduct.getID_category()+"")
                     .appendQueryParameter("NameProduct",        newProduct.getNameProduct())
@@ -123,13 +122,13 @@ public class ActionsNewProduct extends ActionsViewHandler{
         }
 
     }
-    private static class AddIngredient_ActionHandler implements ActionHandler{
+    private static class AddIngredient_ActionHandler implements IActionHandler {
 
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> Choose Ingredient");
             action.getManager().setData(action.getData());
-            action.getManager().useTemporaryNewView(ControlMapper.INDEX_INVENTORY_LIST,ControlMapper.INDEX_TYPE_MANAGER_INVENTORY);
+            action.getManager().useTemporaryNewView(ControlMapper.IndexViewMapper.INDEX_INVENTORY_LIST,ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_INVENTORY);
         }
 
     }

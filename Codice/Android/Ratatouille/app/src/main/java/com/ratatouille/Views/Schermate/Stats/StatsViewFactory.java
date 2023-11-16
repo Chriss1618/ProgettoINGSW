@@ -3,7 +3,7 @@ package com.ratatouille.Views.Schermate.Stats;
 import android.util.Log;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.Interfaces.IViewFactory;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -13,12 +13,12 @@ import java.util.Objects;
 public class StatsViewFactory implements IViewFactory {
     private static final String TAG = "StatsViewFactory";
 
-    private static final Map<Integer, Class<? extends ViewLayout>> classMap = new HashMap<>();
+    private static final Map<Integer, Class<? extends IViewLayout>> classMap = new HashMap<>();
     static {
-        classMap.put(ControlMapper.INDEX_STATS_PRODUCTIVITY,  Fragment_Stats.class);
+        classMap.put(ControlMapper.IndexViewMapper.INDEX_STATS_PRODUCTIVITY,  Fragment_Stats.class);
     }
 
-    public ViewLayout createView( int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
+    public IViewLayout createView(int typeView, Manager manager)throws IllegalAccessException, InstantiationException{
         try{
             return Objects.requireNonNull(classMap.get(typeView))
                     .getConstructor(Manager.class,int.class)

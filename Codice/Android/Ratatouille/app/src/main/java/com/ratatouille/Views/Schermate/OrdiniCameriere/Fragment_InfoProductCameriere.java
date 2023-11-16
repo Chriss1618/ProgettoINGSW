@@ -22,15 +22,14 @@ import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
-import com.ratatouille.Models.Listeners.RecycleEventListener;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
-public class Fragment_InfoProductCameriere extends Fragment implements ViewLayout {
+public class Fragment_InfoProductCameriere extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_InfoProductCam";
 

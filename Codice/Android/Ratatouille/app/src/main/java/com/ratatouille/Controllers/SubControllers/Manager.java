@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.Events.Action.Action;
-import com.ratatouille.Models.Interfaces.SubController;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.ISubController;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Events.SourceInfo;
@@ -20,19 +20,17 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import io.vavr.control.Try;
 
-public class Manager implements SubController {
-    //SYSTEM
+public class Manager implements ISubController {
+    //SYSTEM ------------------------------------------------------------------------------- //
     private static final String TAG = "Manager_MenuFragments";
-    private static final long DEBOUNCE_INTERVAL = 1000; // 1 second
-    private long lastActionTime = 0;
 
-    //LAYOUT
+    //LAYOUT ------------------------------------------------------------------------------- //
     public final Context                    context;
-    public final BottomBarListener          bottomBarListener;
-    protected final ArrayList<ViewLayout>   ViewsFragments;
+    protected final ArrayList<IViewLayout>   ViewsFragments;
     protected final View                    ViewContainer;
 
-    //FUNCTIONAL
+    //FUNCTIONAL --------------------------------------------------------------------------- //
+    public final BottomBarListener          bottomBarListener;
     protected final SourceInfo              sourceInfo;
     protected final FragmentManager         fragmentManager;
     protected final ManagerActionFactory    ManagerAction;
@@ -43,7 +41,9 @@ public class Manager implements SubController {
 
     public Integer      IndexOnMain;
     public Integer      IndexFrom;
-    //DATA
+
+    private long lastActionTime = 0;
+    //DATA ------------------------------------------------------------------------------- //
     private Object data;
     private Object dataAlternative;
 
@@ -83,15 +83,18 @@ public class Manager implements SubController {
         this.dataAlternative = data;
     }
 
-    //ShowPages
+    //ShowPages -------------------------------------------------------------------------- //
     @Override
     public void showMain(){
         IndexOnMain  = MAIN_VIEW_INDEX;
         IndexFrom = MAIN_VIEW_INDEX;
-        loadFragment( getPositionView( IndexOnMain ) );
+        loadFragment( getPositionOfView( IndexOnMain ) );
 
         getSourceInfo().setIndex_TypeView(IndexOnMain);
     }
+
+    @Override
+    public void changeOnMain(int indexMain) {}
 
     @Override
     public void changeOnMain(int indexMain, Object msg) {
@@ -101,13 +104,13 @@ public class Manager implements SubController {
         IndexOnMain = indexMain;
 
         closeView();
-        loadFragment( getPositionView( IndexOnMain ) );
+        loadFragment( getPositionOfView( IndexOnMain ) );
 
         getSourceInfo().setIndex_TypeView(IndexOnMain);
     }
     @Override
     public void closeView() {
-        ViewsFragments.get( getPositionView(IndexFrom) ).EndAnimations();
+        ViewsFragments.get( getPositionOfView(IndexFrom) ).EndAnimations();
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(300));
     }
 
@@ -115,7 +118,7 @@ public class Manager implements SubController {
     public void goBack(){
         IndexFrom = IndexOnMain;
 
-        ViewsFragments.get( getPositionView(IndexFrom) ).EndAnimations();
+        ViewsFragments.get( getPositionOfView(IndexFrom) ).EndAnimations();
         Log.d(TAG, "goBack: stackCount ->" + fragmentManager.getBackStackEntryCount());
         if(fragmentManager.getBackStackEntryCount() > 1){
             IndexOnMain = Integer.parseInt(Objects.requireNonNull(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2).getName()));
@@ -125,10 +128,11 @@ public class Manager implements SubController {
         new Handler(Looper.getMainLooper()).postDelayed( fragmentManager::popBackStack,300);
     }
 
-    public void goBack2(int indexFrom){
+    @Override
+    public void goBack(int indexFrom){
         IndexFrom = indexFrom;
 
-        ViewsFragments.get( getPositionView(IndexFrom) ).EndAnimations();
+        ViewsFragments.get( getPositionOfView(IndexFrom) ).EndAnimations();
         Log.d(TAG, "goBack: stackCount ->" + fragmentManager.getBackStackEntryCount());
         if(fragmentManager.getBackStackEntryCount() > 2){
             IndexOnMain = Integer.parseInt(Objects.requireNonNull(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 3).getName()));
@@ -144,7 +148,7 @@ public class Manager implements SubController {
     public void useTemporaryNewView(int indexView,int typeManager){
         try{
 
-            ViewLayout view = new ViewFactory().createView(typeManager,indexView,this);
+            IViewLayout view = new ViewFactory().createView(typeManager,indexView,this);
             fragmentManager.beginTransaction()
                     .replace(ViewContainer.getId(), (Fragment) view, String.valueOf(indexView))
                     .setReorderingAllowed(true)
@@ -156,20 +160,24 @@ public class Manager implements SubController {
         catch (IllegalAccessException | InstantiationException e) { Log.e(TAG, "Manager_MenuFragments: ", e); }
     }
 
-    private void loadFragment(int positionList){
+    private void loadFragment(int indexViewFragmentArray){
         fragmentManager.beginTransaction()
-                .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(positionList), String.valueOf(IndexOnMain))
+                .replace(ViewContainer.getId(), (Fragment) ViewsFragments.get(indexViewFragmentArray), String.valueOf(IndexOnMain))
                 .setReorderingAllowed(true)
                 .addToBackStack( String.valueOf(IndexOnMain) )
                 .commit();
     }
-    private int getPositionView(int indexFragment){
+    private int getPositionOfView(int indexFragment){
         for(int position = 0 ; position < LIST_INDEX_VIEW.length; position++)
             if(indexFragment == LIST_INDEX_VIEW[position] )  return position;
         return 0;
     }
 
+    //FUNCTIONAL ------------------------------------------------------------------------------- //
     public void HandleAction(Action action){
+        final long DEBOUNCE_INTERVAL = 1000; // 1 second
+
+
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastActionTime < DEBOUNCE_INTERVAL) {
             return;
@@ -179,14 +187,14 @@ public class Manager implements SubController {
 
         action.setManager(this);
         action.setSourceInfo(getSourceInfo());
-        new Thread(() -> ManagerAction.handleAction(action) ).start();
+        new Thread(() -> ManagerAction.MapAction(action) ).start();
     }
     public void HandleRequest(Request request){
         request.setManager(this);
         request.setSourceInfo(getSourceInfo());
-        new Thread(() -> ManagerRequest.handleRequest(request) ).start();
+        new Thread(() -> ManagerRequest.MapRequest(request) ).start();
     }
-    //FUNCTIONAL
+
     public void hideBottomBar(){
         bottomBarListener.hideBottomBar();
     }

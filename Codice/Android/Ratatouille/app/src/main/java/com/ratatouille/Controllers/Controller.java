@@ -7,26 +7,26 @@ import android.view.View;
 import androidx.fragment.app.FragmentManager;
 import com.ratatouille.Controllers.SubControllers.Manager;
 import com.ratatouille.Models.Interfaces.IController;
-import com.ratatouille.Models.Interfaces.SubController;
+import com.ratatouille.Models.Interfaces.ISubController;
 import com.ratatouille.Models.Listeners.BottomBarListener;
 import com.ratatouille.Models.Events.SourceInfo;
 import java.util.ArrayList;
 
 public class Controller implements IController {
 
-    //SYSTEM
+    //SYSTEM ------------------------------------------------------------------------------- //
     private static final String TAG = "Controller_Amministratore";
 
-    //FUNCTIONAL
+    //FUNCTIONAL --------------------------------------------------------------------------- //
     public int          typeController;
     static Integer[]    LIST_INDEX_MANAGERS = {};
 
     private static final int            MAIN_MANAGER = 0;
     public int                          managerOnMain;
-    private final FragmentManager           fragmentManager;
-    private final ArrayList<SubController> Managers;
+    private final FragmentManager       fragmentManager;
+    private final ArrayList<ISubController> Managers;
 
-    //LAYOUT
+    //LAYOUT ------------------------------------------------------------------------------ //
     private Context             context;
     private android.view.View   View;
     private BottomBarListener   bottomBarListener;
@@ -58,7 +58,8 @@ public class Controller implements IController {
     public int getNumberManagers(){
         return LIST_INDEX_MANAGERS.length;
     }
-    //Show Pages
+
+    //Show Pages --------------------------------------------------------------------------- //
     @Override
     public void showMain(){
         showOnMain(MAIN_MANAGER);

@@ -22,51 +22,53 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ManagerActionFactory {
+    //SYSTEM
     private static final String TAG = "ManagerActionFactory";
 
-    private static final Map<Integer, Class<? extends ActionsViewHandler>> classMap = new HashMap<>();
+    //FUNCTIONAL
+    private static final Map<Integer, Class<? extends ActionsViewHandler>> IndexActionMap = new HashMap<>();
     static {
         //LOGIN
-        classMap.put(ControlMapper.INDEX_LOGIN_WELCOME,     ActionsLogin.class);
-        classMap.put(ControlMapper.INDEX_LOGIN_LOGIN,       ActionsLogin.class);
-        classMap.put(ControlMapper.INDEX_LOGIN_CONFIRM,     ActionsLogin.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_LOGIN_WELCOME,     ActionsLogin.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_LOGIN_LOGIN,       ActionsLogin.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_LOGIN_CONFIRM,     ActionsLogin.class);
         //MENU
-        classMap.put(ControlMapper.INDEX_MENU_LIST_CATEGORY,    ActionsListCategory.class);
-        classMap.put(ControlMapper.INDEX_MENU_LIST_PRODUCTS,    ActionsListProducts.class);
-        classMap.put(ControlMapper.INDEX_MENU_NEW_PRODUCT,      ActionsNewProduct.class);
-        classMap.put(ControlMapper.INDEX_MENU_INFO_PRODUCT,     ActionsInfoEditProduct.class);
-        classMap.put(ControlMapper.INDEX_MENU_EDIT_PRODUCT,     ActionsInfoEditProduct.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_MENU_LIST_CATEGORY,    ActionsListCategory.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_MENU_LIST_PRODUCTS,    ActionsListProducts.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_MENU_NEW_PRODUCT,      ActionsNewProduct.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_MENU_INFO_PRODUCT,     ActionsInfoEditProduct.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_MENU_EDIT_PRODUCT,     ActionsInfoEditProduct.class);
         //ACCOUNT
-        classMap.put(ControlMapper.INDEX_ACCOUNT_INFO,          ActionsAccountInfo.class);
-        classMap.put(ControlMapper.INDEX_ACCOUNT_EDIT,          ActionsAccountInfo.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_ACCOUNT_INFO,          ActionsAccountInfo.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_ACCOUNT_EDIT,          ActionsAccountInfo.class);
 
         //STATS
 //        classMap.put(ControlMapper.INDEX_STATS_PRODUCTIVITY,  MenuViewFactory.class);
         //INVENTORY
-        classMap.put(ControlMapper.INDEX_INVENTORY_LIST,    ActionsListInventory.class);
-        classMap.put(ControlMapper.INDEX_INVENTORY_NEW,     ActionsNewIngredient.class);
-        classMap.put(ControlMapper.INDEX_INVENTORY_INFO, ActionsInfoEditIngredient.class);
-        classMap.put(ControlMapper.INDEX_INVENTORY_EDIT, ActionsInfoEditIngredient.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_INVENTORY_LIST,    ActionsListInventory.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_INVENTORY_NEW,     ActionsNewIngredient.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_INVENTORY_INFO, ActionsInfoEditIngredient.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_INVENTORY_EDIT, ActionsInfoEditIngredient.class);
 
         //STAFF
-        classMap.put(ControlMapper.INDEX_STAFF_LIST, ActionsStaff.class);
-        classMap.put(ControlMapper.INDEX_STAFF_NEW, ActionsStaff.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_STAFF_LIST, ActionsStaff.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_STAFF_NEW, ActionsStaff.class);
 
         //MENU WAITER
-        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_TABLE,   ActionsMenuWaiter.class);
-        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_INFO_TABLE,   ActionsMenuWaiter.class);
-        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_CAT,     ActionsMenuWaiter.class);
-        classMap.put(ControlMapper.INDEX_ORDINI_CAMERIERE_LIST_PRODUCT, ActionsMenuWaiter.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_ORDINI_CAMERIERE_LIST_TABLE,   ActionsMenuWaiter.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_ORDINI_CAMERIERE_INFO_TABLE,   ActionsMenuWaiter.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_ORDINI_CAMERIERE_LIST_CAT,     ActionsMenuWaiter.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_ORDINI_CAMERIERE_LIST_PRODUCT, ActionsMenuWaiter.class);
 
         //CHEF
-        classMap.put(ControlMapper.INDEX_ORDINI_LIST, ActionsOrdini.class);
-        classMap.put(ControlMapper.INDEX_ORDINI_TABLE, ActionsOrdini.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_ORDINI_LIST, ActionsOrdini.class);
+        IndexActionMap.put(ControlMapper.IndexViewMapper.INDEX_ORDINI_TABLE, ActionsOrdini.class);
 
     }
 
-    public void handleAction(Action action){
+    public void MapAction(Action action){
         try{
-             Objects.requireNonNull( classMap.get(action.getSourceInfo().getIndex_TypeView()) )
+             Objects.requireNonNull( IndexActionMap.get(action.getSourceInfo().getIndex_TypeView()) )
                     .getConstructor()
                     .newInstance().handleAction( action );
         }catch (InvocationTargetException | NoSuchMethodException e ) {

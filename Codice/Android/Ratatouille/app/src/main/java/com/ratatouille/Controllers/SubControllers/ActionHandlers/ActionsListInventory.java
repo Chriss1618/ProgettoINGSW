@@ -6,7 +6,6 @@ import com.ratatouille.Controllers.ControlMapper;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.Ingredient;
-import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 
 import org.json.JSONObject;
@@ -25,6 +24,10 @@ public class ActionsListInventory extends ActionsViewHandler{
     public final static int INDEX_ACTION_ADD_TO_PRODUCT         = 4;
 
     public ActionsListInventory(){
+        MapLocalActions();
+    }
+    @Override
+    protected void MapLocalActions(){
         actionHandlerMap = new HashMap<>();
         actionHandlerMap.put(INDEX_ACTION_SHOW_NEW_INGREDIENT,      new ShowNewIngredient_ActionHandler());
         actionHandlerMap.put(INDEX_ACTION_SHOW_REMOVE_INGREDIENT,   new ShowDeleteIngredient_ActionHandler());
@@ -33,23 +36,23 @@ public class ActionsListInventory extends ActionsViewHandler{
         actionHandlerMap.put(INDEX_ACTION_ADD_TO_PRODUCT,           new AddToProduct_ActionHandler());
     }
 
-    private static class ShowNewIngredient_ActionHandler implements ActionHandler {
+    protected static class ShowNewIngredient_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> SHOW NEW INGREDIENT");
             action.getManager().hideBottomBar();
-            action.getManager().changeOnMain(ControlMapper.INDEX_INVENTORY_NEW,null);
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_INVENTORY_NEW,null);
         }
     }
 
-    private static class ShowDeleteIngredient_ActionHandler implements ActionHandler {
+    protected static class ShowDeleteIngredient_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> SHOW DELETE INGREDIENT");
         }
     }
 
-    protected static class DeleteIngredient_ActionHandler implements ActionHandler {
+    protected static class DeleteIngredient_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Ingredient ingredient = (Ingredient) action.getData();
@@ -58,7 +61,7 @@ public class ActionsListInventory extends ActionsViewHandler{
             }
         }
 
-        public boolean sendDeleteIngredientToServer(int id_ristorante, int  id_ingredient){
+        protected boolean sendDeleteIngredientToServer(int id_ristorante, int  id_ingredient){
             Log.d(TAG, "sendDeleteIngredientToServer: idIngredient = "+id_ingredient);
             Log.d(TAG, "sendDeleteIngredientToServer: idRestaurant = "+id_ristorante);
             Uri.Builder dataToSend = new Uri.Builder()
@@ -83,16 +86,16 @@ public class ActionsListInventory extends ActionsViewHandler{
         }
     }
 
-    private static class SelectedIngredient_ActionHandler implements ActionHandler {
+    protected static class SelectedIngredient_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> SELECTED INGREDIENT");
             Ingredient ingredient = (Ingredient) action.getData();
-            action.getManager().changeOnMain(ControlMapper.INDEX_INVENTORY_INFO,ingredient);
+            action.getManager().changeOnMain(ControlMapper.IndexViewMapper.INDEX_INVENTORY_INFO,ingredient);
         }
     }
 
-    private static class AddToProduct_ActionHandler implements ActionHandler {
+    protected static class AddToProduct_ActionHandler implements IActionHandler {
         @Override
         public void handleAction(Action action) {
             Log.d(TAG, "handleAction -> SHOW NEW INGREDIENT");

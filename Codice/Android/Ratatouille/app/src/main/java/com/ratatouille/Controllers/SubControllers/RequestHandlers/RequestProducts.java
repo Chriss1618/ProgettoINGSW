@@ -5,18 +5,16 @@ import android.util.Log;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
 import com.ratatouille.Models.Entity.CategoriaMenu;
-import com.ratatouille.Models.Entity.Ingredient;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.LocalStorage;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class RequestProducts implements RequestHandler{
+public class RequestProducts extends RequestHandler {
     //SYSTEM
     private static final String TAG = "RequestProducts";
     //DATA
@@ -50,7 +48,7 @@ public class RequestProducts implements RequestHandler{
         }
     }
 
-    public boolean getProductsFromServer( int id_category, int id_restaurant ){
+    protected boolean getProductsFromServer( int id_category, int id_restaurant ){
         JSONObject ResponseServerJSON =  sendToServer( id_category, id_restaurant );
         if( JSONCheckProductsExist( ResponseServerJSON) ){
             SaveProducts( ResponseServerJSON );

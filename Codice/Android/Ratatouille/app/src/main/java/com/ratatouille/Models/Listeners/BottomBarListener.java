@@ -1,7 +1,6 @@
 package com.ratatouille.Models.Listeners;
 
 public class BottomBarListener {
-    public boolean visible = true;
     //INTERFACE
     public interface ShowBottomBarListener {
         void showBottomBar();
@@ -11,42 +10,24 @@ public class BottomBarListener {
 
     }
 
-    public interface EnableBottomBarListener {
-        void enableBottomBar();
-    }
-    public interface DisableBottomBarListener {
-        void disableBottomBar();
-    }
+    //DATA
+    public boolean visible = true;
 
     //FUNCTIONAL
     private HideBottomBarListener hideBottomBarListener;
     private ShowBottomBarListener showBottomBarListener;
 
-    private EnableBottomBarListener enableBottomBarListener;
-    private DisableBottomBarListener disableBottomBarListener;
-
     public BottomBarListener() {
         this.hideBottomBarListener = null;
         this.showBottomBarListener = null;
-        this.enableBottomBarListener = null;
-        this.disableBottomBarListener = null;
     }
 
     //SETTING LISTENERS
     public void setHideBottomBarListener(HideBottomBarListener hideBottomBarListener) {
         this.hideBottomBarListener = hideBottomBarListener;
     }
-
     public void setShowBottomBarListener(ShowBottomBarListener showBottomBarListener) {
         this.showBottomBarListener = showBottomBarListener;
-    }
-
-    public void setEnableBottomBarListener(EnableBottomBarListener enableBottomBarListener) {
-        this.enableBottomBarListener = enableBottomBarListener;
-    }
-
-    public void setDisableBottomBarListener(DisableBottomBarListener disableBottomBarListener) {
-        this.disableBottomBarListener = disableBottomBarListener;
     }
 
     //Methods
@@ -60,16 +41,6 @@ public class BottomBarListener {
         if(hideBottomBarListener != null ){
             hideBottomBarListener.hideBottomBar();
             visible = false;
-        }
-    }
-    public void enableBottomBar(){
-        if(enableBottomBarListener != null ){
-            enableBottomBarListener.enableBottomBar();
-        }
-    }
-    public void disableBottomBar(){
-        if(disableBottomBarListener != null ){
-            disableBottomBarListener.disableBottomBar();
         }
     }
 }

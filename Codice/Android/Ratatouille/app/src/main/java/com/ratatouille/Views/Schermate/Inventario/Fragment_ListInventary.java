@@ -35,13 +35,13 @@ import com.ratatouille.Models.Entity.Ricettario;
 import com.ratatouille.Models.Events.Action.Action;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Fragment_ListInventary extends Fragment implements ViewLayout {
+public class Fragment_ListInventary extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_ListInventary";
 
@@ -147,7 +147,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
         ImageView_AddIngredient     = View_Fragment.findViewById(R.id.ic_add_ingrediente);
 
         ImageView_Back              = View_Fragment.findViewById(R.id.ic_back);
-        if(manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.INDEX_TYPE_MANAGER_MENU)  ImageView_Back.setVisibility(View.VISIBLE);
+        if(manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_MENU)  ImageView_Back.setVisibility(View.VISIBLE);
         else ImageView_Back.setVisibility(View.GONE);
 
         //Dialog
@@ -206,7 +206,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     }
 
     private void onClickProduct(Object product) {
-        if(manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.INDEX_TYPE_MANAGER_MENU){
+        if(manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_MENU){
             IngredientSelected = (Ingredient) product;
             new DialogNewIngredient().showDialogNewIngredient();
         } else {
@@ -447,7 +447,7 @@ public class Fragment_ListInventary extends Fragment implements ViewLayout {
     //ANIMATIONS
     @Override
     public void StartAnimations() {
-        if( manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.INDEX_TYPE_MANAGER_MENU){
+        if( manager.getSourceInfo().getIndex_TypeManager() == ControlMapper.IndexManagerMapper.INDEX_TYPE_MANAGER_MENU){
             ImageView_AddIngredient     .setVisibility(View.GONE);
             ImageView_DeleteProduct     .setVisibility(View.GONE);
         }else{

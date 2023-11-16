@@ -5,9 +5,6 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -22,27 +19,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.ratatouille.Controllers.SubControllers.Manager;
@@ -52,9 +40,8 @@ import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Stats;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Request.Request;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
-import com.ratatouille.Views.Schermate.Menu.Fragment_NewProduct;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,7 +51,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.vavr.control.Try;
 
-public class Fragment_Stats extends Fragment implements ViewLayout {
+public class Fragment_Stats extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_Stats";
 

@@ -14,9 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-public class RequestStats implements RequestHandler{
+public class RequestStats extends RequestHandler {
     //SYSTEM
     private static final String TAG = "RequestStats";
 

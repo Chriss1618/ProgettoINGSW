@@ -1,9 +1,9 @@
 package com.ratatouille.Models.Events;
 
 public class SourceInfo {
-    int Index_TypeManager;
-    int Index_TypeController;
-    int Index_TypeView;
+    private int Index_TypeManager;
+    private int Index_TypeController;
+    private int Index_TypeView;
 
     public SourceInfo(int Index_TypeManager, Integer Index_TypeController) {
         this.Index_TypeManager = Index_TypeManager;

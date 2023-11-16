@@ -31,11 +31,11 @@ public class Ricettario {
         TypeMeasure = typeMeasure;
     }
 
-    public com.ratatouille.Models.Entity.Ingredient getIngredient() {
+    public Ingredient getIngredient() {
         return Ingredient;
     }
 
-    public void setIngredient(com.ratatouille.Models.Entity.Ingredient ingredient) {
+    public void setIngredient(Ingredient ingredient) {
         Ingredient = ingredient;
     }
 }

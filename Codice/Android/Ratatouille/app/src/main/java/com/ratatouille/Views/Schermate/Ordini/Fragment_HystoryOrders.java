@@ -15,12 +15,12 @@ import com.ratatouille.Models.Animation.Manager_Animation;
 import com.ratatouille.Models.Entity.Ordine;
 import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Listeners.RecycleEventListener;
-import com.ratatouille.Models.Interfaces.ViewLayout;
+import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.R;
 import java.util.ArrayList;
 
 
-public class Fragment_HystoryOrders extends Fragment implements ViewLayout {
+public class Fragment_HystoryOrders extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_HystoryOrders";
 

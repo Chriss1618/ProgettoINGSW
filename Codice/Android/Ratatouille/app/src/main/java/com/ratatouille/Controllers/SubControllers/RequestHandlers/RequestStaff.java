@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.util.Log;
 import com.ratatouille.Models.API.Rest.EndPointer;
 import com.ratatouille.Models.API.Rest.ServerCommunication;
-import com.ratatouille.Models.Entity.Product;
 import com.ratatouille.Models.Entity.Utente;
 import com.ratatouille.Models.Events.Request.Request;
 import com.ratatouille.Models.LocalStorage;
@@ -14,13 +13,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class RequestStaff implements RequestHandler{
+public class RequestStaff extends RequestHandler {
     //SYSTEM
     private static final String TAG = "RequestStaff";
 
     //DATA
     private ArrayList<Utente> ListStaff;
     private Request request;
+
     @Override
     public void handleRequest(Request request) {
         Log.d(TAG, "handleRequest: STAFF");

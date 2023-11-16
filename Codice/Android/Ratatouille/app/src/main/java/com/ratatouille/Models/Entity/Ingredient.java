@@ -141,7 +141,6 @@ public class Ingredient implements Cloneable{
     public Uri getUriImageIngredient() {
         return UriImageIngredient;
     }
-
     public void setUriImageIngredient(Uri uriImageIngredient) {
         UriImageIngredient = uriImageIngredient;
     }
@@ -149,7 +148,6 @@ public class Ingredient implements Cloneable{
     public String getDescription() {
         return Description;
     }
-
     public void setDescription(String description) {
         Description = description;
     }

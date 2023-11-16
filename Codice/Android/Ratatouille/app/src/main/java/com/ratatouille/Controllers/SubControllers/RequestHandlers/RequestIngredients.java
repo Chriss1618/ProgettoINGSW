@@ -12,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-public class RequestIngredients implements RequestHandler{
+public class RequestIngredients extends RequestHandler {
     //SYSTEM
     private static final String TAG = "RequestIngredients";
 
