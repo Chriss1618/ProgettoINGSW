@@ -56,37 +56,34 @@ public class Fragment_Stats extends Fragment implements IViewLayout {
     private static final String TAG = "Fragment_Stats";
 
     //LAYOUT
-    android.view.View view_fragment;
-    PieChart    Pie_Chart_Productivity;
+    private android.view.View view_fragment;
+    private PieChart    Pie_Chart_Productivity;
 
-    ArrayList<PieEntry> pieEntries;
-    TextView            Text_View_Title_productivity;
-    LinearLayout        Linear_Layout_Date_produttivita;
-    LinearLayout        Linear_Layout_HorizontalBar;
-    CardView            Card_view_BarChart;
-    CardView            Card_view_from_Data;
-    CardView            Card_view_to_Data;
-    TextView            Text_View_From_Data;
-    TextView            Text_View_to_Data;
-    CardView            Card_view_Pie_Chart;
-    private TextView        Text_View_Empty;
-    private ProgressBar     ProgressBar;
+    private final ArrayList<PieEntry> pieEntries;
+    private TextView            Text_View_Title_productivity;
+    private LinearLayout        Linear_Layout_Date_produttivita;
+    private LinearLayout        Linear_Layout_HorizontalBar;
+    private CardView            Card_view_BarChart;
+    private CardView            Card_view_from_Data;
+    private CardView            Card_view_to_Data;
+    private TextView            Text_View_From_Data;
+    private TextView            Text_View_to_Data;
+    private CardView            Card_view_Pie_Chart;
+    private ProgressBar         ProgressBar;
 
-    LinearLayout    LinearLayout_Dialog;
-    LinearLayout    LinearLayout_DarkL;
+    private LinearLayout    LinearLayout_Dialog;
+    private LinearLayout    LinearLayout_DarkL;
+
     //FUNCTIONAL
-    Manager manager;
+    private final Manager manager;
 
     //DATA
-    Stats stats;
-    long timestampFrom;
-    long timestampTo;
-    String dataFrom;
-    String dataTo;
+    private Stats stats;
+    private long timestampFrom;
+    private long timestampTo;
     private int yearTo = 0;
     private int monthTo;
     private int dayTo;
-
 
     private int yearFrom = 0;
     private int monthFrom;
@@ -194,7 +191,7 @@ public class Fragment_Stats extends Fragment implements IViewLayout {
         Card_view_Pie_Chart             = view_fragment.findViewById(R.id.card_view_element_pie_chart);
         Card_view_BarChart             = view_fragment.findViewById(R.id.card_view_element_bar_chart);
         ProgressBar                     = view_fragment.findViewById(R.id.progressbar);
-        Text_View_Empty                 = view_fragment.findViewById(R.id.text_view_empty);
+        TextView text_View_Empty = view_fragment.findViewById(R.id.text_view_empty);
     }
     @Override
     public void SetActionsOfLayout() {
@@ -214,7 +211,7 @@ public class Fragment_Stats extends Fragment implements IViewLayout {
             dayTo= calendar.get(Calendar.DAY_OF_MONTH);
 
             // Calculate "to" date and timestamp
-            dataTo = dayTo + "/" + monthTo + "/" + yearTo;
+            String dataTo = dayTo + "/" + monthTo + "/" + yearTo;
             Date myDateTo = dateFormat.parse(dataTo);
             calendar.setTime(myDateTo);
             timestampTo = calendar.getTimeInMillis() / 1000; // Convert to seconds
@@ -226,7 +223,7 @@ public class Fragment_Stats extends Fragment implements IViewLayout {
             monthFrom = calendar.get(Calendar.MONTH);
             dayFrom = calendar.get(Calendar.DAY_OF_MONTH);
             Date newDate = calendar.getTime();
-            dataFrom = dateFormat.format(newDate);
+            String dataFrom = dateFormat.format(newDate);
             timestampFrom = newDate.getTime() / 1000; // Convert to seconds
 
             Log.d(TAG, "setDataPickers: dataFrom->" + dataFrom);
