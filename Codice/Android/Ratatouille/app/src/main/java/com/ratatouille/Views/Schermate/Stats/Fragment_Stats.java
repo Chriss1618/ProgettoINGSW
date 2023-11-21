@@ -55,7 +55,7 @@ public class Fragment_Stats extends Fragment implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Fragment_Stats";
 
-    //LAYOUT
+   //LAYOUT
     private android.view.View view_fragment;
     private PieChart    Pie_Chart_Productivity;
 
