@@ -22,7 +22,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".Views.Schermate.Activity_Amministratore" />
+        <activity android:name=".Views.Schermate.Activity_HomePage" />
         <activity android:name=".Views.Schermate.Login.Activity_Login" />
 
         <service

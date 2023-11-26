@@ -23,7 +23,7 @@ import com.ratatouille.Models.LocalStorage;
 import com.ratatouille.R;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
-public class Activity_Amministratore extends AppCompatActivity implements IViewLayout {
+public class Activity_HomePage extends AppCompatActivity implements IViewLayout {
     //SYSTEM
     private static final String TAG = "Activity_Amministratore";
 

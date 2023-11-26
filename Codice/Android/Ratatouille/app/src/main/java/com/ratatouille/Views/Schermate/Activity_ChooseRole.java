@@ -6,8 +6,6 @@ import androidx.constraintlayout.motion.widget.MotionLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.ratatouille.Models.Interfaces.IViewLayout;
 import com.ratatouille.Models.LocalStorage;
@@ -81,7 +79,7 @@ public class Activity_ChooseRole extends AppCompatActivity implements IViewLayou
         if(motionLayout != null ) closeLoading();
 
         Try.run(() -> TimeUnit.MILLISECONDS.sleep(500));
-        Intent intent = new Intent(this, Activity_Amministratore.class);
+        Intent intent = new Intent(this, Activity_HomePage.class);
         startActivity(intent);
         finish();
     }
