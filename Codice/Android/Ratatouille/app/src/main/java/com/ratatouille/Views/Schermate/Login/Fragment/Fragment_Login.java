@@ -52,7 +52,6 @@ public class Fragment_Login extends Fragment implements IViewLayout {
     private TextView        TextView_warningEmail;
     private TextView        TextView_warningPassword;
     private TextView        TextView_warningConfirmPassowrd;
-    private ImageView       ImageView_Logo;
 
     //FUNCTIONAL
     private final Manager manager;
@@ -70,9 +69,6 @@ public class Fragment_Login extends Fragment implements IViewLayout {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
 
         Utente = new Utente();
     }
@@ -110,7 +106,7 @@ public class Fragment_Login extends Fragment implements IViewLayout {
         LinearLayout_Error              = Fragment_View.findViewById(R.id.linear_layout_error_login);
 
         LinearLayout_Login_step        = Fragment_View.findViewById(R.id.linear_layout_login_step);
-        LinearLayout_ConfirmPassword        = Fragment_View.findViewById(R.id.linear_layout_confirm_password);
+        LinearLayout_ConfirmPassword   = Fragment_View.findViewById(R.id.linear_layout_confirm_password);
 
         LinearLayout_BackGroundError        = Fragment_View.findViewById(R.id.darkRL);
         EditTex_Email                       = Fragment_View.findViewById(R.id.edit_text_email);
@@ -122,8 +118,7 @@ public class Fragment_Login extends Fragment implements IViewLayout {
         TextView_warningPassword            = Fragment_View.findViewById(R.id.warning_password);
         TextView_MsgLogin                   = Fragment_View.findViewById(R.id.text_view_login_msg);
         TextView_warningConfirmPassowrd     = Fragment_View.findViewById(R.id.warning_new_password);
-        Button_Login        = Fragment_View.findViewById(R.id.button_login);
-        ImageView_Logo      = Fragment_View.findViewById(R.id.image_view_logo);
+        Button_Login             = Fragment_View.findViewById(R.id.button_login);
     }
     @Override
     public void SetDataOnLayout() {

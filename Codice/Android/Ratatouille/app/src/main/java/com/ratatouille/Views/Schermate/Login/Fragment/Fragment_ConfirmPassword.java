@@ -30,15 +30,15 @@ public class Fragment_ConfirmPassword extends Fragment implements IViewLayout {
     private static final String TAG = "Fragment_ConfirmPasswor";
 
     //LAYOUT
-    View        Fragment_View;
-    TextView    TextView_WelcomeText;
+    private View        Fragment_View;
+    private TextView    TextView_WelcomeText;
 
-    LinearLayout    Background;
-    LinearLayout LinearLayout_Confirm;
-    LinearLayout   LinearLayout_message;
-    LinearLayout   LinearLayout_message2;
-    ConstraintLayout ConstraintLayout_message3;
-    Button      Button_Save;
+    private LinearLayout        Background;
+    private LinearLayout        LinearLayout_Confirm;
+    private LinearLayout        LinearLayout_message;
+    private LinearLayout        LinearLayout_message2;
+    private ConstraintLayout    ConstraintLayout_message3;
+    private Button              Button_Save;
 
     //FUNCTIONAL
     private final Manager manager;
